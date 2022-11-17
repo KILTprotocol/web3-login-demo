@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  margin-right: 8px;
+  display: inline-block;
+  height: 24px;
+}
+
+.heading {
+  display: inline-block;
+  color: white;
+  font-size: 18px;
+}

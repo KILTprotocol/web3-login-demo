@@ -1,0 +1,35 @@
+.account, .action {
+  padding: 10px 20px;
+  font-size: 0;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.31);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(7.1px);
+  -webkit-backdrop-filter: blur(7.1px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 24px;
+  color: white; 
+  display: inline-flex;
+  vertical-align: top;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.account svg {
+  margin-right: 8px;
+}
+
+.account span {
+  box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 160px;
+}
+
+.action {
+  cursor: pointer;
+  margin-left: 8px;
+}
