@@ -6,16 +6,11 @@
   "repository": "git@github.com:KILTprotocol/web3-login-demo.git",
   "author": "dudleyneedham <dudleyneedham1993@gmail.com>",
   "license": "BSD-4-Clause",
-  "proxy": "http://localhost:3000",
   "scripts": {
-    "build:client": " react-scripts build",
-    "build:server": "npx tsc -p tsconfig.server.json",
-    "build": "concurrently yarn:build:*",
-    "start:client": "PORT=8080 react-scripts start",
+    "start:build": "concurrently \"npx tsc -w\" \"cd src/frontend && yarn run build\" ",
     "start:server": "nodemon build/backend/server.js",
-    "start": "concurrently yarn:start:*",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start:client": "cd frontend && yarn start",
+    "start": "concurrently yarn:start:*"
   },
   "dependencies": {
     "@kiltprotocol/sdk-js": "^0.29.0",
@@ -25,13 +20,7 @@
     "express": "^4.18.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "ts-node": "^10.9.1",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "react-scripts": "5.0.1",
-    "typescript": "^4.9.4",
-    "web-vitals": "^2.1.4"
+    "ts-node": "^10.9.1"
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.2",
@@ -43,23 +32,5 @@
     "concurrently": "^7.5.0",
     "nodemon": "^2.0.20",
     "typescript": "^4.8.4"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
   }
 }
