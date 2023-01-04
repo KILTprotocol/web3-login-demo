@@ -4,7 +4,7 @@
   "description": "web3 login demo for KILT distillery",
   "main": "index.ts",
   "repository": "git@github.com:KILTprotocol/web3-login-demo.git",
-  "author": "dudleyneedham <dudleyneedham1993@gmail.com>",
+  "author": "KILT <info@kilt.io>",
   "license": "BSD-4-Clause",
   "scripts": {
     "install": "concurrently \"cd ./backend && yarn install\" \"cd ./frontend && yarn install\" ",

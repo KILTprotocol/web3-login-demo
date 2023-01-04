@@ -1,10 +1,9 @@
 {
-  "name": "web3-login-demo",
+  "name": "web3-login-demo-backend",
   "version": "0.0.1",
   "description": "web3 login demo for KILT distillery",
   "main": "index.ts",
   "repository": "git@github.com:KILTprotocol/web3-login-demo.git",
-  "author": "dudleyneedham <dudleyneedham1993@gmail.com>",
   "license": "BSD-4-Clause",
   "scripts": {
     "build": "npx tsc -w",
