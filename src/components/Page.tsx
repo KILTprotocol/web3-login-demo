@@ -12,14 +12,12 @@ function Page({ children }: Props): JSX.Element {
 Page.Header = function ({ children }: Props): JSX.Element {
   return <header className={styles.header}>{children}</header>
 }
-//@ts-ignore
-Page.Header.displayName = 'Page.Header'
+// Page.Header.displayName = 'Page.Header'x
 
 Page.Content = function ({ children }: Props): JSX.Element {
   return <section className={styles.content}>{children}</section>
 }
 
-//@ts-ignore
-Page.Content.displayName = 'Page.Content'
+// Page.Content.displayName = 'Page.Content'
 
 export default Page

@@ -1,12 +1,30 @@
 {
   "compilerOptions": {
-    "jsx": "react",
-    "target": "es2016", /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
-    "module": "commonjs", /* Specify what module code is generated. */
-    "esModuleInterop": true, /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */
-    "forceConsistentCasingInFileNames": true, /* Ensure that casing is correct in imports. */
-    "strict": true, /* Enable all strict type-checking options. */
-    "skipLibCheck": true, /* Skip type checking all .d.ts files. */
-    "outDir": "./build",
+    "target": "es2016",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "outDir": "./dist/",
   },
+  "exclude": [
+    "./backend"
+  ],
+  "include": [
+    "./src/*"
+  ]
 }
