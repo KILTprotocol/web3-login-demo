@@ -1,10 +1,17 @@
+import React, { useEffect } from 'react'
 import Button from './components/Button'
+import Card from './components/Card'
 import Logo from './components/Logo'
 import Page from './components/Page'
-import Card from './components/Card'
 import User from './components/User'
 
-export default function Home() {
+export default function Home(): JSX.Element {
+  async function testApi() {
+    const result = await fetch('/api')
+    const message = await result.json()
+    console.log(message)
+  }
+
   return (
     <Page>
       <Page.Header>
@@ -13,7 +20,7 @@ export default function Home() {
       </Page.Header>
       <Page.Content>
         <Card>
-          <Button onClick={undefined}>GO TO SECRET PAGE</Button>
+          <Button onClick={testApi}>GO TO SECRET PAGE</Button>
           <Button onClick={undefined}>GET SECRET MESSAGE</Button>
           <Button onClick={undefined}>CLEAR COOKIES</Button>
         </Card>

@@ -4,23 +4,20 @@
   "description": "web3 login demo for KILT distillery",
   "main": "index.ts",
   "repository": "git@github.com:KILTprotocol/web3-login-demo.git",
-  "author": "dudleyneedham <dudleyneedham1993@gmail.com>",
+  "author": "KILT <info@kilt.io>",
   "license": "BSD-4-Clause",
   "scripts": {
-    "build": "npx tsc",
-    "start": "concurrently \"yarn run server\" \"yarn run client\"",
-    "server": "node dist/backend/server.js",
-    "client": "cd ./src/frontend && yarn start",
-    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\""
-  },
-  "dependencies": {
-    "@kiltprotocol/sdk-js": "^0.29.0",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2"
+    "install": "concurrently \"cd ./backend && yarn install\" \"cd ./frontend && yarn install\" ",
+    "build:client": "cd ./frontend && yarn build",
+    "build:server": "cd ./backend && npx tsc",
+    "build": "concurrently yarn:build:*",
+    "start:client": "cd ./frontend && yarn start",
+    "start:server": "cd ./backend && nodemon build/server.js",
+    "start": "concurrently yarn:start:*",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "@types/express": "^4.17.14",
-    "@types/node": "^18.11.9",
     "concurrently": "^7.5.0",
     "nodemon": "^2.0.20",
     "typescript": "^4.8.4"
