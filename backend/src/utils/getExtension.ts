@@ -3,7 +3,7 @@ import {
     InjectedWindowProvider,
     PubSubSessionV1,
     PubSubSessionV2,
-  } from '../types/types'
+  } from './types'
   
   const apiWindow = window as Window & ApiWindow
   
