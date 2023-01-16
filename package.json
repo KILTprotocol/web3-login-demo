@@ -21,5 +21,10 @@
     "concurrently": "^7.5.0",
     "nodemon": "^2.0.20",
     "typescript": "^4.8.4"
+  },
+  "dependencies": {
+    "@kiltprotocol/sdk-js": "^0.30.0",
+    "@kiltprotocol/vc-export": "^0.30.0",
+    "eslint": "^8.31.0"
   }
 }

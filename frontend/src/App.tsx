@@ -4,6 +4,7 @@ import Card from './components/Card'
 import Logo from './components/Logo'
 import Page from './components/Page'
 import User from './components/User'
+import { getExtensions } from './utils/getExtension'
 
 export default function Home(): JSX.Element {
   async function testApi() {
@@ -11,6 +12,13 @@ export default function Home(): JSX.Element {
     const message = await result.json()
     console.log(message)
   }
+
+  //Inject the extensions that support the KILT protocol
+  useEffect(() => {
+    getExtensions()
+  })
+
+
 
   return (
     <Page>
