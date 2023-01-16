@@ -97,26 +97,29 @@ export interface ApiWindow extends This {
   >
 }
 
-export interface CredentialSubject {
-  id: DidUri
-  origin: string
-}
+// Comment out unused Types: 
+// better to define them when needed
 
-const context = [
-  DEFAULT_VERIFIABLECREDENTIAL_CONTEXT,
-  'https://identity.foundation/.well-known/did-configuration/v1',
-]
-export interface DomainLinkageCredential
-  extends Omit<
-    VerifiableCredential,
-    '@context' | 'legitimationIds' | 'credentialSubject' | 'proof'
-  > {
-  '@context': typeof context
-  credentialSubject: CredentialSubject
-  proof: SelfSignedProof
-}
+// export interface CredentialSubject {
+//   id: DidUri
+//   origin: string
+// }
 
-export interface VerifiableDomainLinkagePresentation {
-  '@context': string
-  linked_dids: [DomainLinkageCredential]
-}
+// const context = [
+//   DEFAULT_VERIFIABLECREDENTIAL_CONTEXT,
+//   'https://identity.foundation/.well-known/did-configuration/v1',
+// ]
+// export interface DomainLinkageCredential
+//   extends Omit<
+//     VerifiableCredential,
+//     '@context' | 'legitimationIds' | 'credentialSubject' | 'proof'
+//   > {
+//   '@context': typeof context
+//   credentialSubject: CredentialSubject
+//   proof: SelfSignedProof
+// }
+
+// export interface VerifiableDomainLinkagePresentation {
+//   '@context': string
+//   linked_dids: [DomainLinkageCredential]
+// }
