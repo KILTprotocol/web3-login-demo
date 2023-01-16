@@ -1,7 +1,7 @@
 .page {
   position: absolute;
   height: 100%;
-  width: 100%;
+  width: 95%;
   padding: 20px;
   background: transparent url('../../public/background-tile.svg') no-repeat center center fixed;
   -webkit-background-size: cover;
