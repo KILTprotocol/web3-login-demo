@@ -3,6 +3,7 @@ import {
   DidUri,
   KiltAddress,
   DidResourceUri,
+  Hash,
 } from '@kiltprotocol/types'
 import { HexString } from '@polkadot/util/types'
 import { SelfSignedProof, VerifiableCredential } from '@kiltprotocol/vc-export'
@@ -100,26 +101,27 @@ export interface ApiWindow extends This {
 // Comment out unused Types: 
 // better to define them when needed
 
-// export interface CredentialSubject {
-//   id: DidUri
-//   origin: string
-// }
+export interface CredentialSubject {
+  id: DidUri
+  origin: string
+  rootHash: Hash
+}
 
-// const context = [
-//   DEFAULT_VERIFIABLECREDENTIAL_CONTEXT,
-//   'https://identity.foundation/.well-known/did-configuration/v1',
-// ]
-// export interface DomainLinkageCredential
-//   extends Omit<
-//     VerifiableCredential,
-//     '@context' | 'legitimationIds' | 'credentialSubject' | 'proof'
-//   > {
-//   '@context': typeof context
-//   credentialSubject: CredentialSubject
-//   proof: SelfSignedProof
-// }
+const context = [
+  DEFAULT_VERIFIABLECREDENTIAL_CONTEXT,
+  'https://identity.foundation/.well-known/did-configuration/v1',
+]
+export interface DomainLinkageCredential
+  extends Omit<
+    VerifiableCredential,
+    '@context' | 'legitimationIds' | 'credentialSubject' | 'proof'
+  > {
+  '@context': typeof context
+  credentialSubject: CredentialSubject
+  proof: SelfSignedProof
+}
 
-// export interface VerifiableDomainLinkagePresentation {
-//   '@context': string
-//   linked_dids: [DomainLinkageCredential]
-// }
+export interface VerifiableDomainLinkagePresentation {
+  '@context': string
+  linked_dids: [DomainLinkageCredential]
+}
