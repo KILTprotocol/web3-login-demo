@@ -1,6 +1,8 @@
 import * as Kilt from '@kiltprotocol/sdk-js';
+import { useStoreTxSignCallback } from '../backend/src/utils/callBacks';
+import { generateKeypairs } from './attester/generateKeyPairs';
 
-export async function createCompleteFullDid(
+export default async function createCompleteFullDid(
     submitterAccount: Kilt.KiltKeyringPair,
     {
         authentication,
@@ -17,24 +19,26 @@ export async function createCompleteFullDid(
 ): Promise<Kilt.DidDocument> {
     const api = Kilt.ConfigService.get('api');
 
-    const fullDidCreationTx = await Kilt.Did.getStoreTx(
-        {
-            authentication: [authentication],
-            keyAgreement: [encryption],
-            assertionMethod: [attestation],
-            capabilityDelegation: [delegation],
-            // Example service.
-            service: [
-                {
-                    id: '#my-service',
-                    type: ['service-type'],
-                    serviceEndpoint: ['https://www.example.com']
-                }
-            ]
-        },
-        submitterAccount.address,
-        signCallback
-    );
+    // const fullDidCreationTx = await Kilt.Did.getStoreTx(
+    //     {
+    //         authentication: [authentication],
+    //         keyAgreement: [encryption],
+    //         assertionMethod: [attestation],
+    //         capabilityDelegation: [delegation],
+    //         // Example service.
+    //         service: [
+    //             {
+    //                 id: '#my-dApp',
+    //                 type: ['service-type'],
+    //                 serviceEndpoint: [process.env.ORIGIN || "https://www.example.com"]
+    //             }
+    //         ]
+    //     },
+    //     submitterAccount.address,
+    //     signCallback
+    // );
+
+    const fullDidCreationTx = await useStoreTxSignCallback(submitterAccount.address);
 
     await Kilt.Blockchain.signAndSubmitTx(fullDidCreationTx, submitterAccount);
 
@@ -44,4 +48,8 @@ export async function createCompleteFullDid(
         Kilt.Did.toChain(fullDid)
     );
     return Kilt.Did.linkedInfoFromChain(encodedUpdatedDidDetails).document;
+}
+
+export function createCompleFullDIDfromMnemonic(mnemonic: string) {
+
 }
