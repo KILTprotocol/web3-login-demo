@@ -11,12 +11,12 @@
     "build:client": "cd ./frontend && yarn build",
     "build:server": "cd ./backend && npx tsc",
     "build": "concurrently yarn:build:*",
+    "build:well-known" : "ts-node ./scripts/genesiswellKnownDIDConfig.ts",
     "start:client": "cd ./frontend && yarn start",
     "start:server": "cd ./backend && nodemon build/server.js",
     "start": "concurrently yarn:start:*",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "create-well-know-DID-config": "ts-node ./scripts/wellKnownDIDConfigGenesis.ts"
+    "eject": "react-scripts eject"
   },
   "devDependencies": {
     "concurrently": "^7.5.0",

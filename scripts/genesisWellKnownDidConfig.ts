@@ -1,9 +1,10 @@
 import * as Kilt from '@kiltprotocol/sdk-js';
 import fs from 'fs';
-import { generateKeypairs } from './attester/generateKeyPairs';
+import path from 'path';
+import { generateKeypairs } from '../backend/src/utils/attester/generateKeyPairs';
 import { createCredential, createPresentation, selfAttestCredential, getDomainLinkagePresentation } from './wellKnownDIDConfiguration';
 import dotenv from 'dotenv';
-import { generateAccount } from './attester/generateAccount';
+import { generateAccount } from '../backend/src/utils/attester/generateAccount';
 
 async function main() {
 
@@ -66,7 +67,7 @@ async function main() {
     const assertionMethodKeyId = didResolveResult.document.assertionMethod![0].id;
 
 
-    // to declare the SingCallBacks is a bit tricky. You either have to speficy the type of every return variable, or of the whole return.   
+    // to declare the SignCallBacks is a bit tricky. You either have to speficy the type of every return variable, or of the whole return.   
 
     // const presentationSignCallback = async ({ data }: any) => ({
     //     signature: assertionMethodKey.sign(data) as Uint8Array,
@@ -94,9 +95,13 @@ async function main() {
     // Fourth Step: Host the presentation in your web App
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    fs.writeFile('well-known-did-configuration.json', JSON.stringify(wellKnownDidconfig, null, 2), (err) => {
+    // __dirname is the folder where this file is; here 'scripts'
+
+    const parentDirectory = path.dirname(__dirname);//  it roughly means “find me the parent path to the current path.”
+
+    fs.writeFile(`${parentDirectory}/frontend/public/.well-known/did-configuration.json`, JSON.stringify(wellKnownDidconfig, null, 2), (err) => {
         if (err) throw err;
-        console.log('Data written to file');
+        console.log('Data written to file on the Front-End.');
     });
 
 

@@ -1,6 +1,6 @@
 import * as Kilt from '@kiltprotocol/sdk-js';
 import { useStoreTxSignCallback } from '../backend/src/utils/callBacks';
-import { generateKeypairs } from './attester/generateKeyPairs';
+import { generateKeypairs } from '../backend/src/utils/attester/generateKeyPairs';
 
 export default async function createCompleteFullDid(
     submitterAccount: Kilt.KiltKeyringPair,
@@ -15,7 +15,7 @@ export default async function createCompleteFullDid(
         attestation: Kilt.NewDidVerificationKey;
         delegation: Kilt.NewDidVerificationKey;
     },
-    signCallback: Kilt.SignExtrinsicCallback
+    signCallback?: Kilt.SignExtrinsicCallback
 ): Promise<Kilt.DidDocument> {
     const api = Kilt.ConfigService.get('api');
 

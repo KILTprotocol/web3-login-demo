@@ -1,5 +1,5 @@
 import * as Kilt from '@kiltprotocol/sdk-js';
-import { generateKeypairs } from './attester/generateKeyPairs';
+import { generateKeypairs } from '../backend/src/utils/attester/generateKeyPairs';
 import createCompleteFullDid from './createCompleteFullDid';
 
 // In order to have access to my private keys, from my Seed, I need to regenerate my Full DID with all Keypairs and the same derivation path as the first time. This time not uploading it to the blockchain. 
@@ -17,7 +17,7 @@ async function main() {
     //Kilt.Did.
     const myKeys = generateKeypairs(dAppMnemonic);
 
-    // Try to decleare the object explixitly
+    // Try to decleare the object explicitly
     // const did: Kilt.DidDocument = {
     //     uri: Kilt.Did.getFullDidUriFromKey(myKeys.authentication),
     //     authentication: [myKeys.authentication],
