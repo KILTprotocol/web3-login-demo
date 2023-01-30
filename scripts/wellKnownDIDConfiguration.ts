@@ -1,18 +1,3 @@
-// import {
-//     Did,
-//     CType,
-//     Credential,
-//     Claim,
-//     SignCallback,
-//     DidUri,
-//     Utils,
-//     ICredentialPresentation,
-//     DidResourceUri,
-//     connect,
-//     ICredential,
-//     ConfigService,
-//     Attestation,
-// } from '@kiltprotocol/sdk-js';
 import * as Kilt from '@kiltprotocol/sdk-js';
 import {
     CredentialSubject,
@@ -300,29 +285,3 @@ export async function verifyDidConfigPresentation(
         });
     });
 }
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// //Andres:
-// //Try to create the well-know Did Config
-
-
-// const domainURI = process.env.ATTESTER_DID as DidUri || `did:kilt:4${'noURIEstablished'}` as DidUri;
-// const domainOrigin = process.env.ORIGIN || 'no origin assiged';
-
-// function signCallback: async ({ data }) => ({
-//     signature: assertionMethodKey.sign(data),
-//     keyType: assertionMethodKey.type,
-//     keyUri: `${didUri}${assertionMethodKeyId}`
-// });
-
-
-
-// const myDomainsCredential = await createCredential(
-//     signCallback,
-//     domainOrigin,
-//     domainURI
-// );
-
-// const myDomainLinkagePresentation = await getDomainLinkagePresentation(myDomainsCredential);
-
-// console.log(myDomainLinkagePresentation);

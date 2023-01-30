@@ -16,6 +16,7 @@ async function main() {
     const dAppMnemonic = process.env.ATTESTER_DID_MNEMONIC ?? 'failure';
     const fundsMnemonic = process.env.ATTESTER_ACCOUNT_MNEMONIC ?? 'no Sugar Daddy';
 
+    console.log("The enviorment variales in use are:");
     console.log("dAppURI", dAppURI);
     console.log("domainOrigin", domainOrigin);
     console.log("dAppMnemonic", dAppMnemonic);
