@@ -6,16 +6,28 @@ import {
 } from '../frontend/src/utils/types';
 import * as validUrl from 'valid-url';
 
-import { SelfSignedProof } from '@kiltprotocol/vc-export';
+
+import { SelfSignedProof, constants } from '@kiltprotocol/vc-export';
 import { hexToU8a } from '@polkadot/util';
 
-export const DEFAULT_VERIFIABLECREDENTIAL_TYPE = 'VerifiableCredential';
-export const KILT_VERIFIABLECREDENTIAL_TYPE = 'KiltCredential2020';
-export const KILT_SELF_SIGNED_PROOF_TYPE = 'KILTSelfSigned2020';
-export const DID_CONFIGURATION_CONTEXT =
-    'https://identity.foundation/.well-known/did-configuration/v1';
-export const DID_VC_CONTEXT = 'https://www.w3.org/2018/credentials/v1';
-export const KILT_CREDENTIAL_IRI_PREFIX = 'kilt:cred:';
+// This constants are needed to create a credential and/or presentation. 
+// They are standard, an so it's better to fetch them from the @kiltprotocol/vc-export package, to keep them up to date.  
+// On the right it is comment the values used when this repository was made. They can change in the future (maybe your past). 
+export const DEFAULT_VERIFIABLECREDENTIAL_TYPE = constants.DEFAULT_VERIFIABLECREDENTIAL_TYPE; // 'VerifiableCredential';
+export const KILT_VERIFIABLECREDENTIAL_TYPE = constants.KILT_VERIFIABLECREDENTIAL_TYPE; // 'KiltCredential2020';
+export const KILT_SELF_SIGNED_PROOF_TYPE = constants.KILT_SELF_SIGNED_PROOF_TYPE; // 'KILTSelfSigned2020';
+export const DID_CONFIGURATION_CONTEXT = 'https://identity.foundation/.well-known/did-configuration/v1'; // this constant is not yet in the kilt-sdk
+export const DID_VC_CONTEXT = constants.DEFAULT_VERIFIABLECREDENTIAL_CONTEXT; // 'https://www.w3.org/2018/credentials/v1';
+export const KILT_CREDENTIAL_IRI_PREFIX = constants.KILT_CREDENTIAL_IRI_PREFIX;// 'kilt:cred:';
+
+// Quick check of the value of the default constants:
+// console.log("DEFAULT_VERIFIABLECREDENTIAL_TYPE: ", DEFAULT_VERIFIABLECREDENTIAL_TYPE);
+// console.log("KILT_VERIFIABLECREDENTIAL_TYPE: ", KILT_VERIFIABLECREDENTIAL_TYPE);
+// console.log("KILT_SELF_SIGNED_PROOF_TYPE: ", KILT_SELF_SIGNED_PROOF_TYPE);
+// console.log("DID_CONFIGURATION_CONTEXT: ", DID_CONFIGURATION_CONTEXT);
+// console.log("DID_VC_CONTEXT: ", DID_VC_CONTEXT);
+// console.log("KILT_CREDENTIAL_IRI_PREFIX: ", KILT_CREDENTIAL_IRI_PREFIX);
+
 
 export const ctypeDomainLinkage = Kilt.CType.fromProperties(
     'Domain Linkage Credential',
@@ -23,6 +35,10 @@ export const ctypeDomainLinkage = Kilt.CType.fromProperties(
         origin: {
             type: 'string',
         },
+        id: {
+            type: 'string',
+        },
+
     }
 );
 
@@ -38,6 +54,11 @@ export async function createCredential(
 
     const { document } = fullDid;
 
+    if (document.uri !== didUri) {
+        throw new Error('Trouble resolving the DID-URI');
+
+    }
+
     if (!validUrl.isUri(origin)) {
         throw new Error('The origin is not a valid url');
     }
@@ -49,11 +70,13 @@ export async function createCredential(
     const claim = Kilt.Claim.fromCTypeAndClaimContents(
         ctypeDomainLinkage,
         domainClaimContents,
-        document.uri
+        didUri
     );
 
     const credential = Kilt.Credential.fromClaim(claim);
 
+    // In order to later attest this credential, the DID needs an assertion key.
+    // We assuere that this is the case here:
     const assertionKey = document.assertionMethod?.[0];
 
     if (!assertionKey) {
@@ -78,59 +101,65 @@ export async function getDomainLinkagePresentation(
         Date.now() + 1000 * 60 * 60 * 24 * 365 * 5
     ).toISOString()
 ): Promise<VerifiableDomainLinkagePresentation> {
-    const claimContents = credentialPresentation.claim.contents;
-    if (!credentialPresentation.claim.owner && !claimContents.origin) {
-        throw new Error('Claim do not content an owner or origin');
-    }
-
-    Kilt.Did.validateUri(credentialPresentation.claim.owner);
-
-    const didUri = credentialPresentation.claim.owner;
-
-    let origin: string;
-    if (typeof claimContents.origin !== 'string') {
-        throw new Error('claim contents origin is not a string');
-    } else if (!validUrl.isUri(claimContents.origin)) {
-        throw new Error('The claim contents origin is not a valid url');
-    } else {
-        origin = claimContents.origin;
-    }
-
-    const credentialSubject = {
-        id: didUri,
-        origin,
-        rootHash: credentialPresentation.rootHash,
-    };
-
-    // assuere that the credential is self attested 
-    const api = Kilt.ConfigService.get('api');
-    const encodedAttestationDetails = await api.query.attestation.attestations(
-        credentialPresentation.rootHash
-    );
-    const issuer = Kilt.Attestation.fromChain(
-        encodedAttestationDetails,
-        credentialPresentation.claim.cTypeHash
-    ).owner;
-
-    if (issuer !== didUri) {
-        throw new Error('the well-known-did should be self attested.');
-    }
-
+    const { claim, rootHash: credentialRootHash, claimerSignature } = credentialPresentation;
+    const { owner: issuerDidUri, contents: claimContents, cTypeHash } = claim; // The owner of a claim is the issuer of it. It´s identified with its DID-URI. 
+    const { origin: domainsOrigin } = claimContents;
     const issuanceDate = new Date().toISOString();
+    const api = Kilt.ConfigService.get('api');
 
-    const { claimerSignature, rootHash } = credentialPresentation;
-
+    // check if the claim is up for the task
+    if (!issuerDidUri) {
+        throw new Error('Claim does not have an owner');
+    }
+    if (!domainsOrigin) {
+        throw new Error('Claim do not content an origin');
+    }
     if (!claimerSignature) {
         throw new Error('Claimer signature is required.');
     }
 
-    const id = rootHash;
+    // validateUri  validate if string is a valid DID Uri
+    Kilt.Did.validateUri(issuerDidUri);
+
+    // Make sure the origin is valid: 
+    if (typeof domainsOrigin !== 'string') {
+        throw new Error('claim contents origin is not a string');
+    }
+    if (!validUrl.isUri(domainsOrigin)) {
+        throw new Error('The claim contents origin is not a valid url');
+    }
+
+    // craft credential Subject
+    const credentialSubject = {
+        id: issuerDidUri,
+        origin: domainsOrigin,
+        rootHash: credentialRootHash,
+    } as CredentialSubject;
+
+    // assuere that the credential is self attested 
+    const encodedAttestationDetails = await api.query.attestation.attestations(
+        credentialRootHash
+    );
+    const attestation = Kilt.Attestation.fromChain(
+        encodedAttestationDetails,
+        cTypeHash
+    );
+
+    //the attestation owner is the issuer of the attestation
+    if (attestation.owner !== issuerDidUri) {
+        throw new Error('the well-known-did should be self attested.');
+    }
+
+    // preparing the input for the Did.verifySignature function. To make it more readeble.
+    // the signature and the message needs to be a Unit8 Array
+    const encodedClaimerSignature = hexToU8a(claimerSignature.signature);
+    const messageU8Array = Kilt.Utils.Crypto.coToUInt8(credentialRootHash);
 
     await Kilt.Did.verifyDidSignature({
         expectedVerificationMethod: 'assertionMethod',
-        signature: hexToU8a(claimerSignature.signature),
+        signature: encodedClaimerSignature,
         keyUri: claimerSignature.keyUri,
-        message: Kilt.Utils.Crypto.coToUInt8(rootHash),
+        message: messageU8Array,
     });
 
     // add self-signed proof
@@ -147,11 +176,11 @@ export async function getDomainLinkagePresentation(
         linked_dids: [
             {
                 '@context': [
-                    'https://www.w3.org/2018/credentials/v1',
+                    DID_VC_CONTEXT,
                     DID_CONFIGURATION_CONTEXT,
                 ],
-                id,
-                issuer: didUri,
+                id: credentialRootHash,
+                issuer: issuerDidUri,
                 issuanceDate,
                 expirationDate,
                 type: [
@@ -200,8 +229,8 @@ export async function selfAttestCredential(credential: Kilt.ICredential, attesta
 
     const attestationTx = api.tx.attestation.add(claimHash, cTypeHash, null);
 
-    // Step 3: authorizing the transaction with your DID
-    // We authorize the call using the attestation key of the Dapps DID.
+    // Step 3: authorizing the transaction with the dApps DID
+    // We authorize the call using the attestation key of the dApps DID.
 
     const assertionMethodKey = attestationKey; //just for you to see the two synonims.
 
@@ -222,7 +251,6 @@ export async function selfAttestCredential(credential: Kilt.ICredential, attesta
             payerAccount.address
         );
     } catch (error) {
-        console.log("Failed to fetch my dApp's DID-Document");
         throw new Error("Could not sing the self-attestation of the credential");
 
     }
@@ -231,7 +259,7 @@ export async function selfAttestCredential(credential: Kilt.ICredential, attesta
     const result = await Kilt.Blockchain.signAndSubmitTx(submitTx, payerAccount);
 
     if (result.isError) {
-        console.log('Attestation failed');
+        throw new Error('Attestation failed');
     } else {
         console.log('Attestation successful');
     }
@@ -241,14 +269,14 @@ export async function selfAttestCredential(credential: Kilt.ICredential, attesta
 
 export async function verifyDidConfigPresentation(
     didUri: Kilt.DidUri,
-    domainLinkageCredential: VerifiableDomainLinkagePresentation,
+    domainLinkageCredentialPresentation: VerifiableDomainLinkagePresentation,
     origin: string
 ): Promise<void> {
     // Verification steps outlined in Well Known DID Configuration
     // https://identity.foundation/.well-known/resources/did-configuration/#did-configuration-resource-verification
 
-    await asyncSome(domainLinkageCredential.linked_dids, async (credential) => {
-        const { issuer, credentialSubject, id } = credential;
+    await asyncSome(domainLinkageCredentialPresentation.linked_dids, async (credential) => {
+        const { issuer, credentialSubject, id: credentialRootHash, proof } = credential;
 
         const matchesSessionDid = didUri === credentialSubject.id;
         if (!matchesSessionDid) throw new Error('session did doesnt match');
@@ -273,15 +301,16 @@ export async function verifyDidConfigPresentation(
             throw new Error('No DID attestation key on-chain');
         }
 
-        // Stripping off the prefix to get the root hash
-        const rootHash = id;
-        //const rootHash = fromCredentialIRI(id); //old
+        // preparing the input for the Did.verifySignature function. To make it more readeble.
+        // the signature and the message needs to be a Unit8 Array
+        const encodedClaimerSignature = hexToU8a(proof.signature);
+        const messageU8Array = Kilt.Utils.Crypto.coToUInt8(credentialRootHash);
 
         await Kilt.Did.verifyDidSignature({
             expectedVerificationMethod: 'assertionMethod',
-            signature: hexToU8a(credential.proof.signature),
-            keyUri: credential.proof.verificationMethod as Kilt.DidResourceUri,
-            message: Kilt.Utils.Crypto.coToUInt8(rootHash),
+            signature: encodedClaimerSignature,
+            keyUri: proof.verificationMethod as Kilt.DidResourceUri,
+            message: messageU8Array,
         });
     });
 }

@@ -1,10 +1,10 @@
 import * as Kilt from '@kiltprotocol/sdk-js';
 import fs from 'fs';
 import path from 'path';
-import { generateKeypairs } from '../backend/src/utils/attester/generateKeyPairs';
+import generateKeypairs from '../backend/src/utils/attester/generateKeyPairs';
 import { createCredential, createPresentation, selfAttestCredential, getDomainLinkagePresentation } from './wellKnownDIDConfiguration';
 import dotenv from 'dotenv';
-import { generateAccount } from '../backend/src/utils/attester/generateAccount';
+import generateAccount from '../backend/src/utils/attester/generateAccount';
 
 async function main() {
 
@@ -16,7 +16,7 @@ async function main() {
     const dAppMnemonic = process.env.ATTESTER_DID_MNEMONIC ?? 'failure';
     const fundsMnemonic = process.env.ATTESTER_ACCOUNT_MNEMONIC ?? 'no Sugar Daddy';
 
-    console.log("The enviorment variales in use are:");
+    console.log("The enviorment variables in use are:");
     console.log("dAppURI", dAppURI);
     console.log("domainOrigin", domainOrigin);
     console.log("dAppMnemonic", dAppMnemonic);
@@ -63,6 +63,8 @@ async function main() {
     // one AssertionMethodKey and its id is stored on the blockchain.
     const didResolveResult = await Kilt.Did.resolve(dAppURI);
     if (typeof didResolveResult?.document === 'undefined') {
+        console.log("dAppURI", dAppURI);
+        console.log("didResolveResult", didResolveResult);
         throw new Error('DID must be resolvable (i.e. not deleted)');
     }
     const assertionMethodKeyId = didResolveResult.document.assertionMethod![0].id;

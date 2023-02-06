@@ -1,0 +1,31 @@
+{
+  "@context": "https://identity.foundation/.well-known/did-configuration/v1",
+  "linked_dids": [
+    {
+      "@context": [
+        "https://www.w3.org/2018/credentials/v1",
+        "https://identity.foundation/.well-known/did-configuration/v1"
+      ],
+      "id": "0xbe5e240b90669c103cc0cfb7ce018b30e90e8756a60337f1a83ffdc2ca9dc443",
+      "issuer": "did:kilt:4oWrtvZA1tUYSWJeqMXoS7CH3pmbcfifuizTTRnUh7YC21d2",
+      "issuanceDate": "2023-02-06T16:08:41.838Z",
+      "expirationDate": "2028-02-05T16:08:41.838Z",
+      "type": [
+        "VerifiableCredential",
+        "DomainLinkageCredential",
+        "KiltCredential2020"
+      ],
+      "credentialSubject": {
+        "id": "did:kilt:4oWrtvZA1tUYSWJeqMXoS7CH3pmbcfifuizTTRnUh7YC21d2",
+        "origin": "http://localhost:8080/",
+        "rootHash": "0xbe5e240b90669c103cc0cfb7ce018b30e90e8756a60337f1a83ffdc2ca9dc443"
+      },
+      "proof": {
+        "type": "KILTSelfSigned2020",
+        "proofPurpose": "assertionMethod",
+        "verificationMethod": "did:kilt:4oWrtvZA1tUYSWJeqMXoS7CH3pmbcfifuizTTRnUh7YC21d2#0x8ba599b67e4148f040d4b5ff6073fa6a7ae8e343075fdd98c01987015f726a48",
+        "signature": "0x50652f67d177df75b9bec46c1dd71f6077b729fa89f048d00465277a6ea0da53007a5f790ffda39e9666ff48953c23bb105274889156c9ef0087310b13cbfe83"
+      }
+    }
+  ]
+}

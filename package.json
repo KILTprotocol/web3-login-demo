@@ -11,7 +11,7 @@
     "build:client": "cd ./frontend && yarn build",
     "build:server": "cd ./backend && npx tsc",
     "build": "concurrently yarn:build:*",
-    "build:well-known" : "ts-node ./scripts/genesiswellKnownDIDConfig.ts",
+    "build:well-known": "ts-node ./scripts/genesisWellKnownDidConfig.ts",
     "start:client": "cd ./frontend && yarn start",
     "start:server": "cd ./backend && nodemon build/server.js",
     "start": "concurrently yarn:start:*",
@@ -29,6 +29,7 @@
     "@types/valid-url": "^1.0.3",
     "dotenv": "^16.0.3",
     "eslint": "^8.31.0",
+    "polkadot": "^1.0.0",
     "ts-node": "^10.9.1",
     "valid-url": "^1.0.9"
   }

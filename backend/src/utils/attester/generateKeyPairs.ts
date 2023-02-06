@@ -1,8 +1,8 @@
-import { mnemonicGenerate, mnemonicToMiniSecret } from '@polkadot/util-crypto';
+import { mnemonicToMiniSecret } from '@polkadot/util-crypto';
 
 import * as Kilt from '@kiltprotocol/sdk-js';
 
-export function generateKeypairs(mnemonic = mnemonicGenerate()) {
+export default function generateKeypairs(mnemonic: string) {
 
     // Currently, the default the keytype used by the Kilt-team is "sr25519"
     const authentication = Kilt.Utils.Crypto.makeKeypairFromSeed(

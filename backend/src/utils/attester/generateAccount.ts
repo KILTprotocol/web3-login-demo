@@ -4,9 +4,10 @@ import { mnemonicGenerate, mnemonicToMiniSecret } from '@polkadot/util-crypto';
 
 import * as Kilt from '@kiltprotocol/sdk-js';
 
-export function generateAccount(mnemonic: string): Kilt.KiltKeyringPair {
+export default function generateAccount(mnemonic: string): Kilt.KiltKeyringPair {
 
-    //console.log("mnemonic from generate Account", mnemonic);
+    // console.log("mnemonic from generate Account", mnemonic);
+
     // Currently, the default the keytype used by the Kilt-team is "sr25519"
     const mnemonicToU8A = mnemonicToMiniSecret(mnemonic); //transform to a U8 Array. 
     const account = Kilt.Utils.Crypto.makeKeypairFromSeed(
@@ -16,6 +17,7 @@ export function generateAccount(mnemonic: string): Kilt.KiltKeyringPair {
     return account;
 }
 
+// Move this later to a .env- genesis script:
 // Don't execute if this is imported by another file.
 if (require.main === module) {
     ; (async () => {
