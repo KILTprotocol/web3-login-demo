@@ -7,6 +7,13 @@ import User from './components/User'
 import { getExtensions } from './utils/getExtension'
 
 export default function Home(): JSX.Element {
+
+
+  async function logout() {
+    const result = await fetch('/api/logout')
+    console.log(result.json(), 'You have been logged out')
+  }
+
   async function testApi() {
     const result = await fetch('/api')
     const message = await result.json()
@@ -30,7 +37,7 @@ export default function Home(): JSX.Element {
         <Card>
           <Button onClick={testApi}>GO TO SECRET PAGE</Button>
           <Button onClick={undefined}>GET SECRET MESSAGE</Button>
-          <Button onClick={undefined}>CLEAR COOKIES</Button>
+          <Button onClick={logout}>LOGOUT</Button>
         </Card>
       </Page.Content>
     </Page>
