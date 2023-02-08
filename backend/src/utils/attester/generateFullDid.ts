@@ -1,10 +1,6 @@
-
 import * as Kilt from '@kiltprotocol/sdk-js';
-
-import generateAccount from './generateAccount';
 import generateKeypairs from './generateKeyPairs';
 import { getApi } from '../connection';
-import { queryFullDid } from '../utils';
 
 export default async function generateFullDid(
     submitterAccount: Kilt.KiltKeyringPair,
@@ -15,7 +11,7 @@ export default async function generateFullDid(
     await getApi();
     const didMnemonic = mnemonic;
     // console.log("Mnemonic to generate this DID", didMnemonic);
-    const { authentication, encryption, attestation, delegation } =
+    const { authentication, keyAgreement, assertionMethod, capabilityDelegation } =
         generateKeypairs(didMnemonic);
 
     // Before submitting the transaction, it is worth it to assure that the DID does not already exist. 
@@ -40,9 +36,9 @@ export default async function generateFullDid(
     const fullDidCreationTx = await Kilt.Did.getStoreTx(
         {
             authentication: [authentication],
-            keyAgreement: [encryption],
-            assertionMethod: [attestation],
-            capabilityDelegation: [delegation]
+            keyAgreement: [keyAgreement],
+            assertionMethod: [assertionMethod],
+            capabilityDelegation: [capabilityDelegation]
         },
         submitterAccount.address,
         async ({ data }) => ({
@@ -52,7 +48,7 @@ export default async function generateFullDid(
     );
 
     // This is what register the DID on the chain. This costs, regardless of the result. 
-    const submitableresult = await Kilt.Blockchain.signAndSubmitTx(fullDidCreationTx, submitterAccount);
+    await Kilt.Blockchain.signAndSubmitTx(fullDidCreationTx, submitterAccount);
 
     const didUri = Kilt.Did.getFullDidUriFromKey(authentication);
     const resolved = await Kilt.Did.resolve(didUri);

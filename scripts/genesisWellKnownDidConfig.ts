@@ -49,7 +49,7 @@ async function main() {
     const dAppsDidKeys = generateKeypairs(dAppMnemonic);
     const dappAccount = generateAccount(fundsMnemonic);
 
-    await selfAttestCredential(domainCredential, dAppsDidKeys.attestation, dappAccount);
+    await selfAttestCredential(domainCredential, dAppsDidKeys.assertionMethod, dappAccount);
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -79,9 +79,9 @@ async function main() {
     // });
 
     const presentationSignCallback = async ({ data }: any) => ({
-        signature: dAppsDidKeys.attestation.sign(data),
+        signature: dAppsDidKeys.assertionMethod.sign(data),
         keyUri: `${dAppURI}${assertionMethodKeyId}`,
-        keyType: dAppsDidKeys.attestation.type
+        keyType: dAppsDidKeys.assertionMethod.type
     }) as Kilt.SignResponseData;
 
     const domainCredentialPresentation = await createPresentation(
