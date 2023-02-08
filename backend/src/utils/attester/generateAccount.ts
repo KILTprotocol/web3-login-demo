@@ -16,25 +16,3 @@ export default function generateAccount(mnemonic: string): Kilt.KiltKeyringPair 
 
     return account;
 }
-
-// Move this later to a .env- genesis script:
-// Don't execute if this is imported by another file.
-if (require.main === module) {
-    ; (async () => {
-        envConfig();
-
-        try {
-            await Kilt.init();
-
-            const mnemonic = mnemonicGenerate();
-
-            const account = generateAccount(mnemonic);
-            console.log('save to mnemonic and address to .env to continue!\n\n');
-            console.log(`ATTESTER_ACCOUNT_MNEMONIC="${mnemonic}"`);
-            console.log(`ATTESTER_ACCOUNT_ADDRESS="${account.address}"\n\n`);
-        } catch (e) {
-            console.log('Error while setting up attester account');
-            throw e;
-        }
-    })();
-}
