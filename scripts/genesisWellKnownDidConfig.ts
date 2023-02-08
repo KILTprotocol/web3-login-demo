@@ -5,16 +5,17 @@ import generateKeypairs from '../backend/src/utils/attester/generateKeyPairs';
 import { createCredential, createPresentation, selfAttestCredential, getDomainLinkagePresentation } from './wellKnownDIDConfiguration';
 import dotenv from 'dotenv';
 import generateAccount from '../backend/src/utils/attester/generateAccount';
+import { getApi } from '../backend/src/utils/connection';
 
 async function main() {
 
     // Fetch variables from .env file:
     dotenv.config();
 
-    const dAppURI = process.env.ATTESTER_DID_URI as Kilt.DidUri ?? `did:kilt:4${'noURIEstablished'}` as Kilt.DidUri; // maybe createCompleFullDID(an account with money)
+    const dAppURI = process.env.ATTESTER_DID_URI as Kilt.DidUri ?? `did:kilt:4${'noURIEstablished'}` as Kilt.DidUri;
     const domainOrigin = process.env.ORIGIN ?? 'no origin assiged';
-    const dAppMnemonic = process.env.ATTESTER_DID_MNEMONIC ?? 'failure';
-    const fundsMnemonic = process.env.ATTESTER_ACCOUNT_MNEMONIC ?? 'no Sugar Daddy';
+    const dAppMnemonic = process.env.ATTESTER_DID_MNEMONIC ?? 'your dApp needs an Identity ';
+    const fundsMnemonic = process.env.ATTESTER_ACCOUNT_MNEMONIC ?? 'your dApp needs an Sponsor ';
 
     console.log("The enviorment variables in use are:");
     console.log("dAppURI", dAppURI);
@@ -29,7 +30,7 @@ async function main() {
         await Kilt.connect(webSocket);
 
     } else {
-        throw new Error("You need to define on the .env the WebSocket you want to connect with.");
+        throw new Error("You need to define, on the .env, the WebSocket you want to connect with.");
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -42,6 +42,13 @@ export const ctypeDomainLinkage = Kilt.CType.fromProperties(
     }
 );
 
+/**
+ *  Creates credential for just one kind of Claim-Type: ctypeDomainLinkage. 
+ * 
+ * @param origin URL of the dApp. Domain of your site,
+ * @param didUri URI of the dApp. Kilt Decentralized Identity string. 
+ * @returns Credetial to present. 
+ */
 export async function createCredential(
     origin: string,
     didUri: Kilt.DidUri
@@ -66,6 +73,14 @@ export async function createCredential(
     const domainClaimContents = {
         origin,
     };
+
+    // Make sure that the cType we are using is the right one.
+    // Needed, because we are crafting it and not fetching it from the chain.
+    // In order for the Extensions to recognize your dApp, it has to use a standard, broad used cType. 
+    // For well-known-did-configurations the cType we use has the following hash id:
+    // "$id": "kilt:ctype:0xc22f85da01c18c1b48acf9556ac7167247ce253cc10373ea77f50fc91521d478"
+    const digitalFootprintOfCType = "kilt:ctype:0xc22f85da01c18c1b48acf9556ac7167247ce253cc10373ea77f50fc91521d478";
+    if (ctypeDomainLinkage.$id !== digitalFootprintOfCType) throw new Error("This is not the needed cType to create a well-known-did-configuration.");
 
     const claim = Kilt.Claim.fromCTypeAndClaimContents(
         ctypeDomainLinkage,
