@@ -1,33 +1,40 @@
-import { config as envConfig } from 'dotenv';
-
-import { mnemonicGenerate } from '@polkadot/util-crypto';
 
 import * as Kilt from '@kiltprotocol/sdk-js';
 
 import generateAccount from './generateAccount';
 import generateKeypairs from './generateKeyPairs';
+import { getApi } from '../connection';
+import { queryFullDid } from '../utils';
 
-export default async function createFullDid(
+export default async function generateFullDid(
     submitterAccount: Kilt.KiltKeyringPair,
     mnemonic: string
 ): Promise<
     Kilt.DidDocument
 > {
+    await getApi();
     const didMnemonic = mnemonic;
     // console.log("Mnemonic to generate this DID", didMnemonic);
     const { authentication, encryption, attestation, delegation } =
         generateKeypairs(didMnemonic);
 
-    // Before submitting the transaction, it is worth it to assure that the did does not already exist. 
-    // If the did aleady exist, the transaction will fail, but it will still costs the fee. Better to avoid this.
-    try {
-        const desiredDidUri = Kilt.Did.getFullDidUriFromKey(authentication);
-        Kilt.Did.resolve(desiredDidUri);
-    } catch (error) {
-        throw new Error("this DID is already registered on chain");
+    // Before submitting the transaction, it is worth it to assure that the DID does not already exist. 
+    // If the DID aleady exist, the transaction will fail, but it will still costs the fee. Better to avoid this.
 
+    // check if DID already exists: 
+    const desiredDidUri = Kilt.Did.getFullDidUriFromKey(authentication);
+    const oldDidResolved = await Kilt.Did.resolve(desiredDidUri);
+    if (oldDidResolved) {
+        console.log("this DID is already registered on chain");
+        const deactivated: boolean = oldDidResolved.metadata.deactivated; // true if it was deleted
+        const oldDidDocument = oldDidResolved.document;
 
+        if (deactivated) throw new Error("This DID was deleted/deactivated and cannot be created again.");
+        if (!oldDidDocument) throw new Error("DID resolved, but document undefine. This should be impossible.");
+
+        return oldDidDocument;
     }
+
 
     // Get tx that will create the DID on chain and DID-URI that can be used to resolve the DID Document.
     const fullDidCreationTx = await Kilt.Did.getStoreTx(
@@ -44,7 +51,8 @@ export default async function createFullDid(
         })
     );
 
-    await Kilt.Blockchain.signAndSubmitTx(fullDidCreationTx, submitterAccount);
+    // This is what register the DID on the chain. This costs, regardless of the result. 
+    const submitableresult = await Kilt.Blockchain.signAndSubmitTx(fullDidCreationTx, submitterAccount);
 
     const didUri = Kilt.Did.getFullDidUriFromKey(authentication);
     const resolved = await Kilt.Did.resolve(didUri);
@@ -54,14 +62,14 @@ export default async function createFullDid(
     const { document: didDocument } = resolved;
 
 
-    // Alternative without the Did.resolve function
+    // Alternative without the Did.resolve method:
     // const api = Kilt.ConfigService.get('api');
     // const encodedFullDid = await api.call.did.query(Kilt.Did.toChain(didUri));
     // const { didDocument } = Kilt.Did.linkedInfoFromChain(encodedFullDid);
 
 
     if (!didDocument) {
-        throw new Error('Full DID was not successfully created.');
+        throw new Error('Full DID was not successfully fetched.');
     }
 
     return didDocument;

@@ -12,6 +12,7 @@ package_lock.json
 # production
 build
 dist
+.well-known/
 
 # misc
 .DS_Store
