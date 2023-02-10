@@ -11,10 +11,10 @@ async function main() {
     // Fetch variables from .env file:
     dotenv.config();
 
-    const dAppURI = process.env.ATTESTER_DID_URI as Kilt.DidUri ?? `did:kilt:4${'noURIEstablished'}` as Kilt.DidUri;
+    const dAppURI = process.env.APP_DID_URI as Kilt.DidUri ?? `did:kilt:4${'noURIEstablished'}` as Kilt.DidUri;
     const domainOrigin = process.env.ORIGIN ?? 'no origin assiged';
-    const dAppMnemonic = process.env.ATTESTER_DID_MNEMONIC ?? 'your dApp needs an Identity ';
-    const fundsMnemonic = process.env.ATTESTER_ACCOUNT_MNEMONIC ?? 'your dApp needs an Sponsor ';
+    const dAppMnemonic = process.env.DAPP_DID_MNEMONIC ?? 'your dApp needs an Identity ';
+    const fundsMnemonic = process.env.DAPP_ACCOUNT_MNEMONIC ?? 'your dApp needs an Sponsor ';
 
     console.log("The enviorment variables in use are:");
     console.log("dAppURI", dAppURI);

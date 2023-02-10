@@ -9,6 +9,7 @@ import * as validUrl from 'valid-url';
 
 import { SelfSignedProof, constants } from '@kiltprotocol/vc-export';
 import { hexToU8a } from '@polkadot/util';
+import { getApi } from '../backend/src/utils/connection';
 
 // This constants are needed to create a credential and/or presentation. 
 // They are standard, an so it's better to fetch them from the @kiltprotocol/vc-export package, to keep them up to date.  

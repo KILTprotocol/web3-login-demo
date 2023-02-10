@@ -1,6 +1,6 @@
 import * as Kilt from "@kiltprotocol/sdk-js";
-import { cryptoWaitReady } from "@polkadot/util-crypto";
 import { ApiPromise } from '@polkadot/api';
+import { cryptoWaitReady } from '@polkadot/util-crypto';
 
 /**
  * Makes sure you only connect once to the API of the Blockchain. If you are connected, return it. 
@@ -8,14 +8,16 @@ import { ApiPromise } from '@polkadot/api';
  * 
  * @returns active ApiPromise
  */
-export async function getApi(): Promise<ApiPromise> {
-    await cryptoWaitReady();
+export async function getApi() {
     // If the API is already set up, return it
+    //await cryptoWaitReady();
+
     if (Kilt.ConfigService.isSet('api')) return Kilt.ConfigService.get('api');
 
     // If it is not, connect to it using the Web-Socket Address from the enviorment variable:
     if (!process.env.WSS_ADDRESS) {
         throw new Error("please, define a value for WSS_ADDRESS on .env-file to use this function");
     }
-    return Kilt.connect(process.env.WSS_ADDRESS);
+    await Kilt.connect(process.env.WSS_ADDRESS); // internally it calls cryptoWaitReady()
+    return Kilt.ConfigService.get('api');
 }
