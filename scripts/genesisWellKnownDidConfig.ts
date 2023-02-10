@@ -5,7 +5,6 @@ import generateKeypairs from '../backend/src/utils/attester/generateKeyPairs';
 import { createCredential, createPresentation, selfAttestCredential, getDomainLinkagePresentation } from './wellKnownDIDConfiguration';
 import dotenv from 'dotenv';
 import generateAccount from '../backend/src/utils/attester/generateAccount';
-import { getApi } from '../backend/src/utils/connection';
 
 async function main() {
 
