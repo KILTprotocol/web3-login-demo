@@ -1,5 +1,6 @@
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+frontend/public/.well-known/did-configuration.json
 
 # dependencies
 node_modules
@@ -12,8 +13,6 @@ package_lock.json
 # production
 build
 dist
-.well-known/
-
 # misc
 .DS_Store
 .env
