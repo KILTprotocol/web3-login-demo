@@ -16,7 +16,7 @@ async function main() {
     const dAppMnemonic = process.env.DAPP_DID_MNEMONIC ?? 'your dApp needs an Identity ';
     const fundsMnemonic = process.env.DAPP_ACCOUNT_MNEMONIC ?? 'your dApp needs an Sponsor ';
 
-    console.log("The enviorment variables in use are:");
+    console.log("The enviorment variables are:");
     console.log("dAppURI", dAppURI);
     console.log("domainOrigin", domainOrigin);
     console.log("dAppMnemonic", dAppMnemonic);
