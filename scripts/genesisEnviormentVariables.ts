@@ -38,7 +38,8 @@ if (require.main === module) {
                 break; // end this for-loop
             } else if (index === stairs.length - 1) {
                 step = stairs.length; // You already climbed up all the stairs
-                throw console.log("It seems like all enviorment variables are allready defined.");
+                //throw new Error("It seems like all enviorment variables are already defined.");
+                console.log("It seems like all enviorment variables are already defined.");
             }
         }
 
@@ -46,7 +47,7 @@ if (require.main === module) {
         switch (step) {
             case 0: // first assign a websocket of the blockchain you want to interact with:
                 console.log("\ntrouble reading the address of the WebSocket\n");
-                console.log("please, define a value for WSS_ADDRESS on .env to continue, and then run this file again\n");
+                console.log("please, define a value for WSS_ADDRESS on the .env-file to continue, and then run this file again\n");
                 console.log("to connect to the KILT-Test-Blockchain, named Peregrine (recomended), please save the following:\n\n\n",
                     'WSS_ADDRESS=wss://peregrine.kilt.io/parachain-public-ws\n\n');
                 console.log("In the future, if you wish to interact with the production KILT-Blockchain, named Spiritnet, change the address to a web-socket (public Endpoint) of Spiritnet.",
@@ -55,7 +56,7 @@ if (require.main === module) {
 
             case 1: // then assing where the dApp is going to be reachable
                 console.log("\ntrouble reading the URL-Address of your dApp\n");
-                console.log("please, define a value for ORIGIN on .env to continue, and then run this file again\n");
+                console.log("please, define a value for ORIGIN on the .env-file to continue, and then run this file again\n");
                 console.log("first it should only run locally. You can use a custom IP or just the default:\n");
                 console.log("Default dApps domain origin: \n",
                     'ORIGIN=http://localhost:8080/', "\n\n");
@@ -63,14 +64,14 @@ if (require.main === module) {
 
             case 2: // then we generate an account
                 console.log("\ntrouble reading the account's mnemonic of your dApp\n");
-                console.log("An account is being generated for you.");
+                console.log("An account is being generated for your dApp.");
                 await Kilt.connect(webSocket!);
                 const mnemonic = mnemonicGenerate();
                 // you could manually enter a custom mnemonic here instead
                 const account = generateAccount(mnemonic);
-                console.log('\n please, save mnemonic and address of your dApps account to .env to continue!\n\n');
-                console.log(`DAPP_ACCOUNT_MNEMONIC="${mnemonic}"`);
-                console.log(`DAPP_ACCOUNT_ADDRESS="${account.address}"\n\n`);
+                console.log('\n please, save mnemonic and address of your dApps account to the .env-file to continue!\n\n');
+                console.log(`DAPP_ACCOUNT_MNEMONIC=${mnemonic}`);
+                console.log(`DAPP_ACCOUNT_ADDRESS=${account.address}\n\n`);
                 console.log('You also need to deposit funds on this account, to be able to create a DID.\n For peregrine-accounts you can use: https://faucet.peregrine.kilt.io/');
                 console.log("\nAfterwards run this file again\n");
                 await Kilt.disconnect();
@@ -80,8 +81,8 @@ if (require.main === module) {
                 console.log("\ntrouble reading the account's address of your dApp\n");
                 await Kilt.connect(webSocket!);
                 const accounty = generateAccount(fundsMnemonic!);
-                console.log('\n please, save the address of your dApps account to .env to continue!\n\n');
-                console.log(`DAPP_ACCOUNT_ADDRESS="${accounty.address}"\n\n`);
+                console.log('\n please, save the address of your dApps account to the .env-file to continue!\n\n');
+                console.log(`DAPP_ACCOUNT_ADDRESS=${accounty.address}\n\n`);
                 console.log('You also need to deposit funds on this account, to be able to create a DID.\n For peregrine-accounts you can use: https://faucet.peregrine.kilt.io/');
                 console.log("\nAfterwards run this file again\n");
                 await Kilt.disconnect();
@@ -89,53 +90,34 @@ if (require.main === module) {
 
             case 4: // then we generate a FullDID with all the key types
                 // Load attester account
+                console.log("\ntrouble reading the mnemonic of your dApp's DID\n");
+                await Kilt.connect(webSocket!);
+                console.log("\n\nA decentralized identity (DID) is being generated for your dApp.\n\n");
                 const attesterAccount = generateAccount(fundsMnemonic!);
-
                 // the DID can be generated by a different mnemonic than from the account. This is also the prefered option.
                 // You could also pass a specific mnemonic, but here we generate a random mnemonic.
                 const didMnemonic = mnemonicGenerate();
                 const fullDid = await generateFullDid(attesterAccount, didMnemonic);
 
-                console.log('\nsave following to .env to continue\n');
-                console.error(`DAPP_DID_MNEMONIC=${didMnemonic}\n`);
-                console.error(`DAPP_DID_URI=${fullDid.uri}\n`);
+                console.log("\n please, save the mnemonic and URI of your dApp's DID to the .env-file to continue!\n");
+                console.log(`DAPP_DID_MNEMONIC=${didMnemonic}`);
+                console.log(`DAPP_DID_URI=${fullDid.uri}\n`);
+                await Kilt.disconnect();
+                break;
+
+            case 5:
+                console.log("\ntrouble reading the URI of your dApp's DID\n");
+                console.log("getting the URI of the DID corresponding the provided mnemonic");
+                await Kilt.connect(webSocket!);
+                const { authentication } = generateKeypairs(dAppMnemonic!);
+                const dAppDidUri = Kilt.Did.getFullDidUriFromKey(authentication);
+                console.log("\n please, save the URI of your dApp's DID to the .env-file to continue!\n");
+                console.log(`DAPP_DID_URI=${dAppDidUri}\n`);
+                await Kilt.disconnect();
                 break;
             default:
                 break;
         }
-
-
-
-
-
-        // // then we generate a FullDID with all the key types
-        // // If the account is already defined
-        // if (process.env.ATTESTER_ACCOUNT_MNEMONIC) {
-        //     try {
-
-        //         // Load attester account
-        //         const accountMnemonic = process.env.ATTESTER_ACCOUNT_MNEMONIC as string;
-        //         const account = generateAccount(accountMnemonic);
-        //         //const dAppMnemonic = process.env.ATTESTER_DID_MNEMONIC as string;
-
-        //         // the DID can be generated by a different mnemonic than from the account. This is also the prefered option.
-        //         // I could also pass a specific mnemonic, but here we generate a random mnemonic.
-        //         const didMnemonic = mnemonicGenerate();
-        //         const fullDid = await generateFullDid(account, didMnemonic);
-
-        //         console.log('\nsave following to .env to continue\n');
-        //         console.error(`ATTESTER_DID_MNEMONIC=${didMnemonic}\n`);
-        //         console.error(`ATTESTER_DID_URI=${fullDid.uri}\n`);
-
-
-        //     } catch (e) {
-        //         console.log('Error while creating attester DID');
-        //         throw e;
-        //     }
-        // } else {
-        //     throw new Error("you need to define the ATTESTER_ACCOUNT_MNEMONIC first");
-
-        // };
 
         console.log("\u001b[0m", "reset output appareance");
     })();
