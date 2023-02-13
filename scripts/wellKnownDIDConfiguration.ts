@@ -229,10 +229,10 @@ async function asyncSome(
  * Since the website wants to link itself to the DID just created, it has to self-attest the domain linkage credential, i.e., write the credential attestation on chain using the same DID it is trying to link to.
  * 
  * @param credential - Credential from the claim to be attested. 
- * @param attestationKey - Attestation Keypair from the DID of the dApp.
- * @param payerAccount - Account paying for the transaction (attestation)
+ * @param assertionMethodKey - Attestation Keypair from the DID of the dApp.
+ * @param submitterAccount - Account paying for the transaction (attestation)
  */
-export async function selfAttestCredential(credential: Kilt.ICredential, attestationKey: Kilt.KiltKeyringPair, payerAccount: Kilt.KiltKeyringPair) {
+export async function selfAttestCredential(credential: Kilt.ICredential, assertionMethodKey: Kilt.KiltKeyringPair, submitterAccount: Kilt.KiltKeyringPair) {
 
     const api = Kilt.ConfigService.get('api');
 
@@ -252,8 +252,6 @@ export async function selfAttestCredential(credential: Kilt.ICredential, attesta
     // Step 3: authorizing the transaction with the dApps DID
     // We authorize the call using the attestation key of the dApps DID.
 
-    const assertionMethodKey = attestationKey; //just for you to see the two synonims.
-
     let submitTx: Kilt.SubmittableExtrinsic;
 
     const signCallback = async ({ data }: any) => ({
@@ -268,7 +266,7 @@ export async function selfAttestCredential(credential: Kilt.ICredential, attesta
             credential.claim.owner,
             attestationTx,
             signCallback,
-            payerAccount.address
+            submitterAccount.address
         );
     } catch (error) {
         throw new Error("Could not sing the self-attestation of the credential");
@@ -276,7 +274,7 @@ export async function selfAttestCredential(credential: Kilt.ICredential, attesta
     }
 
     // Since DIDs can not hold any balance, we pay for the transaction using our blockchain account
-    const result = await Kilt.Blockchain.signAndSubmitTx(submitTx, payerAccount);
+    const result = await Kilt.Blockchain.signAndSubmitTx(submitTx, submitterAccount);
 
     if (result.isError) {
         throw new Error('Attestation failed');
