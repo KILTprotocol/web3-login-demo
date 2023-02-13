@@ -17,7 +17,7 @@ export default async function generateFullDid(
     // Before submitting the transaction, it is worth it to assure that the DID does not already exist. 
     // If the DID aleady exist, the transaction will fail, but it will still costs the fee. Better to avoid this.
 
-    // check if DID already exists: 
+    // check if DID already exists or use to exist: 
     const desiredDidUri = Kilt.Did.getFullDidUriFromKey(authentication);
     const oldDidResolved = await Kilt.Did.resolve(desiredDidUri);
     if (oldDidResolved) {
