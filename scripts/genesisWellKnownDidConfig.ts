@@ -1,10 +1,20 @@
 import * as Kilt from '@kiltprotocol/sdk-js';
+import dotenv from 'dotenv';
 import fs from 'fs';
 import path from 'path';
-import generateKeypairs from '../backend/src/utils/attester/generateKeyPairs';
-import { createCredential, createPresentation, selfAttestCredential, getDomainLinkagePresentation } from './wellKnownDIDConfiguration';
-import dotenv from 'dotenv';
 import generateAccount from '../backend/src/utils/attester/generateAccount';
+import generateKeypairs from '../backend/src/utils/attester/generateKeyPairs';
+import {
+    VerifiableDomainLinkagePresentation,
+} from '../frontend/src/utils/types';
+import {
+    createCredential,
+    createPresentation,
+    selfAttestCredential,
+    getDomainLinkagePresentation,
+    verifyDidConfigPresentation
+} from './wellKnownDIDConfiguration';
+
 
 async function main() {
 
@@ -32,6 +42,60 @@ async function main() {
         throw new Error("You need to define, on the .env, the WebSocket you want to connect with.");
     }
 
+    // Before we start, it makes sense to check if the project already has a well-known-did-configuration.
+    // Why? Because each time we make a new one, an attestation is needed and that costs a fee. If working with the production Blockchain, you would want to spare this.
+
+    try {
+        const currentWellKnown = await readCurrentDidConfig(); // this will deliver an error, if the file can't be found
+
+        // if no error:
+        console.log("An old well-known-did-config was found. Let's check if it still valid");
+        try {
+            await verifyDidConfigPresentation(dAppURI, currentWellKnown, domainOrigin); // this will deliver an error, if the presentation can´t be verify
+
+        } catch (err) {
+            console.log("The current well-known-did-config of your project is not valid anymore. Let's proceed with the first step to make a new one!");
+            // if this is case, don't trow an error to the next catch
+        }
+
+    } catch (error) {
+
+        console.log("No old well-known-did-config was found. Let's proceed with the first step to make one!");
+        // if (!error) {
+        //     throw new Error(
+        //         "A valid well-known-did-config was found on of your project. No need to make a new one.\n, If you still want to make a new one, delete the old one first.");
+        // }
+    }
+
+    // first draft. Does not work because the catch block will not be executed if there is no error. ;(
+
+    // try {
+    //     await readCurrentDidConfig(); // this will deliver an error, if the file can't be found
+    // } catch (error) {
+    //     if (error) {
+    //         console.log("No old well-known-did-config was found. Let's proceed with the first step to make one!");
+    //     }
+    //     if (!error) {
+    //         console.log("An old well-known-did-config was found. Let's check if it still valid");
+    //         const currentWellKnown = await readCurrentDidConfig();
+    //         try {
+    //             await verifyDidConfigPresentation(dAppURI, currentWellKnown, domainOrigin); // // this will deliver an error, if the presentation can´t be verify
+
+    //         } catch (err) {
+    //             if (err) {
+    //                 console.log("The current well-known-did-config of your project is not valid anymore. Let's proceed with the first step to make a new one!");
+    //             }
+    //             if (err) {
+    //                 throw new Error(
+    //                     "A valid well-known-did-config was found on of your project. No need to make a new one.\n, If you still want to make a new one, delete the old one first.");
+
+    //             }
+
+    //         }
+    //     }
+    // }
+
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // First Step: Create a Claim 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -44,7 +108,7 @@ async function main() {
     // Second Step: Self-attesting the credential of this claim
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    //A valid credential requires an attestation. Since the website wants to link itself to the DID just created, it has to self-attest the domain linkage credential, i.e., write the credential attestation on chain using the same DID it is trying to link to.
+    // A valid credential requires an attestation. Since the website wants to link itself to the DID just created, it has to self-attest the domain linkage credential, i.e., write the credential attestation on chain using the same DID it is trying to link to.
 
     const dAppsDidKeys = generateKeypairs(dAppMnemonic);
     const dappAccount = generateAccount(fundsMnemonic);
@@ -56,7 +120,7 @@ async function main() {
     // Third Step: Create a presentation for the attested credential
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // To use the newly attested credential, we need to derive a presentation from it to host on the dapp website.
+    // To use the newly attested credential, we need to derive a presentation from it to host on the dApp website.
 
 
     // We need the KeyId of the AssertionMethod Key. There is only
@@ -101,9 +165,9 @@ async function main() {
     // Fourth Step: Host the presentation in your web App
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // __dirname is the folder where this file is; here 'scripts'
+    // __dirname is the folder where this file is; here currently 'scripts'
 
-    const parentDirectory = path.dirname(__dirname);//  it roughly means “find me the parent path to the current path.”
+    const parentDirectory = path.dirname(__dirname);//  it roughly means “find me the parent path to the current folder.”
 
     await fs.promises.mkdir(`${parentDirectory}/frontend/public/.well-known`, { recursive: true });// creates a folder where to save the did-config file
 
@@ -116,3 +180,32 @@ async function main() {
 }
 
 main().then(() => { });
+
+
+async function readCurrentDidConfig(): Promise<VerifiableDomainLinkagePresentation> {
+    let present: boolean = false;
+
+    const parentDirectory = path.dirname(__dirname);
+    const fullpath = `${parentDirectory}/frontend/public/.well-known/did-configuration.json`;
+
+    const filecontent = await fs.promises.readFile(fullpath, { encoding: 'utf8' });
+
+    if (filecontent) { // if I can read the file without any problem
+        present = true;
+        console.log("\n\nYour projects repository already has a well-known-did-configuration file.");
+        console.log("You can find it under this path: \n", fullpath);
+        console.log("here is the content of that file");
+        console.log(filecontent);
+        // throw new Error("Delete the current well-known-did-config before making a new one.");
+    }
+    if (!filecontent) {
+        console.log("No well-known-did-configuration file found on your repository. Good that we are creating one now. ");
+    }
+    const wellKnownDidconfig = JSON.parse(filecontent);
+    console.log("Is there a Well-known-did-config file already present? ", present);
+    console.log("print the json object", wellKnownDidconfig);
+    return wellKnownDidconfig;
+    // return present;
+}
+
+

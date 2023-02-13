@@ -293,6 +293,7 @@ export async function verifyDidConfigPresentation(
     // Verification steps outlined in Well Known DID Configuration
     // https://identity.foundation/.well-known/resources/did-configuration/#did-configuration-resource-verification
 
+    console.log("Verifying a well-known-did-configuration presentation...");
     await asyncSome(domainLinkageCredentialPresentation.linked_dids, async (credential) => {
         const { issuer, credentialSubject, id: credentialRootHash, proof } = credential;
 
