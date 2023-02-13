@@ -17,10 +17,10 @@ async function main() {
     const fundsMnemonic = process.env.DAPP_ACCOUNT_MNEMONIC ?? 'your dApp needs an Sponsor ';
 
     console.log("The enviorment variables are:");
-    console.log("dAppURI", dAppURI);
-    console.log("domainOrigin", domainOrigin);
-    console.log("dAppMnemonic", dAppMnemonic);
-    console.log("fundsMnemonic", fundsMnemonic, "\n");
+    console.log("dAppURI= ", dAppURI);
+    console.log("domainOrigin= ", domainOrigin);
+    console.log("dAppMnemonic= ", dAppMnemonic);
+    console.log("fundsMnemonic= ", fundsMnemonic, "\n");
 
 
     //Connect to the webSocket. This tells the Kilt Api to wich node to interact, and ergo also the blockchain (Spiritnet or Peregrine)
@@ -104,6 +104,8 @@ async function main() {
     // __dirname is the folder where this file is; here 'scripts'
 
     const parentDirectory = path.dirname(__dirname);//  it roughly means “find me the parent path to the current path.”
+
+    await fs.promises.mkdir(`${parentDirectory}/frontend/public/.well-known`, { recursive: true });// creates a folder where to save the did-config file
 
     fs.writeFile(`${parentDirectory}/frontend/public/.well-known/did-configuration.json`, JSON.stringify(wellKnownDidconfig, null, 2), (err) => {
         if (err) throw err;
