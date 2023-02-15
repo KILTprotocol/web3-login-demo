@@ -43,7 +43,7 @@ async function main() {
     }
 
     // Before we start, it makes sense to check if the project already has a well-known-did-configuration.
-    // Why? Because each time we make a new one, an attestation is needed and that costs a fee. If working with the production Blockchain, you would want to spare this.
+    // Why? Because each time we make a new one, an attestation is needed and that costs a fee. If working with the production Blockchain, you would want to spare this fee.
 
     try {
         const currentWellKnown = await readCurrentDidConfig(); // this will deliver an error, if the file can't be found
@@ -59,7 +59,7 @@ async function main() {
             Kilt.disconnect();
             return;
         } catch (err) {
-            console.log("The current well-known-did-config of your project is not valid anymore. Let's proceed with the first step to make a new one!");
+            console.log("The current well-known-did-config of your project is not valid (anymore). \n Let's proceed with the first step to make a new one!");
             // if this is case, don't trow an error to the next catch
         }
 
@@ -132,7 +132,7 @@ async function main() {
     // disconnect from the blockchain API
     await Kilt.disconnect();
 
-    console.log(JSON.stringify(wellKnownDidconfig, null, 2));
+    console.log("this is the well-known-DID-configuration of your dApp that was just created: \n", JSON.stringify(wellKnownDidconfig, null, 2));
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Fourth Step: Host the presentation in your web App
@@ -169,13 +169,12 @@ async function readCurrentDidConfig(): Promise<VerifiableDomainLinkagePresentati
         console.log("You can find it under this path: \n", fullpath);
         console.log("here is the content of that file");
         console.log(filecontent);
-        // throw new Error("Delete the current well-known-did-config before making a new one.");
     }
     if (!filecontent) {
-        console.log("No well-known-did-configuration file found on your repository. Good that we are creating one now. ");
+        console.log("No well-known-did-configuration file found on your repository.");
     }
     const wellKnownDidconfig = JSON.parse(filecontent);
-    console.log("Is there a Well-known-did-config file already present? ", present);
+    // console.log("Is there a Well-known-did-config file already present? ", present);
     console.log("print the json object", wellKnownDidconfig);
     return wellKnownDidconfig;
     // return present;
