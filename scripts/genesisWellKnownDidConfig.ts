@@ -49,10 +49,15 @@ async function main() {
         const currentWellKnown = await readCurrentDidConfig(); // this will deliver an error, if the file can't be found
 
         // if no error:
-        console.log("An old well-known-did-config was found. Let's check if it still valid");
+        console.log("An old well-known-did-config file was found. Let's check if it still valid");
         try {
             await verifyDidConfigPresentation(dAppURI, currentWellKnown, domainOrigin); // this will deliver an error, if the presentation can´t be verify
 
+            //if no error: 
+            console.log("A valid well-known-did-config was found on of your project. No need to make a new one.\n If you still want to make a new one, delete the old one first.");
+            // Stop running this script:
+            Kilt.disconnect();
+            return;
         } catch (err) {
             console.log("The current well-known-did-config of your project is not valid anymore. Let's proceed with the first step to make a new one!");
             // if this is case, don't trow an error to the next catch
@@ -61,40 +66,8 @@ async function main() {
     } catch (error) {
 
         console.log("No old well-known-did-config was found. Let's proceed with the first step to make one!");
-        // if (!error) {
-        //     throw new Error(
-        //         "A valid well-known-did-config was found on of your project. No need to make a new one.\n, If you still want to make a new one, delete the old one first.");
-        // }
+
     }
-
-    // first draft. Does not work because the catch block will not be executed if there is no error. ;(
-
-    // try {
-    //     await readCurrentDidConfig(); // this will deliver an error, if the file can't be found
-    // } catch (error) {
-    //     if (error) {
-    //         console.log("No old well-known-did-config was found. Let's proceed with the first step to make one!");
-    //     }
-    //     if (!error) {
-    //         console.log("An old well-known-did-config was found. Let's check if it still valid");
-    //         const currentWellKnown = await readCurrentDidConfig();
-    //         try {
-    //             await verifyDidConfigPresentation(dAppURI, currentWellKnown, domainOrigin); // // this will deliver an error, if the presentation can´t be verify
-
-    //         } catch (err) {
-    //             if (err) {
-    //                 console.log("The current well-known-did-config of your project is not valid anymore. Let's proceed with the first step to make a new one!");
-    //             }
-    //             if (err) {
-    //                 throw new Error(
-    //                     "A valid well-known-did-config was found on of your project. No need to make a new one.\n, If you still want to make a new one, delete the old one first.");
-
-    //             }
-
-    //         }
-    //     }
-    // }
-
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // First Step: Create a Claim 
