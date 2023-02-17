@@ -15,6 +15,38 @@ import {
     verifyDidConfigPresentation
 } from './wellKnownDIDConfiguration';
 
+/**
+ * Reads the file of the current well-known-did-configuration from it's place on the frontend. 
+ * This will throw if no file can be found. 
+ * 
+ * @returns a json object from readed file.
+ */
+async function readCurrentDidConfig(): Promise<VerifiableDomainLinkagePresentation> {
+    // let present: boolean = false;
+
+    const parentDirectory = path.dirname(__dirname);
+    const fullpath = `${parentDirectory}/frontend/public/.well-known/did-configuration.json`;
+
+    const filecontent = await fs.promises.readFile(fullpath, { encoding: 'utf8' });
+
+    if (filecontent) { // if I can read the file without any problem
+        // present = true;
+        console.log("\n\nYour projects repository already has a well-known-did-configuration file.");
+        console.log("You can find it under this path: \n", fullpath);
+        console.log("here is the content of that file");
+        console.log(filecontent);
+    }
+    if (!filecontent) {
+        console.log("No well-known-did-configuration file found on your repository.");
+    }
+    const wellKnownDidconfig = JSON.parse(filecontent);
+    // console.log("print the json object", wellKnownDidconfig);
+    return wellKnownDidconfig;
+
+    // console.log("Is there a Well-known-did-config file already present? ", present);
+    // return present;
+}
+
 
 async function main() {
 
@@ -153,31 +185,4 @@ async function main() {
 }
 
 main().then(() => { });
-
-
-async function readCurrentDidConfig(): Promise<VerifiableDomainLinkagePresentation> {
-    let present: boolean = false;
-
-    const parentDirectory = path.dirname(__dirname);
-    const fullpath = `${parentDirectory}/frontend/public/.well-known/did-configuration.json`;
-
-    const filecontent = await fs.promises.readFile(fullpath, { encoding: 'utf8' });
-
-    if (filecontent) { // if I can read the file without any problem
-        present = true;
-        console.log("\n\nYour projects repository already has a well-known-did-configuration file.");
-        console.log("You can find it under this path: \n", fullpath);
-        console.log("here is the content of that file");
-        console.log(filecontent);
-    }
-    if (!filecontent) {
-        console.log("No well-known-did-configuration file found on your repository.");
-    }
-    const wellKnownDidconfig = JSON.parse(filecontent);
-    // console.log("Is there a Well-known-did-config file already present? ", present);
-    console.log("print the json object", wellKnownDidconfig);
-    return wellKnownDidconfig;
-    // return present;
-}
-
 
