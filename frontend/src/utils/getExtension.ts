@@ -20,7 +20,12 @@ export function getExtensions(): Promise<
   apiWindow.kilt = apiWindow.kilt || {};
 
   return documentReadyPromise(() =>
-    Object.assign(apiWindow.kilt, { meta: { value: { versions: { credentials: "3.0" } } }, enumerable: !1 })
+    Object.assign(apiWindow.kilt,
+      {
+        meta:
+          { value: { versions: { credentials: "3.0" } } },
+        enumerable: false
+      })
   );
 
 
