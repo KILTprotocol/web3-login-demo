@@ -16,19 +16,32 @@
     "start:server": "cd ./backend && nodemon build/server.js",
     "start": "concurrently yarn:start:*",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint --ext .js,.ts",
+    "fix": "concurrently yarn:fix:*",
+    "fix:frontend": "cd frontend && yarn fix",
+    "fix:backend": "cd backend && yarn fix",
+    "fix:scripts": "yarn run eslint --fix ./scripts/*"
   },
   "devDependencies": {
     "concurrently": "^7.5.0",
     "nodemon": "^2.0.20",
-    "typescript": "^4.8.4"
+    "typescript": "^4.9.3",
+    "@typescript-eslint/eslint-plugin": "^5.33.0",
+    "@typescript-eslint/parser": "^5.33.0",
+    "eslint": ">=8.31.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.31.11",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "prettier": "^2.8.0"
   },
   "dependencies": {
-    "@kiltprotocol/sdk-js": "^0.30.0",
-    "@kiltprotocol/vc-export": "^0.30.0",
+    "@kiltprotocol/sdk-js": "^0.31.0",
+    "@kiltprotocol/vc-export": "^0.31.0",
     "@types/valid-url": "^1.0.3",
     "dotenv": "^16.0.3",
-    "eslint": "^8.31.0",
     "ts-node": "^10.9.1",
     "valid-url": "^1.0.9"
   }
