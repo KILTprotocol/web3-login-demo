@@ -29,6 +29,8 @@
     "@types/valid-url": "^1.0.3",
     "dotenv": "^16.0.3",
     "eslint": "^8.31.0",
+    "react": "^18.2.0",
+    "react-devtools": "^4.27.2",
     "ts-node": "^10.9.1",
     "valid-url": "^1.0.9"
   }
