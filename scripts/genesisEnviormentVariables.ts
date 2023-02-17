@@ -24,7 +24,6 @@ if (require.main === module) {
         const dAppMnemonic = process.env.DAPP_DID_MNEMONIC;
         const dAppURI = process.env.DAPP_DID_URI;
 
-
         // decide where you are: 
         let step: number = 0;
         let stairs: (string | undefined)[] = [webSocket, domainOrigin, fundsMnemonic, fundsAddress, dAppMnemonic, dAppURI];
