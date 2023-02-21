@@ -18,8 +18,6 @@ export default function Home(): JSX.Element {
     getExtensions()
   })
 
-
-
   return (
     <Page>
       <Page.Header>

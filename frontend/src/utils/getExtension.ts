@@ -1,29 +1,24 @@
-import {
-  ApiWindow,
-} from './types';
+import { ApiWindow } from './types'
 
-const apiWindow = window as Window & ApiWindow;
+const apiWindow = window as Window & ApiWindow
 
 function documentReadyPromise(creator: () => any): Promise<ApiWindow> {
   return new Promise((resolve): void => {
     if (document.readyState === 'complete') {
-      resolve(creator());
+      resolve(creator())
     } else {
-      window.addEventListener('load', () => resolve(creator()));
+      window.addEventListener('load', () => resolve(creator()))
     }
-  });
+  })
 }
 
-export function getExtensions(): Promise<
-  ApiWindow
-> {
-  apiWindow.kilt = apiWindow.kilt || {};
+export function getExtensions(): Promise<ApiWindow> {
+  apiWindow.kilt = apiWindow.kilt || {}
 
   return documentReadyPromise(() =>
-    Object.assign(apiWindow.kilt, { meta: { value: { versions: { credentials: "3.0" } } }, enumerable: !1 })
-  );
-
-
+    Object.assign(apiWindow.kilt, {
+      meta: { value: { versions: { credentials: '3.0' } } },
+      enumerable: !1
+    })
+  )
 }
-
-
