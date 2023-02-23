@@ -9,7 +9,6 @@ import { HexString } from '@polkadot/util/types';
 import { SelfSignedProof, VerifiableCredential, constants } from '@kiltprotocol/vc-export';
 
 export type This = typeof globalThis;
-const DEFAULT_VERIFIABLECREDENTIAL_CONTEXT = constants.DEFAULT_VERIFIABLECREDENTIAL_CONTEXT; // 'https://www.w3.org/2018/credentials/v1';
 
 export interface IEncryptedMessageV1 {
   /** ID of the key agreement key of the receiver DID used to encrypt the message */
@@ -71,11 +70,16 @@ export interface PubSubSessionV2 {
 
 export interface InjectedWindowProvider<T> {
   startSession: (
+    /** human-readable name of the dApp */
     dAppName: string,
+    /** URI of the key agreement key of the dApp DID to be used to encrypt the session messages */
     dAppEncryptionKeyId: DidResourceUri,
+    /** 24 random bytes as hexadecimal */
     challenge: string
   ) => Promise<T>;
+  /** human-readable name of the extension */
   name: string;
+  /** version of the extension */
   version: string;
   specVersion: '1.0' | '3.0';
   signWithDid: (
@@ -105,7 +109,7 @@ export interface CredentialSubject {
 }
 
 const context = [
-  DEFAULT_VERIFIABLECREDENTIAL_CONTEXT,
+  constants.DEFAULT_VERIFIABLECREDENTIAL_CONTEXT,
   'https://identity.foundation/.well-known/did-configuration/v1',
 ];
 export interface DomainLinkageCredential
