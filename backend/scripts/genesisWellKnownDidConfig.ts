@@ -5,9 +5,9 @@ import path from 'path'
 import * as Kilt from '@kiltprotocol/sdk-js'
 import dotenv from 'dotenv'
 
-import generateAccount from '../backend/src/utils/attester/generateAccount'
-import generateKeypairs from '../backend/src/utils/attester/generateKeyPairs'
-import { VerifiableDomainLinkagePresentation } from '../frontend/src/utils/types'
+import generateAccount from '../src/utils/generateAccount'
+import generateKeypairs from '../src/utils/generateKeyPairs'
+import { VerifiableDomainLinkagePresentation } from '../src/utils/types'
 
 import {
   createCredential,

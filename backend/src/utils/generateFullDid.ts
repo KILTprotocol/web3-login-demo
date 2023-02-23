@@ -1,14 +1,14 @@
 import * as Kilt from '@kiltprotocol/sdk-js'
 
-import { getApi } from '../connection'
-
 import generateKeypairs from './generateKeyPairs'
+
+const WSS_ADDRESS = process.env.WSS_ADDRESS || 'wss://peregrine.kilt.io'
 
 export default async function generateFullDid(
   submitterAccount: Kilt.KiltKeyringPair,
   mnemonic: string
 ): Promise<Kilt.DidDocument> {
-  await getApi()
+  await Kilt.init({ address: WSS_ADDRESS })
   const didMnemonic = mnemonic
   // console.log("Mnemonic to generate this DID", didMnemonic);
   const {

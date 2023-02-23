@@ -1,20 +1,11 @@
 import {
   IEncryptedMessage,
-  DidUri,
   KiltAddress,
-  DidResourceUri,
-  Hash
+  DidResourceUri
 } from '@kiltprotocol/types'
 import { HexString } from '@polkadot/util/types'
-import {
-  SelfSignedProof,
-  VerifiableCredential,
-  constants
-} from '@kiltprotocol/vc-export'
 
 export type This = typeof globalThis
-const DEFAULT_VERIFIABLECREDENTIAL_CONTEXT =
-  constants.DEFAULT_VERIFIABLECREDENTIAL_CONTEXT // 'https://www.w3.org/2018/credentials/v1';
 
 export interface IEncryptedMessageV1 {
   /** ID of the key agreement key of the receiver DID used to encrypt the message */
@@ -100,29 +91,4 @@ export interface ApiWindow extends This {
     string,
     InjectedWindowProvider<PubSubSessionV1 | PubSubSessionV2>
   >
-}
-
-export interface CredentialSubject {
-  id: DidUri
-  origin: string
-  rootHash: Hash
-}
-
-const context = [
-  DEFAULT_VERIFIABLECREDENTIAL_CONTEXT,
-  'https://identity.foundation/.well-known/did-configuration/v1'
-]
-export interface DomainLinkageCredential
-  extends Omit<
-    VerifiableCredential,
-    '@context' | 'legitimationIds' | 'credentialSubject' | 'proof'
-  > {
-  '@context': typeof context
-  credentialSubject: CredentialSubject
-  proof: SelfSignedProof
-}
-
-export interface VerifiableDomainLinkagePresentation {
-  '@context': string
-  linked_dids: [DomainLinkageCredential]
 }
