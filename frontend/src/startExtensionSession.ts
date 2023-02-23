@@ -35,8 +35,8 @@ async function startExtensionSession() {
 
         return session;
     } catch (error) {
-        console.error(`Error initializing ${apiWindow.kilt.sporran.name}: ${apiWindow.kilt.sporran.message}`);
+        console.error(`Error initializing ${apiWindow.kilt.sporran.name}: ${apiWindow.kilt.sporran.version}`);
         throw error;
     }
 
-}
+};
