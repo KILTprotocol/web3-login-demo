@@ -1,10 +1,8 @@
 import { useState, useEffect } from 'react';
 import { cryptoWaitReady, randomAsHex, signatureVerify } from '@polkadot/util-crypto';
-import { getApi } from '../../backend/src/utils/connection';
 import { getExtensions, apiWindow } from './utils/getExtension';
 
 async function startExtensionSession() {
-    const api = await getApi();
     getExtensions();
 
     // generate and get session values from the backend:
