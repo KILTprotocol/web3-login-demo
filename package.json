@@ -8,7 +8,7 @@
   "license": "BSD-4-Clause",
   "scripts": {
     "install": "concurrently \"cd ./backend && yarn install\" \"cd ./frontend && yarn install\" ",
-    "environment": "yarn ts-node ./scripts/genesisEnvironmentVariables.ts",
+    "environment": "ts-node ./scripts/genesisEnvironmentVariables.ts",
     "build:client": "cd ./frontend && yarn build",
     "build:server": "cd ./backend && npx tsc",
     "build": "concurrently yarn:build:*",
