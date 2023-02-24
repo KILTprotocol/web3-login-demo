@@ -54,7 +54,7 @@ async function main() {
     dotenv.config();
 
     const dAppURI = process.env.DAPP_DID_URI as Kilt.DidUri ?? `did:kilt:4${'noURIEstablished'}` as Kilt.DidUri;
-    const domainOrigin = process.env.ORIGIN ?? 'no origin assiged';
+    const domainOrigin = process.env.ORIGIN ?? 'no origin assiged'; // don't put a slash / at the end!
     const dAppMnemonic = process.env.DAPP_DID_MNEMONIC ?? 'your dApp needs an Identity ';
     const fundsMnemonic = process.env.DAPP_ACCOUNT_MNEMONIC ?? 'your dApp needs an Sponsor ';
 
@@ -92,7 +92,7 @@ async function main() {
             return;
         } catch (err) {
             console.log("The current well-known-did-config of your project is not valid (anymore). \n Let's proceed with the first step to make a new one!");
-            // if this is case, don't trow an error to the next catch
+            // if this is case, don't throw an error to the next catch
         }
 
     } catch (error) {

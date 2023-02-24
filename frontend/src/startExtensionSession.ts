@@ -5,7 +5,7 @@ export async function startExtensionSession() {
     getExtensions();
 
     // generate and get session values from the backend:
-    const values = await fetch(`/api/session`, {
+    const sessionValues = await fetch(`/api/session`, {
         method: "GET", credentials: 'include', headers: {
             accessControlAllowOrigin: '*',
             ContentType: 'application/json',
@@ -13,18 +13,18 @@ export async function startExtensionSession() {
 
         },
     });
-    if (!values.ok) throw Error(values.statusText);
+    if (!sessionValues.ok) throw Error(sessionValues.statusText);
 
     const {
-        sessionId,
+        sessionID,
         challenge,
         dAppName,
         dAppEncryptionKeyUri,
-    } = await values.json();
+    } = await sessionValues.json();
 
     console.log(
-        "Values fetched from the backend", '\n',
-        "sessionId:", sessionId, '\n',
+        "Session Values fetched from the backend", '\n',
+        "sessionId:", sessionID, '\n',
         "challenge:", challenge, '\n',
         "dAppName:", dAppName, '\n',
         "dAppEncryptionKeyUri:", dAppEncryptionKeyUri, '\n',
