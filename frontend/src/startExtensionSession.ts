@@ -1,12 +1,18 @@
-import { useState, useEffect } from 'react';
-import { cryptoWaitReady, randomAsHex, signatureVerify } from '@polkadot/util-crypto';
+// import { useState, useEffect } from 'react';
+// import { cryptoWaitReady, randomAsHex, signatureVerify } from '@polkadot/util-crypto';
 import { getExtensions, apiWindow } from './utils/getExtension';
-
-async function startExtensionSession() {
+export async function startExtensionSession() {
     getExtensions();
 
     // generate and get session values from the backend:
-    const values = await fetch('/api/session', { method: "GET" });
+    const values = await fetch(`/api/session`, {
+        method: "GET", credentials: 'include', headers: {
+            accessControlAllowOrigin: '*',
+            ContentType: 'application/json',
+            Accept: 'application/json',
+
+        },
+    });
     if (!values.ok) throw Error(values.statusText);
 
     const {
@@ -26,6 +32,7 @@ async function startExtensionSession() {
 
     try {
         const session = await apiWindow.kilt.sporran.startSession(dAppName, dAppEncryptionKeyUri, challenge);
+        console.log("the session was initialized :) (:  ");
 
         // Resolve the `session.encryptionKeyUri` and use this key and the nonce 
         // to decrypt `session.encryptedChallenge` and confirm that it’s equal to the original challenge.
