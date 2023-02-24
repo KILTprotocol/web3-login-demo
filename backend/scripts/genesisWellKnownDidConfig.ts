@@ -60,20 +60,20 @@ async function main() {
   // Fetch variables from .env file:
   dotenv.config()
 
-  const dAppURI =
+  const DAPP_DID_URI =
     (process.env.DAPP_DID_URI as Kilt.DidUri) ??
     (`did:kilt:4${'noURIEstablished'}` as Kilt.DidUri)
-  const domainOrigin = process.env.ORIGIN ?? 'no origin assiged'
-  const dAppMnemonic =
+  const ORIGIN = process.env.ORIGIN ?? 'no origin assiged'
+  const DAPP_DID_MNEMONIC =
     process.env.DAPP_DID_MNEMONIC ?? 'your dApp needs an Identity '
-  const fundsMnemonic =
+  const DAPP_ACCOUNT_MNEMONIC =
     process.env.DAPP_ACCOUNT_MNEMONIC ?? 'your dApp needs an Sponsor '
 
   console.log('The enviorment variables are:')
-  console.log('dAppURI= ', dAppURI)
-  console.log('domainOrigin= ', domainOrigin)
-  console.log('dAppMnemonic= ', dAppMnemonic)
-  console.log('fundsMnemonic= ', fundsMnemonic, '\n')
+  console.log('DAPP_DID_URI= ', DAPP_DID_URI)
+  console.log('ORIGIN= ', ORIGIN)
+  console.log('DAPP_DID_MNEMONIC= ', DAPP_DID_MNEMONIC)
+  console.log('DAPP_ACCOUNT_MNEMONIC= ', DAPP_ACCOUNT_MNEMONIC, '\n')
 
   //Connect to the webSocket. This tells the Kilt Api to wich node to interact, and ergo also the blockchain (Spiritnet or Peregrine)
   const webSocket = process.env.WSS_ADDRESS
@@ -96,7 +96,7 @@ async function main() {
       "An old well-known-did-config file was found. Let's check if it still valid"
     )
     try {
-      await verifyDidConfigPresentation(dAppURI, currentWellKnown, domainOrigin) // this will deliver an error, if the presentation can´t be verify
+      await verifyDidConfigPresentation(DAPP_DID_URI, currentWellKnown, ORIGIN) // this will deliver an error, if the presentation can´t be verify
 
       //if no error:
       console.log(
@@ -123,7 +123,7 @@ async function main() {
 
   // The claim has to be based on the Domain Linkage CType. This CType is fetched from the Blockchain on './wellKnownDIDConfiguration' and imported here as cTypeDomeinLinkage
 
-  const domainCredential = await createCredential(domainOrigin, dAppURI)
+  const domainCredential = await createCredential(ORIGIN, DAPP_DID_URI)
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // Second Step: Self-attesting the credential of this claim
@@ -131,8 +131,8 @@ async function main() {
 
   // A valid credential requires an attestation. Since the website wants to link itself to the DID just created, it has to self-attest the domain linkage credential, i.e., write the credential attestation on chain using the same DID it is trying to link to.
 
-  const dAppsDidKeys = generateKeypairs(dAppMnemonic)
-  const dappAccount = generateAccount(fundsMnemonic)
+  const dAppsDidKeys = generateKeypairs(DAPP_DID_MNEMONIC)
+  const dappAccount = generateAccount(DAPP_ACCOUNT_MNEMONIC)
 
   await selfAttestCredential(
     domainCredential,
@@ -148,9 +148,9 @@ async function main() {
 
   // We need the KeyId of the AssertionMethod Key. There is only
   // one AssertionMethodKey and its id is stored on the blockchain.
-  const didResolveResult = await Kilt.Did.resolve(dAppURI)
+  const didResolveResult = await Kilt.Did.resolve(DAPP_DID_URI)
   if (typeof didResolveResult?.document === 'undefined') {
-    console.log('dAppURI', dAppURI)
+    console.log('DAPP_DID_URI', DAPP_DID_URI)
     console.log('didResolveResult', didResolveResult)
     throw new Error('DID must be resolvable (i.e. not deleted)')
   }
@@ -160,7 +160,7 @@ async function main() {
 
   // const presentationSignCallback = async ({ data }: any) => ({
   //     signature: assertionMethodKey.sign(data) as Uint8Array,
-  //     keyUri: `${dAppURI}${assertionMethodKeyId}` as Kilt.DidResourceUri,
+  //     keyUri: `${DAPP_DID_URI}${assertionMethodKeyId}` as Kilt.DidResourceUri,
   //     keyType: assertionMethodKey.type as Kilt.DidVerificationKey['type']
   // });
 
@@ -169,7 +169,7 @@ async function main() {
   }: any): Promise<Kilt.SignResponseData> => {
     return {
       signature: dAppsDidKeys.assertionMethod.sign(data),
-      keyUri: `${dAppURI}${assertionMethodKeyId}`,
+      keyUri: `${DAPP_DID_URI}${assertionMethodKeyId}`,
       keyType: dAppsDidKeys.assertionMethod.type
     }
   }
@@ -199,12 +199,12 @@ async function main() {
 
   const parentDirectory = path.dirname(__dirname) //  it roughly means “find me the parent path to the current folder.”
 
-  await fs.promises.mkdir(`${parentDirectory}/frontend/public/.well-known`, {
+  await fs.promises.mkdir(`../${parentDirectory}/frontend/public/.well-known`, {
     recursive: true
   }) // creates a folder where to save the did-config file
 
   fs.writeFile(
-    `${parentDirectory}/frontend/public/.well-known/did-configuration.json`,
+    `../${parentDirectory}/frontend/public/.well-known/did-configuration.json`,
     JSON.stringify(wellKnownDidconfig, null, 2),
     (err) => {
       if (err) throw err

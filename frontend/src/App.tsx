@@ -16,7 +16,7 @@ export default function Home(): JSX.Element {
   //Inject the extensions that support the KILT protocol
   useEffect(() => {
     getExtensions()
-  })
+  }, [])
 
   return (
     <Page>
