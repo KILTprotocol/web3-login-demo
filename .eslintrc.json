@@ -4,9 +4,8 @@
     "plugin:import/recommended",
     "plugin:import/typescript",
     "plugin:@typescript-eslint/recommended",
-    "plugin:react/recommended",
-    "plugin:react-hooks/recommended",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:react-hooks/recommended"
   ],
   "parserOptions": {
     "ecmaVersion": 2019,
@@ -20,19 +19,14 @@
     "react/react-in-jsx-scope": "off",
     "react-hooks/exhaustive-deps": "error",
     "import/no-extraneous-dependencies": "error",
-    "import/no-unresolved": ["error", { "ignore": ["\\.js$"] }],
-    "import/order": ["error", {
-      "newlines-between": "always-and-inside-groups",
-      "groups": ["builtin", "type", "external", "internal", "parent", "sibling", "index", "object"],
-      "pathGroups": [
-        {
-          "patternOptions": { "matchBase": true },
-          "pattern": "*.module.css",
-          "group": "internal",
-          "position": "before"
-        }
-      ]
-    }],
+    "import/no-unresolved": [
+      "error",
+      {
+        "ignore": [
+          "\\.js$"
+        ]
+      }
+    ],
     "@typescript-eslint/no-unused-vars": "error"
   },
   "settings": {
