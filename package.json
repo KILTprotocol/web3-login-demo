@@ -2,7 +2,6 @@
   "name": "web3-login-demo",
   "version": "0.0.1",
   "description": "web3 login demo for KILT distillery",
-  "main": "index.ts",
   "repository": "git@github.com:KILTprotocol/web3-login-demo.git",
   "author": "KILT <info@kilt.io>",
   "license": "BSD-4-Clause",
@@ -10,19 +9,19 @@
     "install": "concurrently \"cd ./backend && yarn install\" \"cd ./frontend && yarn install\" ",
     "environment": "ts-node ./scripts/genesisEnvironmentVariables.ts",
     "build:client": "cd ./frontend && yarn build",
+    "build:well-known": "ts-node ./backend/scripts/genesisWellKnownDidConfig.ts",
     "build": "concurrently yarn:build:*",
-    "build:well-known": "ts-node ./scripts/genesisWellKnownDidConfig.ts",
     "start:client": "cd ./frontend && yarn start",
     "start:server": "cd ./backend && yarn start",
     "start": "concurrently yarn:start:*",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
     "lint:frontend": "eslint --ext .js,.ts --config ./.eslintrc.json \"frontend/**/*.ts\"",
     "lint:backend": "eslint --ext .js,.ts --config ./.eslintrc.json \"backend/**/*.ts\"",
     "lint": "concurrently yarn:lint:*",
     "fix:frontend": "eslint --ext .js,.ts --config ./.eslintrc.json --fix \"frontend/**/*.ts\"",
     "fix:backend": "eslint --ext .js,.ts --config ./.eslintrc.json --fix \"backend/**/*.ts\"",
-    "fix": "concurrently yarn:fix:*"
+    "fix": "concurrently yarn:fix:*",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.33.0",
@@ -39,13 +38,7 @@
     "typescript": "^4.9.3"
   },
   "dependencies": {
-    "@kiltprotocol/sdk-js": "^0.31.0",
-    "@kiltprotocol/vc-export": "^0.31.0",
-    "@polkadot/util": "^10.4.2",
-    "@polkadot/util-crypto": "^11.0.2",
-    "@types/valid-url": "^1.0.3",
     "dotenv": "^16.0.3",
-    "ts-node": "^10.9.1",
-    "valid-url": "^1.0.9"
+    "ts-node": "^10.9.1"
   }
 }
