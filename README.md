@@ -4,7 +4,7 @@ In order to run this recipe you need an on-chain DID, domain linkage credential 
 
 ## Enviroment Variables
 
-Each instance of this repository needs to include a local list of environment variables. This variables determine the comunication with the blockchain, your dApps identity and possibly some function. Defining them is part of the set up of your project.
+Each instance of this repository needs to include a local list of environment variables. This variables determine the comunication with the blockchain, your dApps identity and possibly influence some function. Defining them is part of the set up of your project.
 
 The .env-file should be on the root directory of this repository. It's just called `.env`. It is include on the .gitignore list, so that it never gets push to github.
 
