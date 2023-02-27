@@ -5,11 +5,6 @@ import { generateKeypairs } from '../backend/src/utils/attester/generateKeyPairs
 import { generateAccount } from '../backend/src/utils/attester/generateAccount';
 import { generateFullDid } from '../backend/src/utils/attester/generateFullDid';
 
-// This scripts facilitate the generetion of the enviorment variables that are needed to set up your decentralized App.
-// The Values of this variables define who your dApp is and influence most of it functions. 
-
-// It is forseen that you run this file a couple of times and follow the instructions that it provides, depending on your project's state. 
-// After running this script each time, you need to manually copy the output and save it on the .env-file on the main project folder.
 
 async function main() {
 
