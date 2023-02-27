@@ -2,7 +2,7 @@ import * as Kilt from '@kiltprotocol/sdk-js';
 import generateKeypairs from './generateKeyPairs';
 import { getApi } from '../connection';
 
-export default async function generateFullDid(
+export async function generateFullDid(
     submitterAccount: Kilt.KiltKeyringPair,
     mnemonic: string
 ): Promise<

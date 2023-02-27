@@ -16,7 +16,7 @@ function generateKeyAgreement(mnemonic: string) {
     return Kilt.Utils.Crypto.makeEncryptionKeypairFromSeed(blake2AsU8a(secretKey));
 }
 
-export default function generateKeypairs(mnemonic: string) {
+export function generateKeypairs(mnemonic: string) {
 
     // Currently, the default the keytype used by the Kilt-team is "sr25519". Better to use it for compatibility.
     const account = Kilt.Utils.Crypto.makeKeypairFromSeed(

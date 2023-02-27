@@ -1,9 +1,9 @@
 import { config as envConfig } from 'dotenv';
 import * as Kilt from '@kiltprotocol/sdk-js';
 import { mnemonicGenerate, mnemonicToMiniSecret } from '@polkadot/util-crypto';
-import generateKeypairs from '../backend/src/utils/attester/generateKeyPairs';
-import generateAccount from '../backend/src/utils/attester/generateAccount';
-import generateFullDid from '../backend/src/utils/attester/generateFullDid';
+import { generateKeypairs } from '../backend/src/utils/attester/generateKeyPairs';
+import { generateAccount } from '../backend/src/utils/attester/generateAccount';
+import { generateFullDid } from '../backend/src/utils/attester/generateFullDid';
 
 // This scripts facilitate the generetion of the enviorment variables that are needed to set up your decentralized App.
 // The Values of this variables define who your dApp is and influence most of it functions. 
