@@ -120,4 +120,4 @@ async function main() {
 
     console.log("\u001b[0m", "reset output appareance");
 }
-await main(); //run the code
+main(); //run the code
