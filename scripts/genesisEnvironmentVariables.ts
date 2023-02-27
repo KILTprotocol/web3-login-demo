@@ -1,4 +1,4 @@
-import { config as envConfig } from 'dotenv';
+import dotenv from 'dotenv';
 import * as Kilt from '@kiltprotocol/sdk-js';
 import { mnemonicGenerate, mnemonicToMiniSecret } from '@polkadot/util-crypto';
 import { generateKeypairs } from '../backend/src/utils/attester/generateKeyPairs';
@@ -11,7 +11,7 @@ async function main() {
     console.log("\u001B[38;5;201m", "Making this output purple");
 
     // try to read the variables from the .env-file:
-    envConfig();
+    dotenv.config();
     const WSS_ADDRESS = process.env.WSS_ADDRESS; // webSocket
     const ORIGIN = process.env.ORIGIN; // domainOrigin
     const DAPP_ACCOUNT_MNEMONIC = process.env.DAPP_ACCOUNT_MNEMONIC; // fundsMnemonic
