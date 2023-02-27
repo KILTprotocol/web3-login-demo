@@ -1,5 +1,5 @@
 import * as Kilt from '@kiltprotocol/sdk-js';
-import generateKeypairs from './generateKeyPairs';
+import { generateKeypairs } from './generateKeyPairs';
 import { getApi } from '../connection';
 
 export async function generateFullDid(
