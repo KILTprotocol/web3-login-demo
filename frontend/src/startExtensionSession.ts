@@ -15,12 +15,13 @@ export async function startExtensionSession() {
     });
     if (!sessionValues.ok) throw Error(sessionValues.statusText);
 
+    const sessionObject = await sessionValues.json();
     const {
         sessionID,
         challenge,
         dAppName,
         dAppEncryptionKeyUri,
-    } = await sessionValues.json();
+    } = sessionObject;
 
     console.log(
         "Session Values fetched from the backend", '\n',
@@ -30,15 +31,22 @@ export async function startExtensionSession() {
         "dAppEncryptionKeyUri:", dAppEncryptionKeyUri, '\n',
     );
 
+    localStorage.setItem('originalSessionValues', JSON.stringify(sessionObject));
+
+
     try {
-        const session = await apiWindow.kilt.sporran.startSession(dAppName, dAppEncryptionKeyUri, challenge);
+        const extensionSession = await apiWindow.kilt.sporran.startSession(dAppName, dAppEncryptionKeyUri, challenge);
         console.log("the session was initialized :) (:  ");
+        console.log("session being returned by the extension:", extensionSession);
+
 
         // Resolve the `session.encryptionKeyUri` and use this key and the nonce 
         // to decrypt `session.encryptedChallenge` and confirm that it’s equal to the original challenge.
         // This verification must happen on the server-side.
 
-        return session;
+
+        localStorage.setItem('extensionSessionInterpretation', JSON.stringify(extensionSession));
+        return extensionSession;
     } catch (error) {
         console.error(`Error initializing ${apiWindow.kilt.sporran.name}: ${apiWindow.kilt.sporran.version}`);
         throw error;

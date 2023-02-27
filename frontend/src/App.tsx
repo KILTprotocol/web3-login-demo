@@ -14,7 +14,7 @@ export default function Home(): JSX.Element {
   }
 
 
-  // Direcktly inject the extensions that support the KILT protocol
+  // Directly inject the extensions that support the KILT protocol
   useEffect(() => {
     getExtensions()
   })

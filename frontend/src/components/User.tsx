@@ -2,6 +2,7 @@ import React from 'react'
 import styles from './User.module.css'
 import Button from './Button'
 import {startExtensionSession} from '../startExtensionSession'
+import { stringify } from 'querystring';
 
 
 interface Props {
@@ -9,8 +10,9 @@ interface Props {
 }
 
 async function startSession() {
-  const session = startExtensionSession();
+  const session = await startExtensionSession();
   console.log("trying to start the session! ")
+
 }
 
 export default function User({ user, connected, onClick }: Props): JSX.Element {
