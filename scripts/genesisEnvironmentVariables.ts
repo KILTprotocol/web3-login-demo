@@ -53,7 +53,7 @@ async function main() {
             console.log("please, define a value for ORIGIN on the .env-file to continue, and then run this file again\n");
             console.log("first it should only run locally. You can use a custom IP or just the default:\n");
             console.log("Default dApps domain origin: \n",
-                'ORIGIN=http://localhost:8080/', "\n\n");
+                'ORIGIN=http://localhost:8080', "\n\n");
             break;
 
         case 2: // then we generate an account
@@ -119,5 +119,6 @@ async function main() {
     }
 
     console.log("\u001b[0m", "reset output appareance");
+    return;
 }
 main(); //run the code
