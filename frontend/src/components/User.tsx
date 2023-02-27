@@ -2,7 +2,6 @@ import React from 'react'
 import styles from './User.module.css'
 import Button from './Button'
 import {startExtensionSession} from '../startExtensionSession'
-import { stringify } from 'querystring';
 
 
 interface Props {
@@ -10,7 +9,7 @@ interface Props {
 }
 
 async function startSession() {
-  const session = await startExtensionSession();
+  await startExtensionSession();
   console.log("trying to start the session! ")
 
 }
