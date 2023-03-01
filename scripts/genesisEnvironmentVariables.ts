@@ -8,14 +8,22 @@ import { generateFullDid } from '../backend/src/utils/attester/generateFullDid';
 
 // try to read the variables from the .env-file:
 dotenv.config();
-const WSS_ADDRESS = process.env.WSS_ADDRESS; // webSocket
-const ORIGIN = process.env.ORIGIN; // domainOrigin
-const DAPP_ACCOUNT_MNEMONIC = process.env.DAPP_ACCOUNT_MNEMONIC; // fundsMnemonic
-const DAPP_ACCOUNT_ADDRESS = process.env.DAPP_ACCOUNT_ADDRESS; // fundsAddress
-const DAPP_DID_MNEMONIC = process.env.DAPP_DID_MNEMONIC; // dAppMnemonic
-const DAPP_DID_URI = process.env.DAPP_DID_URI; // dAppURI
-const DAPP_NAME = process.env.DAPP_NAME; // Your dApp's name
-
+const {
+    // This is the websocket address of the rpc node 
+    WSS_ADDRESS,
+    // This is the URL domain origin of your website
+    ORIGIN,
+    // This is the mnemonic of the Kilt account paying for all transactions
+    DAPP_ACCOUNT_MNEMONIC,
+    // This is the address of the Kilt account paying for all transactions
+    DAPP_ACCOUNT_ADDRESS,
+    // This is the mnemonic of the Kilt DID that identifies your dApp
+    DAPP_DID_MNEMONIC,
+    // This is the URI of the Kilt DID that identifies your dApp
+    DAPP_DID_URI,
+    // This should be a custom name for your dApp
+    DAPP_NAME
+} = process.env;
 
 async function main() {
 
