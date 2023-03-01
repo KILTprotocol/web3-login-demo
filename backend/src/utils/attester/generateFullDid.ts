@@ -68,5 +68,6 @@ export async function generateFullDid(
         throw new Error('Full DID was not successfully fetched.');
     }
 
+    Kilt.disconnect();
     return didDocument;
 }
