@@ -8,11 +8,23 @@ Each instance of this repository needs to include a local list of environment va
 
 The .env-file should be on the root directory of this repository. It's just called `.env`. It is include on the .gitignore list, so that it never gets push to github.
 
+Is it a standard that all enviroment variables are name with capitalized letters. Please, follow the standard and use this name for your enviorement variables:
+
+- WSS_ADDRESS = { webSocket}
+- ORIGIN = { domainOrigin }
+- DAPP_ACCOUNT_MNEMONIC = { fundsMnemonic }
+- DAPP_ACCOUNT_ADDRESS = { fundsAddress }
+- DAPP_DID_MNEMONIC ={ dAppMnemonic }
+- DAPP_DID_URI = { dAppURI }
+- DAPP_NAME = { Your dApp's name }
+
 There is a script to facilitate the generetion of the environment variables that are needed to set up your decentralized App. This script is called `genesisEnvironmentVariables` you can either
 run:
+
 - `yarn  ts-node ./scripts/genesisEnvironmentVariables.ts`
 
 or just:
+
 - `yarn environment`
 
 to execute it once.
