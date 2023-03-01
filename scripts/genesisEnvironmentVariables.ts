@@ -25,13 +25,30 @@ const {
     DAPP_NAME
 } = process.env;
 
+function noWebSocketyet() {
+    console.log('Trouble reading the address of the WebSocket \n\n',
+
+        'Please, define a value for WSS_ADDRESS on the .env-file to continue \n',
+        'To connect to the KILT-Test-Blockchain, named Peregrine (recomended), please save the following: \n\n',
+        'WSS_ADDRESS=wss://peregrine.kilt.io/parachain-public-ws', '\n\n',
+
+        'In the future, if you wish to interact with the production KILT-Blockchain, named Spiritnet, change the address to a web-socket (public Endpoint) of Spiritnet.',
+        'More info under: https://docs.kilt.io/docs/develop/chain/deployments', "\n\n");
+
+}
+
 async function main() {
 
-    console.log("\u001B[38;5;201m", "Making this output purple\n");
+    // Making the output purple
+    console.log("\u001B[38;5;201m");
+
     console.log(
-        "This is a script for an easy creation of the enviroment variables needed for your dApp's functionality.\n",
-        'All eviroment variables need to be saved on a file called ".env" that you need to create and save on the project\'s root directory.\n',
-        "Is it a standard that all enviroment variables are name with capitalized letters. Please, follow the standard.\n",
+        "This is a script for an easy creation of the enviroment variables needed for your dApp's functionality.\n\n",
+
+        'All eviroment variables need to be saved on a file called ".env" that you need to create and save on the project\'s root directory.',
+        'It is a standard that all environment variables are name with capitalized letters.',
+        'Please, follow the standard.\n\n',
+
         "Alternatively, you could create some of the environment values otherwise and let this script do the rest for you. Or (for pros) make them all otherwise and don't use this.\n\n"
     );
 
@@ -51,20 +68,16 @@ async function main() {
         } else if (index === stairs.length - 1) {
             step = stairs.length; // You already climbed up all the stairs
             //throw new Error("It seems like all enviorment variables are already defined.");
-            console.log("It seems like all enviorment variables are already defined.\n",
-                "Take in consideration, that this script does not verify if the environment values already defined are valid.\n\n");
+            console.log(`It seems like all enviorment variables are already defined.\n
+                Take in consideration, that this script does not verify if the environment values already defined are valid.\n\n`);
         }
     }
 
     // Go through the current step:
     switch (step) {
-        case 0: // first assign a websocket of the blockchain you want to interact with:
-            console.log("\ntrouble reading the address of the WebSocket\n");
-            console.log("please, define a value for WSS_ADDRESS on the .env-file to continue\n");
-            console.log("to connect to the KILT-Test-Blockchain, named Peregrine (recomended), please save the following:\n\n\n",
-                'WSS_ADDRESS=wss://peregrine.kilt.io/parachain-public-ws\n\n');
-            console.log("In the future, if you wish to interact with the production KILT-Blockchain, named Spiritnet, change the address to a web-socket (public Endpoint) of Spiritnet.",
-                "More info under: ", "https://docs.kilt.io/docs/develop/chain/deployments", "\n\n");
+        // first assign a websocket of the blockchain you want to interact with:
+        case 0:
+            noWebSocketyet();
             break;
 
         case 1: // then assign where the dApp is going to be reachable
