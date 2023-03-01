@@ -6,6 +6,17 @@ import { generateAccount } from '../backend/src/utils/attester/generateAccount';
 import { generateFullDid } from '../backend/src/utils/attester/generateFullDid';
 
 
+// try to read the variables from the .env-file:
+dotenv.config();
+const WSS_ADDRESS = process.env.WSS_ADDRESS; // webSocket
+const ORIGIN = process.env.ORIGIN; // domainOrigin
+const DAPP_ACCOUNT_MNEMONIC = process.env.DAPP_ACCOUNT_MNEMONIC; // fundsMnemonic
+const DAPP_ACCOUNT_ADDRESS = process.env.DAPP_ACCOUNT_ADDRESS; // fundsAddress
+const DAPP_DID_MNEMONIC = process.env.DAPP_DID_MNEMONIC; // dAppMnemonic
+const DAPP_DID_URI = process.env.DAPP_DID_URI; // dAppURI
+const DAPP_NAME = process.env.DAPP_NAME; // Your dApp's name
+
+
 async function main() {
 
     console.log("\u001B[38;5;201m", "Making this output purple\n");
@@ -16,15 +27,7 @@ async function main() {
         "Alternatively, you could create some of the environment values otherwise and let this script do the rest for you. Or (for pros) make them all otherwise and don't use this.\n\n"
     );
 
-    // try to read the variables from the .env-file:
-    dotenv.config();
-    const WSS_ADDRESS = process.env.WSS_ADDRESS; // webSocket
-    const ORIGIN = process.env.ORIGIN; // domainOrigin
-    const DAPP_ACCOUNT_MNEMONIC = process.env.DAPP_ACCOUNT_MNEMONIC; // fundsMnemonic
-    const DAPP_ACCOUNT_ADDRESS = process.env.DAPP_ACCOUNT_ADDRESS; // fundsAddress
-    const DAPP_DID_MNEMONIC = process.env.DAPP_DID_MNEMONIC; // dAppMnemonic
-    const DAPP_DID_URI = process.env.DAPP_DID_URI; // dAppURI
-    const DAPP_NAME = process.env.DAPP_NAME; // Your dApp's name
+
 
     // figure out your project's current state: 
     let step: number = 0;
