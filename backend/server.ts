@@ -5,7 +5,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import getSessionValues from './src/session/session';
 
-// Letting the server know where 
+// Letting the server know where the environment varibles are
 const projectRoootDirectory = path.dirname(__dirname);
 dotenv.config({ path: `${projectRoootDirectory}/.env` });
 
