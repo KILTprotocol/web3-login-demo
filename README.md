@@ -12,8 +12,8 @@ Defining them is part of the set up of your project.
 The .env-file should be on the root directory of this repository. It's just called `.env`.
 It is include on the .gitignore list, so that it never gets push to github.
 
-Is it a standard that all enviroment variables are name with capitalized letters.
-Please, follow the standard and use this names for your environment variables:
+It is a standard that all enviroment variables are name with capitalized letters.
+Please, follow the standard and use these names for your environment variables:
 
 - WSS_ADDRESS = { webSocket}
 - ORIGIN = { domainOrigin }
