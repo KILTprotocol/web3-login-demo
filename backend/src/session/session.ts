@@ -3,10 +3,11 @@ import { PubSubSessionV1, PubSubSessionV2 } from '../../../frontend/src/utils/ty
 import generateKeypairs from '../utils/attester/generateKeyPairs';
 import { getApi } from '../utils/connection';
 import { Response, Request, NextFunction } from 'express';
+import cache from 'memory-cache';
 
 
 
-export default async function getSessionValues(request: Request, response: Response, next: NextFunction): Promise<void> {
+export async function generateSessionValues(request: Request, response: Response, next: NextFunction): Promise<void> {
     console.log("creating session Values");
     try {
 
@@ -52,7 +53,10 @@ export default async function getSessionValues(request: Request, response: Respo
             dAppEncryptionKeyUri: dAppEncryptionKeyUri,
             challenge: challenge,
         };
+
         console.log(sessionValues);
+        cache.put(sessionID, sessionValues);
+
         response.status(200).send(sessionValues);
     } catch (error) {
         // print the possible error on the frontend
@@ -60,41 +64,65 @@ export default async function getSessionValues(request: Request, response: Respo
     }
 }
 
-export async function verifySession(session: PubSubSessionV1 | PubSubSessionV2) {
+export async function verifySession(request: Request, response: Response, next: NextFunction): Promise<void> {
 
-    const { encryptedChallenge, nonce } = session;
-    let encryptionKeyUri: Kilt.DidResourceUri;
-    if ("encryptionKeyId" in session) { // if session is type PubSubSessionV1
-        encryptionKeyUri = session.encryptionKeyId as Kilt.DidResourceUri;
-    } else {
-        encryptionKeyUri = session.encryptionKeyUri;
+    // check if I got something to verify
+    if (!request.body) {
+        throw new Error("Nothing to verify was passed.");
     }
-    const encryptionKey = await Kilt.Did.resolveKey(encryptionKeyUri);
-    if (!encryptionKey) {
-        throw new Error('an encryption key is required');
+    try {
+        // console.log("request", request);
+        console.log("aqui mmg", typeof request.body);
+        console.log("body", request.body);
+        // extract variables:
+        const { extensionSession: session, serverSessionID } = JSON.parse(request.body);//request.body.json();
+        const { encryptedChallenge, nonce } = session;
+        // This varible has different name depending on the session version
+        let encryptionKeyUri: Kilt.DidResourceUri;
+        // if session is type PubSubSessionV1
+        if ("encryptionKeyId" in session) {
+            encryptionKeyUri = session.encryptionKeyId as Kilt.DidResourceUri;
+        } else {
+            // if session is type PubSubSessionV2
+            encryptionKeyUri = session.encryptionKeyUri;
+        }
+        const encryptionKey = await Kilt.Did.resolveKey(encryptionKeyUri);
+        if (!encryptionKey) {
+            throw new Error('an encryption key is required');
+        }
+
+        // get your encryption Key, a.k.a. Key Agreement
+        const dAppDidMnemonic = process.env.DAPP_DID_MNEMONIC;
+        if (!dAppDidMnemonic) throw new Error("Enter your dApps mnemonic on the .env file");
+
+        const { keyAgreement } = generateKeypairs(dAppDidMnemonic);
+
+        const decryptedBytes = Kilt.Utils.Crypto.decryptAsymmetric(
+            { box: encryptedChallenge, nonce },
+            encryptionKey.publicKey,
+            keyAgreement.secretKey // derived from your seed phrase
+        );
+        // If it fails to decrypt, return.
+        if (!decryptedBytes) {
+            throw new Error('Could not decode/decrypt the challange from the extension');
+        }
+
+        const decryptedChallenge = Kilt.Utils.Crypto.u8aToHex(decryptedBytes);
+        const serverSession = cache.get(serverSessionID);
+        const { challenge: originalChallenge } = serverSession;
+
+        // Compare the decrypted challenge to the challenge you stored earlier.
+        console.log(
+            "originalChallenge: ", originalChallenge,
+            "decrypted challenge: ", decryptedChallenge,
+        );
+        if (decryptedChallenge !== originalChallenge) {
+            throw new Error('Invalid challenge');
+        }
+    } catch (err) {
+        // print the possible error on the frontend
+        next(err);
     }
 
-    // get your encryption Key, a.k.a. Key Agreement
-    const dAppDidMnemonic = process.env.DAPP_DID_MNEMONIC;
-    if (!dAppDidMnemonic) throw new Error("Enter your dApps mnemonic on the .env file");
-
-    const { keyAgreement } = generateKeypairs(dAppDidMnemonic);
-
-    const decryptedBytes = Kilt.Utils.Crypto.decryptAsymmetric(
-        { box: encryptedChallenge, nonce },
-        encryptionKey.publicKey,
-        keyAgreement.secretKey // derived from your seed phrase
-    );
-    // If it fails to decrypt, return.
-    if (!decryptedBytes) {
-        throw new Error('Could not decode');
-    }
-
-    const decryptedChallenge = Kilt.Utils.Crypto.u8aToHex(decryptedBytes);
-
-    // Compare the decrypted challenge to the challenge you stored earlier.
-    if (decryptedChallenge) {
-        throw new Error('Invalid challenge');
-    }
-    return session;
+    return;
 }

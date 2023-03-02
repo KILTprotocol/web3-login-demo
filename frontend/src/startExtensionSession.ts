@@ -5,7 +5,7 @@ export async function startExtensionSession() {
     getExtensions();
 
     // generate and get session values from the backend:
-    const sessionValues = await fetch(`/api/session`, {
+    const serverSessionValues = await fetch(`/api/session/start`, {
         method: "GET", credentials: 'include', headers: {
             accessControlAllowOrigin: '*',
             ContentType: 'application/json',
@@ -13,9 +13,9 @@ export async function startExtensionSession() {
 
         },
     });
-    if (!sessionValues.ok) throw Error(sessionValues.statusText);
+    if (!serverSessionValues.ok) throw Error(serverSessionValues.statusText);
 
-    const sessionObject = await sessionValues.json();
+    const sessionObject = await serverSessionValues.json();
     const {
         sessionID,
         challenge,
@@ -40,9 +40,23 @@ export async function startExtensionSession() {
         console.log("session being returned by the extension:", extensionSession);
 
 
+
         // Resolve the `session.encryptionKeyUri` and use this key and the nonce 
         // to decrypt `session.encryptedChallenge` and confirm that it’s equal to the original challenge.
         // This verification must happen on the server-side.
+
+        console.log("extensionSession", extensionSession);
+        const responseToBackend = JSON.stringify({ extensionSession, serverSessionID: sessionID });
+        console.log("responseToBackend", responseToBackend);
+        await fetch(`/api/session/verify`, {
+            method: "POST", credentials: 'include', headers: {
+                accessControlAllowOrigin: '*',
+                ContentType: 'application/json',
+
+            },
+            body: responseToBackend,
+        });
+
 
 
         localStorage.setItem('extensionSessionInterpretation', JSON.stringify(extensionSession));

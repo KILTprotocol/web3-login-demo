@@ -3,7 +3,7 @@ import path from 'path';
 import express, { Express, Request, Response, Router } from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import getSessionValues from './src/session/session';
+import { generateSessionValues, verifySession } from './src/session/session';
 
 // Letting the server know where the environment varibles are
 const projectRoootDirectory = path.dirname(__dirname);
@@ -23,7 +23,11 @@ app.get('/api', (req: Request, res: Response) => {
   res.status(200).json('Welcome to the API for the KILT Web3 Login');
 });
 
-app.get('/api/session', getSessionValues);
+app.get('/api/session/start', generateSessionValues);
+
+app.post('/api/session/verify', verifySession);
+
+
 
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
