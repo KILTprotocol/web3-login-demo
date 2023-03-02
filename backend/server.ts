@@ -12,7 +12,6 @@ dotenv.config({ path: `${projectRoootDirectory}/.env` });
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
-const router = Router();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
