@@ -40,7 +40,7 @@ export async function getRequestCredential(
 
     const DAPP_DID_URI = process.env.DAPP_DID_URI as Kilt.DidUri
     const DAPP_DID_MNEMONIC = process.env.DAPP_DID_MNEMONIC as string
-    const { keyAgreement } = await generateKeypairs(DAPP_DID_MNEMONIC)
+    const { keyAgreement } = generateKeypairs(DAPP_DID_MNEMONIC)
 
     const message = Kilt.Message.fromBody(
       messageBody,
