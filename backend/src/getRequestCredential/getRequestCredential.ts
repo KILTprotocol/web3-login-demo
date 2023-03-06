@@ -1,6 +1,8 @@
 import * as Kilt from '@kiltprotocol/sdk-js'
-
+import { randomAsHex } from '@polkadot/util-crypto'
+import { useEncryptionCallback } from '../utils/useEncryptionCallback'
 import { NextFunction, Request, Response } from 'express'
+import generateKeypairs from '../utils/generateKeyPairs'
 
 const exampleRequest: Kilt.IRequestCredentialContent = {
   cTypes: [
@@ -12,8 +14,7 @@ const exampleRequest: Kilt.IRequestCredentialContent = {
       ],
       requiredProperties: ['name']
     }
-  ],
-  challenge: '9f1ceac971cce4c61505974f411a9db432949531abe10dde'
+  ]
 }
 
 export async function getRequestCredential(
@@ -24,6 +25,39 @@ export async function getRequestCredential(
   try {
     console.log('Request', JSON.parse(request.body))
     console.log(exampleRequest)
+
+    const session = getSession(request.body.sessionId)
+
+    const { did: claimerSessionDidUri } = Kilt.Did.parse(
+      session.encryptionKeyUri
+    )
+
+    const challenge = randomAsHex()
+    const messageBody: Kilt.IRequestCredential = {
+      content: { ...exampleRequest, challenge: challenge },
+      type: 'request-credential'
+    }
+
+    const DAPP_DID_URI = process.env.DAPP_DID_URI as Kilt.DidUri
+    const DAPP_DID_MNEMONIC = process.env.DAPP_DID_MNEMONIC as string
+    const { keyAgreement } = await generateKeypairs(DAPP_DID_MNEMONIC)
+
+    const message = Kilt.Message.fromBody(
+      messageBody,
+      DAPP_DID_URI,
+      claimerSessionDidUri
+    )
+
+    const { document: dAppDidDocuemnt } = await Kilt.Did.resolve(DAPP_DID_URI)
+
+    const encryptedMessage = Kilt.Message.encrypt(
+      message,
+      useEncryptionCallback({
+        keyAgreement: keyAgreement,
+        keyAgreementUri: dAppDidDocuemnt.keyAgreement?.[0].id
+      }),
+      session.encryptionKeyUri
+    )
     return response
   } catch (error) {
     console.log('Get Request Credential Error', error)
