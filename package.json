@@ -6,7 +6,7 @@
   "author": "KILT <info@kilt.io>",
   "license": "BSD-4-Clause",
   "scripts": {
-    "install": "concurrently \"yarn install\" \"cd ./backend && yarn install\" \"cd ./frontend && yarn install\" ",
+    "install": "concurrently \"cd ./backend && yarn install\" \"cd ./frontend && yarn install\" ",
     "build:client": "cd ./frontend && yarn build",
     "build:well-known": "ts-node ./backend/scripts/genesisWellKnownDidConfig.ts",
     "build": "concurrently yarn:build:*",
