@@ -98,7 +98,8 @@ async function main() {
     }
 
     console.log("If you are still missing some environment values and want the easy way, run this file again.\n");
-    console.log("\u001b[0m", "reset output's appareance");
+    // reset output's appareance:
+    console.log("\u001b[0m");
     return;
 }
 
@@ -113,6 +114,7 @@ function imploreWebSocket() {
         'More info under: https://docs.kilt.io/docs/develop/chain/deployments', "\n\n");
 
 }
+
 function imploreDomainOrigin() {
     console.log("\nTrouble reading the URL-Address of your dApp\n",
         "Please, define a value for ORIGIN on the .env-file to continue\n",
@@ -177,11 +179,10 @@ async function getURI(mnemonic: string) {
         console.log("There is no DID-Document on the chain for the given mnemonic. The corresponding Uri would be useless.",
             "Please, provide a mnemonic of registered DID!",
             "Easy way: delete current mnemonic from the .env-file and run this script again");
-        await Kilt.disconnect();
-        return;
-    };
-    console.log("\n please, save the URI of your dApp's DID to the .env-file to continue!\n",
-        `DAPP_DID_URI=${dAppDidUri}\n`);
+    } else {
+        console.log("\n please, save the URI of your dApp's DID to the .env-file to continue!\n",
+            `DAPP_DID_URI=${dAppDidUri}\n`);
+    }
     await Kilt.disconnect();
 }
 
