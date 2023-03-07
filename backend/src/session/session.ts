@@ -111,8 +111,11 @@ export async function verifySession(request: Request, response: Response, next: 
             "decrypted challenge: ", decryptedChallenge,
         );
         if (decryptedChallenge !== originalChallenge) {
+            response.status(401).send('Session verification failed. The challenges don\'t match.');
             throw new Error('Invalid challenge');
         }
+
+        response.status(200).send('Session succesfully verified. Extension and dApp understand each other.');
     } catch (err) {
         // print the possible error on the frontend
         next(err);

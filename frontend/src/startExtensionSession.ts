@@ -34,9 +34,8 @@ export async function startExtensionSession() {
 
     try {
         const extensionSession = await apiWindow.kilt.sporran.startSession(dAppName, dAppEncryptionKeyUri, challenge);
-        console.log("the session was initialized :) (:  ");
-        console.log("session being returned by the extension:", extensionSession);
-
+        console.log("the session was initialized (¬‿¬)");
+        // console.log("session being returned by the extension:", extensionSession);
 
 
         // Resolve the `session.encryptionKeyUri` and use this key and the nonce 
