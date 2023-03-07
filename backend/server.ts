@@ -13,15 +13,13 @@ dotenv.config({ path: `${projectRoootDirectory}/.env` });
 const app: Express = express();
 const port = process.env.PORT || 3000;
 
-// app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 app.use(cors({ origin: 'http://localhost:3000' }));
 
-console.log(process.env.WSS_ADDRESS);
 app.get('/api', (req: Request, res: Response) => {
-  console.log('hello');
+  console.log(`'/api' triggered`);
   res.status(200).json('Welcome to the API for the KILT Web3 Login');
 });
 
