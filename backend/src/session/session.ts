@@ -65,17 +65,11 @@ export async function generateSessionValues(request: Request, response: Response
 }
 
 export async function verifySession(request: Request, response: Response, next: NextFunction): Promise<void> {
-
-    // check if I got something to verify
-    if (!request.body) {
-        throw new Error("Nothing to verify was passed.");
-    }
     try {
-        // console.log("request", request);
-        console.log("aqui mmg", typeof request.body);
-        console.log("body", request.body);
+        // console.log("body", request.body);
+
         // extract variables:
-        const { extensionSession: session, serverSessionID } = JSON.parse(request.body);//request.body.json();
+        const { extensionSession: session, serverSessionID } = request.body;
         const { encryptedChallenge, nonce } = session;
         // This varible has different name depending on the session version
         let encryptionKeyUri: Kilt.DidResourceUri;

@@ -45,18 +45,15 @@ export async function startExtensionSession() {
         // to decrypt `session.encryptedChallenge` and confirm that it’s equal to the original challenge.
         // This verification must happen on the server-side.
 
-        console.log("extensionSession", extensionSession);
         const responseToBackend = JSON.stringify({ extensionSession, serverSessionID: sessionID });
-        console.log("responseToBackend", responseToBackend);
+        // console.log("responseToBackend", responseToBackend);
         await fetch(`/api/session/verify`, {
             method: "POST", credentials: 'include', headers: {
-                accessControlAllowOrigin: '*',
                 'Content-type': 'application/json',
-
+                Accept: 'application/json',
             },
             body: responseToBackend,
         });
-
 
 
         localStorage.setItem('extensionSessionInterpretation', JSON.stringify(extensionSession));

@@ -13,9 +13,11 @@ dotenv.config({ path: `${projectRoootDirectory}/.env` });
 const app: Express = express();
 const port = process.env.PORT || 3000;
 
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
-app.use(cors({ origin: 'http://localhost:3000/' }));
+app.use(cors({ origin: 'http://localhost:3000' }));
 
 console.log(process.env.WSS_ADDRESS);
 app.get('/api', (req: Request, res: Response) => {
