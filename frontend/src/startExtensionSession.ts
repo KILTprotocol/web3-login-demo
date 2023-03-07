@@ -51,7 +51,7 @@ export async function startExtensionSession() {
         await fetch(`/api/session/verify`, {
             method: "POST", credentials: 'include', headers: {
                 accessControlAllowOrigin: '*',
-                ContentType: 'application/json',
+                'Content-type': 'application/json',
 
             },
             body: responseToBackend,
