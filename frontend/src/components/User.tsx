@@ -9,8 +9,8 @@ interface Props {
 }
 
 async function startSession() {
-  await startExtensionSession();
   console.log("trying to start the session! ")
+  await startExtensionSession();
 
 }
 
