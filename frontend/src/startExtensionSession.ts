@@ -8,7 +8,7 @@ export async function startExtensionSession() {
     const serverSessionValues = await fetch(`/api/session/start`, {
         method: "GET", credentials: 'include', headers: {
             accessControlAllowOrigin: '*',
-            ContentType: 'application/json',
+            'Content-type': 'application/json',
             Accept: 'application/json',
 
         },
