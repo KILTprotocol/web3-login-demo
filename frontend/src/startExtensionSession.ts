@@ -31,8 +31,6 @@ export async function startExtensionSession() {
         "dAppEncryptionKeyUri:", dAppEncryptionKeyUri, '\n',
     );
 
-    localStorage.setItem('originalSessionValues', JSON.stringify(sessionObject));
-
 
     try {
         const extensionSession = await apiWindow.kilt.sporran.startSession(dAppName, dAppEncryptionKeyUri, challenge);
@@ -55,8 +53,6 @@ export async function startExtensionSession() {
             body: responseToBackend,
         });
 
-
-        localStorage.setItem('extensionSessionInterpretation', JSON.stringify(extensionSession));
         return extensionSession;
     } catch (error) {
         console.error(`Error initializing ${apiWindow.kilt.sporran.name}: ${apiWindow.kilt.sporran.version}`);
