@@ -48,20 +48,9 @@ async function main() {
     let step: number = 0;
     let stairs: (string | undefined)[] = [WSS_ADDRESS, ORIGIN, DAPP_ACCOUNT_MNEMONIC, DAPP_ACCOUNT_ADDRESS, DAPP_DID_MNEMONIC, DAPP_DID_URI, DAPP_NAME];
 
-    for (let index = 0; index < stairs.length; index++) {
-        const value = stairs[index];
-
-        if (!value) { // if the variable is still undefined
-            step = index;
-            console.log(`the ${index}-th enviorment variable is still undefined \n`);
-            break; // end this for-loop
-        } else if (index === stairs.length - 1) {
-            step = stairs.length; // You already climbed up all the stairs
-            //throw new Error("It seems like all enviorment variables are already defined.");
-            console.log(`It seems like all enviorment variables are already defined.\n
-               >> Take in consideration, that this script does not verify if the environment values already defined are valid. <<\n\n`);
-        }
-    }
+    // find the first element in the array "stairs" that it is still undefined. 
+    step = stairs.indexOf(undefined);
+    // The indexOf() method returns the first index at which a given element can be found in the array, or -1 if it is not present.
 
     // Go through the current step:
     switch (step) {
@@ -100,6 +89,11 @@ async function main() {
         // ask you to choose a name for your dApp
         case 6:
             imploreName();
+            break;
+        // if (step = -1):
+        default:
+            console.log(`It seems like all enviorment variables are already defined.\n
+               >> Take in consideration, that this script does not verify if the environment values already defined are valid. <<\n\n`);
             break;
     }
 
