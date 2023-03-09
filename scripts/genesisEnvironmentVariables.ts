@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import * as Kilt from '@kiltprotocol/sdk-js';
-import { mnemonicGenerate, mnemonicToMiniSecret } from '@polkadot/util-crypto';
+import { mnemonicGenerate } from '@polkadot/util-crypto';
 import { generateKeypairs } from '../backend/src/utils/attester/generateKeyPairs';
 import { generateAccount } from '../backend/src/utils/attester/generateAccount';
 import { generateFullDid } from '../backend/src/utils/attester/generateFullDid';
