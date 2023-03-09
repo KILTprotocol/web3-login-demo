@@ -102,7 +102,8 @@ async function main() {
     console.log("\u001b[0m");
     return;
 }
-
+// The JavaScript (ergo also the Typescript) interpreter hoists the entire function declaration to the top of the current scope.
+// So the main function can use the following functions wthout problem. 
 function imploreWebSocket() {
     console.log('Trouble reading the address of the WebSocket \n\n',
 
