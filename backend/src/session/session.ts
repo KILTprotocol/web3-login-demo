@@ -57,13 +57,14 @@ export async function generateSessionValues(request: Request, response: Response
             challenge: challenge,
         };
 
+
         console.log(sessionValues);
 
         sessionStorage[sessionID] = sessionValues;
 
         // You can see all sessions Values (including old ones) with this:
         // console.log('All sessions stored:', sessionStorage);
-        // to reset this list 
+        // to reset this list restart the server
 
         response.status(200).send(sessionValues);
     } catch (error) {
@@ -115,7 +116,7 @@ export async function verifySession(request: Request, response: Response, next: 
 
         // Compare the decrypted challenge to the challenge you stored earlier.
         console.log(
-            "originalChallenge: ", originalChallenge,
+            "originalChallenge: ", originalChallenge, "\n",
             "decrypted challenge: ", decryptedChallenge,
         );
         if (decryptedChallenge !== originalChallenge) {
