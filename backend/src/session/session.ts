@@ -3,8 +3,9 @@ import { PubSubSessionV1, PubSubSessionV2 } from '../../../frontend/src/utils/ty
 import generateKeypairs from '../utils/attester/generateKeyPairs';
 import { getApi } from '../utils/connection';
 import { Response, Request, NextFunction } from 'express';
-import cache from 'memory-cache';
 
+// Object to store all session values on the cache:
+const sessionStorage: { [key: string]: any; } = {};
 
 
 export async function generateSessionValues(request: Request, response: Response, next: NextFunction): Promise<void> {
@@ -15,6 +16,8 @@ export async function generateSessionValues(request: Request, response: Response
 
         const didUri = process.env.DAPP_DID_URI as Kilt.DidUri;
         const dAppName = process.env.DAPP_NAME ?? 'Your dApp Name';
+        const DAPP_DID_MNEMONIC = process.env.DAPP_DID_MNEMONIC;
+        const { keyAgreement } = generateKeypairs(DAPP_DID_MNEMONIC as string);
 
         // console.log(`printing the didUri${didUri}`);
         if (!didUri) throw new Error("enter your dApp's DID URI on the .env-file first");
@@ -55,7 +58,12 @@ export async function generateSessionValues(request: Request, response: Response
         };
 
         console.log(sessionValues);
-        cache.put(sessionID, sessionValues);
+
+        sessionStorage[sessionID] = sessionValues;
+
+        // You can see all sessions Values (including old ones) with this:
+        // console.log('All sessions stored:', sessionStorage);
+        // to reset this list 
 
         response.status(200).send(sessionValues);
     } catch (error) {
@@ -102,8 +110,8 @@ export async function verifySession(request: Request, response: Response, next: 
         }
 
         const decryptedChallenge = Kilt.Utils.Crypto.u8aToHex(decryptedBytes);
-        const serverSession = cache.get(serverSessionID);
-        const { challenge: originalChallenge } = serverSession;
+        const originalChallenge = sessionStorage[serverSessionID].challenge;
+
 
         // Compare the decrypted challenge to the challenge you stored earlier.
         console.log(
