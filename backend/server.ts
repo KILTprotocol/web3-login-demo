@@ -11,12 +11,14 @@ dotenv.config({ path: `${projectRoootDirectory}/.env` });
 
 
 const app: Express = express();
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
+
+
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
-app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(cors({ origin: [`http://localhost:${PORT}`, `http://127.0.0.1:${PORT}`, `http://[::1]:${PORT}`, `http://[0:0:0:0:0:0:0:1]:${PORT}`] }));
 
 app.get('/api', (req: Request, res: Response) => {
   console.log(`'/api' triggered`);
@@ -29,6 +31,6 @@ app.post('/api/session/verify', verifySession);
 
 
 
-app.listen(port, () => {
-  console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`⚡️[server]: Server is running at http://localhost:${PORT}`);
 });
