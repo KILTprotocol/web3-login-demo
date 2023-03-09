@@ -1,6 +1,6 @@
-// import { useState, useEffect } from 'react';
-// import { cryptoWaitReady, randomAsHex, signatureVerify } from '@polkadot/util-crypto';
 import { getExtensions, apiWindow } from './utils/getExtension';
+
+
 export async function startExtensionSession() {
     getExtensions();
 
