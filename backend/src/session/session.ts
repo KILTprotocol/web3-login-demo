@@ -18,8 +18,6 @@ export async function generateSessionValues(
 
     const DAPP_DID_URI = process.env.DAPP_DID_URI as Kilt.DidUri
     const dAppName = process.env.DAPP_NAME ?? 'Your dApp Name'
-    const DAPP_DID_MNEMONIC = process.env.DAPP_DID_MNEMONIC
-    const { keyAgreement } = generateKeypairs(DAPP_DID_MNEMONIC as string)
 
     if (!DAPP_DID_URI)
       throw new Error("enter your dApp's DID URI on the .env-file first")
@@ -47,10 +45,6 @@ export async function generateSessionValues(
       throw new Error(
         'The DID of your dApp needs to have an authentification Key to sing stuff. Go get one and register in on chain.'
       )
-    }
-
-    if (didDocument.keyAgreement[0].id !== keyAgreement.publicKey.toString()) {
-      throw new Error('The public key Agrrement does not match. ')
     }
 
     // this basiclly says how are you going to encrypt:
