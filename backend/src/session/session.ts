@@ -1,5 +1,4 @@
 import * as Kilt from '@kiltprotocol/sdk-js';
-import { PubSubSessionV1, PubSubSessionV2 } from '../../../frontend/src/utils/types';
 import generateKeypairs from '../utils/attester/generateKeyPairs';
 import { getApi } from '../utils/connection';
 import { Response, Request, NextFunction } from 'express';
