@@ -13,15 +13,15 @@ export async function generateSessionValues(request: Request, response: Response
 
         await getApi(); // connects to the websocket of your, in .env, specified blockchain
 
-        const didUri = process.env.DAPP_DID_URI as Kilt.DidUri;
+        const DAPP_DID_URI = process.env.DAPP_DID_URI as Kilt.DidUri;
         const dAppName = process.env.DAPP_NAME ?? 'Your dApp Name';
         const DAPP_DID_MNEMONIC = process.env.DAPP_DID_MNEMONIC;
         const { keyAgreement } = generateKeypairs(DAPP_DID_MNEMONIC as string);
 
-        if (!didUri) throw new Error("enter your dApp's DID URI on the .env-file first");
+        if (!DAPP_DID_URI) throw new Error("enter your dApp's DID URI on the .env-file first");
 
         // fetch the DID document from the blockchain
-        const resolved = await Kilt.Did.resolve(didUri);
+        const resolved = await Kilt.Did.resolve(DAPP_DID_URI);
 
         // Assure this did has a document on chain
         if (resolved === null) {
@@ -41,7 +41,7 @@ export async function generateSessionValues(request: Request, response: Response
 
         // this basiclly says how are you going to encrypt:
         const dAppEncryptionKeyUri =
-            `${didUri}${didDocument.keyAgreement[0].id}` as Kilt.DidResourceUri;
+            `${DAPP_DID_URI}${didDocument.keyAgreement[0].id}` as Kilt.DidResourceUri;
 
         // Generate and store sessionID and challenge on the server side for the next step.
         // A UUID is a universally unique identifier, a 128-bit label. Here express as a string of a hexaheximal number.
