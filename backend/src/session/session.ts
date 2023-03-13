@@ -4,7 +4,7 @@ import generateKeypairs from '../utils/attester/generateKeyPairs';
 import { getApi } from '../utils/connection';
 import { Response, Request, NextFunction } from 'express';
 
-// Object to store all session values on the cache:
+// Object to store all session values on the memory-cache:
 const sessionStorage: { [key: string]: any; } = {};
 
 
@@ -19,7 +19,6 @@ export async function generateSessionValues(request: Request, response: Response
         const DAPP_DID_MNEMONIC = process.env.DAPP_DID_MNEMONIC;
         const { keyAgreement } = generateKeypairs(DAPP_DID_MNEMONIC as string);
 
-        // console.log(`printing the didUri${didUri}`);
         if (!didUri) throw new Error("enter your dApp's DID URI on the .env-file first");
 
         // fetch the DID document from the blockchain
@@ -75,6 +74,8 @@ export async function generateSessionValues(request: Request, response: Response
 
 export async function verifySession(request: Request, response: Response, next: NextFunction): Promise<void> {
     try {
+        // the body is the wrapper for the information send by the frontend 
+        // You could print it with:
         // console.log("body", request.body);
 
         // extract variables:
