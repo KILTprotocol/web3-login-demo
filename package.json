@@ -9,11 +9,10 @@
   "scripts": {
     "install": "concurrently \"cd ./backend && yarn install\" \"cd ./frontend && yarn install\" ",
     "build:client": "cd ./frontend && yarn build",
-    "build:server": "cd ./backend && npx tsc",
     "build": "concurrently yarn:build:*",
     "build:well-known": "ts-node ./scripts/genesisWellKnownDidConfig.ts",
     "start:client": "cd ./frontend && yarn start",
-    "start:server": "cd ./backend && nodemon build/server.js",
+    "start:server": "cd ./backend && yarn start",
     "start": "concurrently yarn:start:*",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -46,6 +45,7 @@
     "@polkadot/util": "^10.4.2",
     "@types/valid-url": "^1.0.3",
     "dotenv": "^16.0.3",
+    "eslint": "^8.31.0",
     "ts-node": "^10.9.1",
     "valid-url": "^1.0.9"
   }
