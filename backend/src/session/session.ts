@@ -1,5 +1,6 @@
 import * as Kilt from '@kiltprotocol/sdk-js'
 import { Response, Request, NextFunction } from 'express'
+import jwt from 'jsonwebtoken'
 
 import { generateKeypairs } from '../utils/attester/generateKeyPairs'
 import { getApi } from '../utils/connection'
@@ -7,70 +8,75 @@ import { getApi } from '../utils/connection'
 // Object to store all session values on the memory-cache:
 const sessionStorage: { [key: string]: any } = {}
 
-export async function generateSessionValues(
+export async function generateSessionValues(): Promise<Object> {
+  console.log('creating session Values')
+  await getApi() // connects to the websocket of your, in .env, specified blockchain
+
+  const DAPP_DID_URI = process.env.DAPP_DID_URI as Kilt.DidUri
+  const dAppName = process.env.DAPP_NAME ?? 'Your dApp Name'
+
+  if (!DAPP_DID_URI)
+    throw new Error("enter your dApp's DID URI on the .env-file first")
+
+  // fetch the DID document from the blockchain
+  const resolved = await Kilt.Did.resolve(DAPP_DID_URI)
+
+  // Assure this did has a document on chain
+  if (resolved === null) {
+    throw new Error('DID could not be resolved')
+  }
+  if (!resolved.document) {
+    throw new Error(
+      'No DID document could be fetched from your given dApps URI'
+    )
+  }
+  const didDocument = resolved.document
+  // If there the DID does not have any key agreement key, throw
+  if (!didDocument.keyAgreement || !didDocument.keyAgreement[0]) {
+    throw new Error(
+      'The DID of your dApp needs to have an Key Agreement to comunicate. Go get one and register in on chain.'
+    )
+  }
+  if (!didDocument.authentication || !didDocument.authentication[0]) {
+    throw new Error(
+      'The DID of your dApp needs to have an authentification Key to sing stuff. Go get one and register in on chain.'
+    )
+  }
+
+  // this basiclly says how are you going to encrypt:
+  const dAppEncryptionKeyUri =
+    `${DAPP_DID_URI}${didDocument.keyAgreement[0].id}` as Kilt.DidResourceUri
+
+  // Generate and store sessionID and challenge on the server side for the next step.
+  // A UUID is a universally unique identifier, a 128-bit label. Here express as a string of a hexaheximal number.
+  const sessionID = Kilt.Utils.UUID.generate()
+  const challenge = Kilt.Utils.UUID.generate()
+
+  const sessionValues = {
+    sessionID: sessionID,
+    dAppName: dAppName,
+    dAppEncryptionKeyUri: dAppEncryptionKeyUri,
+    challenge: challenge
+  }
+
+  console.log(sessionValues)
+
+  sessionStorage[sessionID] = sessionValues
+
+  // You can see all sessions Values (including old ones) with this:
+  // console.log('All sessions stored:', sessionStorage);
+  // to reset this list restart the server
+
+  return sessionValues
+}
+
+export async function sendSessionValues(
   request: Request,
   response: Response,
   next: NextFunction
 ): Promise<void> {
-  console.log('creating session Values')
   try {
-    await getApi() // connects to the websocket of your, in .env, specified blockchain
-
-    const DAPP_DID_URI = process.env.DAPP_DID_URI as Kilt.DidUri
-    const dAppName = process.env.DAPP_NAME ?? 'Your dApp Name'
-
-    if (!DAPP_DID_URI)
-      throw new Error("enter your dApp's DID URI on the .env-file first")
-
-    // fetch the DID document from the blockchain
-    const resolved = await Kilt.Did.resolve(DAPP_DID_URI)
-
-    // Assure this did has a document on chain
-    if (resolved === null) {
-      throw new Error('DID could not be resolved')
-    }
-    if (!resolved.document) {
-      throw new Error(
-        'No DID document could be fetched from your given dApps URI'
-      )
-    }
-    const didDocument = resolved.document
-    // If there the DID does not have any key agreement key, throw
-    if (!didDocument.keyAgreement || !didDocument.keyAgreement[0]) {
-      throw new Error(
-        'The DID of your dApp needs to have an Key Agreement to comunicate. Go get one and register in on chain.'
-      )
-    }
-    if (!didDocument.authentication || !didDocument.authentication[0]) {
-      throw new Error(
-        'The DID of your dApp needs to have an authentification Key to sing stuff. Go get one and register in on chain.'
-      )
-    }
-
-    // this basiclly says how are you going to encrypt:
-    const dAppEncryptionKeyUri =
-      `${DAPP_DID_URI}${didDocument.keyAgreement[0].id}` as Kilt.DidResourceUri
-
-    // Generate and store sessionID and challenge on the server side for the next step.
-    // A UUID is a universally unique identifier, a 128-bit label. Here express as a string of a hexaheximal number.
-    const sessionID = Kilt.Utils.UUID.generate()
-    const challenge = Kilt.Utils.UUID.generate()
-
-    const sessionValues = {
-      sessionID: sessionID,
-      dAppName: dAppName,
-      dAppEncryptionKeyUri: dAppEncryptionKeyUri,
-      challenge: challenge
-    }
-
-    console.log(sessionValues)
-
-    sessionStorage[sessionID] = sessionValues
-
-    // You can see all sessions Values (including old ones) with this:
-    // console.log('All sessions stored:', sessionStorage);
-    // to reset this list restart the server
-
+    const sessionValues = await generateSessionValues()
     response.status(200).send(sessionValues)
   } catch (error) {
     // print the possible error on the frontend
@@ -153,4 +159,26 @@ export async function verifySession(
   }
 
   return
+}
+
+export async function generateJWT(
+  request: Request,
+  response: Response,
+  next: NextFunction
+): Promise<void> {
+  try {
+    const payload = await generateSessionValues()
+    const secretKey = 'JWT_Encoder'
+    const options = {
+      expiresIn: '1d'
+    }
+    // default to algorithm: 'HS256',
+    const token = jwt.sign(payload, secretKey, options)
+
+    console.log(token)
+    response.status(200).send(token)
+  } catch (error) {
+    // print the possible error on the frontend
+    next(error)
+  }
 }

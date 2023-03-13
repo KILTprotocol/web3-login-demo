@@ -5,7 +5,11 @@ import express, { Express, Request, Response } from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 
-import { generateSessionValues, verifySession } from './src/session/session'
+import {
+  sendSessionValues,
+  verifySession,
+  generateJWT
+} from './src/session/session'
 
 // Letting the server know where the environment varibles are
 const projectRoootDirectory = path.dirname(__dirname)
@@ -32,7 +36,7 @@ app.get('/api', (req: Request, res: Response) => {
   res.status(200).json('Welcome to the API for the KILT Web3 Login')
 })
 
-app.get('/api/session/start', generateSessionValues)
+app.get('/api/session/start', sendSessionValues)
 
 app.post('/api/session/verify', verifySession)
 

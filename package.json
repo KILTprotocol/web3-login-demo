@@ -47,6 +47,7 @@
     "@polkadot/util-crypto": "^11.0.2",
     "@types/valid-url": "^1.0.3",
     "dotenv": "^16.0.3",
+    "jsonwebtoken": "^9.0.0",
     "ts-node": "^10.9.1",
     "valid-url": "^1.0.9"
   }
