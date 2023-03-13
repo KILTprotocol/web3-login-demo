@@ -154,7 +154,8 @@ async function main() {
     console.log('didResolveResult', didResolveResult);
     throw new Error('DID must be resolvable (i.e. not deleted)');
   }
-  const assertionMethodKeyId = didResolveResult.document.assertionMethod![0].id;
+  if (didResolveResult.document.assertionMethod === undefined) throw new Error("No assertion Key disponible.");
+  const assertionMethodKeyId = didResolveResult.document.assertionMethod[0].id;
 
   // to declare the SignCallBacks is a bit tricky. You either have to speficy the type of every return variable, or of the whole return.
 
