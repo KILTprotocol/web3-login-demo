@@ -54,30 +54,31 @@ async function main() {
   // Fetch variables from .env file:
   dotenv.config();
 
-  const dAppURI =
-    (process.env.DAPP_DID_URI as Kilt.DidUri) ??
-    (`did:kilt:4${'noURIEstablished'}` as Kilt.DidUri);
-  const domainOrigin = process.env.ORIGIN ?? 'no origin assiged';
-  const dAppMnemonic =
-    process.env.DAPP_DID_MNEMONIC ?? 'your dApp needs an Identity ';
-  const fundsMnemonic =
-    process.env.DAPP_ACCOUNT_MNEMONIC ?? 'your dApp needs an Sponsor ';
-
-  console.log('The enviorment variables are:');
-  console.log('dAppURI= ', dAppURI);
-  console.log('domainOrigin= ', domainOrigin);
-  console.log('dAppMnemonic= ', dAppMnemonic);
-  console.log('fundsMnemonic= ', fundsMnemonic, '\n');
+  const dAppURI = process.env.DAPP_DID_URI as Kilt.DidUri ?? `did:kilt:4${'noURIEstablished'}` as Kilt.DidUri;
+  const domainOrigin = process.env.ORIGIN ?? 'no origin assiged'; // don't put a slash / at the end!
+  const dAppMnemonic = process.env.DAPP_DID_MNEMONIC ?? 'your dApp needs an Identity ';
+  const fundsMnemonic = process.env.DAPP_ACCOUNT_MNEMONIC ?? 'your dApp needs an Sponsor ';
 
   //Connect to the webSocket. This tells the Kilt Api to wich node to interact, and ergo also the blockchain (Spiritnet or Peregrine)
   const webSocket = process.env.WSS_ADDRESS;
+  const webSocket = process.env.WSS_ADDRESS;
   if (webSocket) {
+    await Kilt.connect(webSocket);
     await Kilt.connect(webSocket);
   } else {
     throw new Error(
       'You need to define, on the .env, the WebSocket you want to connect with.'
     );
+    );
   }
+
+  console.log('The enviorment variables are: \n',
+    'webSocket= ', webSocket,
+    'dAppURI= ', dAppURI,
+    'domainOrigin= ', domainOrigin,
+    'dAppMnemonic= ', dAppMnemonic,
+    'fundsMnemonic= ', fundsMnemonic, '\n');
+
 
   // Before we start, it makes sense to check if the project already has a well-known-did-configuration.
   // Why? Because each time we make a new one, an attestation is needed and that costs a fee. If working with the production Blockchain, you would want to spare this fee.
@@ -91,6 +92,7 @@ async function main() {
     );
     try {
       await verifyDidConfigPresentation(dAppURI, currentWellKnown, domainOrigin); // this will deliver an error, if the presentation can´t be verify
+      await verifyDidConfigPresentation(dAppURI, currentWellKnown, domainOrigin); // this will deliver an error, if the presentation can´t be verify
 
       //if no error:
       console.log(
@@ -102,6 +104,7 @@ async function main() {
     } catch (err) {
       console.log(
         "The current well-known-did-config of your project is not valid (anymore). \n Let's proceed with the first step to make a new one!"
+      );
       );
       // if this is case, don't trow an error to the next catch
     }

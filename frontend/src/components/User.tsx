@@ -1,8 +1,17 @@
 import React from 'react'
 import styles from './User.module.css'
+import Button from './Button'
+import {startExtensionSession} from '../startExtensionSession'
+
 
 interface Props {
   [x: string]: any
+}
+
+async function startSession() {
+  console.log("trying to start the session! ")
+  await startExtensionSession();
+
 }
 
 export default function User({ user, connected, onClick }: Props): JSX.Element {
@@ -38,9 +47,9 @@ export default function User({ user, connected, onClick }: Props): JSX.Element {
         </svg>
         <span className={styles.text}>{user || 'guest'}</span>
       </div>
-      <a className={styles.action} onClick={onClick}>
+      <Button className={styles.action} onClick={startSession}>
         {!connected ? 'connect' : user ? 'logout' : 'login'}
-      </a>
+      </Button>
     </div>
   )
 }
