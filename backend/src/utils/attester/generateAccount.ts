@@ -16,7 +16,7 @@ export function generateAccount(mnemonic: string): Kilt.KiltKeyringPair {
   // });
   // const account = keyring.addFromMnemonic(mnemonic) as Kilt.KiltKeyringPair;
 
-  // try loging it out:
+  // try logging it out:
   // console.log('acount', JSON.stringify(account, null, 2));
 
   return account
