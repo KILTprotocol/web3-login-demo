@@ -2,9 +2,9 @@ import * as Kilt from '@kiltprotocol/sdk-js'
 
 import { getApi } from '../connection'
 
-import generateKeypairs from './generateKeyPairs'
+import { generateKeypairs } from './generateKeyPairs'
 
-export default async function generateFullDid(
+export async function generateFullDid(
   submitterAccount: Kilt.KiltKeyringPair,
   mnemonic: string
 ): Promise<Kilt.DidDocument> {
@@ -75,5 +75,6 @@ export default async function generateFullDid(
     throw new Error('Full DID was not successfully fetched.')
   }
 
+  Kilt.disconnect()
   return didDocument
 }

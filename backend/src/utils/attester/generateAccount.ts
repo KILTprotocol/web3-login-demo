@@ -1,9 +1,7 @@
 import { mnemonicToMiniSecret } from '@polkadot/util-crypto'
 import * as Kilt from '@kiltprotocol/sdk-js'
 
-export default function generateAccount(
-  mnemonic: string
-): Kilt.KiltKeyringPair {
+export function generateAccount(mnemonic: string): Kilt.KiltKeyringPair {
   // console.log("mnemonic as input for generateAccount()", mnemonic);
 
   // Currently, the default the keytype used by the Kilt-team is "sr25519"
