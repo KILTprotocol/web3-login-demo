@@ -4,72 +4,72 @@ import {
   KiltAddress,
   DidResourceUri,
   Hash
-} from '@kiltprotocol/types';
-import { HexString } from '@polkadot/util/types';
+} from '@kiltprotocol/types'
+import { HexString } from '@polkadot/util/types'
 import {
   SelfSignedProof,
   VerifiableCredential,
   constants
-} from '@kiltprotocol/vc-export';
+} from '@kiltprotocol/vc-export'
 
-export type This = typeof globalThis;
+export type This = typeof globalThis
 
 export interface IEncryptedMessageV1 {
   /** ID of the key agreement key of the receiver DID used to encrypt the message */
-  receiverKeyId: DidResourceUri;
+  receiverKeyId: DidResourceUri
 
   /** ID of the key agreement key of the sender DID used to encrypt the message */
-  senderKeyId: DidResourceUri;
+  senderKeyId: DidResourceUri
 
   /** ciphertext as hexadecimal */
-  ciphertext: string;
+  ciphertext: string
 
   /** 24 bytes nonce as hexadecimal */
-  nonce: string;
+  nonce: string
 }
 
 export interface PubSubSessionV1 {
   /** Configure the callback the extension must use to send messages to the dApp. Overrides previous values. */
   listen: (
     callback: (message: IEncryptedMessageV1) => Promise<void>
-  ) => Promise<void>;
+  ) => Promise<void>
 
   /** send the encrypted message to the extension */
-  send: (message: IEncryptedMessageV1) => Promise<void>;
+  send: (message: IEncryptedMessageV1) => Promise<void>
 
   /** close the session and stop receiving further messages */
-  close: () => Promise<void>;
+  close: () => Promise<void>
 
   /** ID of the key agreement key of the temporary DID the extension will use to encrypt the session messages */
-  encryptionKeyId: string;
+  encryptionKeyId: string
 
   /** bytes as hexadecimal */
-  encryptedChallenge: string;
+  encryptedChallenge: string
 
   /** 24 bytes nonce as hexadecimal */
-  nonce: string;
+  nonce: string
 }
 
 export interface PubSubSessionV2 {
   /** Configure the callback the extension must use to send messages to the dApp. Overrides previous values. */
   listen: (
     callback: (message: IEncryptedMessage) => Promise<void>
-  ) => Promise<void>;
+  ) => Promise<void>
 
   /** send the encrypted message to the extension */
-  send: (message: IEncryptedMessage) => Promise<void>;
+  send: (message: IEncryptedMessage) => Promise<void>
 
   /** close the session and stop receiving further messages */
-  close: () => Promise<void>;
+  close: () => Promise<void>
 
   /** ID of the key agreement key of the temporary DID the extension will use to encrypt the session messages */
-  encryptionKeyUri: DidResourceUri;
+  encryptionKeyUri: DidResourceUri
 
   /** bytes as hexadecimal */
-  encryptedChallenge: string;
+  encryptedChallenge: string
 
   /** 24 bytes nonce as hexadecimal */
-  nonce: string;
+  nonce: string
 }
 
 export interface InjectedWindowProvider<T> {
@@ -80,52 +80,52 @@ export interface InjectedWindowProvider<T> {
     dAppEncryptionKeyId: DidResourceUri,
     /** 24 random bytes as hexadecimal */
     challenge: string
-  ) => Promise<T>;
+  ) => Promise<T>
   /** human-readable name of the extension */
-  name: string;
+  name: string
   /** version of the extension */
-  version: string;
-  specVersion: '1.0' | '3.0';
+  version: string
+  specVersion: '1.0' | '3.0'
   signWithDid: (
     plaintext: string
-  ) => Promise<{ signature: string; didKeyUri: DidResourceUri; }>;
+  ) => Promise<{ signature: string; didKeyUri: DidResourceUri }>
   signExtrinsicWithDid: (
     extrinsic: HexString,
     signer: KiltAddress
-  ) => Promise<{ signed: HexString; didKeyUri: DidResourceUri; }>;
+  ) => Promise<{ signed: HexString; didKeyUri: DidResourceUri }>
   getSignedDidCreationExtrinsic: (
     submitter: KiltAddress
-  ) => Promise<{ signedExtrinsic: HexString; }>;
+  ) => Promise<{ signedExtrinsic: HexString }>
 }
 
 export interface ApiWindow extends This {
   kilt: Record<
     string,
     InjectedWindowProvider<PubSubSessionV1 | PubSubSessionV2>
-  >;
+  >
 }
 
 export interface CredentialSubject {
-  id: DidUri;
-  origin: string;
-  rootHash: Hash;
+  id: DidUri
+  origin: string
+  rootHash: Hash
 }
 
 const context = [
   constants.DEFAULT_VERIFIABLECREDENTIAL_CONTEXT,
-  'https://identity.foundation/.well-known/did-configuration/v1',
-];
+  'https://identity.foundation/.well-known/did-configuration/v1'
+]
 export interface DomainLinkageCredential
   extends Omit<
     VerifiableCredential,
     '@context' | 'legitimationIds' | 'credentialSubject' | 'proof'
   > {
-  '@context': typeof context;
-  credentialSubject: CredentialSubject;
-  proof: SelfSignedProof;
+  '@context': typeof context
+  credentialSubject: CredentialSubject
+  proof: SelfSignedProof
 }
 
 export interface VerifiableDomainLinkagePresentation {
-  '@context': string;
-  linked_dids: [DomainLinkageCredential];
+  '@context': string
+  linked_dids: [DomainLinkageCredential]
 }
