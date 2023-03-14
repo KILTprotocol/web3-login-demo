@@ -1,8 +1,9 @@
 import * as Kilt from '@kiltprotocol/sdk-js'
 import { randomAsHex } from '@polkadot/util-crypto'
-import { useEncryptionCallback } from '../utils/useEncryptionCallback'
+import { encryptionCallback } from '../utils/encryptionCallback'
 import { NextFunction, Request, Response } from 'express'
-import generateKeypairs from '../utils/generateKeyPairs'
+import { generateKeypairs } from '../utils/generateKeyPairs'
+import { sessionStorage } from '../utils/sessionStorage'
 
 const exampleRequest: Kilt.IRequestCredentialContent = {
   cTypes: [
@@ -26,10 +27,10 @@ export async function getRequestCredential(
     console.log('Request', JSON.parse(request.body))
     console.log(exampleRequest)
 
-    const session = getSession(request.body.sessionId)
+    const sessionValues = sessionStorage[request.body.sessionID]
 
     const { did: claimerSessionDidUri } = Kilt.Did.parse(
-      session.encryptionKeyUri
+      sessionValues.encryptionKeyUri
     )
 
     const challenge = randomAsHex()
@@ -48,17 +49,21 @@ export async function getRequestCredential(
       claimerSessionDidUri
     )
 
-    const { document: dAppDidDocuemnt } = await Kilt.Did.resolve(DAPP_DID_URI)
+    const dAppDid = await Kilt.Did.resolve(DAPP_DID_URI)
+
+    const dAppKeyAgreementKeyId = dAppDid?.document?.keyAgreement?.[0].id
+
+    if (!dAppKeyAgreementKeyId) throw new Error('handle')
 
     const encryptedMessage = Kilt.Message.encrypt(
       message,
-      useEncryptionCallback({
+      encryptionCallback({
         keyAgreement: keyAgreement,
-        keyAgreementUri: dAppDidDocuemnt.keyAgreement?.[0].id
+        keyAgreementUri: `${DAPP_DID_URI}${dAppKeyAgreementKeyId}`
       }),
-      session.encryptionKeyUri
+      sessionValues.encryptionKeyUri
     )
-    return response
+    return response.send(encryptedMessage)
   } catch (error) {
     console.log('Get Request Credential Error', error)
     next(error)

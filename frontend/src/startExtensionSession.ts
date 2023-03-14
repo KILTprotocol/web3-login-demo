@@ -42,7 +42,6 @@ export async function startExtensionSession() {
       challenge
     )
     console.log('the session was initialized (¬‿¬)')
-    // console.log("session being returned by the extension:", extensionSession);
 
     // Resolve the `session.encryptionKeyUri` and use this key and the nonce
     // to decrypt `session.encryptedChallenge` and confirm that it’s equal to the original challenge.
@@ -52,7 +51,7 @@ export async function startExtensionSession() {
       extensionSession,
       serverSessionID: sessionID
     })
-    // console.log("responseToBackend", responseToBackend);
+
     await fetch(`/api/session/verify`, {
       method: 'POST',
       credentials: 'include',
