@@ -25,88 +25,6 @@ const {
   DAPP_NAME
 } = process.env
 
-async function main() {
-  // Making the output purple
-  console.log('\u001B[38;5;201m')
-
-  console.log(
-    "This is a script for an easy creation of the enviroment variables needed for your dApp's functionality.\n\n",
-
-    'All eviroment variables need to be saved on a file called ".env" that you need to create and save on the project\'s root directory.',
-    'It is a standard that all environment variables are name with capitalized letters.',
-    'Please, follow the standard.\n\n',
-
-    "Alternatively, you could create some of the environment values otherwise and let this script do the rest for you. Or (for pros) make them all otherwise and don't use this.\n\n"
-  )
-
-  // figure out your project's current state:
-  let step = 0
-  const stairs: (string | undefined)[] = [
-    WSS_ADDRESS,
-    ORIGIN,
-    DAPP_ACCOUNT_MNEMONIC,
-    DAPP_ACCOUNT_ADDRESS,
-    DAPP_DID_MNEMONIC,
-    DAPP_DID_URI,
-    DAPP_NAME
-  ]
-
-  // find the first element in the array "stairs" that it is still undefined.
-  step = stairs.indexOf(undefined)
-  // The indexOf() method returns the first index at which a given element can be found in the array, or -1 if it is not present.
-
-  // Go through the current step:
-  switch (step) {
-    // first assign a websocket of the blockchain you want to interact with:
-    case 0:
-      imploreWebSocket()
-      break
-
-    // then assign where the dApp is going to be reachable
-    case 1:
-      imploreDomainOrigin()
-      break
-
-    // then we generate an account
-    case 2:
-      await spawnAccount()
-      break
-
-    // just in case you did not saved the account address:
-    // save the account address as well
-    case 3:
-      await getAddress(DAPP_ACCOUNT_MNEMONIC!)
-      break
-
-    // then we generate a FullDID with all the key types
-    // and ask you to save the mnemonic and URI
-    case 4:
-      await spawnDid()
-      break
-
-    // Just in case yu did not save the URI of the DID
-    // save the DID's URI as well:
-    case 5:
-      await getURI(DAPP_DID_MNEMONIC!)
-      break
-    // ask you to choose a name for your dApp
-    case 6:
-      imploreName()
-      break
-    // if (step = -1):
-    default:
-      console.log(`It seems like all enviorment variables are already defined.\n
-               >> Take in consideration, that this script does not verify if the environment values already defined are valid. <<\n\n`)
-      break
-  }
-
-  console.log(
-    'If you are still missing some environment values and want the easy way, run this file again.\n'
-  )
-  // reset output's appareance:
-  console.log('\u001b[0m')
-  return
-}
 // The JavaScript (ergo also the Typescript) interpreter hoists the entire function declaration to the top of the current scope.
 // So the main function can use the following functions wthout problem.
 function imploreWebSocket() {
@@ -220,6 +138,89 @@ function imploreName() {
     'Please provide a name inside the .env file using this constant name: \n',
     `DAPP_NAME={your dApp's name here}\n`
   )
+}
+
+async function main() {
+  // Making the output purple
+  console.log('\u001B[38;5;201m')
+
+  console.log(
+    "This is a script for an easy creation of the enviroment variables needed for your dApp's functionality.\n\n",
+
+    'All eviroment variables need to be saved on a file called ".env" that you need to create and save on the project\'s root directory.',
+    'It is a standard that all environment variables are name with capitalized letters.',
+    'Please, follow the standard.\n\n',
+
+    "Alternatively, you could create some of the environment values otherwise and let this script do the rest for you. Or (for pros) make them all otherwise and don't use this.\n\n"
+  )
+
+  // figure out your project's current state:
+  let step = 0
+  const stairs: (string | undefined)[] = [
+    WSS_ADDRESS,
+    ORIGIN,
+    DAPP_ACCOUNT_MNEMONIC,
+    DAPP_ACCOUNT_ADDRESS,
+    DAPP_DID_MNEMONIC,
+    DAPP_DID_URI,
+    DAPP_NAME
+  ]
+
+  // find the first element in the array "stairs" that it is still undefined.
+  step = stairs.indexOf(undefined)
+  // The indexOf() method returns the first index at which a given element can be found in the array, or -1 if it is not present.
+
+  // Go through the current step:
+  switch (step) {
+    // first assign a websocket of the blockchain you want to interact with:
+    case 0:
+      imploreWebSocket()
+      break
+
+    // then assign where the dApp is going to be reachable
+    case 1:
+      imploreDomainOrigin()
+      break
+
+    // then we generate an account
+    case 2:
+      await spawnAccount()
+      break
+
+    // just in case you did not saved the account address:
+    // save the account address as well
+    case 3:
+      await getAddress(DAPP_ACCOUNT_MNEMONIC!)
+      break
+
+    // then we generate a FullDID with all the key types
+    // and ask you to save the mnemonic and URI
+    case 4:
+      await spawnDid()
+      break
+
+    // Just in case yu did not save the URI of the DID
+    // save the DID's URI as well:
+    case 5:
+      await getURI(DAPP_DID_MNEMONIC!)
+      break
+    // ask you to choose a name for your dApp
+    case 6:
+      imploreName()
+      break
+    // if (step = -1):
+    default:
+      console.log(`It seems like all enviorment variables are already defined.\n
+               >> Take in consideration, that this script does not verify if the environment values already defined are valid. <<\n\n`)
+      break
+  }
+
+  console.log(
+    'If you are still missing some environment values and want the easy way, run this file again.\n'
+  )
+  // reset output's appareance:
+  console.log('\u001b[0m')
+  return
 }
 
 main() //run the code
