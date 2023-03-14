@@ -6,7 +6,7 @@ export async function generateFullDid(
   submitterAccount: Kilt.KiltKeyringPair,
   mnemonic: string
 ): Promise<Kilt.DidDocument> {
-  await Kilt.init({ address: WSS_ADDRESS })
+  await Kilt.init({ address: process.env.WSS_ADDRESS })
   const didMnemonic = mnemonic
   const {
     authentication,

@@ -1,11 +1,8 @@
 import * as Kilt from '@kiltprotocol/sdk-js'
 import { Response, Request, NextFunction } from 'express'
-
-import { generateKeypairs } from '../utils/attester/generateKeyPairs'
-import { getApi } from '../utils/connection'
-
-// Object to store all session values on the memory-cache:
-const sessionStorage: { [key: string]: any } = {}
+import { sessionStorage } from '../utils/sessionStorage'
+import { generateKeypairs } from '../utils/generateKeyPairs'
+import { DAPP_DID_URI, DAPP_NAME } from '../../server'
 
 export async function generateSessionValues(
   request: Request,
@@ -14,11 +11,6 @@ export async function generateSessionValues(
 ): Promise<void> {
   console.log('creating session Values')
   try {
-    await getApi() // connects to the websocket of your, in .env, specified blockchain
-
-    const DAPP_DID_URI = process.env.DAPP_DID_URI as Kilt.DidUri
-    const dAppName = process.env.DAPP_NAME ?? 'Your dApp Name'
-
     if (!DAPP_DID_URI)
       throw new Error("enter your dApp's DID URI on the .env-file first")
 
@@ -58,7 +50,7 @@ export async function generateSessionValues(
 
     const sessionValues = {
       sessionID: sessionID,
-      dAppName: dAppName,
+      dAppName: DAPP_NAME,
       dAppEncryptionKeyUri: dAppEncryptionKeyUri,
       challenge: challenge
     }
