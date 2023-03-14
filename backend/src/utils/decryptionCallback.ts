@@ -1,7 +1,7 @@
 import * as Kilt from '@kiltprotocol/sdk-js'
 import { naclOpen } from '@polkadot/util-crypto'
 
-export function useDecryptionCallback(
+export function decryptionCallback(
   keyAgreement: Kilt.KiltEncryptionKeypair
 ): Kilt.DecryptCallback {
   return async function decryptCallback({

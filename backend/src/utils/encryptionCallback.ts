@@ -1,7 +1,7 @@
 import * as Kilt from '@kiltprotocol/sdk-js'
 import { naclSeal } from '@polkadot/util-crypto'
 
-export function useEncryptionCallback({
+export function encryptionCallback({
   keyAgreement,
   keyAgreementUri
 }: {
