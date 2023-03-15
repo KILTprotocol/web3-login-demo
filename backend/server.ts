@@ -38,6 +38,8 @@ app.get('/api', (req: Request, res: Response) => {
 
 app.get('/api/session/start', sendSessionValues)
 
+app.get('/api/session/jwt', generateJWT)
+
 app.post('/api/session/verify', verifySession)
 
 app.listen(PORT, () => {

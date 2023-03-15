@@ -35,6 +35,46 @@ export async function startExtensionSession() {
     '\n'
   )
 
+  // generate and get a JasonWebToken with session values from the backend:
+  const serverSessionJWT = await fetch(`/api/session/jwt`, {
+    method: 'GET',
+    credentials: 'include',
+    headers: {
+      accessControlAllowOrigin: '*',
+      'Content-type': 'application/json',
+      Accept: 'application/json'
+    }
+  })
+  if (!serverSessionJWT.ok) throw Error(serverSessionJWT.statusText)
+
+  console.log(
+    'The Json Web Token obtained from the backend is: ',
+    serverSessionJWT.body
+  )
+
+  // Retrieve the JWT from the Cookie and tell the extension to start the session:
+  try {
+    const cookies: string[] = document.cookie
+      .split(';')
+      .map((cookie) => cookie.trim())
+    const jwtCookie: string | undefined = cookies.find((cookie) =>
+      cookie.startsWith('sessionJWT=')
+    )
+    const sessionJWT: string | null = jwtCookie ? jwtCookie.split('=')[1] : null
+
+    if (!sessionJWT)
+      throw new Error(
+        'No JSON-Web-Token with session values found on the cookies.'
+      )
+
+    console.log('The cookie crumbles: ', sessionJWT)
+  } catch (error) {
+    console.error(
+      `Error initializing ${apiWindow.kilt.sporran.name}: ${apiWindow.kilt.sporran.version},  ${apiWindow.kilt.error}`
+    )
+    throw error
+  }
+
   try {
     const extensionSession = await apiWindow.kilt.sporran.startSession(
       dAppName,
@@ -42,7 +82,7 @@ export async function startExtensionSession() {
       challenge
     )
     console.log('the session was initialized (¬‿¬)')
-    // console.log("session being returned by the extension:", extensionSession);
+    console.log('session being returned by the extension:', extensionSession)
 
     // Resolve the `session.encryptionKeyUri` and use this key and the nonce
     // to decrypt `session.encryptedChallenge` and confirm that it’s equal to the original challenge.
@@ -66,7 +106,7 @@ export async function startExtensionSession() {
     return extensionSession
   } catch (error) {
     console.error(
-      `Error initializing ${apiWindow.kilt.sporran.name}: ${apiWindow.kilt.sporran.version}`
+      `Error initializing ${apiWindow.kilt.sporran.name}: ${apiWindow.kilt.sporran.version},  ${apiWindow.kilt.error}`
     )
     throw error
   }

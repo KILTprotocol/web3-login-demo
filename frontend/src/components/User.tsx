@@ -1,17 +1,18 @@
 import React from 'react'
-import styles from './User.module.css'
-import Button from './Button'
-import {startExtensionSession} from '../startExtensionSession'
 
+import styles from './User.module.css'
+
+import { startExtensionSession } from '../startExtensionSession'
+
+import Button from './Button'
 
 interface Props {
   [x: string]: any
 }
 
 async function startSession() {
-  console.log("trying to start the session! ")
-  await startExtensionSession();
-
+  console.log('trying to start the session! ')
+  await startExtensionSession()
 }
 
 export default function User({ user, connected, onClick }: Props): JSX.Element {
