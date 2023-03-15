@@ -2,7 +2,7 @@ import * as Kilt from '@kiltprotocol/sdk-js'
 import { Response, Request, NextFunction } from 'express'
 import { sessionStorage } from '../utils/sessionStorage'
 import { generateKeypairs } from '../utils/generateKeyPairs'
-import { DAPP_DID_URI, DAPP_NAME } from '../config'
+import { DAPP_DID_URI, DAPP_NAME } from '../../config'
 
 export async function generateSessionValues(
   request: Request,

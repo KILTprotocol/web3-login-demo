@@ -3,7 +3,7 @@ import * as Kilt from '@kiltprotocol/sdk-js'
 import { NextFunction, Request, Response } from 'express'
 import { generateKeypairs } from '../utils/generateKeyPairs'
 import { decryptionCallback } from '../utils/decryptionCallback'
-import { DAPP_DID_MNEMONIC } from '../config'
+import { DAPP_DID_MNEMONIC } from '../../config'
 
 export async function postSubmitCredential(
   request: Request,

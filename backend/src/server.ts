@@ -4,7 +4,7 @@ import cors from 'cors'
 import bodyParser from 'body-parser'
 import * as Kilt from '@kiltprotocol/sdk-js'
 
-import { PORT, WSS_ADDRESS } from './config'
+import { PORT, WSS_ADDRESS } from '../config'
 import { generateSessionValues, verifySession } from './session/session'
 import { getRequestCredential } from './getRequestCredential/getRequestCredential'
 import { postSubmitCredential } from './postSubmitCredential/postSubmitCredential'
