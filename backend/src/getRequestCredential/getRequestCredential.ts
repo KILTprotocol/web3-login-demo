@@ -4,6 +4,7 @@ import { encryptionCallback } from '../utils/encryptionCallback'
 import { NextFunction, Request, Response } from 'express'
 import { generateKeypairs } from '../utils/generateKeyPairs'
 import { sessionStorage } from '../utils/sessionStorage'
+import { DAPP_DID_MNEMONIC, DAPP_DID_URI } from '../config'
 
 const exampleRequest: Kilt.IRequestCredentialContent = {
   cTypes: [
@@ -39,8 +40,6 @@ export async function getRequestCredential(
       type: 'request-credential'
     }
 
-    const DAPP_DID_URI = process.env.DAPP_DID_URI as Kilt.DidUri
-    const DAPP_DID_MNEMONIC = process.env.DAPP_DID_MNEMONIC as string
     const { keyAgreement } = generateKeypairs(DAPP_DID_MNEMONIC)
 
     const message = Kilt.Message.fromBody(
