@@ -1,27 +1,15 @@
 import express, { Express, Request, Response } from 'express'
-import path from 'path'
-import dotenv from 'dotenv'
+
 import cors from 'cors'
 import bodyParser from 'body-parser'
-
 import * as Kilt from '@kiltprotocol/sdk-js'
-import { generateSessionValues, verifySession } from './src/session/session'
-import { getRequestCredential } from './src/getRequestCredential/getRequestCredential'
-import { postSubmitCredential } from './src/postSubmitCredential/postSubmitCredential'
 
-dotenv.config()
+import { PORT, WSS_ADDRESS } from './config'
+import { generateSessionValues, verifySession } from './session/session'
+import { getRequestCredential } from './getRequestCredential/getRequestCredential'
+import { postSubmitCredential } from './postSubmitCredential/postSubmitCredential'
 
 const app: Express = express()
-
-// Letting the server know where the environment varibles are
-const projectRoootDirectory = path.dirname(__dirname)
-dotenv.config({ path: `${projectRoootDirectory}/.env` })
-
-export const PORT = process.env.PORT || 3000
-export const WSS_ADDRESS = process.env.WSS_ADDRESS || 'wss://peregrine.kilt.io'
-export const DAPP_DID_URI = process.env.DAPP_DID_URI as Kilt.DidUri
-export const DAPP_NAME = process.env.DAPP_NAME ?? 'Your dApp Name'
-export const DAPP_DID_MNEMONIC = process.env.DAPP_DID_MNEMONIC as string
 
 // for parsing application/json
 app.use(bodyParser.json())
