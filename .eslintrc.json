@@ -22,7 +22,7 @@
     "import/no-extraneous-dependencies": "error",
     "import/no-unresolved": ["error", { "ignore": ["\\.js$"] }],
     "import/order": [
-      "warning",
+      "warn",
       {
         "newlines-between": "always-and-inside-groups",
         "groups": [
