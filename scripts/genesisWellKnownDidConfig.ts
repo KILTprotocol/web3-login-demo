@@ -37,8 +37,7 @@ async function readCurrentDidConfig(): Promise<VerifiableDomainLinkagePresentati
       '\n\nYour projects repository already has a well-known-did-configuration file.'
     )
     console.log('You can find it under this path: \n', fullpath)
-    console.log('here is the content of that file')
-    console.log(filecontent)
+    // console.log('here is the content of that file', filecontent)
   }
   if (!filecontent) {
     console.log(
@@ -73,17 +72,13 @@ async function main() {
   }
 
   console.log(
+    '\n',
     'The enviorment variables are: \n',
-    'webSocket= ',
-    webSocket,
-    'dAppURI= ',
-    dAppURI,
-    'domainOrigin= ',
-    domainOrigin,
-    'dAppMnemonic= ',
-    dAppMnemonic,
-    'fundsMnemonic= ',
-    fundsMnemonic,
+    `webSocket=${webSocket} \n`,
+    `dAppURI=${dAppURI} \n`,
+    `domainOrigin=${domainOrigin} \n`,
+    `dAppMnemonic=${dAppMnemonic} \n`,
+    `fundsMnemonic=${fundsMnemonic} \n`,
     '\n'
   )
 
