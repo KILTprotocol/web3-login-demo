@@ -154,8 +154,8 @@ function imploreServerPort() {
   console.log(
     "\nTrouble reading the Port of your dApp' Server (BackEnd)\n",
     'Please, define a value for PORT on the .env-file to continue\n',
-    'first it should only run locally. You can use a custom IP or just the default:\n\n',
-    'Default dApps servers port: \n',
+    'You can use a custom IP or just the default:\n\n',
+    "Default dApp-Server's port: \n",
     'PORT=3000',
     '\n\n'
   )
@@ -251,7 +251,7 @@ function imploreName() {
 function imploreJwtSecretKey() {
   console.log(
     '\ntrouble reading the Secret Key your dApps use to encode the JSON-Web-Tokens\n',
-    'Please provide a name inside the .env file using this constant name: \n',
+    `Please provide a string value for 'JWT_ENCODER' inside the .env file. \n`,
     `JWT_ENCODER={Oh my God, you are so cryptic!}\n`
   )
 }
