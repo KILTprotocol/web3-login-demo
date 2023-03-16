@@ -13,6 +13,8 @@ const {
   WSS_ADDRESS,
   // This is the URL domain origin of your website
   ORIGIN,
+  // This is the local Port on wich your server would be reachable
+  PORT,
   // This is the mnemonic of the Kilt account paying for all transactions
   DAPP_ACCOUNT_MNEMONIC,
   // This is the address of the Kilt account paying for all transactions
@@ -22,7 +24,9 @@ const {
   // This is the URI of the Kilt DID that identifies your dApp
   DAPP_DID_URI,
   // This should be a custom name for your dApp
-  DAPP_NAME
+  DAPP_NAME,
+  // This is secret key (string) that encodes the Json-Web-Tokens before saving them in the Cookies
+  JWT_ENCODER
 } = process.env
 
 async function main() {
@@ -44,11 +48,13 @@ async function main() {
   const stairs: (string | undefined)[] = [
     WSS_ADDRESS,
     ORIGIN,
+    PORT,
     DAPP_ACCOUNT_MNEMONIC,
     DAPP_ACCOUNT_ADDRESS,
     DAPP_DID_MNEMONIC,
     DAPP_DID_URI,
-    DAPP_NAME
+    DAPP_NAME,
+    JWT_ENCODER
   ]
 
   // find the first element in the array "stairs" that it is still undefined.
@@ -62,36 +68,45 @@ async function main() {
       imploreWebSocket()
       break
 
-    // then assign where the dApp is going to be reachable
+    // then assign where the dApp BackEnd is going to be reachable
     case 1:
       imploreDomainOrigin()
       break
 
-    // then we generate an account
+    // then assign where the dApp FrontEnd is going to be reachable
     case 2:
+      imploreServerPort()
+      break
+
+    // then we generate an account
+    case 3:
       await spawnAccount()
       break
 
     // just in case you did not saved the account address:
     // save the account address as well
-    case 3:
+    case 4:
       await getAddress(DAPP_ACCOUNT_MNEMONIC!)
       break
 
     // then we generate a FullDID with all the key types
     // and ask you to save the mnemonic and URI
-    case 4:
+    case 5:
       await spawnDid()
       break
 
     // Just in case yu did not save the URI of the DID
     // save the DID's URI as well:
-    case 5:
+    case 6:
       await getURI(DAPP_DID_MNEMONIC!)
       break
     // ask you to choose a name for your dApp
-    case 6:
+    case 7:
       imploreName()
+      break
+    // ask you to choose a Secret Key for encoding JWTs
+    case 8:
+      imploreJwtSecretKey()
       break
     // if (step = -1):
     default:
@@ -126,11 +141,22 @@ function imploreWebSocket() {
 
 function imploreDomainOrigin() {
   console.log(
-    '\nTrouble reading the URL-Address of your dApp\n',
+    "\nTrouble reading the URL-Address of your dApp' Website (FrontEnd)\n",
     'Please, define a value for ORIGIN on the .env-file to continue\n',
     'first it should only run locally. You can use a custom IP or just the default:\n\n',
     'Default dApps domain origin: \n',
     'ORIGIN=http://localhost:8080',
+    '\n\n'
+  )
+}
+
+function imploreServerPort() {
+  console.log(
+    "\nTrouble reading the Port of your dApp' Server (BackEnd)\n",
+    'Please, define a value for PORT on the .env-file to continue\n',
+    'first it should only run locally. You can use a custom IP or just the default:\n\n',
+    'Default dApps servers port: \n',
+    'PORT=3000',
     '\n\n'
   )
 }
@@ -219,6 +245,14 @@ function imploreName() {
     "\ntrouble reading your dApp's Name\n",
     'Please provide a name inside the .env file using this constant name: \n',
     `DAPP_NAME={your dApp's name here}\n`
+  )
+}
+
+function imploreJwtSecretKey() {
+  console.log(
+    '\ntrouble reading the Secret Key your dApps use to encode the JSON-Web-Tokens\n',
+    'Please provide a name inside the .env file using this constant name: \n',
+    `JWT_ENCODER={Oh my God, you are so cryptic!}\n`
   )
 }
 
