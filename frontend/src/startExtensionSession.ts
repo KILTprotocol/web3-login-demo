@@ -21,18 +21,10 @@ export async function startExtensionSession() {
   console.log(
     'Session Values fetched from the backend',
     '\n',
-    'sessionId:',
-    sessionID,
-    '\n',
-    'challenge:',
-    challenge,
-    '\n',
-    'dAppName:',
-    dAppName,
-    '\n',
-    'dAppEncryptionKeyUri:',
-    dAppEncryptionKeyUri,
-    '\n'
+    `sessionId: ${sessionID} \n`,
+    `challenge: ${challenge} \n`,
+    `dAppName: ${dAppName} \n`,
+    `dAppEncryptionKeyUri: ${dAppEncryptionKeyUri} \n`
   )
 
   // generate and get a JasonWebToken with session values from the backend:
