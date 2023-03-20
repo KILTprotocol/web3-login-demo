@@ -7,8 +7,6 @@ import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 
 import {
-  sendSessionValues,
-  verifySession,
   generateJWT,
   verifySessionJWT,
   getSessionJWT
@@ -47,10 +45,6 @@ app.get('/api', (req: Request, res: Response) => {
 })
 
 // manage Session:
-
-// using a global array:
-app.get('/api/session/start', sendSessionValues)
-app.post('/api/session/verify', verifySession)
 
 // using JWTs
 app.get('/api/session/startJWT', generateJWT)

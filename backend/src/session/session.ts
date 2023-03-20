@@ -7,14 +7,10 @@ import { getApi } from '../utils/connection'
 
 // Define how the Session Values are packaged:
 interface SessionValues {
-  sessionID: string
   dAppName: string
   dAppEncryptionKeyUri: Kilt.DidResourceUri
   challenge: string
 }
-
-// Object to store all session values on the memory-cache:
-const sessionStorage: { [key: string]: SessionValues } = {}
 
 export async function generateSessionValues(): Promise<SessionValues> {
   console.log('generating session Values')
@@ -55,122 +51,19 @@ export async function generateSessionValues(): Promise<SessionValues> {
   const dAppEncryptionKeyUri =
     `${DAPP_DID_URI}${didDocument.keyAgreement[0].id}` as Kilt.DidResourceUri
 
-  // Generate and store sessionID and challenge on the server side for the next step.
+  // Generate a challenge on the server side for the next step.
   // A UUID is a universally unique identifier, a 128-bit label. Here express as a string of a hexaheximal number.
-  const sessionID = Kilt.Utils.UUID.generate()
   const challenge = Kilt.Utils.UUID.generate()
 
   const sessionValues = {
-    sessionID: sessionID,
     dAppName: dAppName,
     dAppEncryptionKeyUri: dAppEncryptionKeyUri,
     challenge: challenge
   }
 
-  console.log(sessionValues)
-
-  sessionStorage[sessionID] = sessionValues
-
-  // You can see all sessions Values (including old ones) with this:
-  // console.log('All sessions stored:', sessionStorage);
-  // to reset this list restart the server
+  console.log('sesssion Values just generated', sessionValues)
 
   return sessionValues
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Alternative: Not using JWT, but saving values in a array on the memory-cache
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-export async function sendSessionValues(
-  request: Request,
-  response: Response,
-  next: NextFunction
-): Promise<void> {
-  try {
-    const sessionValues = await generateSessionValues()
-    response.status(200).send(sessionValues)
-  } catch (error) {
-    // print the possible error on the frontend
-    next(error)
-  }
-}
-
-export async function verifySession(
-  request: Request,
-  response: Response,
-  next: NextFunction
-): Promise<void> {
-  try {
-    // the body is the wrapper for the information send by the frontend
-    // You could print it with:
-    // console.log("body", request.body);
-
-    // extract variables:
-    const { extensionSession: session, serverSessionID } = request.body
-    const { encryptedChallenge, nonce } = session
-    // This varible has different name depending on the session version
-    let encryptionKeyUri: Kilt.DidResourceUri
-    // if session is type PubSubSessionV1
-    if ('encryptionKeyId' in session) {
-      encryptionKeyUri = session.encryptionKeyId as Kilt.DidResourceUri
-    } else {
-      // if session is type PubSubSessionV2
-      encryptionKeyUri = session.encryptionKeyUri
-    }
-    const encryptionKey = await Kilt.Did.resolveKey(encryptionKeyUri)
-    if (!encryptionKey) {
-      throw new Error('an encryption key is required')
-    }
-
-    // get your encryption Key, a.k.a. Key Agreement
-    const dAppDidMnemonic = process.env.DAPP_DID_MNEMONIC
-    if (!dAppDidMnemonic)
-      throw new Error('Enter your dApps mnemonic on the .env file')
-
-    const { keyAgreement } = generateKeypairs(dAppDidMnemonic)
-
-    const decryptedBytes = Kilt.Utils.Crypto.decryptAsymmetric(
-      { box: encryptedChallenge, nonce },
-      encryptionKey.publicKey,
-      keyAgreement.secretKey // derived from your seed phrase
-    )
-    // If it fails to decrypt, throw.
-    if (!decryptedBytes) {
-      throw new Error(
-        'Could not decode/decrypt the challange from the extension'
-      )
-    }
-
-    const decryptedChallenge = Kilt.Utils.Crypto.u8aToHex(decryptedBytes)
-    const originalChallenge = sessionStorage[serverSessionID].challenge
-
-    // Compare the decrypted challenge to the challenge you stored earlier.
-    console.log(
-      'originalChallenge: ',
-      originalChallenge,
-      '\n',
-      'decrypted challenge: ',
-      decryptedChallenge
-    )
-    if (decryptedChallenge !== originalChallenge) {
-      response
-        .status(401)
-        .send("Session verification failed. The challenges don't match.")
-      throw new Error('Invalid challenge')
-    }
-
-    response
-      .status(200)
-      .send(
-        'Session succesfully verified. Extension and dApp understand each other.'
-      )
-  } catch (err) {
-    // print the possible error on the frontend
-    next(err)
-  }
-
-  return
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -196,8 +89,6 @@ export async function generateJWT(
     }
     // default to algorithm: 'HS256',
     const token = jwt.sign(payload, secretKey, options)
-
-    console.log('token', token)
 
     // We want to save the JWT on a cookie on the browser
 
@@ -241,7 +132,12 @@ export async function generateJWT(
 
     response.cookie('sessionJWT', JSON.stringify(token), cookieOptions)
 
-    console.log('The Json-Web-Token generated by the backend is: \n', token)
+    console.log(
+      'The Json-Web-Token with Session Values generated by the backend is: \n',
+      token
+    )
+
+    // send the Payload as plain text on the response, this facilitates the start of the extension session.
     response.status(200).send(payload)
   } catch (error) {
     // print the possible error on the frontend
@@ -303,7 +199,7 @@ export async function verifySessionJWT(
     console.log(
       '\n',
       `original Challenge: ${originalChallenge} \n`,
-      `decrypted Challenge: ${decryptedChallenge} \n\n`
+      `decrypted Challenge: ${decryptedChallenge} \n`
     )
     if (decryptedChallenge !== originalChallenge) {
       response
@@ -312,6 +208,7 @@ export async function verifySessionJWT(
       throw new Error('Invalid challenge')
     }
 
+    console.log('Session successfully verified.\n')
     response
       .status(200)
       .send(
