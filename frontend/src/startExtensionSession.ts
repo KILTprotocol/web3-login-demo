@@ -62,22 +62,6 @@ export async function startExtensionSession() {
     throw error
   }
 
-  // // Retrieve the JWT from the Cookie
-  //   const cookies: string[] = document.cookie
-  //     .split(';')
-  //     .map((cookie) => cookie.trim())
-  //   const jwtCookie: string | undefined = cookies.find((cookie) =>
-  //     cookie.startsWith('sessionJWT=')
-  //   )
-  //   const sessionJWT: string | null = jwtCookie ? jwtCookie.split('=')[1] : null
-
-  //   if (!sessionJWT)
-  //     throw new Error(
-  //       'No JSON-Web-Token with session values found on the cookies.'
-  //     )
-
-  //   console.log('The cookie crumbles: ', sessionJWT)
-
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // Alternative: Not using JWT, but saving values in a array on the memory-cache
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

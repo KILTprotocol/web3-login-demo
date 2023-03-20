@@ -13,6 +13,20 @@ export default function Home(): JSX.Element {
     console.log(message)
   }
 
+  async function getCookieSession() {
+    const result = await fetch('/api/session/getJWT', {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        accessControlAllowOrigin: '*',
+        'Content-type': 'application/json',
+        Accept: 'application/json'
+      }
+    })
+    const message = await result.text()
+    console.log(message)
+  }
+
   // Directly inject the extensions that support the KILT protocol
   useEffect(() => {
     getExtensions()
@@ -28,6 +42,9 @@ export default function Home(): JSX.Element {
         <Card>
           <Button onClick={testApi}>GO TO SECRET PAGE</Button>
           <Button onClick={undefined}>GET SECRET MESSAGE</Button>
+          <Button onClick={getCookieSession}>
+            GET SESSION JWT FROM COOKIE
+          </Button>
           <Button onClick={undefined}>CLEAR COOKIES</Button>
         </Card>
       </Page.Content>
