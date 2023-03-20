@@ -14,7 +14,7 @@ export default function Home(): JSX.Element {
   }
 
   async function getCookieSession() {
-    const result = await fetch('/api/session/getJWT', {
+    const result = await fetch('/api/session/readCookie', {
       method: 'GET',
       credentials: 'include',
       headers: {

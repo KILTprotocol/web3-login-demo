@@ -47,9 +47,9 @@ app.get('/api', (req: Request, res: Response) => {
 // manage Session:
 
 // using JWTs
-app.get('/api/session/startJWT', generateJWT)
-app.post('/api/session/verifyJWT', verifySessionJWT)
-app.get('/api/session/getJWT', getSessionJWT)
+app.get('/api/session/start', generateJWT)
+app.post('/api/session/verify', verifySessionJWT)
+app.get('/api/session/readCookie', getSessionJWT)
 
 app.listen(PORT, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${PORT}`)

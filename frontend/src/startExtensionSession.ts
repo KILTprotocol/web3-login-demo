@@ -8,7 +8,7 @@ export async function startExtensionSession() {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   // generate and get a JasonWebToken with session values from the backend:
-  const serverSessionJWT = await fetch(`/api/session/startJWT`, {
+  const serverSessionJWT = await fetch(`/api/session/start`, {
     method: 'GET',
     credentials: 'include',
     headers: {
@@ -44,7 +44,7 @@ export async function startExtensionSession() {
       serverSession: payloadJWT
     })
     // console.log("responseToBackend", responseToBackend);
-    await fetch(`/api/session/verifyJWT`, {
+    await fetch(`/api/session/verify`, {
       method: 'POST',
       credentials: 'include',
       headers: {
