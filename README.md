@@ -10,18 +10,20 @@ This variables determine the comunication with the blockchain, your dApps identi
 Defining them is part of the set up of your project.
 
 The .env-file should be on the root directory of this repository. It's just called `.env`.
-It is include on the .gitignore list, so that it never gets push to github.
+It is include on the `.gitignore` list, so that it never gets push to github.
 
 It is a standard that all enviroment variables are name with capitalized letters.
 Please, follow the standard and use these names for your environment variables:
 
-- WSS_ADDRESS = { webSocket}
-- ORIGIN = { domainOrigin }
-- DAPP_ACCOUNT_MNEMONIC = { fundsMnemonic }
-- DAPP_ACCOUNT_ADDRESS = { fundsAddress }
-- DAPP_DID_MNEMONIC ={ dAppMnemonic }
-- DAPP_DID_URI = { dAppURI }
-- DAPP_NAME = { Your dApp's name }
+- `WSS_ADDRESS` = _This is the websocket address of the RPC node_
+- `ORIGIN` = _This is the URL domain origin of your website (frontend)_
+- `PORT` = _This is the local Port on wich your server would be reachable (backend)_
+- `DAPP_ACCOUNT_MNEMONIC` = _This is the mnemonic of the Kilt account paying for all transactions_
+- `DAPP_ACCOUNT_ADDRESS` = _This is the address of the Kilt account paying for all transactions_
+- `DAPP_DID_MNEMONIC` = _This is the mnemonic of the Kilt DID that identifies your dApp_
+- `DAPP_DID_URI` = _This is the URI of the Kilt DID that identifies your dApp_
+- `DAPP_NAME` = _This should be a custom name for your dApp_
+- `JWT_ENCODER` = _This is secret key (string) that encodes the Json-Web-Tokens before saving them in the Cookies_
 
 There is a script to facilitate the generetion of the environment variables that are needed to set up your decentralized App.
 This script is called `genesisEnvironmentVariables` you can either
