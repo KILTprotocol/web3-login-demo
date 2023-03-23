@@ -1,5 +1,5 @@
 import * as Kilt from '@kiltprotocol/sdk-js'
-import { Response, Request, NextFunction } from 'express'
+import { Response, Request, NextFunction, CookieOptions } from 'express'
 import jwt from 'jsonwebtoken'
 
 import { generateKeypairs } from '../utils/attester/generateKeyPairs'
@@ -12,46 +12,20 @@ interface SessionValues {
   challenge: string
 }
 
-export async function generateSessionValues(): Promise<SessionValues> {
+export async function generateSessionValues(
+  didDocument: Kilt.DidDocument
+): Promise<SessionValues> {
   console.log('generating session Values')
-  await getApi() // connects to the websocket of your, in '.env', specified blockchain
-
-  const DAPP_DID_URI = process.env.DAPP_DID_URI as Kilt.DidUri
+  // connects to the websocket of your, in '.env', specified blockchain
+  await getApi()
   const dAppName = process.env.DAPP_NAME ?? 'Your dApp Name'
 
-  if (!DAPP_DID_URI)
-    throw new Error("enter your dApp's DID URI on the .env-file first")
+  // Build the EncryptionKeyUri so that the client can encrypt messages for us:
+  const dAppEncryptionKeyUri = `${didDocument.uri}${
+    didDocument.keyAgreement![0].id
+  }` as Kilt.DidResourceUri
 
-  // fetch the DID document from the blockchain
-  const resolved = await Kilt.Did.resolve(DAPP_DID_URI)
-
-  // Assure this did has a document on chain
-  if (resolved === null) {
-    throw new Error('DID could not be resolved')
-  }
-  if (!resolved.document) {
-    throw new Error(
-      'No DID document could be fetched from your given dApps URI'
-    )
-  }
-  const didDocument = resolved.document
-  // If there the DID does not have any key agreement key, throw
-  if (!didDocument.keyAgreement || !didDocument.keyAgreement[0]) {
-    throw new Error(
-      'The DID of your dApp needs to have an Key Agreement to comunicate. Go get one and register in on chain.'
-    )
-  }
-  if (!didDocument.authentication || !didDocument.authentication[0]) {
-    throw new Error(
-      'The DID of your dApp needs to have an authentification Key to sing stuff. Go get one and register in on chain.'
-    )
-  }
-
-  // this basiclly says how are you going to encrypt:
-  const dAppEncryptionKeyUri =
-    `${DAPP_DID_URI}${didDocument.keyAgreement[0].id}` as Kilt.DidResourceUri
-
-  // Generate a challenge on the server side for the next step.
+  // Generate a challenge to ensure all messages we receive are fresh.
   // A UUID is a universally unique identifier, a 128-bit label. Here express as a string of a hexaheximal number.
   const challenge = Kilt.Utils.UUID.generate()
 
@@ -66,22 +40,24 @@ export async function generateSessionValues(): Promise<SessionValues> {
   return sessionValues
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Saving the session values as a JSON-Web-Token on a Cookie of the browser
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+/**
+ * Saving the session values as a JSON-Web-Token on a Cookie of the browser
+ */
 export async function generateJWT(
   request: Request,
   response: Response,
   next: NextFunction
 ): Promise<void> {
   try {
-    const payload = await generateSessionValues()
+    const payload = await generateSessionValues(
+      request.app.locals.dappDidDocument
+    )
     const secretKey = process.env.JWT_ENCODER
-    if (!secretKey)
+    if (!secretKey) {
       throw new Error(
         "Define a value for 'JWT_ENCODER' on the '.env'-file first!"
       )
+    }
 
     // Create a Json-Web-Token
     const options = {
@@ -90,47 +66,24 @@ export async function generateJWT(
     // default to algorithm: 'HS256',
     const token = jwt.sign(payload, secretKey, options)
 
-    // We want to save the JWT on a cookie on the browser
-
     // Set cookie options (list of ingredients)
-    const cookieOptions: any = {
-      expires: new Date(Date.now() + 86400), // expires in 1 day (in seconds)
-      maxAge: 86400, // an alternative to expires: Indicates the number of seconds until the Cookie expires.
-      secure: true, // only send over HTTPS
-      sameSite: 'strict', // prevent cross-site request forgery attacks
-      path: false, // restricts URL that can request the Cookie from the browser. '/' works for the entire domain.
-      httpOnly: false // Forbids JavaScript from accessing the cookie
+    const cookieOptions: CookieOptions = {
+      // Indicates the number of seconds until the Cookie expires.
+      maxAge: 60 * 60 * 24,
+      // only send over HTTPS
+      secure: true,
+      // prevent cross-site request forgery attacks
+      sameSite: 'strict',
+      // restricts URL that can request the Cookie from the browser. '/' works for the entire domain.
+      path: '/',
+      // Forbids JavaScript from accessing the cookie
+      httpOnly: false
     }
 
     // Set a Cookie in the header including the JWT and our options:
+    // Using 'cookie-parser' deendency:
 
-    // // Self-Crafted version:
-
-    // // Mixing it all together
-    // let cookie = `sessionJWT=${token};
-    // Path=${cookieOptions.path ? `${cookieOptions.path};` : '/;'}
-    // ${cookieOptions.maxAge ? `Max-Age=${cookieOptions.maxAge};` : ''}
-    // ${cookieOptions.secure ? 'Secure;' : ''}
-    // ${cookieOptions.httpOnly ? 'HttpOnly;' : ''}
-    // ${cookieOptions.sameSite ? `SameSite=${cookieOptions.sameSite};` : ''}`
-
-    // // If you prefer to use 'Expires' instead:
-    // // ${
-    // //   cookieOptions.expires
-    // //     ? `Expires=${cookieOptions.expires.toUTCString()};`
-    // //     : ''
-    // // }
-
-    // // the '.setHeader' method does not accept new lines as part of the argument, so we have to get rid of it:
-    // // cutting little dinosour forms
-    // cookie = cookie.replace(/\s/g, ' ')
-    // console.log('The Cookie fresh out of the Oven: \n', cookie)
-
-    // response.setHeader(`Set-Cookie`, cookie)
-
-    // Version using 'cookie-parser' deendency:
-
-    response.cookie('sessionJWT', JSON.stringify(token), cookieOptions)
+    response.cookie('sessionJWT', token, cookieOptions)
 
     console.log(
       'The Json-Web-Token with Session Values generated by the backend is: \n',
@@ -182,8 +135,10 @@ export async function verifySessionJWT(
 
     const decryptedBytes = Kilt.Utils.Crypto.decryptAsymmetric(
       { box: encryptedChallenge, nonce },
+      // fecth from the chain:
       encryptionKey.publicKey,
-      keyAgreement.secretKey // derived from your seed phrase
+      // derived from your seed phrase:
+      keyAgreement.secretKey
     )
     // If it fails to decrypt, throw.
     if (!decryptedBytes) {
@@ -240,12 +195,9 @@ export async function getSessionJWT(
     const sessionCookie = request.cookies.sessionJWT
     if (!sessionCookie)
       throw new Error(
-        'Cookie with Session JWT not found. Logg in and try again.'
+        'Cookie with Session JWT not found. Log-in and try again.'
       )
-
-    const sessionJWT = JSON.parse(sessionCookie)
-
-    const decodedPayload = jwt.decode(sessionJWT, { json: true })
+    const decodedPayload = jwt.decode(sessionCookie, { json: true })
 
     console.log('decoded JWT-Payload from Browser-Cookie: ', decodedPayload)
 
@@ -259,7 +211,7 @@ export async function getSessionJWT(
     next(err)
     response
       .status(404)
-      .send('Could not find Cookie with session values. Try to logg in again.')
+      .send('Could not find Cookie with session values. Try to log-in again.')
     return
   }
 

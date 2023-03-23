@@ -12,6 +12,8 @@ import {
   getSessionJWT
 } from './src/session/session'
 
+import { fetchDidDocument } from './src/utils/fetchDidDocument'
+
 // Letting the server know where the environment varibles are
 const projectRoootDirectory = path.dirname(__dirname)
 dotenv.config({ path: `${projectRoootDirectory}/.env` })
@@ -37,6 +39,9 @@ app.use(
 
 app.use(cookieParser()) // simplifies Cookies. Backing has never been easier.
 
+// app.locals.dummy = 42
+// app.get('/api/fetchDidDoc', fetchDidDocument)
+
 // Setting GET and POST functions
 
 app.get('/api', (req: Request, res: Response) => {
@@ -51,6 +56,15 @@ app.get('/api/session/start', generateJWT)
 app.post('/api/session/verify', verifySessionJWT)
 app.get('/api/session/readCookie', getSessionJWT)
 
-app.listen(PORT, () => {
-  console.log(`⚡️[server]: Server is running at http://localhost:${PORT}`)
-})
+// fetch the the DID-Document of DID of your dApp from the Blockchain once:
+fetchDidDocument()
+  .then((doccy) => {
+    app.locals.dappDidDocument = doccy
+    // wait for fetched document before server starts listening:
+    app.listen(PORT, () => {
+      console.log(`⚡️[server]: Server is running at http://localhost:${PORT}`)
+    })
+  })
+  .catch((error) => {
+    throw new Error(error)
+  })

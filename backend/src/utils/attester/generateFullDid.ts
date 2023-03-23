@@ -20,12 +20,13 @@ export async function generateFullDid(
   // Before submitting the transaction, it is worth it to assure that the DID does not already exist.
   // If the DID aleady exist, the transaction will fail, but it will still costs the fee. Better to avoid this.
 
-  // check if DID already exists or use to exist:
+  // check if DID already exists or if it used to exist:
   const desiredDidUri = Kilt.Did.getFullDidUriFromKey(authentication)
   const oldDidResolved = await Kilt.Did.resolve(desiredDidUri)
   if (oldDidResolved) {
     console.log('this DID is already registered on chain')
-    const deactivated: boolean = oldDidResolved.metadata.deactivated // true if it was deleted
+    // true if it was deleted:
+    const deactivated: boolean = oldDidResolved.metadata.deactivated
     const oldDidDocument = oldDidResolved.document
 
     if (deactivated)
@@ -37,6 +38,7 @@ export async function generateFullDid(
         'DID resolved, but document undefine. This should be impossible.'
       )
 
+    // if it exists and it is valid, just return it.
     return oldDidDocument
   }
 
