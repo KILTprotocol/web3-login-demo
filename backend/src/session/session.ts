@@ -128,8 +128,9 @@ export async function verifySessionJWT(
 
     // get your encryption Key, a.k.a. Key Agreement
     const dAppDidMnemonic = process.env.DAPP_DID_MNEMONIC
-    if (!dAppDidMnemonic)
+    if (!dAppDidMnemonic) {
       throw new Error('Enter your dApps mnemonic on the .env file')
+    }
 
     const { keyAgreement } = generateKeypairs(dAppDidMnemonic)
 
@@ -193,10 +194,11 @@ export async function getSessionJWT(
 ): Promise<void> {
   try {
     const sessionCookie = request.cookies.sessionJWT
-    if (!sessionCookie)
+    if (!sessionCookie) {
       throw new Error(
         'Cookie with Session JWT not found. Log-in and try again.'
       )
+    }
     const decodedPayload = jwt.decode(sessionCookie, { json: true })
 
     console.log('decoded JWT-Payload from Browser-Cookie: ', decodedPayload)
