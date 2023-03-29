@@ -23,8 +23,10 @@ const PORT = process.env.PORT || 3000
 
 // Activating Middleware:
 
-app.use(bodyParser.json()) // for parsing application/json
-app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+// for parsing application/json
+app.use(bodyParser.json())
+// for parsing application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }))
 
 // enable comunication between front and backend
 app.use(
@@ -37,10 +39,8 @@ app.use(
   })
 )
 
-app.use(cookieParser()) // simplifies Cookies. Backing has never been easier.
-
-// app.locals.dummy = 42
-// app.get('/api/fetchDidDoc', fetchDidDocument)
+// simplifies Cookies. Backing has never been easier.
+app.use(cookieParser())
 
 // Setting GET and POST functions
 
