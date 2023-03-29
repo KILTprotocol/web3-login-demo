@@ -21,9 +21,12 @@ export async function generateSessionValues(
   const dAppName = process.env.DAPP_NAME ?? 'Your dApp Name'
 
   // Build the EncryptionKeyUri so that the client can encrypt messages for us:
-  const dAppEncryptionKeyUri = `${didDocument.uri}${
-    didDocument.keyAgreement![0].id
-  }` as Kilt.DidResourceUri
+  const dAppEncryptionKeyUri =
+    `${didDocument.uri}${didDocument.keyAgreement?.[0].id}` as Kilt.DidResourceUri
+
+  if (typeof didDocument.keyAgreement === undefined) {
+    throw new Error('This DID has no Key Agreement. Cannot encrypt like this.')
+  }
 
   // Generate a challenge to ensure all messages we receive are fresh.
   // A UUID is a universally unique identifier, a 128-bit label. Here express as a string of a hexaheximal number.
