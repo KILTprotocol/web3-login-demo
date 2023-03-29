@@ -1,7 +1,5 @@
 import * as Kilt from '@kiltprotocol/sdk-js'
-// import jwt from 'jsonwebtoken'
 
-// import { generateKeypairs } from '../utils/attester/generateKeyPairs'
 import { getApi } from '../utils/connection'
 
 export async function fetchDidDocument(): Promise<Kilt.DidDocument> {
