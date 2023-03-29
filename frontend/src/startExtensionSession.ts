@@ -17,7 +17,9 @@ export async function startExtensionSession() {
       Accept: 'application/json'
     }
   })
-  if (!serverSessionJWT.ok) throw Error(serverSessionJWT.statusText)
+  if (!serverSessionJWT.ok) {
+    throw Error(serverSessionJWT.statusText)
+  }
 
   const payloadJWT = await serverSessionJWT.json()
 

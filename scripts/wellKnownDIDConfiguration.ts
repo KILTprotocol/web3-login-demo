@@ -315,15 +315,23 @@ export async function verifyDidConfigPresentation(
       } = credential
 
       const matchesSessionDid = didUri === credentialSubject.id
-      if (!matchesSessionDid) throw new Error('session did doesnt match')
+      if (!matchesSessionDid) {
+        throw new Error('session did doesnt match')
+      }
 
       Kilt.Did.validateUri(credentialSubject.id)
       const matchesIssuer = issuer === credentialSubject.id
-      if (!matchesIssuer) throw new Error('does not match the issuer')
+      if (!matchesIssuer) {
+        throw new Error('does not match the issuer')
+      }
 
       const matchesOrigin = origin === credentialSubject.origin
-      if (!matchesOrigin) throw new Error('does not match the origin')
-      if (!validUrl.isUri(origin)) throw new Error('not a valid uri')
+      if (!matchesOrigin) {
+        throw new Error('does not match the origin')
+      }
+      if (!validUrl.isUri(origin)) {
+        throw new Error('not a valid uri')
+      }
 
       const fullDid = await Kilt.Did.resolve(didUri)
 

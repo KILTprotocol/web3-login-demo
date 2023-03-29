@@ -29,14 +29,16 @@ export async function generateFullDid(
     const deactivated: boolean = oldDidResolved.metadata.deactivated
     const oldDidDocument = oldDidResolved.document
 
-    if (deactivated)
+    if (deactivated) {
       throw new Error(
         'This DID was deleted/deactivated and cannot be created again.'
       )
-    if (!oldDidDocument)
+    }
+    if (!oldDidDocument) {
       throw new Error(
         'DID resolved, but document undefine. This should be impossible.'
       )
+    }
 
     // if it exists and it is valid, just return it.
     return oldDidDocument

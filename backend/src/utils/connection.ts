@@ -9,7 +9,9 @@ import * as Kilt from '@kiltprotocol/sdk-js'
 export async function getApi() {
   // If the API is already set up, return it
 
-  if (Kilt.ConfigService.isSet('api')) return Kilt.ConfigService.get('api')
+  if (Kilt.ConfigService.isSet('api')) {
+    return Kilt.ConfigService.get('api')
+  }
 
   // If it is not, connect to it using the Web-Socket Address from the enviorment variable:
   if (!process.env.WSS_ADDRESS) {
