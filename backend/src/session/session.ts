@@ -176,10 +176,7 @@ export async function verifySessionJWT(
   } catch (err) {
     // print the possible error on the frontend
     next(err)
-    return
   }
-
-  return
 }
 
 /**
@@ -217,8 +214,5 @@ export async function getSessionJWT(
     response
       .status(404)
       .send('Could not find Cookie with session values. Try to log-in again.')
-    return
   }
-
-  return
 }
