@@ -52,6 +52,7 @@ export async function generateJWT(
   next: NextFunction
 ): Promise<void> {
   try {
+    // we use the DID-Document from the dApp fetched on server-start to generate our Session Values:
     const payload = await generateSessionValues(
       request.app.locals.dappDidDocument
     )
@@ -62,7 +63,7 @@ export async function generateJWT(
       )
     }
 
-    // Create a Json-Web-Token
+    // Create a Json-Web-Token:
     const options = {
       expiresIn: '1d'
     }
@@ -85,7 +86,6 @@ export async function generateJWT(
 
     // Set a Cookie in the header including the JWT and our options:
     // Using 'cookie-parser' deendency:
-
     response.cookie('sessionJWT', token, cookieOptions)
 
     console.log(
@@ -98,21 +98,66 @@ export async function generateJWT(
   } catch (error) {
     // print the possible error on the frontend
     next(error)
+    response
+      .status(500)
+      .send(`Could not set Cookie with session values. \n Error: ${error}.`)
   }
 }
 
-export async function verifySessionJWT(
+export async function verifySession(
   request: Request,
   response: Response,
   next: NextFunction
 ): Promise<void> {
+  const secretKey = process.env.JWT_ENCODER
+  if (!secretKey) {
+    response
+      .status(500)
+      .send(
+        `Could not find JWT-Secret-key; so it is not possible to verify session.`
+      )
+    throw new Error(
+      "Define a value for 'JWT_ENCODER' on the '.env'-file first!"
+    )
+  }
+
+  // read cookie from browser
+  const sessionCookie = request.cookies.sessionJWT
+  if (!sessionCookie) {
+    response
+      .status(401)
+      .send(
+        `Could not find Cookie with session values (as JWT). Log-in and try again.`
+      )
+    throw new Error('Cookie with Session JWT not found. Log-in and try again.')
+  }
+
+  // decode the JWT and verify if it was signed with our SecretKey
+
+  let cookiePayloadServerSession: jwt.JwtPayload
+  try {
+    // will throw error if verification fails
+    const decodedPayload = jwt.verify(sessionCookie, secretKey)
+    if (typeof decodedPayload === typeof 'string') {
+      throw new Error(`Payload of unexpected type. Content: ${decodedPayload}`)
+    }
+    cookiePayloadServerSession = decodedPayload as jwt.JwtPayload
+  } catch (error) {
+    throw new Error(`Could not verify JWT. --> ${error}`)
+  }
+
+  console.log(
+    `decoded JWT-Payload from Browser-Cookie: 
+    ${JSON.stringify(cookiePayloadServerSession, null, 2)}`
+  )
+
   try {
     // the body is the wrapper for the information send by the frontend
     // You could print it with:
-    // console.log("body", request.body);
+    // console.log('body', request.body)
 
     // extract variables:
-    const { extensionSession, serverSession } = request.body
+    const { extensionSession } = request.body
     const { encryptedChallenge, nonce } = extensionSession
     // This varible has different name depending on the session version
     let encryptionKeyUri: Kilt.DidResourceUri
@@ -139,7 +184,7 @@ export async function verifySessionJWT(
 
     const decryptedBytes = Kilt.Utils.Crypto.decryptAsymmetric(
       { box: encryptedChallenge, nonce },
-      // fecth from the chain:
+      // fetch from the chain:
       encryptionKey.publicKey,
       // derived from your seed phrase:
       keyAgreement.secretKey
@@ -152,7 +197,7 @@ export async function verifySessionJWT(
     }
 
     const decryptedChallenge = Kilt.Utils.Crypto.u8aToHex(decryptedBytes)
-    const originalChallenge = serverSession.challenge
+    const originalChallenge = cookiePayloadServerSession.challenge
 
     // Compare the decrypted challenge to the challenge you stored earlier.
     console.log(
@@ -192,6 +237,13 @@ export async function getSessionJWT(
   response: Response,
   next: NextFunction
 ): Promise<void> {
+  const secretKey = process.env.JWT_ENCODER
+  if (!secretKey) {
+    throw new Error(
+      "Define a value for 'JWT_ENCODER' on the '.env'-file first!"
+    )
+  }
+
   try {
     const sessionCookie = request.cookies.sessionJWT
     if (!sessionCookie) {
@@ -199,8 +251,11 @@ export async function getSessionJWT(
         'Cookie with Session JWT not found. Log-in and try again.'
       )
     }
-    const decodedPayload = jwt.decode(sessionCookie, { json: true })
+    // decode the JWT and verify if it was signed with our SecretKey
+    // will throw error if verification fails
+    const decodedPayload = jwt.verify(sessionCookie, secretKey)
 
+    console.log('type of te decodedPayload: ', typeof decodedPayload)
     console.log('decoded JWT-Payload from Browser-Cookie: ', decodedPayload)
 
     response
@@ -213,6 +268,8 @@ export async function getSessionJWT(
     next(err)
     response
       .status(404)
-      .send('Could not find Cookie with session values. Try to log-in again.')
+      .send(
+        `Could not find Cookie with session values or verify it's JWT's signature. \n ${err}`
+      )
   }
 }

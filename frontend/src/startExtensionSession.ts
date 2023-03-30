@@ -3,12 +3,8 @@ import { getExtensions, apiWindow } from './utils/getExtension'
 export async function startExtensionSession() {
   getExtensions()
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  // Saving the session values as a JSON-Web-Token on a Cookie of the browser
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  // generate and get a JasonWebToken with session values from the backend:
-  const serverSessionJWT = await fetch(`/api/session/start`, {
+  // generate a JSON-Web-Token with session values on the backend and save it on a Cookie on the Browser:
+  const serverSessionStart = await fetch(`/api/session/start`, {
     method: 'GET',
     credentials: 'include',
     headers: {
@@ -17,18 +13,23 @@ export async function startExtensionSession() {
       Accept: 'application/json'
     }
   })
-  if (!serverSessionJWT.ok) {
-    throw Error(serverSessionJWT.statusText)
+  if (!serverSessionStart.ok) {
+    throw Error(serverSessionStart.statusText)
   }
 
-  const payloadJWT = await serverSessionJWT.json()
+  const plainPayload = await serverSessionStart.json()
 
-  console.log('Plain text accompanying the Cookie (Payload of JWT)', payloadJWT)
+  if (!plainPayload) {
+    throw new Error('Trouble generating session values on the backend.')
+  }
+
+  console.log('Plain text accompanying the Cookie "sessionJWT": ', plainPayload)
 
   try {
     // destructure the payload:
-    const { dAppName, dAppEncryptionKeyUri, challenge } = payloadJWT
+    const { dAppName, dAppEncryptionKeyUri, challenge } = plainPayload
 
+    // Let the extension do the counterpart:
     const extensionSession = await apiWindow.kilt.sporran.startSession(
       dAppName,
       dAppEncryptionKeyUri,
@@ -41,10 +42,8 @@ export async function startExtensionSession() {
     // to decrypt `session.encryptedChallenge` and confirm that it’s equal to the original challenge.
     // This verification must happen on the server-side.
 
-    const responseToBackend = JSON.stringify({
-      extensionSession,
-      serverSession: payloadJWT
-    })
+    const responseToBackend = JSON.stringify({ extensionSession })
+
     // console.log("responseToBackend", responseToBackend);
     await fetch(`/api/session/verify`, {
       method: 'POST',
@@ -56,7 +55,9 @@ export async function startExtensionSession() {
       body: responseToBackend
     })
 
-    return extensionSession
+    console.log(
+      'Session successfully verified. Server and Extension trust eachother.'
+    )
   } catch (error) {
     console.error(
       `Error verifying Session from:  ${apiWindow.kilt.sporran.name}: ${apiWindow.kilt.sporran.version},  ${error}`

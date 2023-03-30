@@ -8,7 +8,7 @@ import cookieParser from 'cookie-parser'
 
 import {
   generateJWT,
-  verifySessionJWT,
+  verifySession,
   getSessionJWT
 } from './src/session/session'
 
@@ -53,7 +53,7 @@ app.get('/api', (req: Request, res: Response) => {
 
 // using JWTs
 app.get('/api/session/start', generateJWT)
-app.post('/api/session/verify', verifySessionJWT)
+app.post('/api/session/verify', verifySession)
 app.get('/api/session/readCookie', getSessionJWT)
 
 // fetch the the DID-Document of DID of your dApp from the Blockchain once:
