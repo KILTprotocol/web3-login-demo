@@ -256,7 +256,6 @@ export async function getSessionJWT(
     // will throw error if verification fails
     const decodedPayload = jwt.verify(sessionCookie, secretKey)
 
-    console.log('type of te decodedPayload: ', typeof decodedPayload)
     console.log('decoded JWT-Payload from Browser-Cookie: ', decodedPayload)
 
     response
@@ -268,7 +267,7 @@ export async function getSessionJWT(
     // print the possible error on the frontend
     next(err)
     response
-      .status(404)
+      .status(401)
       .send(
         `Could not find Cookie with session values or verify it's JWT's signature. \n ${err}`
       )
