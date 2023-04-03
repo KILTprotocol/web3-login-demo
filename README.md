@@ -23,7 +23,7 @@ Please, follow the standard and use these names for your environment variables:
 - `DAPP_DID_MNEMONIC` = _This is the mnemonic of the Kilt DID that identifies your dApp_
 - `DAPP_DID_URI` = _This is the URI of the Kilt DID that identifies your dApp_
 - `DAPP_NAME` = _This should be a custom name for your dApp_
-- `JWT_UNIQUE_PEN` = _This is secret key (string) that encodes the Json-Web-Tokens before saving them in the Cookies_
+- `JWT_UNIQUE_PEN` = _This is secret key (string) that signs the Json-Web-Tokens before saving them in the Cookies_
 
 There is a script to facilitate the generetion of the environment variables that are needed to set up your decentralized App.
 This script is called `genesisEnvironmentVariables` you can either

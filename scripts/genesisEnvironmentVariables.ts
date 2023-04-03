@@ -25,7 +25,7 @@ const {
   DAPP_DID_URI,
   // This should be a custom name for your dApp
   DAPP_NAME,
-  // This is secret key (string) that encodes the Json-Web-Tokens before saving them in the Cookies
+  // This is secret key (string) that signs the Json-Web-Tokens before saving them in the Cookies
   JWT_UNIQUE_PEN
 } = process.env
 
