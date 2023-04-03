@@ -56,10 +56,10 @@ export async function generateJWT(
     const payload = await generateSessionValues(
       request.app.locals.dappDidDocument
     )
-    const secretKey = process.env.JWT_UNIQUE_PEN
+    const secretKey = process.env.JWT_SIGNER_SECRET
     if (!secretKey) {
       throw new Error(
-        "Define a value for 'JWT_UNIQUE_PEN' on the '.env'-file first!"
+        "Define a value for 'JWT_SIGNER_SECRET' on the '.env'-file first!"
       )
     }
 
@@ -109,7 +109,7 @@ export async function verifySession(
   response: Response,
   next: NextFunction
 ): Promise<void> {
-  const secretKey = process.env.JWT_UNIQUE_PEN
+  const secretKey = process.env.JWT_SIGNER_SECRET
   if (!secretKey) {
     response
       .status(500)
@@ -117,7 +117,7 @@ export async function verifySession(
         `Could not find JWT-Secret-key; so it is not possible to verify session.`
       )
     throw new Error(
-      "Define a value for 'JWT_UNIQUE_PEN' on the '.env'-file first!"
+      "Define a value for 'JWT_SIGNER_SECRET' on the '.env'-file first!"
     )
   }
 
@@ -237,12 +237,13 @@ export async function getSessionJWT(
   response: Response,
   next: NextFunction
 ): Promise<void> {
-  const secretKey = process.env.JWT_UNIQUE_PEN
+  const secretKey = process.env.JWT_SIGNER_SECRET
   if (!secretKey) {
     throw new Error(
-      "Define a value for 'JWT_UNIQUE_PEN' on the '.env'-file first!"
+      "Define a value for 'JWT_SIGNER_SECRET' on the '.env'-file first!"
     )
   }
+  console.log(`Value for JWT_SIGNER_SECRET= ${secretKey}`)
 
   try {
     const sessionCookie = request.cookies.sessionJWT
