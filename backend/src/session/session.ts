@@ -232,7 +232,7 @@ export async function verifySession(
  * @param next
  * @returns
  */
-export async function getSessionJWT(
+export async function readSessionJWT(
   request: Request,
   response: Response,
   next: NextFunction
@@ -243,7 +243,7 @@ export async function getSessionJWT(
       "Define a value for 'JWT_SIGNER_SECRET' on the '.env'-file first!"
     )
   }
-  console.log(`Value for JWT_SIGNER_SECRET= ${secretKey}`)
+  // console.log(`Value for JWT_SIGNER_SECRET= ${secretKey}`)
 
   try {
     const sessionCookie = request.cookies.sessionJWT
