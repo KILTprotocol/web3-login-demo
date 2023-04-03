@@ -26,7 +26,7 @@ const {
   // This should be a custom name for your dApp
   DAPP_NAME,
   // This is secret key (string) that encodes the Json-Web-Tokens before saving them in the Cookies
-  JWT_ENCODER
+  JWT_UNIQUE_PEN
 } = process.env
 
 async function main() {
@@ -54,7 +54,7 @@ async function main() {
     DAPP_DID_MNEMONIC,
     DAPP_DID_URI,
     DAPP_NAME,
-    JWT_ENCODER
+    JWT_UNIQUE_PEN
   ]
 
   // find the first element in the array "stairs" that it is still undefined.
@@ -251,8 +251,8 @@ function imploreName() {
 function imploreJwtSecretKey() {
   console.log(
     '\ntrouble reading the Secret Key your dApps use to encode the JSON-Web-Tokens\n',
-    `Please provide a string value for 'JWT_ENCODER' inside the .env file. \n`,
-    `JWT_ENCODER={Oh my God, you are so cryptic!}\n`
+    `Please provide a string value for 'JWT_UNIQUE_PEN' inside the .env file. \n`,
+    `JWT_UNIQUE_PEN={Oh my God, you are so cryptic!}\n`
   )
 }
 
