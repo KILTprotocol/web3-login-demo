@@ -37,7 +37,6 @@ async function readCurrentDidConfig(): Promise<VerifiableDomainLinkagePresentati
       '\n\nYour projects repository already has a well-known-did-configuration file.'
     )
     console.log('You can find it under this path: \n', fullpath)
-    // console.log('here is the content of that file', filecontent)
   }
   if (!filecontent) {
     console.log(
@@ -61,7 +60,7 @@ async function main() {
   const fundsMnemonic =
     process.env.DAPP_ACCOUNT_MNEMONIC ?? 'your dApp needs an Sponsor '
 
-  //Connect to the webSocket. This tells the Kilt Api to wich node to interact, and ergo also the blockchain (Spiritnet or Peregrine)
+  // Connect to the webSocket. This tells the Kilt Api to wich node to interact, and ergo also the blockchain (Spiritnet or Peregrine)
   const webSocket = process.env.WSS_ADDRESS
   if (webSocket) {
     await Kilt.connect(webSocket)
@@ -73,7 +72,7 @@ async function main() {
 
   console.log(
     '\n',
-    'The enviorment variables are: \n',
+    'The enviorment variables defining the Well-Known-DID-Configuration are: \n',
     `webSocket=${webSocket} \n`,
     `dAppURI=${dAppURI} \n`,
     `domainOrigin=${domainOrigin} \n`,
@@ -197,11 +196,13 @@ async function main() {
 
   // __dirname is the folder where this file is; here currently 'scripts'
 
-  const parentDirectory = path.dirname(__dirname) //  it roughly means “find me the parent path to the current folder.”
+  //  the following roughly means “find me the parent path to the current folder.”
+  const parentDirectory = path.dirname(__dirname)
 
+  // creates a folder where to save the did-config file
   await fs.promises.mkdir(`${parentDirectory}/frontend/public/.well-known`, {
     recursive: true
-  }) // creates a folder where to save the did-config file
+  })
 
   fs.writeFile(
     `${parentDirectory}/frontend/public/.well-known/did-configuration.json`,
