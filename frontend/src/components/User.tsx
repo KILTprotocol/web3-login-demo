@@ -15,7 +15,7 @@ async function startSession() {
   await startExtensionSession()
 }
 
-export default function User({ user, connected, onClick }: Props): JSX.Element {
+export default function User({ user, connected }: Props): JSX.Element {
   return (
     <div>
       <div className={styles.account}>
