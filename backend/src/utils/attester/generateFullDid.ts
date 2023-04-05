@@ -69,11 +69,6 @@ export async function generateFullDid(
   }
   const { document: didDocument } = resolved
 
-  // Alternative without the Did.resolve method:
-  // const api = Kilt.ConfigService.get('api');
-  // const encodedFullDid = await api.call.did.query(Kilt.Did.toChain(didUri));
-  // const { didDocument } = Kilt.Did.linkedInfoFromChain(encodedFullDid);
-
   if (!didDocument) {
     throw new Error('Full DID was not successfully fetched.')
   }

@@ -20,8 +20,6 @@ export function generateKeypairs(mnemonic: string) {
     mnemonicToMiniSecret(mnemonic),
     'sr25519'
   )
-  // Alternative using the other file
-  // const account = generateAccount(mnemonic);
 
   // You can derive the keys however you want to and it will still work.
   // But if, for example, you try to load your seed phrase in a third party wallet, you will get a differnt set of keys, because the derivation is diferent.

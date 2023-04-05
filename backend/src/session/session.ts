@@ -146,16 +146,7 @@ export async function verifySession(
     throw new Error(`Could not verify JWT. --> ${error}`)
   }
 
-  // console.log(
-  //   `decoded JWT-Payload from Browser-Cookie:
-  //   ${JSON.stringify(cookiePayloadServerSession, null, 2)}`
-  // )
-
   try {
-    // the body is the wrapper for the information send by the frontend
-    // You could print it with:
-    // console.log('body', request.body)
-
     // extract variables:
     const { extensionSession } = request.body
     const { encryptedChallenge, nonce } = extensionSession

@@ -8,7 +8,6 @@ import * as Kilt from '@kiltprotocol/sdk-js'
  */
 export async function getApi() {
   // If the API is already set up, return it
-
   if (Kilt.ConfigService.isSet('api')) {
     return Kilt.ConfigService.get('api')
   }
@@ -19,6 +18,7 @@ export async function getApi() {
       'please, define a value for WSS_ADDRESS on .env-file to use this function'
     )
   }
-  await Kilt.connect(process.env.WSS_ADDRESS) // internally it calls cryptoWaitReady()
+  // internally Kilt.connect() calls cryptoWaitReady()
+  await Kilt.connect(process.env.WSS_ADDRESS)
   return Kilt.ConfigService.get('api')
 }

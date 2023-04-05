@@ -44,7 +44,6 @@ export async function startExtensionSession() {
 
     const responseToBackend = JSON.stringify({ extensionSession })
 
-    // console.log("responseToBackend", responseToBackend);
     await fetch(`/api/session/verify`, {
       method: 'POST',
       credentials: 'include',

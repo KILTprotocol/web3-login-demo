@@ -54,7 +54,8 @@ async function main() {
   const dAppURI =
     (process.env.DAPP_DID_URI as Kilt.DidUri) ??
     (`did:kilt:4${'noURIEstablished'}` as Kilt.DidUri)
-  const domainOrigin = process.env.ORIGIN ?? 'no origin assiged' // don't put a slash / at the end!
+  // don't put a slash "/" at the end!
+  const domainOrigin = process.env.ORIGIN ?? 'no origin assiged'
   const dAppMnemonic =
     process.env.DAPP_DID_MNEMONIC ?? 'your dApp needs an Identity '
   const fundsMnemonic =
@@ -154,14 +155,6 @@ async function main() {
     throw new Error('No assertion Key disponible.')
   }
   const assertionMethodKeyId = didResolveResult.document.assertionMethod[0].id
-
-  // to declare the SignCallBacks is a bit tricky. You either have to speficy the type of every return variable, or of the whole return.
-
-  // const presentationSignCallback = async ({ data }: any) => ({
-  //     signature: assertionMethodKey.sign(data) as Uint8Array,
-  //     keyUri: `${dAppURI}${assertionMethodKeyId}` as Kilt.DidResourceUri,
-  //     keyType: assertionMethodKey.type as Kilt.DidVerificationKey['type']
-  // });
 
   const presentationSignCallback = async ({
     data

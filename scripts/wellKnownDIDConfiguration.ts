@@ -15,22 +15,20 @@ import {
 // They are standard, an so it's better to fetch them from the @kiltprotocol/vc-export package, to keep them up to date.
 // On the right it is comment the values used when this repository was made. They can change in the future (maybe your past).
 export const DEFAULT_VERIFIABLECREDENTIAL_TYPE =
-  constants.DEFAULT_VERIFIABLECREDENTIAL_TYPE // 'VerifiableCredential';
+  constants.DEFAULT_VERIFIABLECREDENTIAL_TYPE
+// 'VerifiableCredential';
 export const KILT_VERIFIABLECREDENTIAL_TYPE =
-  constants.KILT_VERIFIABLECREDENTIAL_TYPE // 'KiltCredential2020';
-export const KILT_SELF_SIGNED_PROOF_TYPE = constants.KILT_SELF_SIGNED_PROOF_TYPE // 'KILTSelfSigned2020';
+  constants.KILT_VERIFIABLECREDENTIAL_TYPE
+// 'KiltCredential2020';
+export const KILT_SELF_SIGNED_PROOF_TYPE = constants.KILT_SELF_SIGNED_PROOF_TYPE
+// 'KILTSelfSigned2020';
 export const DID_CONFIGURATION_CONTEXT =
-  'https://identity.foundation/.well-known/did-configuration/v1' // this constant is not yet in the kilt-sdk
-export const DID_VC_CONTEXT = constants.DEFAULT_VERIFIABLECREDENTIAL_CONTEXT // 'https://www.w3.org/2018/credentials/v1';
-export const KILT_CREDENTIAL_IRI_PREFIX = constants.KILT_CREDENTIAL_IRI_PREFIX // 'kilt:cred:';
-
-// Quick check of the value of the default constants:
-// console.log("DEFAULT_VERIFIABLECREDENTIAL_TYPE: ", DEFAULT_VERIFIABLECREDENTIAL_TYPE);
-// console.log("KILT_VERIFIABLECREDENTIAL_TYPE: ", KILT_VERIFIABLECREDENTIAL_TYPE);
-// console.log("KILT_SELF_SIGNED_PROOF_TYPE: ", KILT_SELF_SIGNED_PROOF_TYPE);
-// console.log("DID_CONFIGURATION_CONTEXT: ", DID_CONFIGURATION_CONTEXT);
-// console.log("DID_VC_CONTEXT: ", DID_VC_CONTEXT);
-// console.log("KILT_CREDENTIAL_IRI_PREFIX: ", KILT_CREDENTIAL_IRI_PREFIX);
+  'https://identity.foundation/.well-known/did-configuration/v1'
+// this constant is not yet in the kilt-sdk
+export const DID_VC_CONTEXT = constants.DEFAULT_VERIFIABLECREDENTIAL_CONTEXT
+// 'https://www.w3.org/2018/credentials/v1';
+export const KILT_CREDENTIAL_IRI_PREFIX = constants.KILT_CREDENTIAL_IRI_PREFIX
+// 'kilt:cred:';
 
 export const ctypeDomainLinkage = Kilt.CType.fromProperties(
   'Domain Linkage Credential',
@@ -132,7 +130,8 @@ export async function getDomainLinkagePresentation(
     rootHash: credentialRootHash,
     claimerSignature
   } = credentialPresentation
-  const { owner: issuerDidUri, contents: claimContents, cTypeHash } = claim // The owner of a claim is the issuer of it. It´s identified with its DID-URI.
+  // The owner of a claim is the issuer of it. It´s identified with its DID-URI.
+  const { owner: issuerDidUri, contents: claimContents, cTypeHash } = claim
   const { origin: domainsOrigin } = claimContents
   const issuanceDate = new Date().toISOString()
   const api = Kilt.ConfigService.get('api')
