@@ -14,7 +14,6 @@ interface SessionValues {
 export async function generateSessionValues(
   didDocument: Kilt.DidDocument
 ): Promise<SessionValues> {
-  console.log('generating session Values')
   // connects to the websocket of your, in '.env', specified blockchain
   await getApi()
   const dAppName = process.env.DAPP_NAME ?? 'Your dApp Name'

@@ -49,11 +49,12 @@ export async function verifySession(
     throw new Error(`Could not verify JWT. --> ${error}`)
   }
 
+  // Important/Real Verification:
   try {
     // extract variables:
     const { extensionSession } = request.body
     const { encryptedChallenge, nonce } = extensionSession
-    // This varible has different name depending on the session version
+    // This varible has different name depending on the session version that the extension uses
     let encryptionKeyUri: Kilt.DidResourceUri
     // if session is type PubSubSessionV1
     if ('encryptionKeyId' in extensionSession) {
@@ -78,7 +79,7 @@ export async function verifySession(
 
     const decryptedBytes = Kilt.Utils.Crypto.decryptAsymmetric(
       { box: encryptedChallenge, nonce },
-      // fetch from the chain:
+      // resolved from extension-URI
       encryptionKey.publicKey,
       // derived from your seed phrase:
       keyAgreement.secretKey
@@ -96,8 +97,8 @@ export async function verifySession(
     // Compare the decrypted challenge to the challenge you stored earlier.
     console.log(
       '\n',
-      `original Challenge: ${originalChallenge} \n`,
-      `decrypted Challenge: ${decryptedChallenge} \n`
+      `(from server) original Challenge: ${originalChallenge} \n`,
+      `(from extension) decrypted Challenge: ${decryptedChallenge} \n`
     )
     if (decryptedChallenge !== originalChallenge) {
       response

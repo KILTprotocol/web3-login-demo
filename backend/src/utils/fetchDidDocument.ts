@@ -2,6 +2,13 @@ import * as Kilt from '@kiltprotocol/sdk-js'
 
 import { getApi } from '../utils/connection'
 
+/**
+ * This function is to fetch the the DID-Document of your dApp from the Blockchain once.
+ *
+ * It is meant to be used before starting the server so that the document is available to use.
+ *
+ * @returns didDocument Kilt.DidDocument
+ */
 export async function fetchDidDocument(): Promise<Kilt.DidDocument> {
   // connects to the websocket of your, in '.env', specified blockchain
   await getApi()

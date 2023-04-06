@@ -25,7 +25,8 @@ app.use(bodyParser.json())
 // for parsing application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }))
 
-// enable comunication between front and backend
+// Tell the browser that only these URLs should be allowed to make request to this server.
+// If you host the app using a different URL, you need to add it here.
 app.use(
   cors({
     origin: [
@@ -36,7 +37,7 @@ app.use(
   })
 )
 
-// simplifies Cookies. Backing has never been easier.
+// Utility to read cookies. Backing has never been easier.
 app.use(cookieParser())
 
 // Setting GET and POST functions
@@ -48,11 +49,14 @@ app.get('/api', (req: Request, res: Response) => {
 
 // manage Session:
 
-// using JWTs
+// Login:
+// Starts the session from server side.
 app.get('/api/session/start', startSession)
+// Process session values from the extension and verify that secure comunication is stablish. (compares challenge)
 app.post('/api/session/verify', verifySession)
 
-// fetch the the DID-Document of DID of your dApp from the Blockchain once:
+// We need the DID Document of the dApps DID (DAPP_DID_URI) before we can handle login requests.
+// We therefore start the server only after the document was fetched.
 fetchDidDocument()
   .then((doccy) => {
     app.locals.dappDidDocument = doccy
@@ -62,5 +66,5 @@ fetchDidDocument()
     })
   })
   .catch((error) => {
-    console.log(error)
+    console.log(`Could not start server! ${error}`)
   })
