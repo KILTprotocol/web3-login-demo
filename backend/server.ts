@@ -6,7 +6,8 @@ import cors from 'cors'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 
-import { generateJWT, verifySession } from './src/session/session'
+import { startSession } from './src/session/startSession'
+import { verifySession } from './src/session/verifySession'
 
 import { fetchDidDocument } from './src/utils/fetchDidDocument'
 
@@ -48,7 +49,7 @@ app.get('/api', (req: Request, res: Response) => {
 // manage Session:
 
 // using JWTs
-app.get('/api/session/start', generateJWT)
+app.get('/api/session/start', startSession)
 app.post('/api/session/verify', verifySession)
 
 // fetch the the DID-Document of DID of your dApp from the Blockchain once:
