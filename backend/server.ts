@@ -1,7 +1,7 @@
 import path from 'path'
 
 import dotenv from 'dotenv'
-import express, { Express, Request, Response } from 'express'
+import express, { Express, NextFunction, Request, Response } from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
@@ -40,10 +40,15 @@ app.use(
 // Utility to read cookies. Backing has never been easier.
 app.use(cookieParser())
 
+// Printing the URL that requested the server
+app.use((req: Request, res: Response, next: NextFunction) => {
+  console.log(`Trigger: ${req.url}`)
+  next()
+})
+
 // Setting GET and POST functions
 
 app.get('/api', (req: Request, res: Response) => {
-  console.log(`'/api' triggered`)
   res.status(200).json('Welcome to the API for the KILT Web3 Login')
 })
 
