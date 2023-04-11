@@ -1,5 +1,12 @@
 import * as Kilt from '@kiltprotocol/sdk-js'
 
+/**
+ * The extension Session could be PubSubSessionV1 and PubSubSessionV2.
+ * This function simplyfies extraction the Encryption Key URI from it.
+ *
+ * @param extensionSession object with session values send by the extension
+ * @returns encryptionKeyUri as Kilt.DidResourceUri
+ */
 export function extractEncryptionKeyUri(
   extensionSession: unknown
 ): Kilt.DidResourceUri {
