@@ -42,7 +42,7 @@ export async function verifySession(
   try {
     // will throw error if verification fails
     const decodedPayload = jwt.verify(sessionCookie, secretKey)
-    if (typeof decodedPayload === typeof 'string') {
+    if (typeof decodedPayload === 'string') {
       throw new Error(`Payload of unexpected type. Content: ${decodedPayload}`)
     }
     cookiePayloadServerSession = decodedPayload as jwt.JwtPayload
