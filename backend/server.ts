@@ -10,6 +10,7 @@ import { startSession } from './src/session/startSession'
 import { verifySession } from './src/session/verifySession'
 
 import { fetchDidDocument } from './src/utils/fetchDidDocument'
+import { configurateServer } from './src/configuration/configurationObject'
 
 // Letting the server know where the environment varibles are
 const projectRoootDirectory = path.dirname(__dirname)
@@ -50,6 +51,11 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
 app.get('/api', (req: Request, res: Response) => {
   res.status(200).json('Welcome to the API for the KILT Web3 Login')
+})
+
+app.get('/api/configuration', (req: Request, res: Response) => {
+  configurateServer()
+  res.status(200).json('Configurating the Server')
 })
 
 // manage Session:
