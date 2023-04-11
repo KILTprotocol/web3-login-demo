@@ -41,7 +41,3 @@ After running this script each time, you need to manually copy the output and sa
 
 Alternativly, you could manually add the values that you created somehow elsewhere.
 But this is only recommended, if you really know what you are doing.
-
-### Patch:
-
-The `DAPP_ACCOUNT_ADDRESS` was taken out of the list of environment variables, to avoid the posibility of haven a mnemonic that does not matched the address. If you need this address use `generateAccount(DAPP_ACCOUNT_MNEMONIC)` from backend/src/utils/attester/generateAccount.ts
