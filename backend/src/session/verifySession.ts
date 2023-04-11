@@ -107,7 +107,6 @@ export async function verifySession(
         'Session succesfully verified. Extension and dApp understand each other.'
       )
   } catch (err) {
-    // print the possible error on the frontend
     next(err)
   }
 }

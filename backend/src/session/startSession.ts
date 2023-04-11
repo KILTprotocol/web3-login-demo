@@ -11,6 +11,20 @@ interface SessionValues {
   challenge: string
 }
 
+// Set Cookie Options: (list of ingredients)
+const cookieOptions: CookieOptions = {
+  // Indicates the number of seconds until the Cookie expires.
+  maxAge: 60 * 60 * 24,
+  // only send over HTTPS
+  secure: true,
+  // prevent cross-site request forgery attacks
+  sameSite: 'strict',
+  // restricts URL that can request the Cookie from the browser. '/' works for the entire domain.
+  path: '/',
+  // Forbids JavaScript from accessing the cookie
+  httpOnly: true
+}
+
 export async function generateSessionValues(
   didDocument: Kilt.DidDocument
 ): Promise<SessionValues> {
@@ -62,25 +76,12 @@ export async function startSession(
     }
 
     // Create a Json-Web-Token:
-    const options = {
-      expiresIn: '1d'
+    // set the experiation of JWT same as the Cookie
+    const optionsJwt = {
+      expiresIn: `${cookieOptions.maxAge} seconds`
     }
     // default to algorithm: 'HS256',
-    const token = jwt.sign(payload, secretKey, options)
-
-    // Set cookie options (list of ingredients)
-    const cookieOptions: CookieOptions = {
-      // Indicates the number of seconds until the Cookie expires.
-      maxAge: 60 * 60 * 24,
-      // only send over HTTPS
-      secure: true,
-      // prevent cross-site request forgery attacks
-      sameSite: 'strict',
-      // restricts URL that can request the Cookie from the browser. '/' works for the entire domain.
-      path: '/',
-      // Forbids JavaScript from accessing the cookie
-      httpOnly: true
-    }
+    const token = jwt.sign(payload, secretKey, optionsJwt)
 
     // Set a Cookie in the header including the JWT and our options:
     // Using 'cookie-parser' deendency:
@@ -94,10 +95,6 @@ export async function startSession(
     // send the Payload as plain text on the response, this facilitates the start of the extension session.
     response.status(200).send(payload)
   } catch (error) {
-    // print the possible error on the frontend
     next(error)
-    response
-      .status(500)
-      .send(`Could not set Cookie with session values. \n Error: ${error}.`)
   }
 }
