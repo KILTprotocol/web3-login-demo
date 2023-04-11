@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken'
 
 import { generateKeypairs } from '../utils/attester/generateKeyPairs'
 import { getApi } from '../utils/connection'
+import { extractEncryptionKeyUri } from '../utils/extractEncryptionKeyUri'
 
 export async function verifySession(
   request: Request,
@@ -51,19 +52,11 @@ export async function verifySession(
 
   // Important/Real Verification:
   try {
-    // extract variables:
     const { extensionSession } = request.body
     const { encryptedChallenge, nonce } = extensionSession
     // This varible has different name depending on the session version that the extension uses
-    let encryptionKeyUri: Kilt.DidResourceUri
-    // if session is type PubSubSessionV1
-    if ('encryptionKeyId' in extensionSession) {
-      encryptionKeyUri = extensionSession.encryptionKeyId as Kilt.DidResourceUri
-      // Version 1 had a misleading name for this variable
-    } else {
-      // if session is type PubSubSessionV2
-      encryptionKeyUri = extensionSession.encryptionKeyUri
-    }
+
+    const encryptionKeyUri = extractEncryptionKeyUri(extensionSession)
     const encryptionKey = await Kilt.Did.resolveKey(encryptionKeyUri)
     if (!encryptionKey) {
       throw new Error('an encryption key is required')
