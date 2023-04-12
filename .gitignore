@@ -3,7 +3,6 @@
 
 # dependencies
 node_modules
-yarn.lock
 package_lock.json
 package-lock.json
 
