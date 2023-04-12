@@ -9,7 +9,7 @@ import {
   CredentialSubject,
   DomainLinkageCredential,
   VerifiableDomainLinkagePresentation
-} from '../frontend/src/utils/types'
+} from './launchUtils/types'
 
 // This constants are needed to create a credential and/or presentation.
 // They are standard, an so it's better to fetch them from the @kiltprotocol/vc-export package, to keep them up to date.
