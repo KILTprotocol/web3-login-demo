@@ -1,5 +1,5 @@
 import * as Kilt from '@kiltprotocol/sdk-js'
-import { Response, Request, NextFunction, CookieOptions } from 'express'
+import { Response, Request, CookieOptions } from 'express'
 import jwt from 'jsonwebtoken'
 
 import { getApi } from '../utils/connection'

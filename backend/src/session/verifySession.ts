@@ -1,5 +1,5 @@
 import * as Kilt from '@kiltprotocol/sdk-js'
-import { Response, Request, NextFunction } from 'express'
+import { Response, Request } from 'express'
 import jwt from 'jsonwebtoken'
 
 import { generateKeypairs } from '../utils/attester/generateKeyPairs'
