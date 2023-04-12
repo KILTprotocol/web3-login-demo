@@ -33,21 +33,24 @@ export async function verifySession(
       .send(
         `Could not find Cookie with session values (as JWT). Log-in and try again.`
       )
-    throw new Error('Cookie with Session JWT not found. Log-in and try again.')
+    throw new Error(
+      'Cookie with Session JWT not found. Enable Cookies, Log-in and try again.'
+    )
   }
 
   // decode the JWT and verify if it was signed with our SecretKey
 
-  let cookiePayloadServerSession: jwt.JwtPayload
+  let cookiePayloadServerSession: jwt.JwtPayload | string
   try {
     // will throw error if verification fails
-    const decodedPayload = jwt.verify(sessionCookie, secretKey)
-    if (typeof decodedPayload === 'string') {
-      throw new Error(`Payload of unexpected type. Content: ${decodedPayload}`)
-    }
-    cookiePayloadServerSession = decodedPayload as jwt.JwtPayload
+    cookiePayloadServerSession = jwt.verify(sessionCookie, secretKey)
   } catch (error) {
-    throw new Error(`Could not verify JWT. --> ${error}`)
+    throw new Error(`Could not verify JWT. ${error}`)
+  }
+  if (typeof cookiePayloadServerSession === 'string') {
+    throw new Error(
+      `Payload of unexpected type. Content: ${cookiePayloadServerSession}`
+    )
   }
 
   // Important/Real Verification:

@@ -56,10 +56,13 @@ app.get('/api', (req: Request, res: Response) => {
 
 // Login:
 // Starts the session from server side.
-app.get('/api/session/start', startSession)
+app.get('/api/session/start', (req, res, next) =>
+  startSession(req, res, next).catch(next)
+)
 // Process session values from the extension and verify that secure comunication is stablish. (compares challenge)
-app.post('/api/session/verify', verifySession)
-
+app.post('/api/session/verify', (req, res, next) =>
+  verifySession(req, res, next).catch(next)
+)
 // We need the DID Document of the dApps DID (DAPP_DID_URI) before we can handle login requests.
 // We therefore start the server only after the document was fetched.
 fetchDidDocument()
