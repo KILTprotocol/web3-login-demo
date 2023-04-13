@@ -38,7 +38,7 @@ export function generateKeypairs(mnemonic: string) {
 
   // The encryption keys, a.k.a. keyAgreement, are not natively supported by the polkadot library.
   // So to derive this kinds of keys, we have to play a bit with lower-level details.
-  // That's whats done in the extra function generateKeyAgreement()
+  // Thats whats done in the extra function generateKeyAgreement()
 
   const keyAgreement = generateKeyAgreement(mnemonic)
 

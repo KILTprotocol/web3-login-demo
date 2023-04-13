@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+
 import Button from './components/Button'
 import Card from './components/Card'
 import Logo from './components/Logo'
@@ -12,7 +13,6 @@ export default function Home(): JSX.Element {
     const message = await result.json()
     console.log(message)
   }
-
 
   // Directly inject the extensions that support the KILT protocol
   useEffect(() => {

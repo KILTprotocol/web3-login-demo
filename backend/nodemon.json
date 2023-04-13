@@ -1,0 +1,6 @@
+{
+  "restartable": "rs",
+  "verbose": false,
+  "watch": ["*.*", "../.env"],
+  "ext": "ts,js,json"
+}

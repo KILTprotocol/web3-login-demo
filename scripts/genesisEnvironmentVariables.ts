@@ -2,9 +2,9 @@ import dotenv from 'dotenv'
 import * as Kilt from '@kiltprotocol/sdk-js'
 import { mnemonicGenerate } from '@polkadot/util-crypto'
 
-import { generateKeypairs } from '../backend/src/utils/attester/generateKeyPairs'
-import { generateAccount } from '../backend/src/utils/attester/generateAccount'
-import { generateFullDid } from '../backend/src/utils/attester/generateFullDid'
+import { generateKeypairs } from './launchUtils/generateKeyPairs'
+import { generateAccount } from './launchUtils/generateAccount'
+import { generateFullDid } from './launchUtils/generateFullDid'
 
 // try to read the variables from the .env-file:
 dotenv.config()
@@ -13,6 +13,8 @@ const {
   WSS_ADDRESS,
   // This is the URL domain origin of your website
   ORIGIN,
+  // This is the local Port on which your server would be reachable
+  PORT,
   // This is the mnemonic of the Kilt account paying for all transactions
   DAPP_ACCOUNT_MNEMONIC,
   // This is the address of the Kilt account paying for all transactions
@@ -22,7 +24,9 @@ const {
   // This is the URI of the Kilt DID that identifies your dApp
   DAPP_DID_URI,
   // This should be a custom name for your dApp
-  DAPP_NAME
+  DAPP_NAME,
+  // This is secret key (string) that signs the Json-Web-Tokens before saving them in the Cookies
+  JWT_SIGNER_SECRET
 } = process.env
 
 async function main() {
@@ -30,9 +34,9 @@ async function main() {
   console.log('\u001B[38;5;201m')
 
   console.log(
-    "This is a script for an easy creation of the enviroment variables needed for your dApp's functionality.\n\n",
+    "This is a script for an easy creation of the environment variables needed for your dApp's functionality.\n\n",
 
-    'All eviroment variables need to be saved on a file called ".env" that you need to create and save on the project\'s root directory.',
+    'All environment variables need to be saved on a file called ".env" that you need to create and save on the project\'s root directory.',
     'It is a standard that all environment variables are name with capitalized letters.',
     'Please, follow the standard.\n\n',
 
@@ -44,11 +48,13 @@ async function main() {
   const stairs: (string | undefined)[] = [
     WSS_ADDRESS,
     ORIGIN,
+    PORT,
     DAPP_ACCOUNT_MNEMONIC,
     DAPP_ACCOUNT_ADDRESS,
     DAPP_DID_MNEMONIC,
     DAPP_DID_URI,
-    DAPP_NAME
+    DAPP_NAME,
+    JWT_SIGNER_SECRET
   ]
 
   // find the first element in the array "stairs" that it is still undefined.
@@ -62,40 +68,49 @@ async function main() {
       imploreWebSocket()
       break
 
-    // then assign where the dApp is going to be reachable
+    // then assign where the dApp BackEnd is going to be reachable
     case 1:
       imploreDomainOrigin()
       break
 
-    // then we generate an account
+    // then assign where the dApp FrontEnd is going to be reachable
     case 2:
+      imploreServerPort()
+      break
+
+    // then we generate an account
+    case 3:
       await spawnAccount()
       break
 
     // just in case you did not saved the account address:
     // save the account address as well
-    case 3:
+    case 4:
       await getAddress(DAPP_ACCOUNT_MNEMONIC!)
       break
 
     // then we generate a FullDID with all the key types
     // and ask you to save the mnemonic and URI
-    case 4:
+    case 5:
       await spawnDid()
       break
 
     // Just in case yu did not save the URI of the DID
     // save the DID's URI as well:
-    case 5:
+    case 6:
       await getURI(DAPP_DID_MNEMONIC!)
       break
     // ask you to choose a name for your dApp
-    case 6:
+    case 7:
       imploreName()
+      break
+    // ask you to choose a Secret Key for encoding JWTs
+    case 8:
+      imploreJwtSecretKey()
       break
     // if (step = -1):
     default:
-      console.log(`It seems like all enviorment variables are already defined.\n
+      console.log(`It seems like all environment variables are already defined.\n
                >> Take in consideration, that this script does not verify if the environment values already defined are valid. <<\n\n`)
       break
   }
@@ -103,18 +118,18 @@ async function main() {
   console.log(
     'If you are still missing some environment values and want the easy way, run this file again.\n'
   )
-  // reset output's appareance:
+  // reset output's appearance:
   console.log('\u001b[0m')
   return
 }
 // The JavaScript (ergo also the Typescript) interpreter hoists the entire function declaration to the top of the current scope.
-// So the main function can use the following functions wthout problem.
+// So the main function can use the following functions without problem.
 function imploreWebSocket() {
   console.log(
     'Trouble reading the address of the WebSocket \n\n',
 
     'Please, define a value for WSS_ADDRESS on the .env-file to continue \n',
-    'To connect to the KILT-Test-Blockchain, named Peregrine (recomended), please save the following: \n\n',
+    'To connect to the KILT-Test-Blockchain, named Peregrine (recommended), please save the following: \n\n',
     'WSS_ADDRESS=wss://peregrine.kilt.io/parachain-public-ws',
     '\n\n',
 
@@ -126,11 +141,22 @@ function imploreWebSocket() {
 
 function imploreDomainOrigin() {
   console.log(
-    '\nTrouble reading the URL-Address of your dApp\n',
+    "\nTrouble reading the URL-Address of your dApp' Website (FrontEnd)\n",
     'Please, define a value for ORIGIN on the .env-file to continue\n',
     'first it should only run locally. You can use a custom IP or just the default:\n\n',
     'Default dApps domain origin: \n',
     'ORIGIN=http://localhost:8080',
+    '\n\n'
+  )
+}
+
+function imploreServerPort() {
+  console.log(
+    "\nTrouble reading the Port of your dApp' Server (BackEnd)\n",
+    'Please, define a value for PORT on the .env-file to continue\n',
+    'You can use a custom IP or just the default:\n\n',
+    "Default dApp-Server's port: \n",
+    'PORT=3000',
     '\n\n'
   )
 }
@@ -142,7 +168,8 @@ async function spawnAccount() {
   )
   await Kilt.connect(WSS_ADDRESS!)
   // You could also pass a specific mnemonic, but here we generate a random mnemonic.
-  const mnemonic = mnemonicGenerate() // for costum, replace here with a string of 12 BIP-39 words
+  // for custom, replace here with a string of 12 BIP-39 words
+  const mnemonic = mnemonicGenerate()
   const account = generateAccount(mnemonic)
   console.log(
     '\n Please, save mnemonic and address of your dApps account to the .env-file to continue!\n\n',
@@ -177,9 +204,10 @@ async function spawnDid() {
   )
   // Load attester account
   const attesterAccount = generateAccount(DAPP_ACCOUNT_MNEMONIC!)
-  // the DID can be generated by a different mnemonic than from the account. This is also the prefered option.
+  // the DID can be generated by a different mnemonic than from the account. This is also the preferred option.
   // You could also pass a specific mnemonic, but here we generate a random mnemonic.
-  const didMnemonic = mnemonicGenerate() // for costum, replace here with a string of 12 BIP-39 words
+  // for custom, replace here with a string of 12 BIP-39 words
+  const didMnemonic = mnemonicGenerate()
   const fullDid = await generateFullDid(attesterAccount, didMnemonic)
 
   console.log(
@@ -222,4 +250,13 @@ function imploreName() {
   )
 }
 
-main() //run the code
+function imploreJwtSecretKey() {
+  console.log(
+    '\ntrouble reading the Secret Key your dApps use to encode the JSON-Web-Tokens\n',
+    `Please provide a string value for 'JWT_SIGNER_SECRET' inside the .env file. \n`,
+    `JWT_SIGNER_SECRET={Oh my God, you are so cryptic!}\n`
+  )
+}
+
+//run the code
+main()

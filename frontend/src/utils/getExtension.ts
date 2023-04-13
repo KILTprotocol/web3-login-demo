@@ -6,7 +6,7 @@ export function getExtensions(): void {
   apiWindow.kilt = apiWindow.kilt || {}
 
   Object.assign(apiWindow.kilt, {
-    meta: { value: { versions: { credentials: '3.0' } } },
+    meta: { versions: { credentials: '3.0' } },
     enumerable: false
   })
   apiWindow.addEventListener('kilt-dapp#initialized', getExtensions)
