@@ -15,14 +15,14 @@ function generateKeyAgreement(mnemonic: string) {
 }
 
 export function generateKeypairs(mnemonic: string) {
-  // Currently, the default the keytype used by the Kilt-team is "sr25519". Better to use it for compatibility.
+  // Currently, the default the key type used by the Kilt-team is "sr25519". Better to use it for compatibility.
   const account = Kilt.Utils.Crypto.makeKeypairFromSeed(
     mnemonicToMiniSecret(mnemonic),
     'sr25519'
   )
 
   // You can derive the keys however you want to and it will still work.
-  // But if, for example, you try to load your seed phrase in a third party wallet, you will get a differnt set of keys, because the derivation is diferent.
+  // But if, for example, you try to load your seed phrase in a third party wallet, you will get a different set of keys, because the derivation is different.
   // For a start, it is better to use the same derivations as Sporran. So you can load your Accounts and DIDs there and check if everything worked fine.
 
   const authentication = account.derive('//did//0') as Kilt.KiltKeyringPair

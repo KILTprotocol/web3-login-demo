@@ -5,9 +5,9 @@ import path from 'path'
 import * as Kilt from '@kiltprotocol/sdk-js'
 import dotenv from 'dotenv'
 
-import { generateAccount } from '../backend/src/utils/attester/generateAccount'
-import { generateKeypairs } from '../backend/src/utils/attester/generateKeyPairs'
-import { VerifiableDomainLinkagePresentation } from '../frontend/src/utils/types'
+import { generateAccount } from './launchUtils/generateAccount'
+import { generateKeypairs } from './launchUtils/generateKeyPairs'
+import { VerifiableDomainLinkagePresentation } from './launchUtils/types'
 
 import {
   createCredential,
@@ -21,30 +21,30 @@ import {
  * Reads the file of the current well-known-did-configuration from it's place on the frontend.
  * This will throw if no file can be found.
  *
- * @returns a json object from readed file.
+ * @returns a json object from read file.
  */
 async function readCurrentDidConfig(): Promise<VerifiableDomainLinkagePresentation> {
   const parentDirectory = path.dirname(__dirname)
   const fullpath = `${parentDirectory}/frontend/public/.well-known/did-configuration.json`
 
-  const filecontent = await fs.promises.readFile(fullpath, {
+  const fileContent = await fs.promises.readFile(fullpath, {
     encoding: 'utf8'
   })
 
-  if (filecontent) {
+  if (fileContent) {
     // if I can read the file without any problem
     console.log(
       '\n\nYour projects repository already has a well-known-did-configuration file.'
     )
     console.log('You can find it under this path: \n', fullpath)
   }
-  if (!filecontent) {
+  if (!fileContent) {
     console.log(
       'No well-known-did-configuration file found on your repository.'
     )
   }
-  const wellKnownDidconfig = JSON.parse(filecontent)
-  return wellKnownDidconfig
+  const wellKnownDidConfig = JSON.parse(fileContent)
+  return wellKnownDidConfig
 }
 
 async function main() {
@@ -53,15 +53,16 @@ async function main() {
 
   const dAppURI =
     (process.env.DAPP_DID_URI as Kilt.DidUri) ??
-    (`did:kilt:4${'noURIEstablished'}` as Kilt.DidUri)
+    (`did:kilt:4noURIEstablished` as Kilt.DidUri)
   // don't put a slash "/" at the end!
-  const domainOrigin = process.env.ORIGIN ?? 'no origin assiged'
+  const domainOrigin = process.env.ORIGIN ?? 'no origin assigned'
   const dAppMnemonic =
     process.env.DAPP_DID_MNEMONIC ?? 'your dApp needs an Identity '
   const fundsMnemonic =
     process.env.DAPP_ACCOUNT_MNEMONIC ?? 'your dApp needs an Sponsor '
 
-  // Connect to the webSocket. This tells the Kilt Api to wich node to interact, and ergo also the blockchain (Spiritnet or Peregrine)
+  // Connect to the webSocket. This tells the Kilt Api to which node to interact, and ergo also the
+  // blockchain (Spiritnet or Peregrine)
   const webSocket = process.env.WSS_ADDRESS
   if (webSocket) {
     await Kilt.connect(webSocket)
@@ -73,7 +74,7 @@ async function main() {
 
   console.log(
     '\n',
-    'The enviorment variables defining the Well-Known-DID-Configuration are: \n',
+    'The environment variables defining the Well-Known-DID-Configuration are: \n',
     `webSocket=${webSocket} \n`,
     `dAppURI=${dAppURI} \n`,
     `domainOrigin=${domainOrigin} \n`,
@@ -83,17 +84,20 @@ async function main() {
   )
 
   // Before we start, it makes sense to check if the project already has a well-known-did-configuration.
-  // Why? Because each time we make a new one, an attestation is needed and that costs a fee. If working with the production Blockchain, you would want to spare this fee.
+  // Why? Because each time we make a new one, an attestation is needed and that costs a fee. If
+  // working with the production Blockchain, you would want to spare this fee.
 
   try {
-    const currentWellKnown = await readCurrentDidConfig() // this will deliver an error, if the file can't be found
+    // this will deliver an error, if the file can't be found
+    const currentWellKnown = await readCurrentDidConfig()
 
     // if no error:
     console.log(
       "An old well-known-did-config file was found. Let's check if it still valid"
     )
     try {
-      await verifyDidConfigPresentation(dAppURI, currentWellKnown, domainOrigin) // this will deliver an error, if the presentation can´t be verify
+      // this will deliver an error, if the presentation can´t be verify
+      await verifyDidConfigPresentation(dAppURI, currentWellKnown, domainOrigin)
 
       //if no error:
       console.log(
@@ -152,7 +156,7 @@ async function main() {
     throw new Error('DID must be resolvable (i.e. not deleted)')
   }
   if (didResolveResult.document.assertionMethod === undefined) {
-    throw new Error('No assertion Key disponible.')
+    throw new Error('No assertion Key available.')
   }
   const assertionMethodKeyId = didResolveResult.document.assertionMethod[0].id
 
@@ -197,14 +201,15 @@ async function main() {
     recursive: true
   })
 
+  const outFilePath = `${parentDirectory}/frontend/public/.well-known/did-configuration.json`
   fs.writeFile(
-    `${parentDirectory}/frontend/public/.well-known/did-configuration.json`,
+    outFilePath,
     JSON.stringify(wellKnownDidconfig, null, 2),
     (err) => {
       if (err) {
         throw err
       }
-      console.log('Data written to file on the Front-End.')
+      console.log(`Well known did configuration was written to ${outFilePath}`)
     }
   )
 }

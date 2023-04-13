@@ -56,7 +56,7 @@ export async function verifySession(
 
   const { extensionSession } = request.body
   const { encryptedChallenge, nonce } = extensionSession
-  // This varible has different name depending on the session version that the extension uses
+  // This variable has different name depending on the session version that the extension uses
 
   const encryptionKeyUri = extractEncryptionKeyUri(extensionSession)
   const encryptionKey = await Kilt.Did.resolveKey(encryptionKeyUri)
@@ -81,7 +81,7 @@ export async function verifySession(
   )
   // If it fails to decrypt, throw.
   if (!decryptedBytes) {
-    throw new Error('Could not decode/decrypt the challange from the extension')
+    throw new Error('Could not decode/decrypt the challenge from the extension')
   }
 
   const decryptedChallenge = Kilt.Utils.Crypto.u8aToHex(decryptedBytes)
@@ -104,6 +104,6 @@ export async function verifySession(
   response
     .status(200)
     .send(
-      'Session succesfully verified. Extension and dApp understand each other.'
+      'Session successfully verified. Extension and dApp understand each other.'
     )
 }

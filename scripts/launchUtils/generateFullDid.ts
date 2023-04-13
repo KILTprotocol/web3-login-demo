@@ -18,7 +18,7 @@ export async function generateFullDid(
   } = generateKeypairs(didMnemonic)
 
   // Before submitting the transaction, it is worth it to assure that the DID does not already exist.
-  // If the DID aleady exist, the transaction will fail, but it will still costs the fee. Better to avoid this.
+  // If the DID already exist, the transaction will fail, but it will still costs the fee. Better to avoid this.
 
   // check if DID already exists or if it used to exist:
   const desiredDidUri = Kilt.Did.getFullDidUriFromKey(authentication)
@@ -36,7 +36,7 @@ export async function generateFullDid(
     }
     if (!oldDidDocument) {
       throw new Error(
-        'DID resolved, but document undefine. This should be impossible.'
+        'DID resolved, but document undefined. This should be impossible.'
       )
     }
 

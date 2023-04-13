@@ -50,7 +50,7 @@ export async function generateSessionValues(
     challenge: challenge
   }
 
-  console.log('sesssion Values just generated', sessionValues)
+  console.log('session Values just generated', sessionValues)
 
   return sessionValues
 }
@@ -74,7 +74,7 @@ export async function startSession(
   }
 
   // Create a Json-Web-Token:
-  // set the experiation of JWT same as the Cookie
+  // set the expiration of JWT same as the Cookie
   const optionsJwt = {
     expiresIn: `${cookieOptions.maxAge} seconds`
   }
@@ -82,7 +82,7 @@ export async function startSession(
   const token = jwt.sign(payload, secretKey, optionsJwt)
 
   // Set a Cookie in the header including the JWT and our options:
-  // Using 'cookie-parser' deendency:
+  // Using 'cookie-parser' dependency:
   response.cookie('sessionJWT', token, cookieOptions)
 
   console.log(

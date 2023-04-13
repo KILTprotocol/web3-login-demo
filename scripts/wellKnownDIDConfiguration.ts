@@ -47,7 +47,7 @@ export const ctypeDomainLinkage = Kilt.CType.fromProperties(
  *
  * @param origin URL of the dApp. Domain of your site,
  * @param didUri URI of the dApp. Kilt Decentralized Identity string.
- * @returns Credetial to present.
+ * @returns Credential to present.
  */
 export async function createCredential(
   origin: string,
@@ -97,7 +97,7 @@ export async function createCredential(
   const credential = Kilt.Credential.fromClaim(claim)
 
   // In order to later attest this credential, the DID needs an assertion key.
-  // We assuere that this is the case here:
+  // We assure that this is the case here:
   const assertionKey = document.assertionMethod?.[0]
 
   if (!assertionKey) {
@@ -165,7 +165,7 @@ export async function getDomainLinkagePresentation(
     rootHash: credentialRootHash
   } as CredentialSubject
 
-  // assuere that the credential is self attested
+  // assure that the credential is self attested
   const encodedAttestationDetails = await api.query.attestation.attestations(
     credentialRootHash
   )
@@ -179,7 +179,7 @@ export async function getDomainLinkagePresentation(
     throw new Error('the well-known-did should be self attested.')
   }
 
-  // preparing the input for the Did.verifySignature function. To make it more readeble.
+  // preparing the input for the Did.verifySignature function. To make it more readable.
   // the signature and the message needs to be a Unit8 Array
   const encodedClaimerSignature = hexToU8a(claimerSignature.signature)
   const messageU8Array = Kilt.Utils.Crypto.coToUInt8(credentialRootHash)
@@ -200,7 +200,7 @@ export async function getDomainLinkagePresentation(
     challenge: claimerSignature.challenge
   }
 
-  const wellKnownDidconfig = {
+  const wellKnownDidConfig = {
     '@context': DID_CONFIGURATION_CONTEXT,
     linked_dids: [
       {
@@ -220,7 +220,7 @@ export async function getDomainLinkagePresentation(
     ]
   } as VerifiableDomainLinkagePresentation
 
-  return wellKnownDidconfig
+  return wellKnownDidConfig
 }
 
 async function asyncSome(
@@ -232,7 +232,9 @@ async function asyncSome(
 
 /**
  * A valid credential requires an attestation.
- * Since the website wants to link itself to the DID just created, it has to self-attest the domain linkage credential, i.e., write the credential attestation on chain using the same DID it is trying to link to.
+ * Since the website wants to link itself to the DID just created, it has to self-attest the domain
+ * linkage credential, i.e., write the credential attestation on chain using the same DID it is
+ * trying to link to.
  *
  * @param credential - Credential from the claim to be attested.
  * @param assertionMethodKey - Attestation Keypair from the DID of the dApp.
@@ -315,7 +317,7 @@ export async function verifyDidConfigPresentation(
 
       const matchesSessionDid = didUri === credentialSubject.id
       if (!matchesSessionDid) {
-        throw new Error('session did doesnt match')
+        throw new Error('session did does not match')
       }
 
       Kilt.Did.validateUri(credentialSubject.id)
@@ -344,7 +346,7 @@ export async function verifyDidConfigPresentation(
         throw new Error('No DID attestation key on-chain')
       }
 
-      // preparing the input for the Did.verifySignature function. To make it more readeble.
+      // preparing the input for the Did.verifySignature function. To make it more readable.
       // the signature and the message needs to be a Unit8 Array
       const encodedClaimerSignature = hexToU8a(proof.signature)
       const messageU8Array = Kilt.Utils.Crypto.coToUInt8(credentialRootHash)

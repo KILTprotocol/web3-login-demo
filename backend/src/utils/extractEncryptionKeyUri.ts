@@ -5,7 +5,7 @@ export function extractEncryptionKeyUri(
 ): Kilt.DidResourceUri {
   if (typeof extensionSession !== 'object' || !extensionSession) {
     throw new Error(
-      `Not the tipe of variable expected. This function can only handle either "PubSubSessionV1" or "PubSubSessionV2"`
+      `Not the type of variable expected. This function can only handle either "PubSubSessionV1" or "PubSubSessionV2"`
     )
   }
 

@@ -35,12 +35,12 @@ export async function fetchDidDocument(): Promise<Kilt.DidDocument> {
   // We require a key agreement key to receive encrypted messages
   if (!didDocument.keyAgreement || !didDocument.keyAgreement[0]) {
     throw new Error(
-      'The DID of your dApp needs to have an Key Agreement to comunicate. Info to get one: https://docs.kilt.io/docs/develop/sdk/cookbook/dids/full-did-update'
+      'The DID of your dApp needs to have an Key Agreement to communicate. Info to get one: https://docs.kilt.io/docs/develop/sdk/cookbook/dids/full-did-update'
     )
   }
   if (!didDocument.authentication || !didDocument.authentication[0]) {
     throw new Error(
-      'The DID of your dApp needs to have an authentification Key to sign stuff. Info to get one: https://docs.kilt.io/docs/develop/sdk/cookbook/dids/full-did-update'
+      'The DID of your dApp needs to have an authentication Key to sign stuff. Info to get one: https://docs.kilt.io/docs/develop/sdk/cookbook/dids/full-did-update'
     )
   }
 

@@ -55,7 +55,7 @@ export async function startExtensionSession() {
     })
 
     console.log(
-      'Session successfully verified. dApp-Server and Extension trust eachother.'
+      'Session successfully verified. dApp-Server and Extension trust each other.'
     )
   } catch (error) {
     console.error(

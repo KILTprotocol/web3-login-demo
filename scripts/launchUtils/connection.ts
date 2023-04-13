@@ -12,7 +12,7 @@ export async function getApi() {
     return Kilt.ConfigService.get('api')
   }
 
-  // If it is not, connect to it using the Web-Socket Address from the enviorment variable:
+  // If it is not, connect to it using the Web-Socket Address from the environment variable:
   if (!process.env.WSS_ADDRESS) {
     throw new Error(
       'please, define a value for WSS_ADDRESS on .env-file to use this function'
