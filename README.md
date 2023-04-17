@@ -42,3 +42,13 @@ After running this script each time, you need to manually copy the output and sa
 
 Alternativly, you could manually add the values that you created somehow elsewhere.
 But this is only recommended, if you really know what you are doing.
+
+### _Unusual_ stuff that we implementet:
+
+#### --skipProject
+
+We separated the whole project in 3 smaller projects, for understanding and scaling reasons. There is the _root_, the _backend_ and the _frontend_ projects/directories. This implicated that there are 3 `node_modules`, 3 `package.json`and 3 `yarn.lock`.
+
+When running some scripts from the root directory, `yarn` was complanning about duplicated modules. To avoid loading the `node_modules` multiple times the flag `--skipProject` is added after `ts-node`. This basiclly stops reading the configuration files from the internal directories and use only the ones from the root.
+
+Used for example while running `build:well-known` and `environment`.
