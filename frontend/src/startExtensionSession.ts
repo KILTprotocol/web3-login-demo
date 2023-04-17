@@ -44,7 +44,7 @@ export async function startExtensionSession() {
 
     const responseToBackend = JSON.stringify({ extensionSession })
 
-    await fetch(`/api/session/verify`, {
+    const sessionVerificationResponse = await fetch(`/api/session/verify`, {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -53,6 +53,9 @@ export async function startExtensionSession() {
       },
       body: responseToBackend
     })
+    if (!sessionVerificationResponse.ok) {
+      throw new Error(`${sessionVerificationResponse.statusText}`)
+    }
 
     console.log(
       'Session successfully verified. dApp-Server and Extension trust each other.'
