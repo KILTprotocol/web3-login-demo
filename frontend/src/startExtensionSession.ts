@@ -54,7 +54,10 @@ export async function startExtensionSession() {
       body: responseToBackend
     })
     if (!sessionVerificationResponse.ok) {
-      throw new Error(`${sessionVerificationResponse.statusText}`)
+      const responseTextLong = await sessionVerificationResponse.text()
+      const regex = /<pre>(.*?)<\/pre>/
+      const errorPreview = responseTextLong.match(regex)
+      throw new Error(`${errorPreview![1]}`)
     }
 
     console.log(
@@ -64,6 +67,6 @@ export async function startExtensionSession() {
     console.error(
       `Error verifying Session from:  ${apiWindow.kilt.sporran.name}: ${apiWindow.kilt.sporran.version},  ${error}`
     )
-    throw error
+    // throw error
   }
 }
