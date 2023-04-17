@@ -19,7 +19,6 @@ Please, follow the standard and use these names for your environment variables:
 - `ORIGIN` = _This is the URL domain origin of your website (frontend)_
 - `PORT` = _This is the local Port on which your server would be reachable (backend)_
 - `DAPP_ACCOUNT_MNEMONIC` = _This is the mnemonic of the Kilt account paying for all transactions_
-- `DAPP_ACCOUNT_ADDRESS` = _This is the address of the Kilt account paying for all transactions_
 - `DAPP_DID_MNEMONIC` = _This is the mnemonic of the Kilt DID that identifies your dApp_
 - `DAPP_DID_URI` = _This is the URI of the Kilt DID that identifies your dApp_
 - `DAPP_NAME` = _This should be a custom name for your dApp_
@@ -42,3 +41,7 @@ After running this script each time, you need to manually copy the output and sa
 
 Alternatively, you could manually add the values that you created somehow elsewhere.
 But this is only recommended, if you really know what you are doing.
+
+### Foot-Note:
+
+`DAPP_ACCOUNT_ADDRESS` was taken out of the environment variables to avoid the possibility of having a mnemonic and account that don't match. If you ever need the address, use `generateAccount(DAPP_ACCOUNT_MNEMONIC)`.
