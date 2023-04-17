@@ -36,7 +36,7 @@ export function generateKeypairs(mnemonic: string) {
     '//did//delegation//0'
   ) as Kilt.KiltKeyringPair
 
-  // The encryption keys, a.k.a. keyAgreement, are not natively supported by the polkadot library.
+  // The encryption keys, a.k.a. keyAgreement, are not natively supported by the Polkadot library.
   // So to derive this kinds of keys, we have to play a bit with lower-level details.
   // That's whats done in the extra function generateKeyAgreement()
 

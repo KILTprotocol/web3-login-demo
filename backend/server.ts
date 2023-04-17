@@ -11,9 +11,9 @@ import { verifySession } from './src/session/verifySession'
 
 import { fetchDidDocument } from './src/utils/fetchDidDocument'
 
-// Letting the server know where the environment varibles are
-const projectRoootDirectory = path.dirname(__dirname)
-dotenv.config({ path: `${projectRoootDirectory}/.env` })
+// Letting the server know where the environment variables are
+const projectRootDirectory = path.dirname(__dirname)
+dotenv.config({ path: `${projectRootDirectory}/.env` })
 
 const app: Express = express()
 const PORT = process.env.PORT || 3000
@@ -59,7 +59,7 @@ app.get('/api', (req: Request, res: Response) => {
 app.get('/api/session/start', (req, res, next) =>
   startSession(req, res).catch(next)
 )
-// Process session values from the extension and verify that secure comunication is stablish. (compares challenge)
+// Process session values from the extension and verify that secure communication is stablish. (compares challenge)
 app.post('/api/session/verify', (req, res, next) =>
   verifySession(req, res).catch(next)
 )
