@@ -81,17 +81,17 @@ export async function verifySession(
   )
   // If it fails to decrypt, throw.
   if (!decryptedBytes) {
-    console.log(
-      `Debugger:\n`,
-      `extensionSession: ${JSON.stringify(extensionSession, null, 2)}\n`,
-      `encryptionKeyUri: ${encryptionKeyUri}\n`,
-      `encryptionKey: ${JSON.stringify(encryptionKey, null, 1)}\n`,
-      `encryptedChallenge: ${encryptedChallenge}\n`,
-      `nonce: ${nonce}\n`,
-      `encryptionKey.publicKey: ${encryptionKey.publicKey}\n`,
-      `keyAgreement.secretKey: ${keyAgreement.secretKey}\n`,
-      `decryptedBytes: ${decryptedBytes}\n`
-    )
+    // console.log(
+    //   `Debugger:\n`,
+    //   `extensionSession: ${JSON.stringify(extensionSession, null, 2)}\n`,
+    //   `encryptionKeyUri: ${encryptionKeyUri}\n`,
+    //   `encryptionKey: ${JSON.stringify(encryptionKey, null, 1)}\n`,
+    //   `encryptedChallenge: ${encryptedChallenge}\n`,
+    //   `nonce: ${nonce}\n`,
+    //   `encryptionKey.publicKey: ${encryptionKey.publicKey}\n`,
+    //   `keyAgreement.secretKey: ${keyAgreement.secretKey}\n`,
+    //   `decryptedBytes: ${decryptedBytes}\n`
+    // )
     throw new Error('Could not decode/decrypt the challenge from the extension')
   }
 
