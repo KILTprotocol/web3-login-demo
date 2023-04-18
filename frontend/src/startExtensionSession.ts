@@ -54,10 +54,15 @@ export async function startExtensionSession() {
       body: responseToBackend
     })
     if (!sessionVerificationResponse.ok) {
+      // Print the Error Preview to the Browsers Console
       const responseTextLong = await sessionVerificationResponse.text()
       const regex = /<pre>(.*?)<\/pre>/
       const errorPreview = responseTextLong.match(regex)
-      throw new Error(`${errorPreview![1]}`)
+      if (!errorPreview) {
+        // if no match, just print the status text.
+        throw new Error(`${sessionVerificationResponse.statusText}`)
+      }
+      throw new Error(`${errorPreview[1]}`)
     }
 
     console.log(
@@ -67,6 +72,5 @@ export async function startExtensionSession() {
     console.error(
       `Error verifying Session from:  ${apiWindow.kilt.sporran.name}: ${apiWindow.kilt.sporran.version},  ${error}`
     )
-    // throw error
   }
 }
