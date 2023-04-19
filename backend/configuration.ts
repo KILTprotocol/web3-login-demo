@@ -4,7 +4,7 @@ import dotenv from 'dotenv'
 
 import * as Kilt from '@kiltprotocol/sdk-js'
 
-import { generateAccount } from './src/utils/attester/generateAccount'
+import { generateAccount } from './src/utils/generateAccount'
 
 dotenv.config()
 
