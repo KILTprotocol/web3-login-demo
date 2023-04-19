@@ -54,15 +54,8 @@ export async function startExtensionSession() {
       body: responseToBackend
     })
     if (!sessionVerificationResponse.ok) {
-      // Print the Error Preview to the Browsers Console
-      const responseTextLong = await sessionVerificationResponse.text()
-      const regex = /<pre>(.*?)<\/pre>/
-      const errorPreview = responseTextLong.match(regex)
-      if (!errorPreview) {
-        // if no match, just print the status text.
-        throw new Error(`${sessionVerificationResponse.statusText}`)
-      }
-      throw new Error(`${errorPreview[1]}`)
+      console.log('Session could not be verified.')
+      return
     }
 
     console.log(
