@@ -2,7 +2,7 @@ import * as Kilt from '@kiltprotocol/sdk-js'
 import { Response, Request } from 'express'
 import jwt from 'jsonwebtoken'
 
-import { generateKeypairs } from '../utils/attester/generateKeyPairs'
+import { generateKeypairs } from '../utils/generateKeyPairs'
 import { getApi } from '../utils/connection'
 import { extractEncryptionKeyUri } from '../utils/extractEncryptionKeyUri'
 
