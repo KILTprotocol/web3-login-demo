@@ -4,18 +4,16 @@ import cors from 'cors'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 
-import { startSession } from './src/session/startSession'
-import { verifySession } from './src/session/verifySession'
-
-import { fetchDidDocument } from './src/utils/fetchDidDocument'
-import { getRequestCredential } from './src/getRequestCredential/getRequestCredential'
-import { postSubmitCredential } from './src/postSubmitCredential/postSubmitCredential'
 // Getting necessary environment constants:
-import { WSS_ADDRESS, PORT } from './configuration'
+import { WSS_ADDRESS, PORT } from '../configuration'
 
-// // Letting the server know where the environment variables are
-// const projectRootDirectory = path.dirname(__dirname)
-// dotenv.config({ path: `${projectRootDirectory}/.env` })
+import { startSession } from './session/startSession'
+import { verifySession } from './session/verifySession'
+
+import { fetchDidDocument } from './utils/fetchDidDocument'
+
+import { getRequestCredential } from './getRequestCredential/getRequestCredential'
+import { postSubmitCredential } from './postSubmitCredential/postSubmitCredential'
 
 const app: Express = express()
 
