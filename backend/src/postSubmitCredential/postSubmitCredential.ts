@@ -25,6 +25,7 @@ export async function postSubmitCredential(
       throw new Error('Unexpected message type')
     }
     const credential = decryptedMessage.body.content[0]
+    // FIX-ME!:  maybe allow for several credentials in the future
 
     await Kilt.Credential.verifyPresentation(credential)
 

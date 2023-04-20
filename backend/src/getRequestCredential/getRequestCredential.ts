@@ -31,7 +31,7 @@ export async function getRequestCredential(
   next: NextFunction
 ) {
   try {
-    console.log('Request', JSON.parse(request.body))
+    console.log('Request', request.body)
     console.log(exampleRequest)
 
     // Dudley's version, without cookies: // This wont work with the JWT:
@@ -66,6 +66,7 @@ export async function getRequestCredential(
 
     const sessionValues = cookiePayloadServerSession
 
+    // We need the encryptionKeyUri from the Extension
     const { did: claimerSessionDidUri } = Kilt.Did.parse(
       sessionValues.encryptionKeyUri
     )
@@ -78,7 +79,7 @@ export async function getRequestCredential(
 
     const { keyAgreement } = generateKeypairs(DAPP_DID_MNEMONIC)
 
-    const message = Kilt.Message.fromBody(
+    const credentialRequest = Kilt.Message.fromBody(
       messageBody,
       DAPP_DID_URI,
       claimerSessionDidUri
@@ -93,7 +94,7 @@ export async function getRequestCredential(
     }
 
     const encryptedMessage = Kilt.Message.encrypt(
-      message,
+      credentialRequest,
       encryptionCallback({
         keyAgreement: keyAgreement,
         keyAgreementUri: `${DAPP_DID_URI}${dAppKeyAgreementKeyId}`

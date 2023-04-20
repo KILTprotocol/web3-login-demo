@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import styles from './User.module.css'
 
 import { startExtensionSession } from '../startExtensionSession'
+import { tryToLogIn } from '../tryToLogIn'
 
 import Button from './Button'
+import { PubSubSessionV1, PubSubSessionV2 } from '../utils/types'
 
 interface Props {
   [x: string]: any
@@ -12,10 +14,21 @@ interface Props {
 
 async function startSession() {
   console.log('trying to start the session! ')
-  await startExtensionSession()
+  extensionSession = await startExtensionSession()
+}
+
+async function login() {
+  console.log(
+    'Try to log in. Meaning ask the extension for the specific type of Credential.'
+  )
+  await tryToLogIn()
 }
 
 export default function User({ user, connected }: Props): JSX.Element {
+  const [extensionSession, setExtensionSession] = useState<
+    PubSubSessionV1 | PubSubSessionV2 | null
+  >(null)
+
   return (
     <div>
       <div className={styles.account}>
@@ -46,7 +59,9 @@ export default function User({ user, connected }: Props): JSX.Element {
             strokeWidth="1.5"
           />
         </svg>
-        <span className={styles.text}>{user || 'guest'}</span>
+        <span className={styles.text} onClick={login}>
+          {user || 'not logged in yet'}
+        </span>
       </div>
       <Button className={styles.action} onClick={startSession}>
         {!connected ? 'connect' : user ? 'logout' : 'login'}
