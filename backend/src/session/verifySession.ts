@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken'
 import { generateKeypairs } from '../utils/generateKeyPairs'
 import { getApi } from '../utils/connection'
 import { extractEncryptionKeyUri } from '../utils/extractEncryptionKeyUri'
+import { JWT_SIGNER_SECRET } from '../../configuration'
 
 export async function verifySession(
   request: Request,
@@ -12,7 +13,7 @@ export async function verifySession(
 ): Promise<void> {
   await getApi()
 
-  const secretKey = process.env.JWT_SIGNER_SECRET
+  const secretKey = JWT_SIGNER_SECRET
   if (!secretKey) {
     response
       .status(500)
