@@ -82,9 +82,11 @@ fetchDidDocument()
   .catch((error) => {
     console.log(`Could not start server! ${error}`)
   })
-
-// connect to the api
-initializeServer()
+  .then(
+    // connect with the kilt api
+    initializeServer
+    // the server will not crash if this fails
+  )
 
 async function initializeServer() {
   try {
