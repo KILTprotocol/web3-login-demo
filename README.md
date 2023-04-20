@@ -51,7 +51,7 @@ But this is only recommended, if you really know what you are doing.
 
 #### --skipProject
 
-We separated the whole project in 3 smaller projects, for understanding and scaling reasons. There is the _root_, the _backend_ and the _frontend_ projects/directories. This implicated that there are 3 `node_modules`, 3 `package.json`and 3 `yarn.lock`.
+We separated the whole project in 3 smaller projects, for understanding and scaling reasons. There is the _root_ directory and inside it there is the _backend_ and the _frontend_ sub-projects/directories. This implicated that there are 3 `node_modules`, 3 `package.json`and 3 `yarn.lock`.
 
 When running some scripts from the root directory, `yarn` was complaining about duplicated modules. To avoid loading the `node_modules` multiple times the flag `--skipProject` is added after `ts-node`. This basically stops reading the configuration files from the internal directories and use only the ones from the root.
 
