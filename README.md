@@ -47,7 +47,7 @@ But this is only recommended, if you really know what you are doing.
 
 `DAPP_ACCOUNT_ADDRESS` was taken out of the environment variables to avoid the possibility of having a mnemonic and account that don't match. If you ever need the address, use `generateAccount(DAPP_ACCOUNT_MNEMONIC)`.
 
-### _Unusual_ stuff that we implemented:
+## _Unusual_ stuff that we implemented:
 
 #### --skipProject
 
