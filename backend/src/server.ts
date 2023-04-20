@@ -5,7 +5,7 @@ import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 
 // Getting necessary environment constants:
-import { WSS_ADDRESS, PORT } from '../configuration'
+import { PORT, WSS_ADDRESS } from '../configuration'
 
 import { startSession } from './session/startSession'
 import { verifySession } from './session/verifySession'
@@ -64,8 +64,8 @@ app.post('/api/session/verify', (req, res, next) =>
 
 // Manage Credentials:
 
-app.get('/api/getRequestCredential', getRequestCredential)
-app.post('/api/postSubmitCredential', postSubmitCredential)
+app.get('/api/credential/getRequest', getRequestCredential)
+app.post('/api/credential/postSubmit', postSubmitCredential)
 
 // We need the DID Document of the dApps DID (DAPP_DID_URI) before we can handle login requests.
 // We therefore start the server only after the document was fetched.
