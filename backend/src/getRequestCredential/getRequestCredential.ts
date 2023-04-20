@@ -4,7 +4,7 @@ import { randomAsHex } from '@polkadot/util-crypto'
 import { NextFunction, Request, Response } from 'express'
 
 import { encryptionCallback } from '../utils/encryptionCallback'
-import { generateKeypairs } from '../utils/attester/generateKeyPairs'
+import { generateKeypairs } from '../utils/generateKeyPairs'
 import { DAPP_DID_MNEMONIC, DAPP_DID_URI } from '../../configuration'
 
 const exampleRequest: Kilt.IRequestCredentialContent = {
