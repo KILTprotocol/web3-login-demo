@@ -1,11 +1,16 @@
 import * as Kilt from '@kiltprotocol/sdk-js'
 import { randomAsHex } from '@polkadot/util-crypto'
+import jwt from 'jsonwebtoken'
 
 import { NextFunction, Request, Response } from 'express'
 
 import { encryptionCallback } from '../utils/encryptionCallback'
 import { generateKeypairs } from '../utils/generateKeyPairs'
-import { DAPP_DID_MNEMONIC, DAPP_DID_URI } from '../../configuration'
+import {
+  DAPP_DID_MNEMONIC,
+  DAPP_DID_URI,
+  JWT_SIGNER_SECRET
+} from '../../configuration'
 
 const exampleRequest: Kilt.IRequestCredentialContent = {
   cTypes: [
@@ -29,8 +34,37 @@ export async function getRequestCredential(
     console.log('Request', JSON.parse(request.body))
     console.log(exampleRequest)
 
-    // This wont work with the JWT:
-    const sessionValues = sessionStorage[request.body.sessionID]
+    // Dudley's version, without cookies: // This wont work with the JWT:
+    // const sessionValues = sessionStorage[request.body.sessionID]
+
+    // read cookie from browser
+    const sessionCookie = request.cookies.sessionJWT
+    if (!sessionCookie) {
+      response
+        .status(401)
+        .send(
+          `Could not find Cookie with session values (as JWT). Log-in and try again.`
+        )
+      throw new Error(
+        'Cookie with Session JWT not found. Enable Cookies, Log-in and try again.'
+      )
+    }
+
+    // decode the JWT and verify if it was signed with our SecretKey
+    let cookiePayloadServerSession: jwt.JwtPayload | string
+    try {
+      // will throw error if verification fails
+      cookiePayloadServerSession = jwt.verify(sessionCookie, JWT_SIGNER_SECRET)
+    } catch (error) {
+      throw new Error(`Could not verify JWT. ${error}`)
+    }
+    if (typeof cookiePayloadServerSession === 'string') {
+      throw new Error(
+        `Payload of unexpected type. Content: ${cookiePayloadServerSession}`
+      )
+    }
+
+    const sessionValues = cookiePayloadServerSession
 
     const { did: claimerSessionDidUri } = Kilt.Did.parse(
       sessionValues.encryptionKeyUri
