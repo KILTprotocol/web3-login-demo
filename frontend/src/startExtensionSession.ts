@@ -44,7 +44,7 @@ export async function startExtensionSession() {
 
     const responseToBackend = JSON.stringify({ extensionSession })
 
-    await fetch(`/api/session/verify`, {
+    const sessionVerificationResponse = await fetch(`/api/session/verify`, {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -53,6 +53,10 @@ export async function startExtensionSession() {
       },
       body: responseToBackend
     })
+    if (!sessionVerificationResponse.ok) {
+      console.log('Session could not be verified.')
+      return
+    }
 
     console.log(
       'Session successfully verified. dApp-Server and Extension trust each other.'
@@ -61,6 +65,5 @@ export async function startExtensionSession() {
     console.error(
       `Error verifying Session from:  ${apiWindow.kilt.sporran.name}: ${apiWindow.kilt.sporran.version},  ${error}`
     )
-    throw error
   }
 }

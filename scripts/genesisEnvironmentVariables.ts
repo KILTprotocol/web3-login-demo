@@ -17,8 +17,6 @@ const {
   PORT,
   // This is the mnemonic of the Kilt account paying for all transactions
   DAPP_ACCOUNT_MNEMONIC,
-  // This is the address of the Kilt account paying for all transactions
-  DAPP_ACCOUNT_ADDRESS,
   // This is the mnemonic of the Kilt DID that identifies your dApp
   DAPP_DID_MNEMONIC,
   // This is the URI of the Kilt DID that identifies your dApp
@@ -30,19 +28,20 @@ const {
 } = process.env
 
 async function main() {
-  // Making the output purple
-  console.log('\u001B[38;5;201m')
+  // Making the output light purple
+  console.log('\u001B[38;5;133m')
 
   console.log(
-    "This is a script for an easy creation of the environment variables needed for your dApp's functionality.\n\n",
+    "This is a script for an easy creation of the environment variables needed for your dApp's functionality.\n",
 
     'All environment variables need to be saved on a file called ".env" that you need to create and save on the project\'s root directory.',
     'It is a standard that all environment variables are name with capitalized letters.',
-    'Please, follow the standard.\n\n',
+    'Please, follow the standard.\n',
 
-    "Alternatively, you could create some of the environment values otherwise and let this script do the rest for you. Or (for pros) make them all otherwise and don't use this.\n\n"
+    "Alternatively, you could create some of the environment values otherwise and let this script do the rest for you. Or (for pros) make them all otherwise and don't use this.\n"
   )
-
+  // Making the output strong purple
+  console.log('\u001B[38;5;201m')
   // figure out your project's current state:
   let step = 0
   const stairs: (string | undefined)[] = [
@@ -50,7 +49,6 @@ async function main() {
     ORIGIN,
     PORT,
     DAPP_ACCOUNT_MNEMONIC,
-    DAPP_ACCOUNT_ADDRESS,
     DAPP_DID_MNEMONIC,
     DAPP_DID_URI,
     DAPP_NAME,
@@ -83,29 +81,23 @@ async function main() {
       await spawnAccount()
       break
 
-    // just in case you did not saved the account address:
-    // save the account address as well
-    case 4:
-      await getAddress(DAPP_ACCOUNT_MNEMONIC!)
-      break
-
     // then we generate a FullDID with all the key types
     // and ask you to save the mnemonic and URI
-    case 5:
+    case 4:
       await spawnDid()
       break
 
     // Just in case yu did not save the URI of the DID
     // save the DID's URI as well:
-    case 6:
+    case 5:
       await getURI(DAPP_DID_MNEMONIC!)
       break
     // ask you to choose a name for your dApp
-    case 7:
+    case 6:
       imploreName()
       break
     // ask you to choose a Secret Key for encoding JWTs
-    case 8:
+    case 7:
       imploreJwtSecretKey()
       break
     // if (step = -1):
@@ -114,7 +106,8 @@ async function main() {
                >> Take in consideration, that this script does not verify if the environment values already defined are valid. <<\n\n`)
       break
   }
-
+  // Making the output light purple
+  console.log('\u001B[38;5;133m')
   console.log(
     'If you are still missing some environment values and want the easy way, run this file again.\n'
   )
@@ -166,32 +159,19 @@ async function spawnAccount() {
     "\nTrouble reading the account's mnemonic of your dApp\n",
     'An account is being generated for your dApp.'
   )
-  await Kilt.connect(WSS_ADDRESS!)
+  await Kilt.init()
   // You could also pass a specific mnemonic, but here we generate a random mnemonic.
   // for custom, replace here with a string of 12 BIP-39 words
   const mnemonic = mnemonicGenerate()
   const account = generateAccount(mnemonic)
   console.log(
-    '\n Please, save mnemonic and address of your dApps account to the .env-file to continue!\n\n',
-    `DAPP_ACCOUNT_MNEMONIC=${mnemonic}\n`,
-    `DAPP_ACCOUNT_ADDRESS=${account.address}\n\n`,
+    '\n Please, save mnemonic of your dApps account to the .env-file to continue!\n\n',
+    `DAPP_ACCOUNT_MNEMONIC=${mnemonic}\n\n`,
+    `Kilt account public address generated using that mnemonic: ${account.address}\n\n`,
     `You also need to deposit funds on this account, to be able to create a DID.\n`,
     `For peregrine-accounts you can use: https://faucet.peregrine.kilt.io/?${account.address} \n\n`
   )
-  await Kilt.disconnect()
-}
-
-async function getAddress(mnemonic: string) {
-  console.log("\ntrouble reading the account's address of your dApp\n")
-  await Kilt.connect(WSS_ADDRESS!)
-  const accounty = generateAccount(mnemonic)
-  console.log(
-    '\n Please, save the address of your dApps account to the .env-file to continue!\n\n',
-    `DAPP_ACCOUNT_ADDRESS=${accounty.address}\n\n`,
-    `You also need to deposit funds on this account, to be able to create a DID.\n`,
-    `For peregrine-accounts you can use: https://faucet.peregrine.kilt.io/?${accounty.address} \n\n`
-  )
-  await Kilt.disconnect()
+  // no need for disconnecting while using init()
 }
 
 async function spawnDid() {
@@ -208,6 +188,7 @@ async function spawnDid() {
   // You could also pass a specific mnemonic, but here we generate a random mnemonic.
   // for custom, replace here with a string of 12 BIP-39 words
   const didMnemonic = mnemonicGenerate()
+  // the next function requires connect()
   const fullDid = await generateFullDid(attesterAccount, didMnemonic)
 
   console.log(
