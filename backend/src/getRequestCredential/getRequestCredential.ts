@@ -1,11 +1,13 @@
 import * as Kilt from '@kiltprotocol/sdk-js'
 import { randomAsHex } from '@polkadot/util-crypto'
-import jwt from 'jsonwebtoken'
 
 import { NextFunction, Request, Response } from 'express'
 
 import { encryptionCallback } from '../utils/encryptionCallback'
 import { generateKeypairs } from '../utils/generateKeyPairs'
+import { readSessionCookie } from '../utils/readSessionCookie'
+
+import { SessionValues } from '../session/startSession'
 import {
   DAPP_DID_MNEMONIC,
   DAPP_DID_URI,
@@ -41,54 +43,24 @@ export async function getRequestCredential(
     // const sessionValues = sessionStorage[request.body.sessionID]
 
     // read cookie from browser
-    const sessionCookie = request.cookies.sessionJWT
-    if (!sessionCookie) {
-      response
-        .status(401)
-        .send(
-          `Could not find Cookie with session values (as JWT). Log-in and try again.`
-        )
+    const sessionValues: SessionValues = (await readSessionCookie(
+      request,
+      response,
+      JWT_SIGNER_SECRET
+    )) as SessionValues
+
+    if (!sessionValues.extension) {
       throw new Error(
-        'Cookie with Session JWT not found. Enable Cookies, Log-in and try again.'
+        'Extension Session Values not found. Try restarting and verifying the server-extension-session.'
       )
     }
 
-    // decode the JWT and verify if it was signed with our SecretKey
-    let cookiePayloadServerSession: jwt.JwtPayload | string
-    try {
-      // will throw error if verification fails
-      cookiePayloadServerSession = jwt.verify(sessionCookie, JWT_SIGNER_SECRET)
-    } catch (error) {
-      throw new Error(`Could not verify JWT. ${error}`)
-    }
-    if (typeof cookiePayloadServerSession === 'string') {
-      throw new Error(
-        `Payload of unexpected type. Content: ${cookiePayloadServerSession}`
-      )
-    }
-
-    const serverSessionValues = cookiePayloadServerSession
-
     // Development Help:
-    console.log(
-      `serverSessionValues: ${JSON.stringify(serverSessionValues, null, 2)}`
-    )
-
-    // Extract the extension session from the body:
-    const extensionSessionValues = request.headers.package!
-
-    // Development Help:
-    console.log(
-      `extensionSessionValues: ${JSON.stringify(
-        extensionSessionValues,
-        null,
-        2
-      )}`
-    )
+    console.log(`SessionValues: ${JSON.stringify(sessionValues, null, 2)}`)
 
     // We need the encryptionKeyUri from the Extension
     const { did: claimerSessionDidUri } = Kilt.Did.parse(
-      extensionSessionValues.encryptionKeyUri
+      sessionValues.extension.encryptionKeyUri
     )
 
     const challenge = randomAsHex()
@@ -119,7 +91,7 @@ export async function getRequestCredential(
         keyAgreement: keyAgreement,
         keyAgreementUri: `${DAPP_DID_URI}${dAppKeyAgreementKeyId}`
       }),
-      extensionSessionValues.encryptionKeyUri
+      sessionValues.extension.encryptionKeyUri
     )
     return response.send(encryptedMessage)
   } catch (error) {

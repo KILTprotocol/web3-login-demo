@@ -11,7 +11,7 @@ import { Response, Request } from 'express'
  * @param request
  * @param response
  * @param secretKey The JWT secret signer (or pen).
- * @returns The decoded content of the Payload.
+ * @returns The decoded content of the Payload of the JWT.
  */
 export async function readSessionCookie(
   request: Request,

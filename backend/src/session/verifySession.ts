@@ -2,13 +2,14 @@ import * as Kilt from '@kiltprotocol/sdk-js'
 import { Response, Request } from 'express'
 import jwt from 'jsonwebtoken'
 
+import { JWT_SIGNER_SECRET } from '../../configuration'
+
 import { generateKeypairs } from '../utils/generateKeyPairs'
 import { getApi } from '../utils/connection'
 import { extractEncryptionKeyUri } from '../utils/extractEncryptionKeyUri'
 import { readSessionCookie } from '../utils/readSessionCookie'
 
 import { cookieOptions, SessionValues } from './startSession'
-import { JWT_SIGNER_SECRET } from '../../configuration'
 
 export async function verifySession(
   request: Request,
