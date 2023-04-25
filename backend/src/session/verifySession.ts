@@ -1,10 +1,11 @@
 import * as Kilt from '@kiltprotocol/sdk-js'
 import { Response, Request } from 'express'
-import jwt from 'jsonwebtoken'
+// import jwt from 'jsonwebtoken'
 
 import { generateKeypairs } from '../utils/attester/generateKeyPairs'
 import { getApi } from '../utils/connection'
 import { extractEncryptionKeyUri } from '../utils/extractEncryptionKeyUri'
+import { readSessionCookie } from '../utils/readSessionCookie'
 
 export async function verifySession(
   request: Request,
@@ -25,32 +26,40 @@ export async function verifySession(
   }
 
   // read cookie from browser
-  const sessionCookie = request.cookies.sessionJWT
-  if (!sessionCookie) {
-    response
-      .status(401)
-      .send(
-        `Could not find Cookie with session values (as JWT). Log-in and try again.`
-      )
-    throw new Error(
-      'Cookie with Session JWT not found. Enable Cookies, Log-in and try again.'
-    )
-  }
+  const cookiePayloadServerSession = await readSessionCookie(
+    request,
+    response,
+    secretKey
+  )
 
-  // decode the JWT and verify if it was signed with our SecretKey
+  // Old version:
 
-  let cookiePayloadServerSession: jwt.JwtPayload | string
-  try {
-    // will throw error if verification fails
-    cookiePayloadServerSession = jwt.verify(sessionCookie, secretKey)
-  } catch (error) {
-    throw new Error(`Could not verify JWT. ${error}`)
-  }
-  if (typeof cookiePayloadServerSession === 'string') {
-    throw new Error(
-      `Payload of unexpected type. Content: ${cookiePayloadServerSession}`
-    )
-  }
+  // const sessionCookie = request.cookies.sessionJWT
+  // if (!sessionCookie) {
+  //   response
+  //     .status(401)
+  //     .send(
+  //       `Could not find Cookie with session values (as JWT). Log-in and try again.`
+  //     )
+  //   throw new Error(
+  //     'Cookie with Session JWT not found. Enable Cookies, Log-in and try again.'
+  //   )
+  // }
+
+  // // decode the JWT and verify if it was signed with our SecretKey
+
+  // let cookiePayloadServerSession: jwt.JwtPayload | string
+  // try {
+  //   // will throw error if verification fails
+  //   cookiePayloadServerSession = jwt.verify(sessionCookie, secretKey)
+  // } catch (error) {
+  //   throw new Error(`Could not verify JWT. ${error}`)
+  // }
+  // if (typeof cookiePayloadServerSession === 'string') {
+  //   throw new Error(
+  //     `Payload of unexpected type. Content: ${cookiePayloadServerSession}`
+  //   )
+  // }
 
   // Important/Real Verification:
 
