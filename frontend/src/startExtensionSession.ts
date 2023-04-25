@@ -17,7 +17,8 @@ export async function startExtensionSession() {
     throw Error(serverSessionStart.statusText)
   }
 
-  const plainPayload = await serverSessionStart.json()
+  // At the start, we only want the Server Session Values (and they are only ones available)
+  const plainPayload = (await serverSessionStart.json()).server
 
   if (!plainPayload) {
     throw new Error('Trouble generating session values on the backend.')

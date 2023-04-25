@@ -5,6 +5,9 @@ import jwt from 'jsonwebtoken'
 import { generateKeypairs } from '../utils/attester/generateKeyPairs'
 import { getApi } from '../utils/connection'
 import { extractEncryptionKeyUri } from '../utils/extractEncryptionKeyUri'
+import { readSessionCookie } from '../utils/readSessionCookie'
+
+import { cookieOptions, SessionValues } from './startSession'
 
 export async function verifySession(
   request: Request,
@@ -25,32 +28,8 @@ export async function verifySession(
   }
 
   // read cookie from browser
-  const sessionCookie = request.cookies.sessionJWT
-  if (!sessionCookie) {
-    response
-      .status(401)
-      .send(
-        `Could not find Cookie with session values (as JWT). Log-in and try again.`
-      )
-    throw new Error(
-      'Cookie with Session JWT not found. Enable Cookies, Log-in and try again.'
-    )
-  }
-
-  // decode the JWT and verify if it was signed with our SecretKey
-
-  let cookiePayloadServerSession: jwt.JwtPayload | string
-  try {
-    // will throw error if verification fails
-    cookiePayloadServerSession = jwt.verify(sessionCookie, secretKey)
-  } catch (error) {
-    throw new Error(`Could not verify JWT. ${error}`)
-  }
-  if (typeof cookiePayloadServerSession === 'string') {
-    throw new Error(
-      `Payload of unexpected type. Content: ${cookiePayloadServerSession}`
-    )
-  }
+  const cookiePayload = await readSessionCookie(request, response, secretKey)
+  const serverSession = cookiePayload.server
 
   // Important/Real Verification:
 
@@ -58,8 +37,8 @@ export async function verifySession(
   const { encryptedChallenge, nonce } = extensionSession
   // This variable has different name depending on the session version that the extension uses
 
-  const encryptionKeyUri = extractEncryptionKeyUri(extensionSession)
-  const encryptionKey = await Kilt.Did.resolveKey(encryptionKeyUri)
+  const extensionEncryptionKeyUri = extractEncryptionKeyUri(extensionSession)
+  const encryptionKey = await Kilt.Did.resolveKey(extensionEncryptionKeyUri)
   if (!encryptionKey) {
     throw new Error('an encryption key is required')
   }
@@ -85,7 +64,7 @@ export async function verifySession(
   }
 
   const decryptedChallenge = Kilt.Utils.Crypto.u8aToHex(decryptedBytes)
-  const originalChallenge = cookiePayloadServerSession.challenge
+  const originalChallenge = serverSession.challenge
 
   // Compare the decrypted challenge to the challenge you stored earlier.
   console.log(
@@ -100,10 +79,42 @@ export async function verifySession(
     throw new Error('Invalid challenge')
   }
 
-  console.log('Session successfully verified.\n')
+  console.log(
+    'Session successfully verified.\n',
+    'Cookie is being updated to include the extension session values.\n'
+  )
+
+  // update the cookie so that it also includes the extensionSession-Values
+
+  const completeSessionValues: SessionValues = {
+    server: {
+      dAppName: serverSession.dAppName,
+      dAppEncryptionKeyUri: serverSession.dAppEncryptionKeyUri,
+      challenge: serverSession.challenge
+    },
+    extension: {
+      encryptedChallenge: extensionSession.encryptedChallenge,
+      encryptionKeyUri: extensionEncryptionKeyUri,
+      nonce: extensionSession.nonce
+    }
+  }
+
+  // Create a Json-Web-Token:
+  // cookieOptions are imported from startSession for unanimity
+  // set the expiration of JWT same as the Cookie
+  const optionsJwt = {
+    expiresIn: `${cookieOptions.maxAge} seconds`
+  }
+  // default to algorithm: 'HS256',
+  const token = jwt.sign(completeSessionValues, secretKey, optionsJwt)
+
+  // Set a Cookie in the header including the JWT and our options:
+  // Using 'cookie-parser' dependency:
+  response.cookie('sessionJWT', token, cookieOptions)
+
   response
     .status(200)
     .send(
-      'Session successfully verified. Extension and dApp understand each other.'
+      'Session successfully verified. Extension and dApp understand each other. Server and Extension Session Values now on the Cookie.'
     )
 }
