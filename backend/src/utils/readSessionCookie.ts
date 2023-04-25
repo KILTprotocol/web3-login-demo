@@ -2,10 +2,10 @@ import jwt from 'jsonwebtoken'
 import { Response, Request } from 'express'
 
 /**
- *  Mean to facilitate working with JSON Web tokens inside Cookies.
+ *  Mean to facilitate working with JSON-Web-tokens inside the Cookie.
  *  This function reads, decodes and verifies the 'sessionJWT' Cookie from the browser.
  *
- * Will throw an error if it fail one of it functions.
+ *  Will throw an error if it fail one of it functions.
  *
  * @param request
  * @param response

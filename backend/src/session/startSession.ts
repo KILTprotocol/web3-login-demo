@@ -41,7 +41,7 @@ export async function generateSessionValues(
   }
 
   // Generate a challenge to ensure all messages we receive are fresh.
-  // A UUID is a universally unique identifier, a 128-bit label. Here express as a string of a hexadecimal number.
+  // A UUID is a universally unique identifier, a 128-bit label. Here expressed as a string of a hexadecimal number.
   const challenge = Kilt.Utils.UUID.generate()
 
   const sessionValues = {
