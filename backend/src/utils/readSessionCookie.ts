@@ -4,12 +4,13 @@ import { Response, Request } from 'express'
 /**
  *  Mean to facilitate working with JSON-Web-tokens inside the Cookie.
  *  This function reads, decodes and verifies the 'sessionJWT' Cookie from the browser.
+ *  Verification in this context means that it will check, that the JWT was signed with the dApp's secret pen (key).
  *
  *  Will throw an error if it fail one of it functions.
  *
  * @param request
  * @param response
- * @param secretKey The JWT secret signer.
+ * @param secretKey The JWT secret signer (or pen).
  * @returns The decoded content of the Payload.
  */
 export async function readSessionCookie(
