@@ -31,10 +31,6 @@ export async function verifySession(
   const cookiePayload = await readSessionCookie(request, response, secretKey)
   const serverSession = cookiePayload.server
 
-  // console.log(
-  //   `cookiePayload => serverSession: ${JSON.stringify(serverSession, null, 2)}`
-  // )
-
   // Important/Real Verification:
 
   const { extensionSession } = request.body
@@ -102,11 +98,6 @@ export async function verifySession(
       nonce: extensionSession.nonce
     }
   }
-
-  // console.log(
-  //   `Payload of updated "sessionJWT" Cookie:
-  //    ${JSON.stringify(completeSessionValues, null, 2)}`
-  // )
 
   // Create a Json-Web-Token:
   // cookieOptions are imported from startSession for unanimity
