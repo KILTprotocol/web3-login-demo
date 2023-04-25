@@ -5,29 +5,35 @@ import styles from './User.module.css'
 import { startExtensionSession } from '../startExtensionSession'
 import { tryToLogIn } from '../tryToLogIn'
 
-import Button from './Button'
 import { PubSubSessionV1, PubSubSessionV2 } from '../utils/types'
+
+import Button from './Button'
 
 interface Props {
   [x: string]: any
-}
-
-async function startSession() {
-  console.log('trying to start the session! ')
-  extensionSession = await startExtensionSession()
-}
-
-async function login() {
-  console.log(
-    'Try to log in. Meaning ask the extension for the specific type of Credential.'
-  )
-  await tryToLogIn()
 }
 
 export default function User({ user, connected }: Props): JSX.Element {
   const [extensionSession, setExtensionSession] = useState<
     PubSubSessionV1 | PubSubSessionV2 | null
   >(null)
+
+  async function startSession() {
+    console.log('trying to start the session! ')
+    // Debugger:
+    console.log('old extensionSession:', extensionSession)
+    const extSessHelp = await startExtensionSession()
+    setExtensionSession(extSessHelp)
+    // extensionSession still has it old value here
+    // only after the whole function it will get updated
+  }
+
+  async function login() {
+    console.log(
+      'Try to log in. Meaning ask the extension for the specific type of Credential.'
+    )
+    await tryToLogIn(extensionSession)
+  }
 
   return (
     <div>

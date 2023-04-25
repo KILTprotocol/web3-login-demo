@@ -31,7 +31,10 @@ export async function getRequestCredential(
   next: NextFunction
 ) {
   try {
-    console.log('Request', request.body)
+    console.log(
+      'Request Headers-Package, with ExtensionSession',
+      request.headers.package
+    )
     console.log(exampleRequest)
 
     // Dudley's version, without cookies: // This wont work with the JWT:
@@ -64,11 +67,28 @@ export async function getRequestCredential(
       )
     }
 
-    const sessionValues = cookiePayloadServerSession
+    const serverSessionValues = cookiePayloadServerSession
+
+    // Development Help:
+    console.log(
+      `serverSessionValues: ${JSON.stringify(serverSessionValues, null, 2)}`
+    )
+
+    // Extract the extension session from the body:
+    const extensionSessionValues = request.headers.package!
+
+    // Development Help:
+    console.log(
+      `extensionSessionValues: ${JSON.stringify(
+        extensionSessionValues,
+        null,
+        2
+      )}`
+    )
 
     // We need the encryptionKeyUri from the Extension
     const { did: claimerSessionDidUri } = Kilt.Did.parse(
-      sessionValues.encryptionKeyUri
+      extensionSessionValues.encryptionKeyUri
     )
 
     const challenge = randomAsHex()
@@ -99,7 +119,7 @@ export async function getRequestCredential(
         keyAgreement: keyAgreement,
         keyAgreementUri: `${DAPP_DID_URI}${dAppKeyAgreementKeyId}`
       }),
-      sessionValues.encryptionKeyUri
+      extensionSessionValues.encryptionKeyUri
     )
     return response.send(encryptedMessage)
   } catch (error) {
