@@ -27,7 +27,10 @@ export async function startExtensionSession(): Promise<
     throw new Error('Trouble generating session values on the backend.')
   }
 
-  console.log('Plain text accompanying the Cookie "sessionJWT": ', plainPayload)
+  console.log(
+    'Plain text accompanying the Cookie "sessionJWT": (The server session values) ',
+    plainPayload
+  )
 
   // destructure the payload:
   const { dAppName, dAppEncryptionKeyUri, challenge } = plainPayload
@@ -41,7 +44,7 @@ export async function startExtensionSession(): Promise<
   console.log('the session was initialized (¬‿¬)')
   console.log('session being returned by the extension:', extensionSession)
 
-  // Resolve the `session.encryptionKeyUri` and use this key and the nonce
+  // Resolve the extension `session.encryptionKeyUri` and use this key and the nonce
   // to decrypt `session.encryptedChallenge` and confirm that it’s equal to the original challenge.
   // This verification must happen on the server-side.
 
@@ -61,7 +64,7 @@ export async function startExtensionSession(): Promise<
   }
 
   console.log(
-    'Session successfully verified. dApp-Server and Extension trust each other.'
+    'Session successfully verified. dApp-Server and Browser-Extension trust each other.'
   )
   return extensionSession
 }
