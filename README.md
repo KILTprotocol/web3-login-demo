@@ -41,3 +41,65 @@ After running this script each time, you need to manually copy the output and sa
 
 Alternatively, you could manually add the values that you created somehow elsewhere.
 But this is only recommended, if you really know what you are doing.
+
+## Process
+
+```
++---------+                                                    +---------+                                                                      +---------+
+| Sporran |                                                    | Browser |                                                                      | Server  |
++---------+                                                    +---------+                                                                      +---------+
+     |                                                              | ------------------------\                                                      |
+     |                                                              |-| User visits web3login |                                                      |
+     |                                                              | |-----------------------|                                                      |
+     |                                                              |                                                                                |
+     |                                please allow use on this page |                                                                                |
+     |<-------------------------------------------------------------|                                                                                |
+     |                                                              |                                                                                |
+     | User granted access                                          |                                                                                |
+     |------------------------------------------------------------->|                                                                                |
+     |                                                              | ---------------------------\                                                   |
+     |                                                              |-| User clicks login button |                                                   |
+     |                                                              | |--------------------------|                                                   |
+     |                                                              |                                                                                |
+     |                                                              | GET /api/session/start                                                         |
+     |                                                              |------------------------------------------------------------------------------->|
+     |                                                              |                                                                                |
+     |                                                              |                                                                         200 OK |
+     |                                                              |                                                     set-cookie: JWT{challenge} |
+     |                                                              |                                    {dAppName, dAppEncryptionKeyUri, challenge} |
+     |                                                              |<-------------------------------------------------------------------------------|
+     |                                                              |                                                                                |
+     |      startSession(dAppName, dAppEncryptionKeyUri, challenge) |                                                                                |
+     |<-------------------------------------------------------------|                                                                                |
+     |                                                              |                                                                                |
+     | {encryptionKeyId, encryptedChallenge, nonce}                 |                                                                                |
+     |------------------------------------------------------------->|                                                                                |
+     |                                                              |                                                                                |
+     |                                                              | POST /api/session/verify                                                       |
+     |                                                              | Cookie: JWT{challenge}                                                         |
+     |                                                              | {encryptionKeyId, encryptedChallenge, nonce}                                   |
+     |                                                              |------------------------------------------------------------------------------->|
+     |                                                              |                        ------------------------------------------------------\ |
+     |                                                              |                        | verify JWT{challenge} and decrypted Challenge match |-|
+     |                                                              |                        |-----------------------------------------------------| |
+     |                                                              |                                                                                |
+     |                                                              |                                                                         200 OK |
+     |                                                              |                       set-cookie:Jwt{}expiration=0\KiltMsg{request-credential} |
+     |                                                              |<-------------------------------------------------------------------------------|
+     |                                                              |                                                                                |
+     |                                  KiltMsg{request-credential} |                                                                                |
+     |<-------------------------------------------------------------|                                                                                |
+     |                                                              |                                                                                |
+     | KiltMsg{submit-credential}                                   |                                                                                |
+     |------------------------------------------------------------->|                                                                                |
+     |                                                              |                                                                                |
+     |                                                              | Post /api/session/provideCredential                                            |
+     |                                                              | KiltMsg{submit-credential}                                                     |
+     |                                                              |------------------------------------------------------------------------------->|
+     |                                                              |------------------------------------------------------------------------------\ |
+     |                                                              || Verify the credential                                                       |-|
+     |                                                              || Note the DID inside the credential                                          | |
+     |                                                              || if verification was successful, DID authenticated with provided credentials | |
+     |                                                              ||-----------------------------------------------------------------------------| |
+     |                                                              |                                                                                |
+```
