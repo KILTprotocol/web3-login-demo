@@ -9,7 +9,7 @@ export async function tryToLogIn(
     )
   }
 
-  const encryptedCredentialRequest = await fetch(`/api/credential/getRequest`, {
+  const getRequestResponse = await fetch(`/api/credential/getRequest`, {
     method: 'GET',
     credentials: 'include',
     headers: {
@@ -18,9 +18,23 @@ export async function tryToLogIn(
       Accept: 'application/json'
     }
   })
-  if (!encryptedCredentialRequest.ok) {
-    throw Error(encryptedCredentialRequest.statusText)
+  if (!getRequestResponse.ok) {
+    throw Error(getRequestResponse.statusText)
   }
 
-  console.log(await encryptedCredentialRequest.json())
+  const encryptedCredentialRequest = await getRequestResponse.json()
+  console.log(
+    `encryptedCredentialRequest gotten from the server: ${JSON.stringify(
+      encryptedCredentialRequest,
+      null,
+      2
+    )}`
+  )
+
+  // Now we can pass the message to the extension.
+  // The encrypted Credential-Request is the message.
+
+  extensionSession.send(await encryptedCredentialRequest)
+
+  // Now the extension should ask the user to give a Credential fitting the requested cType.
 }
