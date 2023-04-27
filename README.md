@@ -90,8 +90,12 @@ But this is only recommended, if you really know what you are doing.
      |                                                              |<-------------------------------------------------------------------------------|
      |                                                              |                                                                                |
      |                                                              | GET /api/loginRequirements                                                     |
-     |                                                              | KiltMsg{request-credential}                                                    |
+     |                                                              | Cookie:Jwt{encryptionKeyId}                                                    |
      |                                                              |------------------------------------------------------------------------------->|
+     |                                                              |                                                                                |
+     |                                                              |                                                                         200 Ok |
+     |                                                              |                                                    KiltMsg{request-credential} |
+     |                                                              |<-------------------------------------------------------------------------------|
      |                                                              |                                                                                |
      |                                  KiltMsg{request-credential} |                                                                                |
      |<-------------------------------------------------------------|                                                                                |

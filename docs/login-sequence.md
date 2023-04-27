@@ -13,7 +13,8 @@ Sporran->Browser: {encryptionKeyId, encryptedChallenge, nonce}
 Browser->Server: POST /api/finalizeSessionSetup\nCookie: JWT{challenge}\n{encryptionKeyId, encryptedChallenge, nonce}
 note left of Server: verify JWT{challenge}\ndecrypt challenge using nonce and encryptionKeyId\nAssert that jwt-challenge and decrypted-challenge match
 Server->Browser: 200 OK\nset-cookie:Jwt{encryptionKeyId}
-Browser->Server: GET /api/loginRequirements\nKiltMsg{request-credential}
+Browser->Server: GET /api/loginRequirements\nCookie:Jwt{encryptionKeyId}
+Server->Browser: 200 Ok\nKiltMsg{request-credential}
 Browser->Sporran: KiltMsg{request-credential}
 note right of Sporran: User approves the request\nand selects credential to share
 Sporran->Browser: KiltMsg{submit-credential}
