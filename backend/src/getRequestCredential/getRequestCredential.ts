@@ -34,7 +34,7 @@ export async function getRequestCredential(
 ) {
   try {
     console.log(
-      `The Request of a CType for Login:  ${JSON.stringify(exampleRequest)}`
+      `The CType-Request:  ${JSON.stringify(exampleRequest, null, 2)}`
     )
 
     //FIXME: Error handling for wrong JWT signature or no cookies needed.
