@@ -61,7 +61,7 @@ But this is only recommended, if you really know what you are doing.
      |                                                              |-| User clicks login button |                                                   |
      |                                                              | |--------------------------|                                                   |
      |                                                              |                                                                                |
-     |                                                              | GET /api/session/setup                                                         |
+     |                                                              | GET /api/initializeSessionSetup                                                |
      |                                                              |------------------------------------------------------------------------------->|
      |                                                              |                                                                                |
      |                                                              |                                                                         200 OK |
@@ -75,7 +75,7 @@ But this is only recommended, if you really know what you are doing.
      | {encryptionKeyId, encryptedChallenge, nonce}                 |                                                                                |
      |------------------------------------------------------------->|                                                                                |
      |                                                              |                                                                                |
-     |                                                              | POST /api/session/connect                                                      |
+     |                                                              | POST /api/finalizeSessionSetup                                                 |
      |                                                              | Cookie: JWT{challenge}                                                         |
      |                                                              | {encryptionKeyId, encryptedChallenge, nonce}                                   |
      |                                                              |------------------------------------------------------------------------------->|
@@ -89,7 +89,7 @@ But this is only recommended, if you really know what you are doing.
      |                                                              |                                                set-cookie:Jwt{encryptionKeyId} |
      |                                                              |<-------------------------------------------------------------------------------|
      |                                                              |                                                                                |
-     |                                                              | GET /api/session/loginRequirements                                             |
+     |                                                              | GET /api/loginRequirements                                                     |
      |                                                              | KiltMsg{request-credential}                                                    |
      |                                                              |------------------------------------------------------------------------------->|
      |                                                              |                                                                                |
@@ -99,7 +99,7 @@ But this is only recommended, if you really know what you are doing.
      | KiltMsg{submit-credential}                                   |                                                                                |
      |------------------------------------------------------------->|                                                                                |
      |                                                              |                                                                                |
-     |                                                              | Post /api/session/provideCredential                                            |
+     |                                                              | Post /api/provideCredential                                                    |
      |                                                              | KiltMsg{submit-credential}                                                     |
      |                                                              |------------------------------------------------------------------------------->|
      |                                                              |------------------------------------------------------------------------------\ |
