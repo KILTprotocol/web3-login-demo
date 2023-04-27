@@ -1,4 +1,9 @@
-import { PubSubSessionV1, PubSubSessionV2 } from './utils/types'
+import { IEncryptedMessage } from '@kiltprotocol/types'
+import {
+  IEncryptedMessageV1,
+  PubSubSessionV1,
+  PubSubSessionV2
+} from './utils/types'
 
 export async function tryToLogIn(
   extensionSession: PubSubSessionV1 | PubSubSessionV2 | null
@@ -31,10 +36,46 @@ export async function tryToLogIn(
     )}`
   )
 
+  // prepare to receive the credential from the extension
+
+  // initialize so that typescript don't cry
+  let extensionMessage: IEncryptedMessageV1 | IEncryptedMessage = {
+    receiverKeyId: 'did:kilt:4someones#publicKeyAgreement',
+    senderKeyId: 'did:kilt:4YourDecentralizedApp#publicKeyAgreement',
+    ciphertext: 'string',
+    nonce: 'string'
+  }
+
+  await extensionSession.listen(async (message) => {
+    // try {
+    extensionMessage = message
+    // } finally {
+    //   window.removeEventListener('beforeunload', handleBeforeUnload)
+    // }
+  })
+
   // Now we can pass the message to the extension.
-  // The encrypted Credential-Request is the message.
+  // Meaning, we can request the Credential.
 
-  extensionSession.send(await encryptedCredentialRequest)
-
+  await extensionSession.send(encryptedCredentialRequest)
   // Now the extension should ask the user to give a Credential fitting the requested cType.
+
+  // Send the Credential to the Backend to be verified
+  const responseToBackend = JSON.stringify(extensionMessage)
+
+  const credentialVerificationResponse = await fetch(
+    '/api/credential/postSubmit',
+    {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: responseToBackend
+    }
+  )
+  if (!credentialVerificationResponse.ok) {
+    throw new Error('Login Failed. Error verifying the Credential.')
+  }
 }

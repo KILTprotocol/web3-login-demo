@@ -13,7 +13,14 @@ export async function postSubmitCredential(
   next: NextFunction
 ) {
   try {
-    const { encryptedMessage } = request.body
+    const encryptedMessage = request.body
+    console.log(
+      `encrypted Message that the server obtained ${JSON.stringify(
+        encryptedMessage,
+        null,
+        2
+      )}`
+    )
     const api = await getApi()
 
     const { keyAgreement } = generateKeypairs(DAPP_DID_MNEMONIC)
@@ -41,7 +48,11 @@ export async function postSubmitCredential(
       throw new Error("Credential has been revoked and hence it's not valid.")
     }
 
-    response.send(200)
+    response
+      .status(200)
+      .send(
+        'Credential Successfully Verified!  The user is legitimate. ( ͡° ͜ʖ ͡°)'
+      )
   } catch (error) {
     console.log('Post Submit Credential Error.', error)
     next(error)
