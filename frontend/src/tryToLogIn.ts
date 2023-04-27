@@ -1,4 +1,14 @@
-export async function tryToLogIn() {
+import { PubSubSessionV1, PubSubSessionV2 } from './utils/types'
+
+export async function tryToLogIn(
+  extensionSession: PubSubSessionV1 | PubSubSessionV2 | null
+) {
+  if (!extensionSession) {
+    throw new Error(
+      'No Extension Session Object found. Start the Server-Extension-Session first! '
+    )
+  }
+
   const encryptedCredentialRequest = await fetch(`/api/credential/getRequest`, {
     method: 'GET',
     credentials: 'include',

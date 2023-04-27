@@ -5,6 +5,7 @@ import { NextFunction, Request, Response } from 'express'
 import { generateKeypairs } from '../utils/generateKeyPairs'
 import { decryptionCallback } from '../utils/decryptionCallback'
 import { DAPP_DID_MNEMONIC } from '../../configuration'
+import { getApi } from '../utils/connection'
 
 export async function postSubmitCredential(
   request: Request,
@@ -13,7 +14,7 @@ export async function postSubmitCredential(
 ) {
   try {
     const { encryptedMessage } = request.body
-    const api = Kilt.ConfigService.get('api')
+    const api = await getApi()
 
     const { keyAgreement } = generateKeypairs(DAPP_DID_MNEMONIC)
     const decryptedMessage = await Kilt.Message.decrypt(
@@ -42,7 +43,7 @@ export async function postSubmitCredential(
 
     response.send(200)
   } catch (error) {
-    console.log('Post Submit Credential Error', error)
+    console.log('Post Submit Credential Error.', error)
     next(error)
   }
 }

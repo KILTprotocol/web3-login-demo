@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import styles from './User.module.css'
 
 import { startExtensionSession } from '../startExtensionSession'
 import { tryToLogIn } from '../tryToLogIn'
+
+import { PubSubSessionV1, PubSubSessionV2 } from '../utils/types'
 
 import Button from './Button'
 
@@ -12,16 +14,23 @@ interface Props {
 }
 
 export default function User({ user, connected }: Props): JSX.Element {
+  const [extensionSession, setExtensionSession] = useState<
+    PubSubSessionV1 | PubSubSessionV2 | null
+  >(null)
   async function startSession() {
     console.log('trying to start the session! ')
-    await startExtensionSession()
+    const extSessHelp = await startExtensionSession()
+    setExtensionSession(extSessHelp)
   }
+
+  // After startSession(), the Extension-Session-Values should be available for the backend. Done through cookie parser, (but data bank also possible).
+  // The frontend still needs the Session-Object to be able to use its methods (functions). That's why we save on a React-State.
 
   async function login() {
     console.log(
-      'Try to log in. Meaning ask the extension for the specific type of Credential.'
+      'Trying to log in. Meaning ask the extension for the specific Type of Credential, a CType.'
     )
-    await tryToLogIn()
+    await tryToLogIn(extensionSession)
   }
 
   return (
