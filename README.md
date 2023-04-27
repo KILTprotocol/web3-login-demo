@@ -41,3 +41,87 @@ After running this script each time, you need to manually copy the output and sa
 
 Alternatively, you could manually add the values that you created somehow elsewhere.
 But this is only recommended, if you really know what you are doing.
+
+## Process
+
+```
++-----------+                                                   +---------+                                                                      +---------+
+| Extension |                                                   | Browser |                                                                      | Server  |
++-----------+                                                   +---------+                                                                      +---------+
+      |                                                              | ------------------------\                                                      |
+      |                                                              |-| User visits web3login |                                                      |
+      |                                                              | |-----------------------|                                                      |
+      |                                                              | ---------------------------------------------------------\                     |
+      |                                                              |-| User clicks button "login with Extension X"            |                     |
+      |                                                              | | Here the user chooses which extension they want to use |                     |
+      |                                                              | |--------------------------------------------------------|                     |
+      |                                                              |                                                                                |
+      |                                please allow use on this page |                                                                                |
+      |<-------------------------------------------------------------|                                                                                |
+      | ---------------------------------\                           |                                                                                |
+      |-| Only the "Extension X" pops up |                           |                                                                                |
+      | |--------------------------------|                           |                                                                                |
+      |                                                              |                                                                                |
+      | User granted access                                          |                                                                                |
+      |------------------------------------------------------------->|                                                                                |
+      |                                                              |                                                                                |
+      |                                                              | GET /api/initializeSessionSetup                                                |
+      |                                                              |------------------------------------------------------------------------------->|
+      |                                                              |                                                                                |
+      |                                                              |                                                                         200 OK |
+      |                                                              |                                                     set-cookie: JWT{challenge} |
+      |                                                              |                                    {dAppName, dAppEncryptionKeyUri, challenge} |
+      |                                                              |<-------------------------------------------------------------------------------|
+      |                                                              |                                                                                |
+      |      startSession(dAppName, dAppEncryptionKeyUri, challenge) |                                                                                |
+      |<-------------------------------------------------------------|                                                                                |
+      |                                                              |                                                                                |
+      | {encryptionKeyId, encryptedChallenge, nonce}                 |                                                                                |
+      |------------------------------------------------------------->|                                                                                |
+      |                                                              |                                                                                |
+      |                                                              | POST /api/finalizeSessionSetup                                                 |
+      |                                                              | Cookie: JWT{challenge}                                                         |
+      |                                                              | {encryptionKeyId, encryptedChallenge, nonce}                                   |
+      |                                                              |------------------------------------------------------------------------------->|
+      |                                                              |                    ----------------------------------------------------------\ |
+      |                                                              |                    | verify JWT{challenge}                                   |-|
+      |                                                              |                    | decrypt challenge using nonce and encryptionKeyId       | |
+      |                                                              |                    | Assert that jwt-challenge and decrypted-challenge match | |
+      |                                                              |                    |---------------------------------------------------------| |
+      |                                                              |                                                                                |
+      |                                                              |                                                                         200 OK |
+      |                                                              |                                                set-cookie:JWT{encryptionKeyId} |
+      |                                                              |<-------------------------------------------------------------------------------|
+      |                                                              |                                                                                |
+      |                                                              | GET /api/loginRequirements                                                     |
+      |                                                              | Cookie:JWT{encryptionKeyId}                                                    |
+      |                                                              |------------------------------------------------------------------------------->|
+      |                                                              |                                                                                |
+      |                                                              |                                                                         200 Ok |
+      |                                                              |                                                    KiltMsg{request-credential} |
+      |                                                              |<-------------------------------------------------------------------------------|
+      |                                                              |                                                                                |
+      |                                  KiltMsg{request-credential} |                                                                                |
+      |<-------------------------------------------------------------|                                                                                |
+      | ----------------------------------\                          |                                                                                |
+      |-| User approves the request       |                          |                                                                                |
+      | | and selects credential to share |                          |                                                                                |
+      | |---------------------------------|                          |                                                                                |
+      |                                                              |                                                                                |
+      | KiltMsg{submit-credential}                                   |                                                                                |
+      |------------------------------------------------------------->|                                                                                |
+      |                                                              |                                                                                |
+      |                                                              | Post /api/provideCredential                                                    |
+      |                                                              | KiltMsg{submit-credential}                                                     |
+      |                                                              |------------------------------------------------------------------------------->|
+      |                                                              |------------------------------------------------------------------------------\ |
+      |                                                              || Verify the credential                                                       |-|
+      |                                                              || Note the DID inside the credential                                          | |
+      |                                                              || if verification was successful, DID authenticated with provided credentials | |
+      |                                                              ||-----------------------------------------------------------------------------| |
+      |                                                              |                                                                                |
+      |                                                              |                                                                         200 Ok |
+      |                                                              |                                 set-cookie:JWT{DID,claimHash,"LOGIN COMPLETE"} |
+      |                                                              |<-------------------------------------------------------------------------------|
+      |                                                              |                                                                                |
+```
