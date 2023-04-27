@@ -3,9 +3,10 @@ generated with https://weidagang.github.io/text-diagram/
 ```
 object Extension Browser Server
 note right of Browser: User visits web3login 
+note right of Browser: User clicks button "login with Extension X"\nHere the user chooses which extension they want to use
 Browser->Extension: please allow use on this page
+note right of Extension: Only the "Extension X" pops up
 Extension->Browser: User granted access
-note right of Browser: User clicks login button
 Browser->Server: GET /api/initializeSessionSetup
 Server->Browser: 200 OK\nset-cookie: JWT{challenge}\n{dAppName, dAppEncryptionKeyUri, challenge}
 Browser->Extension: startSession(dAppName, dAppEncryptionKeyUri, challenge)

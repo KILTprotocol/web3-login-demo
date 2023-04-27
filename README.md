@@ -51,15 +51,19 @@ But this is only recommended, if you really know what you are doing.
       |                                                              | ------------------------\                                                      |
       |                                                              |-| User visits web3login |                                                      |
       |                                                              | |-----------------------|                                                      |
+      |                                                              | ---------------------------------------------------------\                     |
+      |                                                              |-| User clicks button "login with Extension X"            |                     |
+      |                                                              | | Here the user chooses which extension they want to use |                     |
+      |                                                              | |--------------------------------------------------------|                     |
       |                                                              |                                                                                |
       |                                please allow use on this page |                                                                                |
       |<-------------------------------------------------------------|                                                                                |
+      | ---------------------------------\                           |                                                                                |
+      |-| Only the "Extension X" pops up |                           |                                                                                |
+      | |--------------------------------|                           |                                                                                |
       |                                                              |                                                                                |
       | User granted access                                          |                                                                                |
       |------------------------------------------------------------->|                                                                                |
-      |                                                              | ---------------------------\                                                   |
-      |                                                              |-| User clicks login button |                                                   |
-      |                                                              | |--------------------------|                                                   |
       |                                                              |                                                                                |
       |                                                              | GET /api/initializeSessionSetup                                                |
       |                                                              |------------------------------------------------------------------------------->|
