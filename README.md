@@ -45,79 +45,79 @@ But this is only recommended, if you really know what you are doing.
 ## Process
 
 ```
-+---------+                                                    +---------+                                                                      +---------+
-| Sporran |                                                    | Browser |                                                                      | Server  |
-+---------+                                                    +---------+                                                                      +---------+
-     |                                                              | ------------------------\                                                      |
-     |                                                              |-| User visits web3login |                                                      |
-     |                                                              | |-----------------------|                                                      |
-     |                                                              |                                                                                |
-     |                                please allow use on this page |                                                                                |
-     |<-------------------------------------------------------------|                                                                                |
-     |                                                              |                                                                                |
-     | User granted access                                          |                                                                                |
-     |------------------------------------------------------------->|                                                                                |
-     |                                                              | ---------------------------\                                                   |
-     |                                                              |-| User clicks login button |                                                   |
-     |                                                              | |--------------------------|                                                   |
-     |                                                              |                                                                                |
-     |                                                              | GET /api/initializeSessionSetup                                                |
-     |                                                              |------------------------------------------------------------------------------->|
-     |                                                              |                                                                                |
-     |                                                              |                                                                         200 OK |
-     |                                                              |                                                     set-cookie: JWT{challenge} |
-     |                                                              |                                    {dAppName, dAppEncryptionKeyUri, challenge} |
-     |                                                              |<-------------------------------------------------------------------------------|
-     |                                                              |                                                                                |
-     |      startSession(dAppName, dAppEncryptionKeyUri, challenge) |                                                                                |
-     |<-------------------------------------------------------------|                                                                                |
-     |                                                              |                                                                                |
-     | {encryptionKeyId, encryptedChallenge, nonce}                 |                                                                                |
-     |------------------------------------------------------------->|                                                                                |
-     |                                                              |                                                                                |
-     |                                                              | POST /api/finalizeSessionSetup                                                 |
-     |                                                              | Cookie: JWT{challenge}                                                         |
-     |                                                              | {encryptionKeyId, encryptedChallenge, nonce}                                   |
-     |                                                              |------------------------------------------------------------------------------->|
-     |                                                              |                    ----------------------------------------------------------\ |
-     |                                                              |                    | verify JWT{challenge}                                   |-|
-     |                                                              |                    | decrypt challenge using nonce and encryptionKeyId       | |
-     |                                                              |                    | Assert that jwt-challenge and decrypted-challenge match | |
-     |                                                              |                    |---------------------------------------------------------| |
-     |                                                              |                                                                                |
-     |                                                              |                                                                         200 OK |
-     |                                                              |                                                set-cookie:Jwt{encryptionKeyId} |
-     |                                                              |<-------------------------------------------------------------------------------|
-     |                                                              |                                                                                |
-     |                                                              | GET /api/loginRequirements                                                     |
-     |                                                              | Cookie:Jwt{encryptionKeyId}                                                    |
-     |                                                              |------------------------------------------------------------------------------->|
-     |                                                              |                                                                                |
-     |                                                              |                                                                         200 Ok |
-     |                                                              |                                                    KiltMsg{request-credential} |
-     |                                                              |<-------------------------------------------------------------------------------|
-     |                                                              |                                                                                |
-     |                                  KiltMsg{request-credential} |                                                                                |
-     |<-------------------------------------------------------------|                                                                                |
-     | ----------------------------------\                          |                                                                                |
-     |-| User approves the request       |                          |                                                                                |
-     | | and selects credential to share |                          |                                                                                |
-     | |---------------------------------|                          |                                                                                |
-     |                                                              |                                                                                |
-     | KiltMsg{submit-credential}                                   |                                                                                |
-     |------------------------------------------------------------->|                                                                                |
-     |                                                              |                                                                                |
-     |                                                              | Post /api/provideCredential                                                    |
-     |                                                              | KiltMsg{submit-credential}                                                     |
-     |                                                              |------------------------------------------------------------------------------->|
-     |                                                              |------------------------------------------------------------------------------\ |
-     |                                                              || Verify the credential                                                       |-|
-     |                                                              || Note the DID inside the credential                                          | |
-     |                                                              || if verification was successful, DID authenticated with provided credentials | |
-     |                                                              ||-----------------------------------------------------------------------------| |
-     |                                                              |                                                                                |
-     |                                                              |                                                                         200 Ok |
-     |                                                              |                                 set-cookie:JWT{DID,claimHash,"LOGIN COMPLETE"} |
-     |                                                              |<-------------------------------------------------------------------------------|
-     |                                                              |                                                                                |
++-----------+                                                   +---------+                                                                      +---------+
+| Extension |                                                   | Browser |                                                                      | Server  |
++-----------+                                                   +---------+                                                                      +---------+
+      |                                                              | ------------------------\                                                      |
+      |                                                              |-| User visits web3login |                                                      |
+      |                                                              | |-----------------------|                                                      |
+      |                                                              |                                                                                |
+      |                                please allow use on this page |                                                                                |
+      |<-------------------------------------------------------------|                                                                                |
+      |                                                              |                                                                                |
+      | User granted access                                          |                                                                                |
+      |------------------------------------------------------------->|                                                                                |
+      |                                                              | ---------------------------\                                                   |
+      |                                                              |-| User clicks login button |                                                   |
+      |                                                              | |--------------------------|                                                   |
+      |                                                              |                                                                                |
+      |                                                              | GET /api/initializeSessionSetup                                                |
+      |                                                              |------------------------------------------------------------------------------->|
+      |                                                              |                                                                                |
+      |                                                              |                                                                         200 OK |
+      |                                                              |                                                     set-cookie: JWT{challenge} |
+      |                                                              |                                    {dAppName, dAppEncryptionKeyUri, challenge} |
+      |                                                              |<-------------------------------------------------------------------------------|
+      |                                                              |                                                                                |
+      |      startSession(dAppName, dAppEncryptionKeyUri, challenge) |                                                                                |
+      |<-------------------------------------------------------------|                                                                                |
+      |                                                              |                                                                                |
+      | {encryptionKeyId, encryptedChallenge, nonce}                 |                                                                                |
+      |------------------------------------------------------------->|                                                                                |
+      |                                                              |                                                                                |
+      |                                                              | POST /api/finalizeSessionSetup                                                 |
+      |                                                              | Cookie: JWT{challenge}                                                         |
+      |                                                              | {encryptionKeyId, encryptedChallenge, nonce}                                   |
+      |                                                              |------------------------------------------------------------------------------->|
+      |                                                              |                    ----------------------------------------------------------\ |
+      |                                                              |                    | verify JWT{challenge}                                   |-|
+      |                                                              |                    | decrypt challenge using nonce and encryptionKeyId       | |
+      |                                                              |                    | Assert that jwt-challenge and decrypted-challenge match | |
+      |                                                              |                    |---------------------------------------------------------| |
+      |                                                              |                                                                                |
+      |                                                              |                                                                         200 OK |
+      |                                                              |                                                set-cookie:JWT{encryptionKeyId} |
+      |                                                              |<-------------------------------------------------------------------------------|
+      |                                                              |                                                                                |
+      |                                                              | GET /api/loginRequirements                                                     |
+      |                                                              | Cookie:JWT{encryptionKeyId}                                                    |
+      |                                                              |------------------------------------------------------------------------------->|
+      |                                                              |                                                                                |
+      |                                                              |                                                                         200 Ok |
+      |                                                              |                                                    KiltMsg{request-credential} |
+      |                                                              |<-------------------------------------------------------------------------------|
+      |                                                              |                                                                                |
+      |                                  KiltMsg{request-credential} |                                                                                |
+      |<-------------------------------------------------------------|                                                                                |
+      | ----------------------------------\                          |                                                                                |
+      |-| User approves the request       |                          |                                                                                |
+      | | and selects credential to share |                          |                                                                                |
+      | |---------------------------------|                          |                                                                                |
+      |                                                              |                                                                                |
+      | KiltMsg{submit-credential}                                   |                                                                                |
+      |------------------------------------------------------------->|                                                                                |
+      |                                                              |                                                                                |
+      |                                                              | Post /api/provideCredential                                                    |
+      |                                                              | KiltMsg{submit-credential}                                                     |
+      |                                                              |------------------------------------------------------------------------------->|
+      |                                                              |------------------------------------------------------------------------------\ |
+      |                                                              || Verify the credential                                                       |-|
+      |                                                              || Note the DID inside the credential                                          | |
+      |                                                              || if verification was successful, DID authenticated with provided credentials | |
+      |                                                              ||-----------------------------------------------------------------------------| |
+      |                                                              |                                                                                |
+      |                                                              |                                                                         200 Ok |
+      |                                                              |                                 set-cookie:JWT{DID,claimHash,"LOGIN COMPLETE"} |
+      |                                                              |<-------------------------------------------------------------------------------|
+      |                                                              |                                                                                |
 ```
