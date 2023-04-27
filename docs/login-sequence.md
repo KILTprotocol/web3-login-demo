@@ -15,7 +15,7 @@ note left of Server: verify JWT{challenge}\ndecrypt challenge using nonce and en
 Server->Browser: 200 OK\nset-cookie:Jwt{encryptionKeyId}
 Browser->Server: GET /api/loginRequirements\nKiltMsg{request-credential}
 Browser->Sporran: KiltMsg{request-credential}
-note right of sporran: User approves the request\nand selects credential to share
+note right of Sporran: User approves the request\nand selects credential to share
 Sporran->Browser: KiltMsg{submit-credential}
 Browser->Server: Post /api/provideCredential\nKiltMsg{submit-credential}
 note left of Server: Verify the credential\nNote the DID inside the credential\nif verification was successful, DID authenticated with provided credentials
