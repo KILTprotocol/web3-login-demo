@@ -34,13 +34,13 @@ export async function getRequestCredential(
 ) {
   try {
     console.log(
-      'Request Headers-Package, with ExtensionSession',
-      request.headers.package
+      `The Request of a CType for Login:  ${JSON.stringify(exampleRequest)}`
     )
-    console.log(exampleRequest)
 
     // Dudley's version, without cookies: // This wont work with the JWT:
     // const sessionValues = sessionStorage[request.body.sessionID]
+
+    //FIXME: Error handling for wrong JWT signature or no cookies needed.
 
     // read cookie from browser
     const sessionValues: SessionValues = (await readSessionCookie(
@@ -77,15 +77,17 @@ export async function getRequestCredential(
       claimerSessionDidUri
     )
 
-    const dAppDid = await Kilt.Did.resolve(DAPP_DID_URI)
+    // const dAppDid = await Kilt.Did.resolve(DAPP_DID_URI)
+    // const dAppKeyAgreementKeyId = dAppDid?.document?.keyAgreement?.[0].id
 
-    const dAppKeyAgreementKeyId = dAppDid?.document?.keyAgreement?.[0].id
+    const dAppKeyAgreementKeyId = request.app.locals.dappDidDocument
+      ?.keyAgreement?.[0].id as `#${string}` | undefined
 
     if (!dAppKeyAgreementKeyId) {
       throw new Error('handle')
     }
 
-    const encryptedMessage = Kilt.Message.encrypt(
+    const encryptedMessage = await Kilt.Message.encrypt(
       credentialRequest,
       encryptionCallback({
         keyAgreement: keyAgreement,
@@ -93,9 +95,19 @@ export async function getRequestCredential(
       }),
       sessionValues.extension.encryptionKeyUri
     )
+
+    // Debugger:
+    console.log(
+      `messageBody: ${JSON.stringify(messageBody, null, 2)}`,
+      `keyAgreement: ${JSON.stringify(keyAgreement, null, 2)}`,
+      `credentialRequest: ${JSON.stringify(credentialRequest, null, 2)}`,
+      `dAppKeyAgreementKeyId: ${dAppKeyAgreementKeyId}`,
+      `encryptedMessage: ${JSON.stringify(encryptedMessage, null, 2)}`
+    )
+
     return response.send(encryptedMessage)
   } catch (error) {
-    console.log('Get Request Credential Error', error)
+    console.log('Get Request Credential Error.', error)
     next(error)
   }
 }

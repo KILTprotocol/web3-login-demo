@@ -11,4 +11,6 @@ export async function tryToLogIn() {
   if (!encryptedCredentialRequest.ok) {
     throw Error(encryptedCredentialRequest.statusText)
   }
+
+  console.log(await encryptedCredentialRequest.json())
 }

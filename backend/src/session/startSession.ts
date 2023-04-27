@@ -42,7 +42,7 @@ export async function generateSessionValues(
 ): Promise<SessionValues> {
   // connects to the websocket of your, in '.env', specified blockchain
   await getApi()
-  const dAppName = process.env.DAPP_NAME ?? 'Your dApp Name'
+  const dAppName = process.env.DAPP_NAME ?? "Your dApp's Name"
 
   // Build the EncryptionKeyUri so that the client can encrypt messages for us:
   const dAppEncryptionKeyUri =
@@ -54,6 +54,7 @@ export async function generateSessionValues(
 
   // Generate a challenge to ensure all messages we receive are fresh.
   // A UUID is a universally unique identifier, a 128-bit label. Here expressed as a string of a hexadecimal number.
+  // It is encourage that you personalize your challenge generation.
   const challenge = Kilt.Utils.UUID.generate()
 
   const sessionValues = {
