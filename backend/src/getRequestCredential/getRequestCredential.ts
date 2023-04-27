@@ -37,9 +37,6 @@ export async function getRequestCredential(
       `The Request of a CType for Login:  ${JSON.stringify(exampleRequest)}`
     )
 
-    // Dudley's version, without cookies: // This wont work with the JWT:
-    // const sessionValues = sessionStorage[request.body.sessionID]
-
     //FIXME: Error handling for wrong JWT signature or no cookies needed.
 
     // read cookie from browser
@@ -54,9 +51,6 @@ export async function getRequestCredential(
         'Extension Session Values not found. Try restarting and verifying the server-extension-session.'
       )
     }
-
-    // Development Help:
-    console.log(`SessionValues: ${JSON.stringify(sessionValues, null, 2)}`)
 
     // We need the encryptionKeyUri from the Extension
     const { did: claimerSessionDidUri } = Kilt.Did.parse(
@@ -77,9 +71,6 @@ export async function getRequestCredential(
       claimerSessionDidUri
     )
 
-    // const dAppDid = await Kilt.Did.resolve(DAPP_DID_URI)
-    // const dAppKeyAgreementKeyId = dAppDid?.document?.keyAgreement?.[0].id
-
     const dAppKeyAgreementKeyId = request.app.locals.dappDidDocument
       ?.keyAgreement?.[0].id as `#${string}` | undefined
 
@@ -94,15 +85,6 @@ export async function getRequestCredential(
         keyAgreementUri: `${DAPP_DID_URI}${dAppKeyAgreementKeyId}`
       }),
       sessionValues.extension.encryptionKeyUri
-    )
-
-    // Debugger:
-    console.log(
-      `messageBody: ${JSON.stringify(messageBody, null, 2)}`,
-      `keyAgreement: ${JSON.stringify(keyAgreement, null, 2)}`,
-      `credentialRequest: ${JSON.stringify(credentialRequest, null, 2)}`,
-      `dAppKeyAgreementKeyId: ${dAppKeyAgreementKeyId}`,
-      `encryptedMessage: ${JSON.stringify(encryptedMessage, null, 2)}`
     )
 
     return response.send(encryptedMessage)
