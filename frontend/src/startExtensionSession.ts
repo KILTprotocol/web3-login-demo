@@ -7,7 +7,7 @@ export async function startExtensionSession(): Promise<
   getExtensions()
 
   // generate a JSON-Web-Token with session values on the backend and save it on a Cookie on the Browser:
-  const serverSessionStart = await fetch(`/api/session/start`, {
+  const serverSessionStart = await fetch(`/api/session/initialize`, {
     method: 'GET',
     credentials: 'include',
     headers: {
@@ -50,7 +50,7 @@ export async function startExtensionSession(): Promise<
 
   const responseToBackend = JSON.stringify({ extensionSession })
 
-  const sessionVerificationResponse = await fetch(`/api/session/verify`, {
+  const sessionVerificationResponse = await fetch(`/api/session/settle`, {
     method: 'POST',
     credentials: 'include',
     headers: {

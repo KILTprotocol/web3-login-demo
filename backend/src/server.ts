@@ -54,11 +54,13 @@ app.get('/api', (req: Request, res: Response) => {
 // manage Session:
 
 // Starts the session from server side.
-app.get('/api/session/start', (req, res, next) =>
+// This also save the server-session values on the sessionJWT cookie
+app.get('/api/session/initialize', (req, res, next) =>
   startSession(req, res).catch(next)
 )
 // Process session values from the extension and verify that secure communication is stablish. (compares challenge)
-app.post('/api/session/verify', (req, res, next) =>
+// This also save the extension-session values on the sessionJWT cookie
+app.post('/api/session/settle', (req, res, next) =>
   verifySession(req, res).catch(next)
 )
 
