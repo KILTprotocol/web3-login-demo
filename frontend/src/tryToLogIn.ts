@@ -1,4 +1,5 @@
 import { IEncryptedMessage } from '@kiltprotocol/types'
+
 import {
   IEncryptedMessageV1,
   PubSubSessionV1,
