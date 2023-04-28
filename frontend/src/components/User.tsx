@@ -9,6 +9,7 @@ import { PubSubSessionV1, PubSubSessionV2 } from '../utils/types'
 
 import Button from './Button'
 
+// FIXME!: Define specific Props when there type is settled
 interface Props {
   [x: string]: any
 }

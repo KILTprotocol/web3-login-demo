@@ -48,11 +48,7 @@ export async function tryToLogIn(
   }
 
   await extensionSession.listen(async (message) => {
-    // try {
     extensionMessage = message
-    // } finally {
-    //   window.removeEventListener('beforeunload', handleBeforeUnload)
-    // }
   })
 
   // Now we can pass the message to the extension.
