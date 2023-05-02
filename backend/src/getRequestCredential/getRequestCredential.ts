@@ -68,19 +68,9 @@ export async function getRequestCredential(
       sessionValues.extension.encryptionKeyUri
     )
 
-    const challenge = randomAsHex()
-    const messageBody: Kilt.IRequestCredential = {
-      content: { ...emailRequest, challenge: challenge },
-      type: 'request-credential'
-    }
+    const message = requestEnveloper(emailRequest, claimerSessionDidUri)
 
     const { keyAgreement } = generateKeypairs(DAPP_DID_MNEMONIC)
-
-    const credentialRequest = Kilt.Message.fromBody(
-      messageBody,
-      DAPP_DID_URI,
-      claimerSessionDidUri
-    )
 
     const dAppKeyAgreementKeyId = request.app.locals.dappDidDocument
       ?.keyAgreement?.[0].id as `#${string}` | undefined
@@ -90,7 +80,7 @@ export async function getRequestCredential(
     }
 
     const encryptedMessage = await Kilt.Message.encrypt(
-      credentialRequest,
+      message,
       encryptionCallback({
         keyAgreement: keyAgreement,
         keyAgreementUri: `${DAPP_DID_URI}${dAppKeyAgreementKeyId}`
@@ -103,4 +93,24 @@ export async function getRequestCredential(
     console.log('Get Request Credential Error.', error)
     next(error)
   }
+}
+
+/** Turns the Credential Request into a Kilt.Message.
+ */
+function requestEnveloper(
+  credentialRequest: Kilt.IRequestCredentialContent,
+  receiverDidUri: Kilt.DidUri
+): Kilt.IMessage {
+  const challenge = randomAsHex()
+  const messageBody: Kilt.IRequestCredential = {
+    content: { ...credentialRequest, challenge: challenge },
+    type: 'request-credential'
+  }
+
+  const message = Kilt.Message.fromBody(
+    messageBody,
+    DAPP_DID_URI,
+    receiverDidUri
+  )
+  return message
 }
