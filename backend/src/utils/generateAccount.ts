@@ -2,10 +2,10 @@ import { mnemonicToMiniSecret } from '@polkadot/util-crypto'
 import * as Kilt from '@kiltprotocol/sdk-js'
 
 /**
- * Makes a KiltKeyringPair from a mnemonic.
+ * Generates a KiltKeyringPair from a mnemonic.
  *
  * The WASM needs to be loaded before.
- * For that, use either 'Kilt.init()', 'Kilt.connect()' or getApi().
+ * For that, use either 'Kilt.init()', 'Kilt.connect()' or 'getApi()'.
  *
  * @param mnemonic
  * @returns
