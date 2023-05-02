@@ -10,13 +10,8 @@ function handleBeforeUnload(event: Event) {
 export function initializeKiltExtensionAPI(): () => void {
   apiWindow.kilt = apiWindow.kilt || {}
 
-  // Object.assign(apiWindow.kilt, {
-  //   meta: { versions: { credentials: '3.0' } }
-  // })
-
   // Check if 'meta' was defined already:
   const metaDefined = Object.hasOwn(apiWindow.kilt, 'meta')
-
   console.log(`metaDefined? ${metaDefined}`)
 
   if (!metaDefined) {
