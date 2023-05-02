@@ -45,7 +45,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next()
 })
 
-// Setting GET (requests) and POST (responses) functions
+// Setting GET and POST functions
 
 app.get('/api', (req: Request, res: Response) => {
   res.status(200).json('Welcome to the API for the KILT Web3 Login')
