@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import Button from './components/Button'
 import Card from './components/Card'
 import Logo from './components/Logo'
 import Page from './components/Page'
 import User from './components/User'
-import { initializeKiltExtensionAPI } from './utils/initializeKiltExtensionAPI'
+// import { initializeKiltExtensionAPI } from './utils/initializeKiltExtensionAPI'
 
 export default function Home(): JSX.Element {
   async function testApi() {
@@ -14,10 +14,10 @@ export default function Home(): JSX.Element {
     console.log(message)
   }
 
-  // Directly inject the extensions that support the KILT protocol
-  useEffect(() => {
-    initializeKiltExtensionAPI()
-  }, [])
+  // // Directly inject the extensions that support the KILT protocol
+  // useEffect(() => {
+  //   initializeKiltExtensionAPI()
+  // }, [])
 
   return (
     <Page>
