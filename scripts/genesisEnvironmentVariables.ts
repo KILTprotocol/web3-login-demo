@@ -30,23 +30,17 @@ const {
 async function main() {
   // Making the output light purple
   console.log('\u001B[38;5;133m')
-  // Making the output light purple
-  console.log('\u001B[38;5;133m')
 
   console.log(
-    "This is a script for an easy creation of the environment variables needed for your dApp's functionality.\n",
     "This is a script for an easy creation of the environment variables needed for your dApp's functionality.\n",
 
     'All environment variables need to be saved on a file called ".env" that you need to create and save on the project\'s root directory.',
     'It is a standard that all environment variables are name with capitalized letters.',
     'Please, follow the standard.\n',
-    'Please, follow the standard.\n',
 
     "Alternatively, you could create some of the environment values otherwise and let this script do the rest for you. Or (for pros) make them all otherwise and don't use this.\n"
-    "Alternatively, you could create some of the environment values otherwise and let this script do the rest for you. Or (for pros) make them all otherwise and don't use this.\n"
   )
-  // Making the output strong purple
-  console.log('\u001B[38;5;201m')
+
   // Making the output strong purple
   console.log('\u001B[38;5;201m')
   // figure out your project's current state:
@@ -91,7 +85,6 @@ async function main() {
     // then we generate a FullDID with all the key types
     // and ask you to save the mnemonic and URI
     case 4:
-    case 4:
       await spawnDid()
       break
 
@@ -102,11 +95,9 @@ async function main() {
       break
     // ask you to choose a name for your dApp
     case 6:
-    case 6:
       imploreName()
       break
     // ask you to choose a Secret Key for encoding JWTs
-    case 7:
     case 7:
       imploreJwtSecretKey()
       break
@@ -116,8 +107,6 @@ async function main() {
                >> Take in consideration, that this script does not verify if the environment values already defined are valid. <<\n\n`)
       break
   }
-  // Making the output light purple
-  console.log('\u001B[38;5;133m')
   // Making the output light purple
   console.log('\u001B[38;5;133m')
   console.log(
@@ -172,7 +161,6 @@ async function spawnAccount() {
     'An account is being generated for your dApp.'
   )
   await Kilt.init()
-  await Kilt.init()
   // You could also pass a specific mnemonic, but here we generate a random mnemonic.
   // for custom, replace here with a string of 12 BIP-39 words
   const mnemonic = mnemonicGenerate()
@@ -181,13 +169,9 @@ async function spawnAccount() {
     '\n Please, save mnemonic of your dApps account to the .env-file to continue!\n\n',
     `DAPP_ACCOUNT_MNEMONIC=${mnemonic}\n\n`,
     `Kilt account public address generated using that mnemonic: ${account.address}\n\n`,
-    '\n Please, save mnemonic of your dApps account to the .env-file to continue!\n\n',
-    `DAPP_ACCOUNT_MNEMONIC=${mnemonic}\n\n`,
-    `Kilt account public address generated using that mnemonic: ${account.address}\n\n`,
     `You also need to deposit funds on this account, to be able to create a DID.\n`,
     `For peregrine-accounts you can use: https://faucet.peregrine.kilt.io/?${account.address} \n\n`
   )
-  // no need for disconnecting while using init()
   // no need for disconnecting while using init()
 }
 
@@ -205,7 +189,6 @@ async function spawnDid() {
   // You could also pass a specific mnemonic, but here we generate a random mnemonic.
   // for custom, replace here with a string of 12 BIP-39 words
   const didMnemonic = mnemonicGenerate()
-  // the next function requires connect()
   // the next function requires connect()
   const fullDid = await generateFullDid(attesterAccount, didMnemonic)
 
