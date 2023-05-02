@@ -12,7 +12,7 @@ export function initializeKiltExtensionAPI(): () => void {
 
   // Check if 'meta' was defined already:
   const metaDefined = Object.hasOwn(apiWindow.kilt, 'meta')
-  console.log(`metaDefined? ${metaDefined}`)
+  console.log(`Is the Property 'meta' of window.kilt defined? ${metaDefined}`)
 
   if (!metaDefined) {
     Object.defineProperty(apiWindow.kilt, 'meta', {
