@@ -3,6 +3,7 @@ import { Response, Request, CookieOptions } from 'express'
 import jwt from 'jsonwebtoken'
 
 import { getApi } from '../utils/connection'
+import { DAPP_NAME } from '../../configuration'
 
 /**
  * Define how the Session Values are packaged.
@@ -42,7 +43,6 @@ export async function generateSessionValues(
 ): Promise<SessionValues> {
   // connects to the websocket of your, in '.env', specified blockchain
   await getApi()
-  const dAppName = process.env.DAPP_NAME ?? "Your dApp's Name"
 
   // Build the EncryptionKeyUri so that the client can encrypt messages for us:
   const dAppEncryptionKeyUri =
@@ -59,7 +59,7 @@ export async function generateSessionValues(
 
   const sessionValues = {
     server: {
-      dAppName: dAppName,
+      dAppName: DAPP_NAME,
       dAppEncryptionKeyUri: dAppEncryptionKeyUri,
       challenge: challenge
     }
