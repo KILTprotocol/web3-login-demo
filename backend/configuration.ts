@@ -6,8 +6,6 @@ import * as Kilt from '@kiltprotocol/sdk-js'
 
 import { generateAccount } from './src/utils/generateAccount'
 
-// import { generateAccount } from './src/utils/generateAccount'
-
 dotenv.config()
 
 // Letting the server know where the environment variables are
