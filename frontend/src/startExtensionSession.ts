@@ -1,8 +1,6 @@
-import { getExtensions, apiWindow } from './utils/getExtension'
+import { apiWindow } from './utils/initializeKiltExtensionAPI'
 
 export async function startExtensionSession() {
-  getExtensions()
-
   // generate a JSON-Web-Token with session values on the backend and save it on a Cookie on the Browser:
   const serverSessionStart = await fetch(`/api/session/start`, {
     method: 'GET',

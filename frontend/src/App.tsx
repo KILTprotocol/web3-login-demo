@@ -5,7 +5,7 @@ import Card from './components/Card'
 import Logo from './components/Logo'
 import Page from './components/Page'
 import User from './components/User'
-import { getExtensions } from './utils/getExtension'
+import { initializeKiltExtensionAPI } from './utils/initializeKiltExtensionAPI'
 
 export default function Home(): JSX.Element {
   async function testApi() {
@@ -16,8 +16,8 @@ export default function Home(): JSX.Element {
 
   // Directly inject the extensions that support the KILT protocol
   useEffect(() => {
-    getExtensions()
-  })
+    initializeKiltExtensionAPI()
+  }, [])
 
   return (
     <Page>
