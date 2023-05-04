@@ -12,7 +12,7 @@ import {
   DAPP_DID_MNEMONIC,
   DAPP_DID_URI,
   JWT_SIGNER_SECRET
-} from '../../configuration'
+} from '../../config'
 
 // const exampleRequest: Kilt.IRequestCredentialContent = {
 //   cTypes: [

@@ -5,7 +5,7 @@ import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 
 // Getting necessary environment constants:
-import { PORT, WSS_ADDRESS } from '../configuration'
+import { PORT, WSS_ADDRESS } from '../config'
 
 import { startSession } from './session/startSession'
 import { verifySession } from './session/verifySession'
