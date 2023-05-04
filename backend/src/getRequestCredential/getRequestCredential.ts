@@ -68,7 +68,7 @@ export async function getRequestCredential(
       sessionValues.extension.encryptionKeyUri
     )
 
-    const message = requestEnveloper(emailRequest, claimerSessionDidUri)
+    const message = requestWrapper(emailRequest, claimerSessionDidUri)
 
     const { keyAgreement } = generateKeypairs(DAPP_DID_MNEMONIC)
 
@@ -96,8 +96,9 @@ export async function getRequestCredential(
 }
 
 /** Turns the Credential Request into a Kilt.Message.
+ *  It also generates and includes a challenge on that message.
  */
-function requestEnveloper(
+function requestWrapper(
   credentialRequest: Kilt.IRequestCredentialContent,
   receiverDidUri: Kilt.DidUri
 ): Kilt.IMessage {
