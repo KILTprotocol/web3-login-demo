@@ -74,7 +74,10 @@ export async function readSessionCookie(
  * @param server -- session.server Object
  * @param extension -- session.extension Object (optional)
  */
-function checkSessionValuesTypes(server: unknown, extension?: unknown) {
+function checkSessionValuesTypes(
+  server: Record<string, unknown>,
+  extension?: Record<string, unknown>
+) {
   // Cheek the session.server:
 
   if (typeof server !== 'object' || server === null) {
@@ -83,25 +86,20 @@ function checkSessionValuesTypes(server: unknown, extension?: unknown) {
     )
   }
 
-  if (!('dAppName' in server)) {
-    throw new Error(
-      `Property 'dAppName' of session.server Object could not be found.`
-    )
-  }
-  if (!(typeof server.dAppName == 'string')) {
-    throw new Error(
-      `Property 'dAppName' of session.server Object should be of type 'string'. Instead it is of type: ${typeof server.dAppName}`
-    )
-  }
-  if (!('challenge' in server)) {
-    throw new Error(
-      `Property 'challenge' of session.server Object  could not be found.`
-    )
-  }
-  if (!(typeof server.challenge == 'string')) {
-    throw new Error(
-      `Property 'challenge' of session.server Object should be of type 'string'. Instead it is of type: ${typeof server.challenge}`
-    )
+  // try to replace with for...in loop
+
+  for (const property of ['dAppName', 'challenge']) {
+    if (!(property in server)) {
+      throw new Error(
+        `Property '${property}' of session.server Object could not be found.`
+      )
+    }
+    if (!(typeof server[property] == 'number')) {
+      throw new Error(
+        `Property '${property}' of session.server Object should be of type 'string'.
+         Instead it is of type: ${typeof server[property]}`
+      )
+    }
   }
 
   if ('dAppEncryptionKeyUri' in server) {
@@ -124,25 +122,19 @@ function checkSessionValuesTypes(server: unknown, extension?: unknown) {
       'The extension session values are not packed in an Object as expected. '
     )
   }
-  if (!('encryptedChallenge' in extension)) {
-    throw new Error(
-      `Property 'encryptedChallenge' of session.extension object  could not be found.`
-    )
-  }
-  if (!(typeof extension.encryptedChallenge == 'string')) {
-    throw new Error(
-      `Property 'encryptedChallenge' of session.extension object should be of type 'string'. Instead it is of type: ${typeof extension.encryptedChallenge}`
-    )
-  }
-  if (!('nonce' in extension)) {
-    throw new Error(
-      `Property 'nonce' of session.extension object  could not be found.`
-    )
-  }
-  if (!(typeof extension.nonce == 'string')) {
-    throw new Error(
-      `Property 'nonce' of session.extension object should be of type 'string'. Instead it is of type: ${typeof extension.nonce}`
-    )
+
+  for (const property of ['encryptedChallenge', 'nonce']) {
+    if (!(property in extension)) {
+      throw new Error(
+        `Property '${property}' of session.server Object could not be found.`
+      )
+    }
+    if (!(typeof extension[property] == 'number')) {
+      throw new Error(
+        `Property '${property}' of session.server Object should be of type 'string'.
+         Instead it is of type: ${typeof extension[property]}`
+      )
+    }
   }
 
   if ('encryptionKeyUri' in extension) {
