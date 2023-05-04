@@ -83,11 +83,27 @@ function checkSessionValuesTypes(server: unknown, extension?: unknown) {
     )
   }
 
-  if (!('dAppName' in server) || !(typeof server.dAppName == 'string')) {
+  if (!('dAppName' in server)) {
     throw new Error(
-      `Property 'dAppName' of session.server Object should be of type 'string'.`
+      `Property 'dAppName' of session.server Object could not be found.`
     )
   }
+  if (!(typeof server.dAppName == 'string')) {
+    throw new Error(
+      `Property 'dAppName' of session.server Object should be of type 'string'. Instead it is of type: ${typeof server.dAppName}`
+    )
+  }
+  if (!('challenge' in server)) {
+    throw new Error(
+      `Property 'challenge' of session.server Object  could not be found.`
+    )
+  }
+  if (!(typeof server.challenge == 'string')) {
+    throw new Error(
+      `Property 'challenge' of session.server Object should be of type 'string'. Instead it is of type: ${typeof server.challenge}`
+    )
+  }
+
   if ('dAppEncryptionKeyUri' in server) {
     Kilt.Did.validateUri(server.dAppEncryptionKeyUri, 'ResourceUri')
   } else {
@@ -96,15 +112,11 @@ function checkSessionValuesTypes(server: unknown, extension?: unknown) {
     )
   }
 
-  if (!('challenge' in server) || !(typeof server.challenge == 'string')) {
-    throw new Error(
-      `Property 'challenge' of session.server Object should be of type 'string'.`
-    )
-  }
-
+  // if the extension session values are not there yet, stop here.
   if (!extension) {
     return
   }
+
   // Check the session.extension
 
   if (typeof extension !== 'object' || extension === null) {
@@ -112,13 +124,24 @@ function checkSessionValuesTypes(server: unknown, extension?: unknown) {
       'The extension session values are not packed in an Object as expected. '
     )
   }
-
-  if (
-    !('encryptedChallenge' in extension) ||
-    !(typeof extension.encryptedChallenge == 'string')
-  ) {
+  if (!('encryptedChallenge' in extension)) {
     throw new Error(
-      `Property 'encryptedChallenge' of extension.server Object should be of type 'string'.`
+      `Property 'encryptedChallenge' of session.extension object  could not be found.`
+    )
+  }
+  if (!(typeof extension.encryptedChallenge == 'string')) {
+    throw new Error(
+      `Property 'encryptedChallenge' of session.extension object should be of type 'string'. Instead it is of type: ${typeof extension.encryptedChallenge}`
+    )
+  }
+  if (!('nonce' in extension)) {
+    throw new Error(
+      `Property 'nonce' of session.extension object  could not be found.`
+    )
+  }
+  if (!(typeof extension.nonce == 'string')) {
+    throw new Error(
+      `Property 'nonce' of session.extension object should be of type 'string'. Instead it is of type: ${typeof extension.nonce}`
     )
   }
 
@@ -127,13 +150,6 @@ function checkSessionValuesTypes(server: unknown, extension?: unknown) {
   } else {
     throw new Error(
       "Property 'encryptionKeyUri' of session.extension could not be found"
-    )
-  }
-  Kilt.Did.validateUri(extension.encryptionKeyUri, 'ResourceUri')
-
-  if (!('nonce' in extension) || !(typeof extension.nonce == 'string')) {
-    throw new Error(
-      `Property 'nonce' of extension.server Object should be of type 'string'.`
     )
   }
 
