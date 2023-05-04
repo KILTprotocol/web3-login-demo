@@ -94,7 +94,7 @@ function checkSessionValuesTypes(
         `Property '${property}' of session.server Object could not be found.`
       )
     }
-    if (!(typeof server[property] == 'number')) {
+    if (!(typeof server[property] == 'string')) {
       throw new Error(
         `Property '${property}' of session.server Object should be of type 'string'.
          Instead it is of type: ${typeof server[property]}`
@@ -129,7 +129,7 @@ function checkSessionValuesTypes(
         `Property '${property}' of session.server Object could not be found.`
       )
     }
-    if (!(typeof extension[property] == 'number')) {
+    if (!(typeof extension[property] == 'string')) {
       throw new Error(
         `Property '${property}' of session.server Object should be of type 'string'.
          Instead it is of type: ${typeof extension[property]}`
