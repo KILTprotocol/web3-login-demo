@@ -71,8 +71,8 @@ export async function readSessionCookie(
  * Checks that types fits the SessionValues Interface
  *
  * Will throw if any property does not matches expectation.
- * @param server -- session.server Object
- * @param extension -- session.extension Object (optional)
+ * @param server -- session.server object
+ * @param extension -- session.extension object (optional)
  */
 function checkSessionValuesTypes(
   server: Record<string, unknown>,
@@ -82,7 +82,7 @@ function checkSessionValuesTypes(
 
   if (typeof server !== 'object' || server === null) {
     throw new Error(
-      'The server session values are not packed in an Object as expected. '
+      'The server session values are not packed in an object as expected. '
     )
   }
 
@@ -91,12 +91,12 @@ function checkSessionValuesTypes(
   for (const property of ['dAppName', 'challenge']) {
     if (!(property in server)) {
       throw new Error(
-        `Property '${property}' of session.server Object could not be found.`
+        `Property '${property}' of session.server object could not be found.`
       )
     }
     if (!(typeof server[property] == 'string')) {
       throw new Error(
-        `Property '${property}' of session.server Object should be of type 'string'.
+        `Property '${property}' of session.server object should be of type 'string'.
          Instead it is of type: ${typeof server[property]}`
       )
     }
@@ -119,19 +119,19 @@ function checkSessionValuesTypes(
 
   if (typeof extension !== 'object' || extension === null) {
     throw new Error(
-      'The extension session values are not packed in an Object as expected. '
+      'The extension session values are not packed in an object as expected. '
     )
   }
 
   for (const property of ['encryptedChallenge', 'nonce']) {
     if (!(property in extension)) {
       throw new Error(
-        `Property '${property}' of session.server Object could not be found.`
+        `Property '${property}' of session.server object could not be found.`
       )
     }
     if (!(typeof extension[property] == 'string')) {
       throw new Error(
-        `Property '${property}' of session.server Object should be of type 'string'.
+        `Property '${property}' of session.server object should be of type 'string'.
          Instead it is of type: ${typeof extension[property]}`
       )
     }
