@@ -1,7 +1,7 @@
 import * as Kilt from '@kiltprotocol/sdk-js'
 import { randomAsHex } from '@polkadot/util-crypto'
 
-import { NextFunction, Request, Response } from 'express'
+import { Request, Response } from 'express'
 
 import { encryptionCallback } from '../utils/encryptionCallback'
 import { generateKeypairs } from '../utils/generateKeyPairs'
@@ -42,8 +42,7 @@ const emailRequest: Kilt.IRequestCredentialContent = {
 
 export async function getRequestCredential(
   request: Request,
-  response: Response,
-  next: NextFunction
+  response: Response
 ) {
   try {
     console.log(`The CType-Request:  ${JSON.stringify(emailRequest, null, 2)}`)
@@ -91,7 +90,6 @@ export async function getRequestCredential(
     return response.send(encryptedMessage)
   } catch (error) {
     console.log('Get Request Credential Error.', error)
-    next(error)
   }
 }
 

@@ -1,6 +1,6 @@
 import * as Kilt from '@kiltprotocol/sdk-js'
 
-import { NextFunction, Request, Response } from 'express'
+import { Request, Response } from 'express'
 
 import { generateKeypairs } from '../utils/generateKeyPairs'
 import { decryptionCallback } from '../utils/decryptionCallback'
@@ -9,8 +9,7 @@ import { getApi } from '../utils/connection'
 
 export async function postSubmitCredential(
   request: Request,
-  response: Response,
-  next: NextFunction
+  response: Response
 ) {
   try {
     const encryptedMessage = request.body
@@ -56,6 +55,5 @@ export async function postSubmitCredential(
       )
   } catch (error) {
     console.log('Post Submit Credential Error.', error)
-    next(error)
   }
 }

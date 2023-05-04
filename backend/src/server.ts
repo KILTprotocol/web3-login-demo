@@ -39,7 +39,7 @@ app.use(
 // Utility to read cookies. Backing has never been easier.
 app.use(cookieParser())
 
-// Printing the URL that requested the server
+// Printing the URL that stimulated the server
 app.use((req: Request, res: Response, next: NextFunction) => {
   console.log(`Trigger: ${req.url}`)
   next()
@@ -64,8 +64,12 @@ app.post('/api/session/verify', (req, res, next) =>
 
 // Manage Credentials:
 
-app.get('/api/credential/getRequest', getRequestCredential)
-app.post('/api/credential/postSubmit', postSubmitCredential)
+app.get('/api/credential/getRequest', (req, res, next) =>
+  getRequestCredential(req, res).catch(next)
+)
+app.post('/api/credential/postSubmit', (req, res, next) =>
+  postSubmitCredential(req, res).catch(next)
+)
 
 // We need the DID Document of the dApps DID (DAPP_DID_URI) before we can handle login requests.
 // We therefore start the server only after the document was fetched.
