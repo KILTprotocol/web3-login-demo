@@ -86,21 +86,32 @@ function checkSessionValuesTypes(
     )
   }
 
-  // try to replace with for...in loop
-
-  for (const property of ['dAppName', 'challenge']) {
-    if (!(property in server)) {
-      throw new Error(
-        `Property '${property}' of session.server object could not be found.`
-      )
-    }
-    if (!(typeof server[property] == 'string')) {
-      throw new Error(
-        `Property '${property}' of session.server object should be of type 'string'.
-         Instead it is of type: ${typeof server[property]}`
-      )
+  /**
+   * Generalizes the `for...in`-loops.
+   *
+   * @param subSession - either session.server or session.extension
+   * @param keyNames - array of strings with the name of the corresponding properties.
+   */
+  function areTheyStrings(
+    subSession: Record<string, unknown>,
+    keyNames: string[]
+  ) {
+    for (const property of keyNames) {
+      if (!(property in subSession)) {
+        throw new Error(
+          `Property '${property}' of session.server object could not be found.`
+        )
+      }
+      if (!(typeof subSession[property] == 'string')) {
+        throw new Error(
+          `Property '${property}' of session.server object should be of type 'string'.
+           Instead it is of type: ${typeof subSession[property]}`
+        )
+      }
     }
   }
+
+  areTheyStrings(server, ['dAppName', 'challenge'])
 
   if ('dAppEncryptionKeyUri' in server) {
     Kilt.Did.validateUri(server.dAppEncryptionKeyUri, 'ResourceUri')
@@ -123,19 +134,7 @@ function checkSessionValuesTypes(
     )
   }
 
-  for (const property of ['encryptedChallenge', 'nonce']) {
-    if (!(property in extension)) {
-      throw new Error(
-        `Property '${property}' of session.server object could not be found.`
-      )
-    }
-    if (!(typeof extension[property] == 'string')) {
-      throw new Error(
-        `Property '${property}' of session.server object should be of type 'string'.
-         Instead it is of type: ${typeof extension[property]}`
-      )
-    }
-  }
+  areTheyStrings(extension, ['encryptedChallenge', 'nonce'])
 
   if ('encryptionKeyUri' in extension) {
     Kilt.Did.validateUri(extension.encryptionKeyUri, 'ResourceUri')
@@ -144,6 +143,4 @@ function checkSessionValuesTypes(
       "Property 'encryptionKeyUri' of session.extension could not be found"
     )
   }
-
-  // if nothing threw until here you are good to go
 }
