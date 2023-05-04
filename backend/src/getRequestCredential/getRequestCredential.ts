@@ -51,11 +51,11 @@ export async function getRequestCredential(
     //FIXME: Error handling for wrong JWT signature or no cookies needed.
 
     // read cookie from browser
-    const sessionValues: SessionValues = (await readSessionCookie(
+    const sessionValues: SessionValues = await readSessionCookie(
       request,
       response,
       JWT_SIGNER_SECRET
-    )) as SessionValues
+    )
 
     if (!sessionValues.extension) {
       throw new Error(
