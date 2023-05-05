@@ -32,6 +32,8 @@ export default function Home(): JSX.Element {
     })
   })
 
+  const extensionInitialized = typeof (window as any).kilt?.meta !== 'undefined'
+
   return (
     <Page>
       <Page.Header>
@@ -40,27 +42,46 @@ export default function Home(): JSX.Element {
       </Page.Header>
       <Page.Content>
         <Card>
-          <Button onClick={testApi}>GO TO SECRET PAGE</Button>
+          <p>Let's walk trough the login process step by step.</p>
+          <h2>1. Enable the Extension</h2>
+          <p>
+            This could happen automatically when the user first clicks login or
+            when the website loads
+          </p>
+          {extensionInitialized && '✅ Extension loaded'}
           <Button
-            disabled={typeof (window as any).kilt?.meta !== 'undefined'}
-            onClick={() =>
-              typeof (window as any).kilt?.meta === 'undefined' &&
-              initializeKiltExtensionAPI()
-            }
+            disabled={extensionInitialized}
+            onClick={() => initializeKiltExtensionAPI()}
           >
             Enable Extensions
           </Button>
-        </Card>
-        <Card>
-          <h2>Extensions</h2>
-          <Dropdown
-            id="drop"
-            name="Select Extension"
-            values={extensions.map((ext, i) => ({
-              label: ext.name,
-              id: i.toString()
-            }))}
-          />
+
+          <h2>2. Choose your Extension</h2>
+          {extensions.length > 0 ? (
+            <Dropdown
+              id="drop"
+              name="Select Extension"
+              values={extensions.map((ext, i) => ({
+                label: ext.name,
+                id: i.toString()
+              }))}
+            />
+          ) : (
+            <p>
+              Make sure that you have sporran installed an clicked the button
+              above
+            </p>
+          )}
+
+          <h2>3. Login</h2>
+          <Button disabled={true} onClick={testApi}>
+            Login
+          </Button>
+
+          <h2>4. Show Secret Content</h2>
+          <Button disabled={true} onClick={testApi}>
+            Load secret
+          </Button>
         </Card>
       </Page.Content>
     </Page>
