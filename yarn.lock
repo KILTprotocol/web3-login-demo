@@ -7424,8 +7424,10 @@ jws@^3.2.2:
     jwa "^1.4.1"
     safe-buffer "^5.0.1"
 
-"kilt-extension-api@file:frontend/.yalc/kilt-extension-api":
-  version "0.0.1"
+kilt-extension-api@0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/kilt-extension-api/-/kilt-extension-api-0.1.0.tgz#6f606652f998fafa01470f7d94a44e6440c12183"
+  integrity sha512-UuxEZk/hvWmT2QtjKNp9IqjoZrhyFHbDETXfAde1sHayjoBxJQt1rkvNb98YL2YpK5qjCd+IkVXjeLtYAWDmqQ==
   dependencies:
     "@kiltprotocol/sdk-js" "^0.32.0"
     "@kiltprotocol/types" "^0.32.0"

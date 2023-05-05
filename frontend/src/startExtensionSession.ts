@@ -1,7 +1,11 @@
-import { getExtensions, apiWindow } from './utils/getExtension'
+import { getExtensions, watchExtensions } from 'kilt-extension-api'
 
 export async function startExtensionSession() {
-  getExtensions()
+  const extension = getExtensions()[0]
+
+  watchExtensions(() => {
+    console.log('extension injected')
+  })
 
   // generate a JSON-Web-Token with session values on the backend and save it on a Cookie on the Browser:
   const serverSessionStart = await fetch(`/api/session/start`, {
@@ -31,7 +35,7 @@ export async function startExtensionSession() {
     const { dAppName, dAppEncryptionKeyUri, challenge } = plainPayload
 
     // Let the extension do the counterpart:
-    const extensionSession = await apiWindow.kilt.sporran.startSession(
+    const extensionSession = await extension.startSession(
       dAppName,
       dAppEncryptionKeyUri,
       challenge
@@ -64,7 +68,7 @@ export async function startExtensionSession() {
     )
   } catch (error) {
     console.error(
-      `Error verifying Session from:  ${apiWindow.kilt.sporran.name}: ${apiWindow.kilt.sporran.version},  ${error}`
+      `Error verifying Session from:  ${extension.name}: ${extension.version},  ${error}`
     )
   }
 }
