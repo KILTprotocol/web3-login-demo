@@ -86,31 +86,6 @@ function checkSessionValuesTypes(
     )
   }
 
-  /**
-   * Generalizes the `for...in`-loops.
-   *
-   * @param subSession - either session.server or session.extension
-   * @param keyNames - array of strings with the name of the corresponding properties.
-   */
-  function areTheyStrings(
-    subSession: Record<string, unknown>,
-    keyNames: string[]
-  ) {
-    for (const property of keyNames) {
-      if (!(property in subSession)) {
-        throw new Error(
-          `Property '${property}' of session.server object could not be found.`
-        )
-      }
-      if (!(typeof subSession[property] == 'string')) {
-        throw new Error(
-          `Property '${property}' of session.server object should be of type 'string'.
-           Instead it is of type: ${typeof subSession[property]}`
-        )
-      }
-    }
-  }
-
   areTheyStrings(server, ['dAppName', 'challenge'])
 
   if ('dAppEncryptionKeyUri' in server) {
@@ -142,5 +117,30 @@ function checkSessionValuesTypes(
     throw new Error(
       "Property 'encryptionKeyUri' of session.extension could not be found"
     )
+  }
+}
+
+/**
+ * Generalizes the `for...in`-loops.
+ *
+ * @param subSession - either session.server or session.extension
+ * @param keyNames - array of strings with the name of the corresponding properties.
+ */
+function areTheyStrings(
+  subSession: Record<string, unknown>,
+  keyNames: string[]
+) {
+  for (const property of keyNames) {
+    if (!(property in subSession)) {
+      throw new Error(
+        `Property '${property}' of session.server object could not be found.`
+      )
+    }
+    if (!(typeof subSession[property] == 'string')) {
+      throw new Error(
+        `Property '${property}' of session.server object should be of type 'string'.
+           Instead it is of type: ${typeof subSession[property]}`
+      )
+    }
   }
 }
