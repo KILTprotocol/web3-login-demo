@@ -70,26 +70,7 @@ export async function getRequestCredential(
       JSON.stringify(message, null, 2)
     )
 
-    const { keyAgreement: ourKeyAgreement } =
-      generateKeypairs(DAPP_DID_MNEMONIC)
-
-    const dAppKeyAgreementKeyId = request.app.locals.dappDidDocument
-      ?.keyAgreement?.[0].id as `#${string}` | undefined
-
-    if (!dAppKeyAgreementKeyId) {
-      throw new Error('Can not encrypt without an Agreement Key.')
-    }
-
-    const ourKeyIdentifier =
-      `${DAPP_DID_URI}${dAppKeyAgreementKeyId}` as Kilt.DidResourceUri
-    const theirKeyIdentifier = sessionValues.extension.encryptionKeyUri
-
-    const encryptedMessage = await encryptMessage(
-      message,
-      ourKeyAgreement,
-      ourKeyIdentifier,
-      theirKeyIdentifier
-    )
+    const encryptedMessage = await encryptMessage(message, sessionValues)
 
     return response.send(encryptedMessage)
   } catch (error) {
@@ -123,17 +104,27 @@ function requestWrapper(
  */
 async function encryptMessage(
   message: Kilt.IMessage,
-  senderKeyAgreementPair: Kilt.KiltEncryptionKeypair,
-  senderKeyAgreementURI: Kilt.DidResourceUri,
-  receiverKeyAgreementURI: Kilt.DidResourceUri
+  sessionObject: SessionValues
 ): Promise<Kilt.IEncryptedMessage> {
+  const { keyAgreement: ourKeyAgreementKeyPair } =
+    generateKeypairs(DAPP_DID_MNEMONIC)
+
+  if (!sessionObject.extension) {
+    throw new Error(
+      'Receivers Encryption Key needed in order to encrypt a message'
+    )
+  }
+
+  const ourKeyIdentifier = sessionObject.server.dAppEncryptionKeyUri
+  const theirKeyIdentifier = sessionObject.extension.encryptionKeyUri
+
   const cypheredMessage = await Kilt.Message.encrypt(
     message,
     encryptionCallback({
-      keyAgreement: senderKeyAgreementPair,
-      keyAgreementUri: senderKeyAgreementURI
+      keyAgreement: ourKeyAgreementKeyPair,
+      keyAgreementUri: ourKeyIdentifier
     }),
-    receiverKeyAgreementURI
+    theirKeyIdentifier
   )
 
   return cypheredMessage
