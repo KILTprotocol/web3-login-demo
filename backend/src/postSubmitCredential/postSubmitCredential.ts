@@ -29,11 +29,13 @@ export async function postSubmitCredential(
     )
 
     if (decryptedMessage.body.type !== 'submit-credential') {
-      throw new Error('Unexpected message type')
+      throw new Error(`Unexpected message type: ${decryptedMessage.body.type}`)
     }
 
     // FIX-ME!:  maybe allow for several credentials in the future
     const credential = decryptedMessage.body.content[0]
+
+    console.log('Decrypted Credential being verify: \n', credential)
 
     await Kilt.Credential.verifyPresentation(credential)
 
@@ -47,6 +49,8 @@ export async function postSubmitCredential(
     if (attestation.revoked) {
       throw new Error("Credential has been revoked and hence it's not valid.")
     }
+
+    //FIX-ME!: need to send the email to the frontend
 
     response
       .status(200)
