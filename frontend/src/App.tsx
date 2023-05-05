@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
 
-import { initializeKiltExtensionAPI, watchExtensions } from 'kilt-extension-api'
 import {
-  InjectedWindowProvider,
-  PubSubSessionV1,
-  PubSubSessionV2
-} from 'kilt-extension-api/dist/types/types'
+  initializeKiltExtensionAPI,
+  watchExtensions,
+  Types
+} from 'kilt-extension-api'
 
 import Button from './components/Button'
 import Card from './components/Card'
@@ -16,7 +15,9 @@ import Dropdown from './components/Dropdown'
 
 export default function Home(): JSX.Element {
   const [extensions, setExtensions] = useState<
-    InjectedWindowProvider<PubSubSessionV1 | PubSubSessionV2>[]
+    Types.InjectedWindowProvider<
+      Types.PubSubSessionV1 | Types.PubSubSessionV2
+    >[]
   >([])
   async function testApi() {
     const result = await fetch('/api')
