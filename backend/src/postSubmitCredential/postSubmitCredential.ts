@@ -28,6 +28,9 @@ export async function postSubmitCredential(
       decryptionCallback(keyAgreement)
     )
 
+    // Verifying this is a properly-formatted message
+    Kilt.Message.verify(decryptedMessage)
+
     if (decryptedMessage.body.type !== 'submit-credential') {
       throw new Error(`Unexpected message type: ${decryptedMessage.body.type}`)
     }
@@ -37,7 +40,10 @@ export async function postSubmitCredential(
 
     console.log('Decrypted Credential being verify: \n', credential)
 
-    await Kilt.Credential.verifyPresentation(credential)
+    // FIX-ME!: server needs to have challenge and cType that requested from user to make a proper verification
+    await Kilt.Credential.verifyPresentation(credential, {
+      challenge: credential.claimerSignature.challenge
+    })
 
     const attestationChain = await api.query.attestation.attestations(
       credential.rootHash
