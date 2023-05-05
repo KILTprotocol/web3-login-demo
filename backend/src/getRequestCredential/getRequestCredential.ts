@@ -45,8 +45,6 @@ export async function getRequestCredential(
   response: Response
 ) {
   try {
-    console.log(`The CType-Request:  ${JSON.stringify(emailRequest, null, 2)}`)
-
     //FIXME: Error handling for wrong JWT signature or no cookies needed.
 
     // read cookie from browser
@@ -68,6 +66,11 @@ export async function getRequestCredential(
     )
 
     const message = requestWrapper(emailRequest, claimerSessionDidUri)
+
+    console.log(
+      'the message with the Credential-Request before encryption: ',
+      JSON.stringify(message, null, 2)
+    )
 
     const { keyAgreement: ourKeyAgreement } =
       generateKeypairs(DAPP_DID_MNEMONIC)
@@ -100,7 +103,7 @@ export async function getRequestCredential(
  *  It also generates and includes a challenge on that message.
  */
 function requestWrapper(
-  credentialRequest: Kilt.IRequestCredentialContent,
+  credentialRequest: Omit<Kilt.IRequestCredentialContent, 'challenge'>,
   receiverDidUri: Kilt.DidUri
 ): Kilt.IMessage {
   const challenge = randomAsHex()
