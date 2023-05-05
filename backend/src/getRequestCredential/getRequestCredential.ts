@@ -45,8 +45,6 @@ export async function getRequestCredential(
   response: Response
 ) {
   try {
-    //FIXME: Error handling for wrong JWT signature or no cookies needed.
-
     // read cookie from browser
     const sessionValues: SessionValues = await readSessionCookie(
       request,

@@ -28,7 +28,7 @@ export async function readSessionCookie(
     response
       .status(401)
       .send(
-        `Could not find Cookie with session values (as JWT). Log-in and try again.`
+        `Could not find Cookie with session values (as JWT). Enable Cookies, Log-in and try again.`
       )
     throw new Error(
       'Cookie with Session JWT not found. Enable Cookies, Log-in and try again.'
