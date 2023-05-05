@@ -39,7 +39,7 @@ app.use(
 // Utility to read cookies. Backing has never been easier.
 app.use(cookieParser())
 
-// Printing the URL that stimulated the server
+// Print the URL requested
 app.use((req: Request, res: Response, next: NextFunction) => {
   console.log(`Trigger: ${req.url}`)
   next()
