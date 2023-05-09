@@ -4,7 +4,7 @@ import { Request, Response } from 'express'
 
 import { generateKeypairs } from '../utils/generateKeyPairs'
 import { decryptionCallback } from '../utils/decryptionCallback'
-import { DAPP_DID_MNEMONIC } from '../../config'
+import { DAPP_DID_MNEMONIC, emailRequest } from '../../config'
 import { getApi } from '../utils/connection'
 
 export async function postSubmitCredential(
@@ -41,8 +41,16 @@ export async function postSubmitCredential(
     console.log('Decrypted Credential being verify: \n', credential)
 
     // FIX-ME!: server needs to have challenge and cType that requested from user to make a proper verification
+
+    // Know against what structure you want to compare to:
+    const requestedCTypeID = emailRequest.cTypes[0].cTypeHash
+    const requestedCTypesSkeleton = await Kilt.CType.fetchFromChain(
+      `kilt:ctype:0x${requestedCTypeID}`
+    )
+
     await Kilt.Credential.verifyPresentation(credential, {
-      challenge: credential.claimerSignature.challenge
+      challenge: credential.claimerSignature.challenge,
+      ctype: requestedCTypesSkeleton
     })
 
     const attestationChain = await api.query.attestation.attestations(
