@@ -4,8 +4,13 @@ import { Request, Response } from 'express'
 
 import { generateKeypairs } from '../utils/generateKeyPairs'
 import { decryptionCallback } from '../utils/decryptionCallback'
-import { DAPP_DID_MNEMONIC, emailRequest } from '../../config'
+import {
+  DAPP_DID_MNEMONIC,
+  JWT_SIGNER_SECRET,
+  emailRequest
+} from '../../config'
 import { getApi } from '../utils/connection'
+import { readCredentialCookie } from '../utils/readCredentialCookie'
 
 export async function postSubmitCredential(
   request: Request,
@@ -40,17 +45,42 @@ export async function postSubmitCredential(
 
     console.log('Decrypted Credential being verify: \n', credential)
 
-    // FIX-ME!: server needs to have challenge and cType that requested from user to make a proper verification
-
     // Know against what structure you want to compare to:
     const requestedCTypeID = emailRequest.cTypes[0].cTypeHash
-    const requestedCTypesSkeleton = await Kilt.CType.fetchFromChain(
-      `kilt:ctype:0x${requestedCTypeID}`
+    const requestedCTypeSkeleton = await Kilt.CType.fetchFromChain(
+      `kilt:ctype:${requestedCTypeID}`
+    )
+
+    // The function Credential.verifyPresentation can check against a specific cType structure.
+    // This cType needs to match the ICType-interface.
+    // To fullfil this structure we need to remove the 'creator' and 'createdAt' properties from our fetched object.
+    const { $id, $schema, title, properties, type } = requestedCTypeSkeleton
+    const requestedCTypeSkeleton2 = { $id, $schema, title, properties, type }
+
+    console.log(
+      `requestedCTypeSkeleton ${JSON.stringify(
+        requestedCTypeSkeleton,
+        null,
+        2
+      )}`
+    )
+    console.log(
+      `requestedCTypeSkeleton2 ${JSON.stringify(
+        requestedCTypeSkeleton2,
+        null,
+        2
+      )}`
+    )
+
+    const challengeOnRequest = await readCredentialCookie(
+      request,
+      response,
+      JWT_SIGNER_SECRET
     )
 
     await Kilt.Credential.verifyPresentation(credential, {
-      challenge: credential.claimerSignature.challenge,
-      ctype: requestedCTypesSkeleton
+      challenge: challengeOnRequest,
+      ctype: requestedCTypeSkeleton2
     })
 
     const attestationChain = await api.query.attestation.attestations(
@@ -65,6 +95,8 @@ export async function postSubmitCredential(
     }
 
     //FIX-ME!: need to send the email to the frontend
+
+    console.log('Credential Successfully Verified! User is logged in now.')
 
     response
       .status(200)
