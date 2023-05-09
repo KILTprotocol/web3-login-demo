@@ -1,6 +1,6 @@
 import * as Kilt from '@kiltprotocol/sdk-js'
 
-import { getApi } from '../connection'
+import { getApi } from './connection'
 
 import { generateKeypairs } from './generateKeyPairs'
 

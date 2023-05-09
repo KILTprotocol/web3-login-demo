@@ -1,16 +1,15 @@
 import * as Kilt from '@kiltprotocol/sdk-js'
 
-import { NextFunction, Request, Response } from 'express'
+import { Request, Response } from 'express'
 
 import { generateKeypairs } from '../utils/generateKeyPairs'
 import { decryptionCallback } from '../utils/decryptionCallback'
-import { DAPP_DID_MNEMONIC } from '../../configuration'
+import { DAPP_DID_MNEMONIC } from '../../config'
 import { getApi } from '../utils/connection'
 
 export async function postSubmitCredential(
   request: Request,
-  response: Response,
-  next: NextFunction
+  response: Response
 ) {
   try {
     const encryptedMessage = request.body
@@ -29,14 +28,22 @@ export async function postSubmitCredential(
       decryptionCallback(keyAgreement)
     )
 
+    // Verifying this is a properly-formatted message
+    Kilt.Message.verify(decryptedMessage)
+
     if (decryptedMessage.body.type !== 'submit-credential') {
-      throw new Error('Unexpected message type')
+      throw new Error(`Unexpected message type: ${decryptedMessage.body.type}`)
     }
 
     // FIX-ME!:  maybe allow for several credentials in the future
     const credential = decryptedMessage.body.content[0]
 
-    await Kilt.Credential.verifyPresentation(credential)
+    console.log('Decrypted Credential being verify: \n', credential)
+
+    // FIX-ME!: server needs to have challenge and cType that requested from user to make a proper verification
+    await Kilt.Credential.verifyPresentation(credential, {
+      challenge: credential.claimerSignature.challenge
+    })
 
     const attestationChain = await api.query.attestation.attestations(
       credential.rootHash
@@ -49,6 +56,8 @@ export async function postSubmitCredential(
       throw new Error("Credential has been revoked and hence it's not valid.")
     }
 
+    //FIX-ME!: need to send the email to the frontend
+
     response
       .status(200)
       .send(
@@ -56,6 +65,5 @@ export async function postSubmitCredential(
       )
   } catch (error) {
     console.log('Post Submit Credential Error.', error)
-    next(error)
   }
 }
