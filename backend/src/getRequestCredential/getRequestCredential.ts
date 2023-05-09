@@ -14,19 +14,6 @@ import {
   JWT_SIGNER_SECRET
 } from '../../config'
 
-// const exampleRequest: Kilt.IRequestCredentialContent = {
-//   cTypes: [
-//     {
-//       cTypeHash:
-//         '0x5366521b1cf4497cfe5f17663a7387a87bb8f2c4295d7c40f3140e7ee6afc41b',
-//       trustedAttesters: [
-//         'did:kilt:5CqJa4Ct7oMeMESzehTiN9fwYdGLd7tqeirRMpGDh2XxYYyx' as Kilt.DidUri
-//       ],
-//       requiredProperties: ['name']
-//     }
-//   ]
-// }
-
 const emailRequest: Kilt.IRequestCredentialContent = {
   cTypes: [
     {

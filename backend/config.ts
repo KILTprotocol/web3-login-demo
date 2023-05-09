@@ -32,10 +32,3 @@ async function deduceAccountAddress(): Promise<string> {
 
   return dAppAccount.address
 }
-
-// // for the future:
-// async function validateEnvironmentConstants() {
-//   await deduceAccountAddress()
-// did_Uri valid
-// generate key_agreement
-// }
