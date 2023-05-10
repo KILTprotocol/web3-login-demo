@@ -2,13 +2,13 @@
 
 In order to run this recipe you need:
 
-1. an on-chain DID
-  * this DID is used so that the user knows who they are talking to
-2. domain linkage credential
-  * bind your DID to a specific Domain
-  * This prevents Man in the Middle attacks
+1. An on-chain DID
+  * This DID is used so that the user knows the parties to whom they talk
+2. Domain linkage credential
+  * Bind your DID to a specific domain
+  * This prevents Man-in-the-Middle attacks
 3. A CType you want to request from the user
-  * In this example we use the EMail CType but you could use any CType you want
+  * In this example, we use the email CType, but you could use any CType you want
 
 
 ## Setup
@@ -18,7 +18,8 @@ This variables specify which blockchain we use and they hold the secrets for you
 Defining them is part of the set up of your project.
 
 The `.env`-file should be on the root directory of this repository.
-It is include on the `.gitignore` list, so that the secrets that are contained never gets push to github.
+*This file maybe hidden.*
+It is included on the `.gitignore` list so that the secrets that are contained in the file never get pushed to GitHub.
 
 The following variables are required:
 
@@ -31,7 +32,7 @@ The following variables are required:
 - `DAPP_NAME` = _This should be a custom name for your dApp_
 - `JWT_SIGNER_SECRET` = _This is secret key (string) that signs the Json-Web-Tokens before saving them in the Cookies_
 
-There is a script to facilitate the generation of the environment variables that are needed to set up your decentralized App.
+There is a script to facilitate the generation of the environment variables that are needed to set up your decentralized App (dApp).
 This script is called `./scripts/genesisEnvironmentVariables.ts`.
 You can execute it by running `yarn environment`.
 
