@@ -45,17 +45,17 @@ export async function postSubmitCredential(
 
     console.log('Decrypted Credential being verify: \n', credential)
 
-    // Know against what structure you want to compare to:
-    const requestedCTypeID = emailRequest.cTypes[0].cTypeHash
-    const requestedCTypeSkeleton = await Kilt.CType.fetchFromChain(
-      `kilt:ctype:${requestedCTypeID}`
+    // Know against to what structure you want to compare to:
+    const requestedCTypeHash = emailRequest.cTypes[0].cTypeHash
+    const requestedCTypeDetailed = await Kilt.CType.fetchFromChain(
+      `kilt:ctype:${requestedCTypeHash}`
     )
 
     // The function Credential.verifyPresentation can check against a specific cType structure.
     // This cType needs to match the ICType-interface.
     // To fullfil this structure we need to remove the 'creator' and 'createdAt' properties from our fetched object.
-    const { $id, $schema, title, properties, type } = requestedCTypeSkeleton
-    const requestedCTypeSkeleton2 = { $id, $schema, title, properties, type }
+    const { $id, $schema, title, properties, type } = requestedCTypeDetailed
+    const requestedCType = { $id, $schema, title, properties, type }
 
     const challengeOnRequest = await readCredentialCookie(
       request,
@@ -65,7 +65,7 @@ export async function postSubmitCredential(
 
     await Kilt.Credential.verifyPresentation(credential, {
       challenge: challengeOnRequest,
-      ctype: requestedCTypeSkeleton2
+      ctype: requestedCType
     })
 
     const attestationChain = await api.query.attestation.attestations(
@@ -79,6 +79,7 @@ export async function postSubmitCredential(
       throw new Error("Credential has been revoked and hence it's not valid.")
     }
 
+    console.log(`attestation: ${attestation}`)
     //FIX-ME!: need to send the email to the frontend
 
     console.log('Credential Successfully Verified! User is logged in now.')
