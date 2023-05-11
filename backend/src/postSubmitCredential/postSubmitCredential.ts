@@ -57,21 +57,6 @@ export async function postSubmitCredential(
     const { $id, $schema, title, properties, type } = requestedCTypeSkeleton
     const requestedCTypeSkeleton2 = { $id, $schema, title, properties, type }
 
-    console.log(
-      `requestedCTypeSkeleton ${JSON.stringify(
-        requestedCTypeSkeleton,
-        null,
-        2
-      )}`
-    )
-    console.log(
-      `requestedCTypeSkeleton2 ${JSON.stringify(
-        requestedCTypeSkeleton2,
-        null,
-        2
-      )}`
-    )
-
     const challengeOnRequest = await readCredentialCookie(
       request,
       response,
