@@ -79,16 +79,12 @@ export async function postSubmitCredential(
       throw new Error("Credential has been revoked and hence it's not valid.")
     }
 
-    console.log(`attestation: ${attestation}`)
-    //FIX-ME!: need to send the email to the frontend
-
     console.log('Credential Successfully Verified! User is logged in now.')
 
-    response
-      .status(200)
-      .send(
-        'Credential Successfully Verified!  The user is legitimate. ( ͡° ͜ʖ ͡°)'
-      )
+    // Send a little something to the frontend, so that the user interface can display who logged in.
+    const plainUserInfo = credential.claim.contents.email
+
+    response.status(200).send(plainUserInfo)
   } catch (error) {
     console.log('Post Submit Credential Error.', error)
   }
