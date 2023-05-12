@@ -18,14 +18,17 @@ if (frontendPort || backendPort) {
   const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'))
   if (backendPort) {
     // Update the value for the backend port in the package.json
-    packageJson.proxy = `http://localhost:${backendPort}`
+    packageJson.proxy = `http://localhost:${backendPort}/`
   }
   if (frontendPort) {
     // Update the value for the frontend port in the package.json
     packageJson.scripts.start = `PORT=${frontendPort} react-scripts start`
   }
   // Write the updated package.json back to the file
-  fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2))
+  fs.writeFileSync(
+    packageJsonPath,
+    JSON.stringify(packageJson, null, 2) + '\r\n'
+  )
 
   console.log('Package.json updated successfully!')
 } else {
