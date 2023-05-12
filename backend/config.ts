@@ -6,8 +6,6 @@ import * as Kilt from '@kiltprotocol/sdk-js'
 
 import { generateAccount } from './src/utils/generateAccount'
 
-dotenv.config()
-
 // Letting the server know where the environment variables are
 const projectRootDirectory = path.dirname(__dirname)
 dotenv.config({ path: `${projectRootDirectory}/.env` })
