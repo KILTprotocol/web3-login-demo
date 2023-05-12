@@ -54,12 +54,16 @@ async function main() {
   const dAppURI =
     (process.env.DAPP_DID_URI as Kilt.DidUri) ??
     (`did:kilt:4noURIEstablished` as Kilt.DidUri)
-  // don't put a slash "/" at the end!
-  const domainOrigin = process.env.ORIGIN ?? 'no origin assigned'
   const dAppMnemonic =
     process.env.DAPP_DID_MNEMONIC ?? 'your dApp needs an Identity '
   const fundsMnemonic =
     process.env.DAPP_ACCOUNT_MNEMONIC ?? 'your dApp needs an Sponsor '
+
+  let domainOrigin = 'no origin assigned'
+  if (process.env.FRONTEND_PORT) {
+    // don't put a slash "/" at the end of the origin!
+    domainOrigin = `http://localhost:${process.env.FRONTEND_PORT}`
+  }
 
   // Connect to the webSocket. This tells the Kilt Api to which node to interact, and ergo also the
   // blockchain (Spiritnet or Peregrine)
@@ -74,8 +78,8 @@ async function main() {
 
   console.log(
     '\n',
-    'The environment variables defining the Well-Known-DID-Configuration are: \n',
-    `webSocket=${webSocket} \n`,
+    'The variables defining the Well-Known-DID-Configuration are: \n',
+    `webSocket=${webSocket}   (tells you the blockchain)\n`,
     `dAppURI=${dAppURI} \n`,
     `domainOrigin=${domainOrigin} \n`,
     `dAppMnemonic=${dAppMnemonic} \n`,
@@ -122,7 +126,7 @@ async function main() {
   // First Step: Create a Claim
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  // The claim has to be based on the Domain Linkage CType. This CType is fetched from the Blockchain on './wellKnownDIDConfiguration' and imported here as cTypeDomeinLinkage
+  // The claim has to be based on the Domain Linkage CType. This CType is fetched from the Blockchain on './wellKnownDIDConfiguration' and imported here as cTypeDomainLinkage
 
   const domainCredential = await createCredential(domainOrigin, dAppURI)
 
