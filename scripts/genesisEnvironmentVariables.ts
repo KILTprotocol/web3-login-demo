@@ -72,7 +72,7 @@ async function main() {
       imploreDomainOrigin()
       break
 
-    // then assign where the dApp FrontEnd is going to be reachable
+    // then assign where the dApp's FrontEnd is going to be reachable
     case 2:
       imploreServerPort()
       break
