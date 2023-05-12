@@ -11,10 +11,10 @@ dotenv.config()
 const {
   // This is the websocket address of the rpc node
   WSS_ADDRESS,
-  // This is the URL domain origin of your website
-  ORIGIN,
-  // This is the local Port on which your server would be reachable
-  PORT,
+  // This is the local Port on which your website (client-side) be reachable (frontend)
+  FRONTEND_PORT,
+  // This is the local Port on which your server would be reachable (backend)
+  BACKEND_PORT,
   // This is the mnemonic of the Kilt account paying for all transactions
   DAPP_ACCOUNT_MNEMONIC,
   // This is the mnemonic of the Kilt DID that identifies your dApp
@@ -47,8 +47,8 @@ async function main() {
   let step = 0
   const stairs: (string | undefined)[] = [
     WSS_ADDRESS,
-    ORIGIN,
-    PORT,
+    FRONTEND_PORT,
+    BACKEND_PORT,
     DAPP_ACCOUNT_MNEMONIC,
     DAPP_DID_MNEMONIC,
     DAPP_DID_URI,
@@ -69,7 +69,7 @@ async function main() {
 
     // then assign where the dApp BackEnd is going to be reachable
     case 1:
-      imploreDomainOrigin()
+      imploreClientSidePort()
       break
 
     // then assign where the dApp's FrontEnd is going to be reachable
@@ -88,7 +88,7 @@ async function main() {
       await spawnDid()
       break
 
-    // Just in case yu did not save the URI of the DID
+    // Just in case you did not save the URI of the DID
     // save the DID's URI as well:
     case 5:
       await getURI(DAPP_DID_MNEMONIC as string)
@@ -133,13 +133,13 @@ function imploreWebSocket() {
   )
 }
 
-function imploreDomainOrigin() {
+function imploreClientSidePort() {
   console.log(
-    "\nTrouble reading the URL-Address of your dApp' Website (FrontEnd)\n",
-    'Please, define a value for ORIGIN on the .env-file to continue\n',
-    'first it should only run locally. You can use a custom IP or just the default:\n\n',
-    'Default dApps domain origin: \n',
-    'ORIGIN=http://localhost:8080',
+    "\nTrouble reading the local port of your dApp' Website (FrontEnd)\n",
+    'Please, define a value for FRONTEND_PORT on the .env-file to continue\n',
+    'For this demonstration the dApp should only run locally. You can use a custom IP or just the default:\n\n',
+    'Default dApps domain port: \n',
+    'FRONTEND_PORT=8080',
     '\n\n'
   )
 }
@@ -150,7 +150,7 @@ function imploreServerPort() {
     'Please, define a value for PORT on the .env-file to continue\n',
     'You can use a custom IP or just the default:\n\n',
     "Default dApp-Server's port: \n",
-    'PORT=3000',
+    'BACKEND_PORT=3000',
     '\n\n'
   )
 }

@@ -10,7 +10,7 @@ import { generateAccount } from './src/utils/generateAccount'
 const projectRootDirectory = path.dirname(__dirname)
 dotenv.config({ path: `${projectRootDirectory}/.env` })
 
-export const PORT = process.env.PORT || 3000
+export const BACKEND_PORT = process.env.PORT || 3000
 export const WSS_ADDRESS = process.env.WSS_ADDRESS || 'wss://peregrine.kilt.io'
 export const DAPP_DID_MNEMONIC = process.env.DAPP_DID_MNEMONIC as string
 export const DAPP_DID_URI = process.env.DAPP_DID_URI as Kilt.DidUri

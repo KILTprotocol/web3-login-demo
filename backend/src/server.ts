@@ -5,7 +5,7 @@ import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 
 // Getting necessary environment constants:
-import { PORT, WSS_ADDRESS } from '../config'
+import { BACKEND_PORT, WSS_ADDRESS } from '../config'
 
 import { startSession } from './session/startSession'
 import { verifySession } from './session/verifySession'
@@ -29,9 +29,9 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(
   cors({
     origin: [
-      `http://localhost:${PORT}`,
-      `http://127.0.0.1:${PORT}`,
-      `http://[::1]:${PORT}`
+      `http://localhost:${BACKEND_PORT}`,
+      `http://127.0.0.1:${BACKEND_PORT}`,
+      `http://[::1]:${BACKEND_PORT}`
     ]
   })
 )
@@ -77,8 +77,10 @@ fetchDidDocument()
   .then((doccy) => {
     app.locals.dappDidDocument = doccy
     // wait for fetched document before server starts listening:
-    app.listen(PORT, () => {
-      console.log(`⚡️[server]: Server is running at http://localhost:${PORT}`)
+    app.listen(BACKEND_PORT, () => {
+      console.log(
+        `⚡️[server]: Server is running at http://localhost:${BACKEND_PORT}`
+      )
     })
   })
   .catch((error) => {

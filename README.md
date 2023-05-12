@@ -16,8 +16,8 @@ It is a standard that all environment variables are name with capitalized letter
 Please, follow the standard and use these names for your environment variables:
 
 - `WSS_ADDRESS` = _This is the websocket address of the RPC node_
-- `ORIGIN` = _This is the URL domain origin of your website (frontend)_
-- `PORT` = _This is the local Port on which your server would be reachable (backend)_
+- `FRONTEND_PORT` = _This is the local Port on which your website (client-side) would be reachable (frontend)_
+- `BACKEND_PORT` = _This is the local Port on which your server would be reachable (backend)_
 - `DAPP_ACCOUNT_MNEMONIC` = _This is the mnemonic of the Kilt account paying for all transactions_
 - `DAPP_DID_MNEMONIC` = _This is the mnemonic of the Kilt DID that identifies your dApp_
 - `DAPP_DID_URI` = _This is the URI of the Kilt DID that identifies your dApp_
