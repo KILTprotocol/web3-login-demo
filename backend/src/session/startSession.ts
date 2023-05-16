@@ -3,7 +3,7 @@ import { Response, Request, CookieOptions } from 'express'
 import jwt from 'jsonwebtoken'
 
 import { getApi } from '../utils/connection'
-import { DAPP_NAME } from '../../config'
+import { DAPP_NAME } from '../config'
 
 /**
  * Define how the Session Values are packaged.

@@ -4,10 +4,11 @@ import dotenv from 'dotenv'
 
 import * as Kilt from '@kiltprotocol/sdk-js'
 
-import { generateAccount } from './src/utils/generateAccount'
+import { generateAccount } from './utils/generateAccount'
 
 // Letting the server know where the environment variables are
-const projectRootDirectory = path.dirname(__dirname)
+const backendDirectory = path.dirname(__dirname)
+const projectRootDirectory = path.dirname(backendDirectory)
 dotenv.config({ path: `${projectRootDirectory}/.env` })
 
 export const BACKEND_PORT = process.env.PORT || 3000

@@ -8,11 +8,7 @@ import { generateKeypairs } from '../utils/generateKeyPairs'
 import { readSessionCookie } from '../utils/readSessionCookie'
 
 import { SessionValues } from '../session/startSession'
-import {
-  DAPP_DID_MNEMONIC,
-  DAPP_DID_URI,
-  JWT_SIGNER_SECRET
-} from '../../config'
+import { DAPP_DID_MNEMONIC, DAPP_DID_URI, JWT_SIGNER_SECRET } from '../config'
 
 // const exampleRequest: Kilt.IRequestCredentialContent = {
 //   cTypes: [

@@ -2,7 +2,7 @@ import * as Kilt from '@kiltprotocol/sdk-js'
 import { Response, Request } from 'express'
 import jwt from 'jsonwebtoken'
 
-import { JWT_SIGNER_SECRET } from '../../config'
+import { JWT_SIGNER_SECRET } from '../config'
 
 import { generateKeypairs } from '../utils/generateKeyPairs'
 import { getApi } from '../utils/connection'

@@ -4,7 +4,7 @@ import { Request, Response } from 'express'
 
 import { generateKeypairs } from '../utils/generateKeyPairs'
 import { decryptionCallback } from '../utils/decryptionCallback'
-import { DAPP_DID_MNEMONIC } from '../../config'
+import { DAPP_DID_MNEMONIC } from '../config'
 import { getApi } from '../utils/connection'
 
 export async function postSubmitCredential(
