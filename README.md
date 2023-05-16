@@ -10,6 +10,17 @@ In order to run this recipe you need:
 3. A CType you want to request from the user
   * In this example, we use the email CType, but you could use any CType you want
 
+## Prerequisite
+
+This code makes use of a different mix of technology.
+If you are not familiar with some of these, we recommend to first get an overview about them.
+
+* [JSON Web Token](https://en.wikipedia.org/wiki/JSON_Web_Token)
+* [JSON](https://www.json.org/json-en.html)
+* [decentralized identifier (DID)](https://docs.kilt.io/docs/concepts/did)
+* [express.js](https://expressjs.com/)
+* [react.js](https://react.dev/)
+* [typescript](https://www.typescriptlang.org/)
 
 ## Setup
 
