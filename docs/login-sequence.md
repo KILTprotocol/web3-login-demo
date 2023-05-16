@@ -6,6 +6,7 @@ note right of Browser: User visits web3login
 note right of Browser: User clicks button "login with Extension X"\nHere the user chooses which extension they want to use
 Browser->Extension: please allow use on this page
 note right of Extension: Only the "Extension X" pops up
+note right of Extension: The Domain Linkage Credentials under\n.well-known/did-configuration.json\nis verified.
 Extension->Browser: User granted access
 Browser->Server: GET /api/initializeSessionSetup
 Server->Browser: 200 OK\nset-cookie: JWT{challenge}\n{dAppName, dAppEncryptionKeyUri, challenge}
@@ -17,9 +18,9 @@ Server->Browser: 200 OK\nset-cookie:JWT{encryptionKeyId}
 Browser->Server: GET /api/loginRequirements\nCookie:JWT{encryptionKeyId}
 Server->Browser: 200 Ok\nKiltMsg{request-credential}
 Browser->Extension: KiltMsg{request-credential}
-note right of Extension: User approves the request\nand selects credential to share
+note right of Extension: User approves the request\nand selects credential to share.
 Extension->Browser: KiltMsg{submit-credential}
 Browser->Server: Post /api/provideCredential\nKiltMsg{submit-credential}
-note left of Server: Verify the credential\nNote the DID inside the credential\nif verification was successful, DID authenticated with provided credentials
+note left of Server: Verify the credential.\nNote the DID inside the credential.\nIf verification was successful,\nDID was authenticated with provided credentials.
 Server->Browser: 200 Ok\nset-cookie:JWT{DID,claimHash,"LOGIN COMPLETE"}
 ```
