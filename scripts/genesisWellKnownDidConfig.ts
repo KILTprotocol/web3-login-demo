@@ -112,7 +112,7 @@ async function main() {
       return
     } catch (err) {
       console.log(
-        "The current well-known-did-config of your project is not valid (anymore). \n Let's proceed with the first step to make a new one!"
+        "The current well-known-did-config of your project is not valid (anymore). \n Let's proceed with to make a new one!"
       )
       // if this is case, don't trow an error to the next catch
     }
