@@ -30,7 +30,7 @@ if (frontendPort || backendPort) {
     JSON.stringify(packageJson, null, 2) + '\r\n'
   )
 
-  console.log('Package.json updated successfully!')
+  console.log('Package.json updated successfully to use custom ports.!')
 } else {
-  console.log('nothing to do')
+  console.log('Using default Ports for server and client-side. ')
 }
