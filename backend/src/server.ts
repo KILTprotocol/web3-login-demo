@@ -5,7 +5,11 @@ import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 
 // Getting necessary environment constants:
-import { BACKEND_PORT, WSS_ADDRESS } from './config'
+import {
+  BACKEND_PORT,
+  WSS_ADDRESS,
+  validateEnvironmentConstants
+} from './config'
 
 import { startSession } from './session/startSession'
 import { verifySession } from './session/verifySession'
@@ -71,9 +75,15 @@ app.post('/api/credential/postSubmit', (req, res, next) =>
   postSubmitCredential(req, res).catch(next)
 )
 
-// We need the DID Document of the dApps DID (DAPP_DID_URI) before we can handle login requests.
-// We therefore start the server only after the document was fetched.
-fetchDidDocument()
+validateEnvironmentConstants()
+  .catch((error) => {
+    console.log(`Could not start server! ${error}`)
+  })
+  .then(
+    // We need the DID Document of the dApps DID (DAPP_DID_URI) before we can handle login requests.
+    // We therefore start the server only after the document was fetched.
+    fetchDidDocument
+  )
   .then((doccy) => {
     app.locals.dappDidDocument = doccy
     // wait for fetched document before server starts listening:
