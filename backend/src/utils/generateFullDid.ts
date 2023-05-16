@@ -2,7 +2,7 @@ import * as Kilt from '@kiltprotocol/sdk-js'
 
 import { getApi } from './connection'
 
-import { generateKeypairs } from './generateKeyPairs'
+import { generateKeyPairs } from './generateKeyPairs'
 
 export async function generateFullDid(
   submitterAccount: Kilt.KiltKeyringPair,
@@ -15,7 +15,7 @@ export async function generateFullDid(
     keyAgreement,
     assertionMethod,
     capabilityDelegation
-  } = generateKeypairs(didMnemonic)
+  } = generateKeyPairs(didMnemonic)
 
   // Before submitting the transaction, it is worth it to assure that the DID does not already exist.
   // If the DID already exist, the transaction will fail, but it will still costs the fee. Better to avoid this.

@@ -2,7 +2,7 @@ import dotenv from 'dotenv'
 import * as Kilt from '@kiltprotocol/sdk-js'
 import { mnemonicGenerate } from '@polkadot/util-crypto'
 
-import { generateKeypairs } from './launchUtils/generateKeyPairs'
+import { generateKeyPairs } from './launchUtils/generateKeyPairs'
 import { generateAccount } from './launchUtils/generateAccount'
 import { generateFullDid } from './launchUtils/generateFullDid'
 
@@ -206,7 +206,7 @@ async function getURI(mnemonic: string) {
     'getting the URI of the DID corresponding the provided mnemonic'
   )
   await Kilt.connect(WSS_ADDRESS as string)
-  const { authentication } = generateKeypairs(mnemonic)
+  const { authentication } = generateKeyPairs(mnemonic)
   const dAppDidUri = Kilt.Did.getFullDidUriFromKey(authentication)
   const resolved = await Kilt.Did.resolve(dAppDidUri)
   if (!resolved) {

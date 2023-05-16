@@ -4,7 +4,7 @@ import { randomAsHex } from '@polkadot/util-crypto'
 import { Request, Response } from 'express'
 
 import { encryptionCallback } from '../utils/encryptionCallback'
-import { generateKeypairs } from '../utils/generateKeyPairs'
+import { generateKeyPairs } from '../utils/generateKeyPairs'
 import { readSessionCookie } from '../utils/readSessionCookie'
 
 import { SessionValues } from '../session/startSession'
@@ -103,7 +103,7 @@ async function encryptMessage(
   sessionObject: SessionValues
 ): Promise<Kilt.IEncryptedMessage> {
   const { keyAgreement: ourKeyAgreementKeyPair } =
-    generateKeypairs(DAPP_DID_MNEMONIC)
+    generateKeyPairs(DAPP_DID_MNEMONIC)
 
   if (!sessionObject.extension) {
     throw new Error(

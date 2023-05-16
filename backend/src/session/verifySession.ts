@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken'
 
 import { JWT_SIGNER_SECRET } from '../config'
 
-import { generateKeypairs } from '../utils/generateKeyPairs'
+import { generateKeyPairs } from '../utils/generateKeyPairs'
 import { getApi } from '../utils/connection'
 import { extractEncryptionKeyUri } from '../utils/extractEncryptionKeyUri'
 import { readSessionCookie } from '../utils/readSessionCookie'
@@ -51,7 +51,7 @@ export async function verifySession(
     throw new Error('Enter your dApps mnemonic on the .env file')
   }
 
-  const { keyAgreement } = generateKeypairs(dAppDidMnemonic)
+  const { keyAgreement } = generateKeyPairs(dAppDidMnemonic)
 
   const decryptedBytes = Kilt.Utils.Crypto.decryptAsymmetric(
     { box: encryptedChallenge, nonce },

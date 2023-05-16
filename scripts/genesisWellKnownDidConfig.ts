@@ -6,7 +6,7 @@ import * as Kilt from '@kiltprotocol/sdk-js'
 import dotenv from 'dotenv'
 
 import { generateAccount } from './launchUtils/generateAccount'
-import { generateKeypairs } from './launchUtils/generateKeyPairs'
+import { generateKeyPairs } from './launchUtils/generateKeyPairs'
 import { VerifiableDomainLinkagePresentation } from './launchUtils/types'
 
 import {
@@ -136,7 +136,7 @@ async function main() {
 
   // A valid credential requires an attestation. Since the website wants to link itself to the DID just created, it has to self-attest the domain linkage credential, i.e., write the credential attestation on chain using the same DID it is trying to link to.
 
-  const dAppsDidKeys = generateKeypairs(dAppMnemonic)
+  const dAppsDidKeys = generateKeyPairs(dAppMnemonic)
   const dappAccount = generateAccount(fundsMnemonic)
 
   await selfAttestCredential(
