@@ -1,6 +1,12 @@
 # web3-login-demo
 
-In order to run this recipe you need:
+KILT Protocol makes it possible to build access control for your website without storing any user data on your servers.
+Before a user is granted access, you can verify that they own credentials.
+You could either issue your own credentials or use credentials of other attesters.
+In this demo we request a credential that tells us an email address that the user owns.
+For that we rely on https://socialkyc.io to issue email credentials. 
+
+In order to run this demo you need the following:
 
 1. An on-chain DID
   * This DID is used so that the user knows the parties to whom they talk
@@ -9,6 +15,8 @@ In order to run this recipe you need:
   * This prevents Man-in-the-Middle attacks
 3. A CType you want to request from the user
   * In this example, we use the email CType, but you could use any CType you want
+
+If you don't have some of the above, make sure to go though the [setup section](#setup).
 
 ## Prerequisite
 
