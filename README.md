@@ -7,7 +7,7 @@ They could be issued by yourself or by other attesters.
 In this demo we request a credential that contains an email address that the user owns.
 For that we rely on https://socialkyc.io to issue email credentials.
 
-In order to run this demo you need the following:
+In order for a **dApp** to support logging in with KILT Credentials, it needs: 
 
 1. An on-chain DID
   * This DID is used so that the user knows the parties to whom they talk
@@ -21,15 +21,15 @@ If you don't have some of the above, make sure to go though the [setup section](
 
 ## Prerequisite
 
-This code makes use of a different mix of technology.
+This code makes use of a mix of different technologies.
 If you are not familiar with some of these, we recommend to first get an overview about them.
 
-* [JSON Web Token](https://en.wikipedia.org/wiki/JSON_Web_Token)
-* [JSON](https://www.json.org/json-en.html)
 * [decentralized identifier (DID)](https://docs.kilt.io/docs/concepts/did)
+* [typescript](https://www.typescriptlang.org/)
+* [JSON](https://www.json.org/json-en.html)
+* [JSON Web Token](https://en.wikipedia.org/wiki/JSON_Web_Token)
 * [express.js](https://expressjs.com/)
 * [react.js](https://react.dev/)
-* [typescript](https://www.typescriptlang.org/)
 
 ## Setup
 
