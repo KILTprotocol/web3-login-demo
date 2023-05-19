@@ -2,10 +2,15 @@ import * as Kilt from '@kiltprotocol/sdk-js'
 
 import { Request, Response } from 'express'
 
-import { generateKeyPairs } from '../utils/generateKeyPairs'
+import { generateKeypairs } from '../utils/generateKeyPairs'
 import { decryptionCallback } from '../utils/decryptionCallback'
-import { DAPP_DID_MNEMONIC } from '../config'
+import {
+  DAPP_DID_MNEMONIC,
+  JWT_SIGNER_SECRET,
+  emailRequest
+} from '../../config'
 import { getApi } from '../utils/connection'
+import { readCredentialCookie } from '../utils/readCredentialCookie'
 
 export async function postSubmitCredential(
   request: Request,
@@ -22,7 +27,7 @@ export async function postSubmitCredential(
     )
     const api = await getApi()
 
-    const { keyAgreement } = generateKeyPairs(DAPP_DID_MNEMONIC)
+    const { keyAgreement } = generateKeypairs(DAPP_DID_MNEMONIC)
     const decryptedMessage = await Kilt.Message.decrypt(
       encryptedMessage,
       decryptionCallback(keyAgreement)
@@ -35,14 +40,32 @@ export async function postSubmitCredential(
       throw new Error(`Unexpected message type: ${decryptedMessage.body.type}`)
     }
 
-    // FIX-ME!:  maybe allow for several credentials in the future
+    // TODO:  maybe allow for several credentials in the future
     const credential = decryptedMessage.body.content[0]
 
     console.log('Decrypted Credential being verify: \n', credential)
 
-    // FIX-ME!: server needs to have challenge and cType that requested from user to make a proper verification
+    // Know against to what structure you want to compare to:
+    const requestedCTypeHash = emailRequest.cTypes[0].cTypeHash
+    const requestedCTypeDetailed = await Kilt.CType.fetchFromChain(
+      `kilt:ctype:${requestedCTypeHash}`
+    )
+
+    // The function Credential.verifyPresentation can check against a specific cType structure.
+    // This cType needs to match the ICType-interface.
+    // To fullfil this structure we need to remove the 'creator' and 'createdAt' properties from our fetched object.
+    const { $id, $schema, title, properties, type } = requestedCTypeDetailed
+    const requestedCType = { $id, $schema, title, properties, type }
+
+    const challengeOnRequest = await readCredentialCookie(
+      request,
+      response,
+      JWT_SIGNER_SECRET
+    )
+
     await Kilt.Credential.verifyPresentation(credential, {
-      challenge: credential.claimerSignature.challenge
+      challenge: challengeOnRequest,
+      ctype: requestedCType
     })
 
     const attestationChain = await api.query.attestation.attestations(
@@ -56,13 +79,12 @@ export async function postSubmitCredential(
       throw new Error("Credential has been revoked and hence it's not valid.")
     }
 
-    //FIX-ME!: need to send the email to the frontend
+    console.log('Credential Successfully Verified! User is logged in now.')
 
-    response
-      .status(200)
-      .send(
-        'Credential Successfully Verified!  The user is legitimate. ( ͡° ͜ʖ ͡°)'
-      )
+    // Send a little something to the frontend, so that the user interface can display who logged in.
+    const plainUserInfo = credential.claim.contents.email
+
+    response.status(200).send(plainUserInfo)
   } catch (error) {
     console.log('Post Submit Credential Error.', error)
   }

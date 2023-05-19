@@ -3,7 +3,7 @@ import * as Kilt from '@kiltprotocol/sdk-js'
 /**
  * The EncryptionKeyURI has different names depending on the Credential API version that the extension uses.
  *
- * @param extensionSession either PubSubSessionV1 or PubSubSessionV1
+ * @param extensionSession either PubSubSessionV1 or PubSubSessionV2
  * @returns encryptionKeyUri as Kilt.DidResourceUri
  */
 export function extractEncryptionKeyUri(

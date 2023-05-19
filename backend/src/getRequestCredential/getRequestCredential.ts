@@ -1,40 +1,20 @@
 import * as Kilt from '@kiltprotocol/sdk-js'
 import { randomAsHex } from '@polkadot/util-crypto'
+import jwt from 'jsonwebtoken'
 
 import { Request, Response } from 'express'
 
 import { encryptionCallback } from '../utils/encryptionCallback'
-import { generateKeyPairs } from '../utils/generateKeyPairs'
+import { generateKeypairs } from '../utils/generateKeyPairs'
 import { readSessionCookie } from '../utils/readSessionCookie'
 
-import { SessionValues } from '../session/startSession'
-import { DAPP_DID_MNEMONIC, DAPP_DID_URI, JWT_SIGNER_SECRET } from '../config'
-
-// const exampleRequest: Kilt.IRequestCredentialContent = {
-//   cTypes: [
-//     {
-//       cTypeHash:
-//         '0x5366521b1cf4497cfe5f17663a7387a87bb8f2c4295d7c40f3140e7ee6afc41b',
-//       trustedAttesters: [
-//         'did:kilt:5CqJa4Ct7oMeMESzehTiN9fwYdGLd7tqeirRMpGDh2XxYYyx' as Kilt.DidUri
-//       ],
-//       requiredProperties: ['name']
-//     }
-//   ]
-// }
-
-const emailRequest: Kilt.IRequestCredentialContent = {
-  cTypes: [
-    {
-      cTypeHash:
-        '0x3291bb126e33b4862d421bfaa1d2f272e6cdfc4f96658988fbcffea8914bd9ac',
-      trustedAttesters: [
-        'did:kilt:5CqJa4Ct7oMeMESzehTiN9fwYdGLd7tqeirRMpGDh2XxYYyx' as Kilt.DidUri
-      ],
-      requiredProperties: ['Email']
-    }
-  ]
-}
+import { SessionValues, cookieOptions } from '../session/startSession'
+import {
+  DAPP_DID_MNEMONIC,
+  DAPP_DID_URI,
+  JWT_SIGNER_SECRET,
+  emailRequest
+} from '../../config'
 
 export async function getRequestCredential(
   request: Request,
@@ -59,12 +39,21 @@ export async function getRequestCredential(
       sessionValues.extension.encryptionKeyUri
     )
 
-    const message = requestWrapper(emailRequest, claimerSessionDidUri)
+    // It is encouraged that you customize your challenge creation
+    const challenge = randomAsHex()
+
+    const message = requestWrapper(
+      emailRequest,
+      challenge,
+      claimerSessionDidUri
+    )
 
     console.log(
       'the message with the Credential-Request before encryption: ',
       JSON.stringify(message, null, 2)
     )
+
+    await saveChallengeOnCookie(challenge, response)
 
     const encryptedMessage = await encryptMessage(message, sessionValues)
 
@@ -75,15 +64,16 @@ export async function getRequestCredential(
 }
 
 /** Turns the Credential Request into a Kilt.Message.
- *  It also generates and includes a challenge on that message.
+ *  It also adds a challenge to the message for the claimer to signed.
+ *  In this way, we make sure that the answer comes from who we asked.
  */
 function requestWrapper(
   credentialRequest: Omit<Kilt.IRequestCredentialContent, 'challenge'>,
+  challenge: string,
   receiverDidUri: Kilt.DidUri
 ): Kilt.IMessage {
-  const challenge = randomAsHex()
   const messageBody: Kilt.IRequestCredential = {
-    content: { ...credentialRequest, challenge: challenge },
+    content: { ...credentialRequest, challenge },
     type: 'request-credential'
   }
 
@@ -103,7 +93,7 @@ async function encryptMessage(
   sessionObject: SessionValues
 ): Promise<Kilt.IEncryptedMessage> {
   const { keyAgreement: ourKeyAgreementKeyPair } =
-    generateKeyPairs(DAPP_DID_MNEMONIC)
+    generateKeypairs(DAPP_DID_MNEMONIC)
 
   if (!sessionObject.extension) {
     throw new Error(
@@ -124,4 +114,23 @@ async function encryptMessage(
   )
 
   return cypheredMessage
+}
+
+function saveChallengeOnCookie(challengeOnRequest: string, response: Response) {
+  // Create a Json-Web-Token:
+  // set the expiration of JWT same as the Cookie
+  const optionsJwt = {
+    expiresIn: `${cookieOptions.maxAge} seconds`
+  }
+
+  // default to algorithm: 'HS256'
+  const token = jwt.sign({ challengeOnRequest }, JWT_SIGNER_SECRET, optionsJwt)
+
+  // Set a Cookie in the header including the JWT and our options:
+  // Using 'cookie-parser' dependency:
+  response.cookie('credentialJWT', token, cookieOptions)
+
+  console.log(
+    "The Challenge included on the Credential-Request is now saved on the 'credentialJWT'-Cookie."
+  )
 }
