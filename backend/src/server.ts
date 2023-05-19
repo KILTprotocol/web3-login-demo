@@ -77,7 +77,7 @@ app.post('/api/credential/postSubmit', (req, res, next) =>
 
 validateEnvironmentConstants()
   .catch((error) => {
-    console.log(`Could not start server! ${error}`)
+    throw new Error(`Trouble validating the environment constants: ${error}`)
   })
   .then(
     // We need the DID Document of the dApps DID (DAPP_DID_URI) before we can handle login requests.
@@ -94,7 +94,7 @@ validateEnvironmentConstants()
     })
   })
   .catch((error) => {
-    console.log(`Could not start server! ${error}`)
+    throw new Error(`\n ❌ Could not start server! ${error} \n`)
   })
   .then(
     // connect with the kilt api
