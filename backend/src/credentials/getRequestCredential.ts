@@ -8,7 +8,7 @@ import { DAPP_DID_MNEMONIC, DAPP_DID_URI, JWT_SIGNER_SECRET } from '../config'
 
 import { encryptionCallback } from '../utils/encryptionCallback'
 import { generateKeyPairs } from '../utils/generateKeyPairs'
-import { readSessionCookie } from '../utils/readSessionCookie'
+import { readSessionCookie } from '../session/readSessionCookie'
 
 import { SessionValues, cookieOptions } from '../session/startSession'
 

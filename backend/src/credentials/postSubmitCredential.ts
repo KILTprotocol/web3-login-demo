@@ -7,8 +7,8 @@ import { DAPP_DID_MNEMONIC, JWT_SIGNER_SECRET } from '../config'
 import { generateKeyPairs } from '../utils/generateKeyPairs'
 import { decryptionCallback } from '../utils/decryptionCallback'
 import { getApi } from '../utils/connection'
-import { readCredentialCookie } from '../utils/readCredentialCookie'
 
+import { readCredentialCookie } from './readCredentialCookie'
 import { emailRequest } from './listOfRequests'
 
 export async function postSubmitCredential(
