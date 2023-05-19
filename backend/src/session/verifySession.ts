@@ -2,7 +2,7 @@ import * as Kilt from '@kiltprotocol/sdk-js'
 import { Response, Request } from 'express'
 import jwt from 'jsonwebtoken'
 
-import { JWT_SIGNER_SECRET } from '../config'
+import { DAPP_DID_MNEMONIC, JWT_SIGNER_SECRET } from '../config'
 
 import { generateKeyPairs } from '../utils/generateKeyPairs'
 import { getApi } from '../utils/connection'
@@ -18,20 +18,12 @@ export async function verifySession(
 ): Promise<void> {
   await getApi()
 
-  const secretKey = JWT_SIGNER_SECRET
-  if (!secretKey) {
-    response
-      .status(500)
-      .send(
-        `Could not find JWT-Secret-key; so it is not possible to verify session.`
-      )
-    throw new Error(
-      "Define a value for 'JWT_SIGNER_SECRET' on the '.env'-file first!"
-    )
-  }
-
   // read cookie from browser
-  const cookiePayload = await readSessionCookie(request, response, secretKey)
+  const cookiePayload = await readSessionCookie(
+    request,
+    response,
+    JWT_SIGNER_SECRET
+  )
   const serverSession = cookiePayload.server
 
   // Important/Real Verification:
@@ -46,13 +38,7 @@ export async function verifySession(
     throw new Error('an encryption key is required')
   }
 
-  // get your encryption Key, a.k.a. Key Agreement
-  const dAppDidMnemonic = process.env.DAPP_DID_MNEMONIC
-  if (!dAppDidMnemonic) {
-    throw new Error('Enter your dApps mnemonic on the .env file')
-  }
-
-  const { keyAgreement } = generateKeyPairs(dAppDidMnemonic)
+  const { keyAgreement } = generateKeyPairs(DAPP_DID_MNEMONIC)
 
   const decryptedBytes = Kilt.Utils.Crypto.decryptAsymmetric(
     { box: encryptedChallenge, nonce },

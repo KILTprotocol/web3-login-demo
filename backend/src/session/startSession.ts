@@ -3,7 +3,7 @@ import { Response, Request, CookieOptions } from 'express'
 import jwt from 'jsonwebtoken'
 
 import { getApi } from '../utils/connection'
-import { DAPP_NAME } from '../config'
+import { DAPP_NAME, JWT_SIGNER_SECRET } from '../config'
 
 /**
  * Define how the Session Values are packaged.
@@ -81,12 +81,6 @@ export async function startSession(
   const payload = await generateSessionValues(
     request.app.locals.dappDidDocument
   )
-  const secretKey = process.env.JWT_SIGNER_SECRET
-  if (!secretKey) {
-    throw new Error(
-      "Define a value for 'JWT_SIGNER_SECRET' on the '.env'-file first!"
-    )
-  }
 
   // Create a Json-Web-Token:
   // set the expiration of JWT same as the Cookie
@@ -94,7 +88,7 @@ export async function startSession(
     expiresIn: `${cookieOptions.maxAge} seconds`
   }
   // default to algorithm: 'HS256',
-  const token = jwt.sign(payload, secretKey, optionsJwt)
+  const token = jwt.sign(payload, JWT_SIGNER_SECRET, optionsJwt)
 
   // Set a Cookie in the header including the JWT and our options:
   // Using 'cookie-parser' dependency:
