@@ -78,7 +78,7 @@ async function main() {
 
   console.log(
     '\n',
-    'The variables defining the Well-Known-DID-Configuration are: \n',
+    'The variables defining/verifying the Well-Known-DID-Configuration are: \n',
     `webSocket=${webSocket}   (tells you the blockchain)\n`,
     `dAppURI=${dAppURI} \n`,
     `domainOrigin=${domainOrigin} \n`,
