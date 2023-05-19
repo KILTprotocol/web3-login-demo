@@ -16,8 +16,8 @@ import { verifySession } from './session/verifySession'
 
 import { fetchDidDocument } from './utils/fetchDidDocument'
 
-import { getRequestCredential } from './getRequestCredential/getRequestCredential'
-import { postSubmitCredential } from './postSubmitCredential/postSubmitCredential'
+import { getRequestCredential } from './credentials/getRequestCredential'
+import { postSubmitCredential } from './credentials/postSubmitCredential'
 
 const app: Express = express()
 

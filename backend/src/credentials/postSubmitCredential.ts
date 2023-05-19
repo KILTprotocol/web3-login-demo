@@ -2,15 +2,14 @@ import * as Kilt from '@kiltprotocol/sdk-js'
 
 import { Request, Response } from 'express'
 
+import { DAPP_DID_MNEMONIC, JWT_SIGNER_SECRET } from '../config'
+
 import { generateKeyPairs } from '../utils/generateKeyPairs'
 import { decryptionCallback } from '../utils/decryptionCallback'
-import {
-  DAPP_DID_MNEMONIC,
-  JWT_SIGNER_SECRET,
-  emailRequest
-} from '../../config'
 import { getApi } from '../utils/connection'
 import { readCredentialCookie } from '../utils/readCredentialCookie'
+
+import { emailRequest } from './listOfRequests'
 
 export async function postSubmitCredential(
   request: Request,
