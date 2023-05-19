@@ -51,7 +51,7 @@ export async function validateEnvironmentConstants() {
  *
  * This would fail if the keys derivation path has changed.
  *
- * I this fails, it means you can not sing or encrypt anything that could be verified or decrypt.
+ * If this fails, it means you can not sign or encrypt anything that could be verified or decrypted by your counterpart.
  *
  * @param didDocument
  */
