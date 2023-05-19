@@ -116,10 +116,7 @@ async function encryptMessage(
   return cypheredMessage
 }
 
-async function saveChallengeOnCookie(
-  challengeOnRequest: string,
-  response: Response
-) {
+function saveChallengeOnCookie(challengeOnRequest: string, response: Response) {
   // Create a Json-Web-Token:
   // set the expiration of JWT same as the Cookie
   const optionsJwt = {
