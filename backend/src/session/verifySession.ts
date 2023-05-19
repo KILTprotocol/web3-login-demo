@@ -2,7 +2,9 @@ import * as Kilt from '@kiltprotocol/sdk-js'
 import { Response, Request } from 'express'
 import jwt from 'jsonwebtoken'
 
-import { generateKeypairs } from '../utils/attester/generateKeyPairs'
+import { JWT_SIGNER_SECRET } from '../../config'
+
+import { generateKeypairs } from '../utils/generateKeyPairs'
 import { getApi } from '../utils/connection'
 import { extractEncryptionKeyUri } from '../utils/extractEncryptionKeyUri'
 import { readSessionCookie } from '../utils/readSessionCookie'
@@ -15,7 +17,7 @@ export async function verifySession(
 ): Promise<void> {
   await getApi()
 
-  const secretKey = process.env.JWT_SIGNER_SECRET
+  const secretKey = JWT_SIGNER_SECRET
   if (!secretKey) {
     response
       .status(500)

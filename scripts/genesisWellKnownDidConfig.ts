@@ -25,9 +25,9 @@ import {
  */
 async function readCurrentDidConfig(): Promise<VerifiableDomainLinkagePresentation> {
   const parentDirectory = path.dirname(__dirname)
-  const fullpath = `${parentDirectory}/frontend/public/.well-known/did-configuration.json`
+  const fullPath = `${parentDirectory}/frontend/public/.well-known/did-configuration.json`
 
-  const fileContent = await fs.promises.readFile(fullpath, {
+  const fileContent = await fs.promises.readFile(fullPath, {
     encoding: 'utf8'
   })
 
@@ -36,7 +36,7 @@ async function readCurrentDidConfig(): Promise<VerifiableDomainLinkagePresentati
     console.log(
       '\n\nYour projects repository already has a well-known-did-configuration file.'
     )
-    console.log('You can find it under this path: \n', fullpath)
+    console.log('You can find it under this path: \n', fullPath)
   }
   if (!fileContent) {
     console.log(

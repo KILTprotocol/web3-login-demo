@@ -1,21 +1,39 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import styles from './User.module.css'
 
 import { startExtensionSession } from '../startExtensionSession'
+import { tryToLogIn } from '../tryToLogIn'
+
+import { PubSubSessionV1, PubSubSessionV2 } from '../utils/types'
 
 import Button from './Button'
 
+// TODO!: Define specific Props when their types are settled
 interface Props {
   [x: string]: any
 }
 
-async function startSession() {
-  console.log('trying to start the session! ')
-  await startExtensionSession()
-}
-
 export default function User({ user, connected }: Props): JSX.Element {
+  const [extensionSession, setExtensionSession] = useState<
+    PubSubSessionV1 | PubSubSessionV2 | null
+  >(null)
+  async function startSession() {
+    console.log('trying to start the session! ')
+    const extSessHelp = await startExtensionSession()
+    setExtensionSession(extSessHelp)
+  }
+
+  // After startSession(), the Extension-Session-Values should be available for the backend. Done through cookie parser, (but data bank also possible).
+  // The frontend still needs the Session-Object to be able to use its methods (functions). That's why we save on a React-State.
+
+  async function login() {
+    console.log(
+      'Trying to log in. Meaning to ask the extension for a specific Type of Credential - a CType.'
+    )
+    await tryToLogIn(extensionSession)
+  }
+
   return (
     <div>
       <div className={styles.account}>
@@ -46,7 +64,9 @@ export default function User({ user, connected }: Props): JSX.Element {
             strokeWidth="1.5"
           />
         </svg>
-        <span className={styles.text}>{user || 'guest'}</span>
+        <span className={styles.text} onClick={login}>
+          {user || 'not logged in yet'}
+        </span>
       </div>
       <Button className={styles.action} onClick={startSession}>
         {!connected ? 'connect' : user ? 'logout' : 'login'}

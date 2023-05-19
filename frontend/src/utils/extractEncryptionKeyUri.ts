@@ -1,7 +1,8 @@
 import * as Kilt from '@kiltprotocol/sdk-js'
 
 /**
- * The EncryptionKeyURI has different names depending on the Credential API version that the extension uses.
+ * The EncryptionKeyURI has different name depending on the session version that the extension uses.
+ * For practical reason, we ut this on a extra utility-function.
  *
  * @param extensionSession either PubSubSessionV1 or PubSubSessionV1
  * @returns encryptionKeyUri as Kilt.DidResourceUri
