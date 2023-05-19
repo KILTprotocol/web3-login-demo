@@ -40,7 +40,7 @@ export async function postSubmitCredential(
       throw new Error(`Unexpected message type: ${decryptedMessage.body.type}`)
     }
 
-    // FIX-ME!:  maybe allow for several credentials in the future
+    // TODO:  maybe allow for several credentials in the future
     const credential = decryptedMessage.body.content[0]
 
     console.log('Decrypted Credential being verify: \n', credential)
