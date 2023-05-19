@@ -2,7 +2,7 @@ import * as Kilt from '@kiltprotocol/sdk-js'
 
 import { Request, Response } from 'express'
 
-import { generateKeypairs } from '../utils/generateKeyPairs'
+import { generateKeyPairs } from '../utils/generateKeyPairs'
 import { decryptionCallback } from '../utils/decryptionCallback'
 import {
   DAPP_DID_MNEMONIC,
@@ -27,7 +27,7 @@ export async function postSubmitCredential(
     )
     const api = await getApi()
 
-    const { keyAgreement } = generateKeypairs(DAPP_DID_MNEMONIC)
+    const { keyAgreement } = generateKeyPairs(DAPP_DID_MNEMONIC)
     const decryptedMessage = await Kilt.Message.decrypt(
       encryptedMessage,
       decryptionCallback(keyAgreement)
