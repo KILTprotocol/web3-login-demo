@@ -84,7 +84,7 @@ async function validateOurKeys(didDocument: Kilt.DidDocument) {
     throw new Error("No mnemonic for your dApp's DID was found.")
   }
 
-  const keyChain = generateKeyPairs(DAPP_DID_MNEMONIC)
+  const localKeyPairs = generateKeyPairs(DAPP_DID_MNEMONIC)
 
   if (!didDocument.authentication) {
     throw new Error('No Key "authentication" for your DID found on chain.')
@@ -92,7 +92,7 @@ async function validateOurKeys(didDocument: Kilt.DidDocument) {
   if (
     !u8aEq(
       didDocument.authentication[0].publicKey,
-      keyChain.authentication.publicKey
+      localKeyPairs.authentication.publicKey
     )
   ) {
     throw new Error(
@@ -106,7 +106,7 @@ async function validateOurKeys(didDocument: Kilt.DidDocument) {
   if (
     !u8aEq(
       didDocument.keyAgreement[0].publicKey,
-      keyChain.keyAgreement.publicKey
+      localKeyPairs.keyAgreement.publicKey
     )
   ) {
     throw new Error(
@@ -120,7 +120,7 @@ async function validateOurKeys(didDocument: Kilt.DidDocument) {
   if (
     !u8aEq(
       didDocument.assertionMethod[0].publicKey,
-      keyChain.assertionMethod.publicKey
+      localKeyPairs.assertionMethod.publicKey
     )
   ) {
     throw new Error(
@@ -137,7 +137,7 @@ async function validateOurKeys(didDocument: Kilt.DidDocument) {
     didDocument.capabilityDelegation &&
     !u8aEq(
       didDocument.capabilityDelegation[0].publicKey,
-      keyChain.capabilityDelegation.publicKey
+      localKeyPairs.capabilityDelegation.publicKey
     )
   ) {
     console.log(
