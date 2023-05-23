@@ -6,10 +6,9 @@ import { generateKeyPairs } from './generateKeyPairs'
 
 export async function generateFullDid(
   submitterAccount: Kilt.KiltKeyringPair,
-  mnemonic: string
+  didMnemonic: string
 ): Promise<Kilt.DidDocument> {
   await getApi()
-  const didMnemonic = mnemonic
   const {
     authentication,
     keyAgreement,
