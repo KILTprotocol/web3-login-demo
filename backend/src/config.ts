@@ -86,10 +86,6 @@ async function validateOurKeys(didDocument: Kilt.DidDocument) {
 
   const keyChain = generateKeyPairs(DAPP_DID_MNEMONIC)
 
-  //Debugger:
-  // console.log(`Generated KeyChain: ${JSON.stringify(keyChain, null, 2)} `)
-  // console.log(`fetched DID Document: ${JSON.stringify(didDocument, null, 2)} `)
-
   if (!didDocument.authentication) {
     throw new Error('No Key "authentication" for your DID found on chain.')
   }
