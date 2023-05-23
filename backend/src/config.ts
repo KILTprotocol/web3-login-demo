@@ -27,7 +27,7 @@ export const JWT_SIGNER_SECRET = process.env.JWT_SIGNER_SECRET as string
 export let DAPP_ACCOUNT_ADDRESS: string
 
 export async function validateEnvironmentConstants() {
-  allCupsOnTheShelf()
+  allEnvsThere()
   DAPP_ACCOUNT_ADDRESS = await deduceAccountAddress()
   Kilt.Did.validateUri(DAPP_DID_URI, 'Did')
   const ourDidDocumentOnChain = await fetchDidDocument()
@@ -38,7 +38,8 @@ export async function validateEnvironmentConstants() {
  * Checks if all the necessary environment constants where defined on the root's directory's `.env`-file.
  *
  */
-function allCupsOnTheShelf() {
+function allEnvsThere() {
+  // Do you have all cups on the shelf?
   const shelf: { [key: string]: string | number | undefined } = {
     WSS_ADDRESS: WSS_ADDRESS,
     BACKEND_PORT: BACKEND_PORT,
