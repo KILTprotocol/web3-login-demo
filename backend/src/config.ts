@@ -1,4 +1,5 @@
 import path from 'path'
+import fs from 'fs'
 
 import dotenv from 'dotenv'
 
@@ -8,6 +9,7 @@ import { u8aEq } from '@polkadot/util'
 import { generateAccount } from './utils/generateAccount'
 import { generateKeyPairs } from './utils/generateKeyPairs'
 import { fetchDidDocument } from './utils/fetchDidDocument'
+import { VerifiableDomainLinkagePresentation } from './utils/types'
 
 // Letting the server know where the environment variables are.
 // Since we are inside a monorepo, the `.env` file is not part of this package, but of the parent directory of this package.
@@ -30,13 +32,14 @@ export async function validateEnvironmentConstants() {
   Kilt.Did.validateUri(DAPP_DID_URI, 'Did')
   const ourDidDocumentOnChain = await fetchDidDocument()
   await validateOurKeys(ourDidDocumentOnChain)
+  await sureToBeMyself(DAPP_DID_URI)
 }
 /**
  * Checks if all the necessary environment constants where defined on the root's directory's `.env`-file.
  *
  */
 function allCupsOnTheShelf() {
-  const cups: { [key: string]: string | number | undefined } = {
+  const shelf: { [key: string]: string | number | undefined } = {
     WSS_ADDRESS: WSS_ADDRESS,
     BACKEND_PORT: BACKEND_PORT,
     DAPP_ACCOUNT_MNEMONIC: DAPP_ACCOUNT_MNEMONIC,
@@ -45,12 +48,12 @@ function allCupsOnTheShelf() {
     DAPP_NAME: DAPP_NAME,
     JWT_SIGNER_SECRET: JWT_SIGNER_SECRET
   }
-  for (const cup in cups) {
-    if (!cups[cup]) {
+  for (const cup in shelf) {
+    if (!shelf[cup]) {
       throw new Error(
         `Environment constant '${cup}' is missing. Define it on the project's root directory '.env'-file. \n
-         Right now '${cup}' is: '${cups[cup]}' . \n
-        Of type: ${typeof cups[cup]}.`
+         Right now '${cup}' is: '${shelf[cup]}' . \n
+        Of type: ${typeof shelf[cup]}.`
       )
     }
   }
@@ -65,11 +68,6 @@ async function deduceAccountAddress(): Promise<string> {
 
   return dAppAccount.address
 }
-
-// async function validateOurDidUri() {
-//   Kilt.Did.validateUri(DAPP_DID_URI, 'Did')
-// Should it have something more on it??
-// }
 
 /**
  * This function checks that the public keys linked to our DID on chain match the ones we generate now.
@@ -151,4 +149,40 @@ async function validateOurKeys(didDocument: Kilt.DidDocument) {
   }
 
   // A DID can have several keys of type 'keyAgreement', but only one key of each of the other types.
+}
+
+/**
+ * Check if the **Well-Known DID Configuration** being displayed on the website uses the same DID URI as the one on the `.env`-file.
+ *
+ * If the DID URIs do not match, the extensions would not trust us. Your ID would be saying a different name as what you claim.
+ *
+ * @param DAPP_DID_URI
+ */
+async function sureToBeMyself(dAppDidUri: Kilt.DidUri) {
+  // Letting the server know where the current Well-Known-DID-Config is stored
+  const wellKnownPath = path.resolve(
+    __dirname,
+    '../..',
+    './frontend/public/.well-known/did-configuration.json'
+  )
+
+  const fileContent = await fs.promises.readFile(wellKnownPath, {
+    encoding: 'utf8'
+  })
+  if (!fileContent) {
+    throw new Error(
+      'No well-known-did-configuration file found on your repository.'
+    )
+  }
+  const wellKnownDidConfig = JSON.parse(
+    fileContent
+  ) as VerifiableDomainLinkagePresentation
+
+  if (wellKnownDidConfig.linked_dids[0].credentialSubject.id !== dAppDidUri) {
+    throw new Error(`The __Well-Known DID Configuration__ that your dApp displays was issued with a different DID than the one, that the server has at disposition.\n
+    The Did from the Well-Known: ${wellKnownDidConfig.linked_dids[0].credentialSubject.id}\n
+    The Did as environment constant: ${dAppDidUri} \n
+    
+    Try running 'build:well-known' to make a new well-known-did-config.  `)
+  }
 }
