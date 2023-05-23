@@ -11,18 +11,18 @@ import { fetchDidDocument } from './utils/fetchDidDocument'
 
 // Letting the server know where the environment variables are.
 // Since we are inside a monorepo, the `.env` file is not part of this package, but of the parent directory of this package.
-const backendDirectory = path.dirname(__dirname)
+const backendDirectory = path.dirname(__filename)
 const projectRootDirectory = path.dirname(backendDirectory)
 dotenv.config({ path: `${projectRootDirectory}/.env` })
 
 export const BACKEND_PORT = process.env.BACKEND_PORT || 3000
 export const WSS_ADDRESS = process.env.WSS_ADDRESS || 'wss://peregrine.kilt.io'
-export const DAPP_DID_MNEMONIC = process.env.DAPP_DID_MNEMONIC
-export const DAPP_DID_URI = process.env.DAPP_DID_URI
+export const DAPP_DID_MNEMONIC = process.env.DAPP_DID_MNEMONIC as string
+export const DAPP_DID_URI = process.env.DAPP_DID_URI as Kilt.DidUri
 export const DAPP_NAME = process.env.DAPP_NAME ?? 'Web3-Login-Demo'
-export const DAPP_ACCOUNT_MNEMONIC = process.env.DAPP_DID_MNEMONIC
+export const DAPP_ACCOUNT_MNEMONIC = process.env.DAPP_DID_MNEMONIC as string
 
-export const JWT_SIGNER_SECRET = process.env.JWT_SIGNER_SECRET
+export const JWT_SIGNER_SECRET = process.env.JWT_SIGNER_SECRET as string
 
 export let DAPP_ACCOUNT_ADDRESS: string
 
@@ -35,7 +35,7 @@ export async function validateEnvironmentConstants() {
 }
 /**
  * Checks if all the necessary environment constants where defined on the root's directory's `.env`-file.
- * Only checks if they have been assigned at all.
+ *
  */
 function allCupsOnTheShelf() {
   const cups: { [key: string]: string | number | undefined } = {
@@ -61,7 +61,7 @@ function allCupsOnTheShelf() {
  */
 async function deduceAccountAddress(): Promise<string> {
   await Kilt.init()
-  const dAppAccount = generateAccount(DAPP_ACCOUNT_MNEMONIC as Kilt.DidUri)
+  const dAppAccount = generateAccount(DAPP_ACCOUNT_MNEMONIC as string)
 
   return dAppAccount.address
 }
