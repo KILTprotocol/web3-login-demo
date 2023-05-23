@@ -9,7 +9,8 @@ import { generateAccount } from './utils/generateAccount'
 import { generateKeyPairs } from './utils/generateKeyPairs'
 import { fetchDidDocument } from './utils/fetchDidDocument'
 
-// Letting the server know where the environment variables are
+// Letting the server know where the environment variables are.
+// Since we are inside a monorepo, the `.env` file is not part of this package, but of the parent directory of this package.
 const backendDirectory = path.dirname(__dirname)
 const projectRootDirectory = path.dirname(backendDirectory)
 dotenv.config({ path: `${projectRootDirectory}/.env` })
