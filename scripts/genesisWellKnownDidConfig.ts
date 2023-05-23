@@ -24,10 +24,13 @@ import {
  * @returns a json object from read file.
  */
 async function readCurrentDidConfig(): Promise<VerifiableDomainLinkagePresentation> {
-  const parentDirectory = path.dirname(__dirname)
-  const fullPath = `${parentDirectory}/frontend/public/.well-known/did-configuration.json`
+  const wellKnownPath = path.resolve(
+    __dirname,
+    '..',
+    './frontend/public/.well-known/did-configuration.json'
+  )
 
-  const fileContent = await fs.promises.readFile(fullPath, {
+  const fileContent = await fs.promises.readFile(wellKnownPath, {
     encoding: 'utf8'
   })
 
@@ -36,7 +39,7 @@ async function readCurrentDidConfig(): Promise<VerifiableDomainLinkagePresentati
     console.log(
       '\n\nYour projects repository already has a well-known-did-configuration file.'
     )
-    console.log('You can find it under this path: \n', fullPath)
+    console.log('You can find it under this path: \n', wellKnownPath)
   }
   if (!fileContent) {
     console.log(
