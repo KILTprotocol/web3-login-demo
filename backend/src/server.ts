@@ -88,9 +88,7 @@ validateEnvironmentConstants()
     app.locals.dappDidDocument = doccy
     // wait for fetched document before server starts listening:
     app.listen(BACKEND_PORT, () => {
-      console.log(
-        `⚡️[server]: Server is running at http://localhost:${BACKEND_PORT}`
-      )
+      console.log(`⚡️ Server is running at http://localhost:${BACKEND_PORT}`)
     })
   })
   .catch((error) => {
