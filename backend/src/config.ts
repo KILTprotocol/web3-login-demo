@@ -11,17 +11,15 @@ import { fetchDidDocument } from './utils/fetchDidDocument'
 
 // Letting the server know where the environment variables are.
 // Since we are inside a monorepo, the `.env` file is not part of this package, but of the parent directory of this package.
-const backendDirectory = path.dirname(__filename)
-const projectRootDirectory = path.dirname(backendDirectory)
-dotenv.config({ path: `${projectRootDirectory}/.env` })
+const envPath = path.resolve(__dirname, '../..', '.env')
+dotenv.config({ path: envPath })
 
-export const BACKEND_PORT = process.env.BACKEND_PORT || 3000
 export const WSS_ADDRESS = process.env.WSS_ADDRESS || 'wss://peregrine.kilt.io'
+export const BACKEND_PORT = process.env.BACKEND_PORT || 3000
+export const DAPP_ACCOUNT_MNEMONIC = process.env.DAPP_ACCOUNT_MNEMONIC as string
 export const DAPP_DID_MNEMONIC = process.env.DAPP_DID_MNEMONIC as string
 export const DAPP_DID_URI = process.env.DAPP_DID_URI as Kilt.DidUri
 export const DAPP_NAME = process.env.DAPP_NAME ?? 'Web3-Login-Demo'
-export const DAPP_ACCOUNT_MNEMONIC = process.env.DAPP_DID_MNEMONIC as string
-
 export const JWT_SIGNER_SECRET = process.env.JWT_SIGNER_SECRET as string
 
 export let DAPP_ACCOUNT_ADDRESS: string
@@ -50,7 +48,9 @@ function allCupsOnTheShelf() {
   for (const cup in cups) {
     if (!cups[cup]) {
       throw new Error(
-        `Environment constant ${cup} is missing. Define it on the project's root directory '.env'-file.`
+        `Environment constant '${cup}' is missing. Define it on the project's root directory '.env'-file. \n
+         Right now '${cup}' is: '${cups[cup]}' . \n
+        Of type: ${typeof cups[cup]}.`
       )
     }
   }
