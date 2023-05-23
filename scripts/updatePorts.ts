@@ -9,7 +9,10 @@ import dotenv from 'dotenv'
 dotenv.config()
 const frontendPort = process.env.FRONTEND_PORT
 const backendPort = process.env.BACKEND_PORT
-console.log(`backendPort: ${backendPort}`, `frontendPort: ${frontendPort}`)
+console.log(
+  `custom backendPort: ${backendPort}`,
+  `custom frontendPort: ${frontendPort}`
+)
 
 // Continues only if at least one of the variables was define on the `.env` file
 if (frontendPort || backendPort) {
