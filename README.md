@@ -1,19 +1,47 @@
 # web3-login-demo
 
-In order to run this recipe you need an on-chain DID, domain linkage credential and test Claimer credentials.
-Please use the KILT Distillery CLI to quickly setup this project or generate the assets needed.
+This website demonstrates how to build a logging using KILT Protocol.
+During the logging procedure, the user is required to present a credential.
+You can decide which credentials to accept.
+They could be issued by yourself or by other attesters.
+In this demo we request a credential that contains an email address that the user owns.
+For that we rely on https://socialkyc.io to issue email credentials.
 
-## Environment Variables
+In order for a **dApp** to support logging in with KILT Credentials, it needs: 
 
-Each instance of this repository needs to include a local list of environment variables.
-This variables determine the communication with the blockchain, your dApps identity and possibly influence some functions.
+1. An on-chain DID
+  * This DID is used so that the user knows the parties to whom they talk
+2. Domain linkage credential
+  * Bind your DID to a specific domain
+  * This prevents Man-in-the-Middle attacks
+3. A CType you want to request from the user
+  * In this example, we use the email CType, but you could use any CType you want
+
+If you don't have some of the above, make sure to go though the [setup section](#setup).
+
+## Prerequisite
+
+This code makes use of a mix of different technologies.
+If you are not familiar with some of these, we recommend to first get an overview about them.
+
+* [decentralized identifier (DID)](https://docs.kilt.io/docs/concepts/did)
+* [typescript](https://www.typescriptlang.org/)
+* [JSON](https://www.json.org/json-en.html)
+* [JSON Web Token](https://en.wikipedia.org/wiki/JSON_Web_Token)
+* [express.js](https://expressjs.com/)
+* [react.js](https://react.dev/)
+
+## Setup
+
+Before you can run this project, you need to setup your environment variables.
+This variables specify which blockchain we use and they hold the secrets for your DID and to sign JWTs.
 Defining them is part of the set up of your project.
 
-The .env-file should be on the root directory of this repository. It's just called `.env`.
-It is include on the `.gitignore` list, so that it never gets push to github.
+The `.env`-file should be on the root directory of this repository.
+*This file maybe hidden.*
+It is included on the `.gitignore` list so that the secrets that are contained in the file never get pushed to GitHub.
 
-It is a standard that all environment variables are name with capitalized letters.
-Please, follow the standard and use these names for your environment variables:
+The following variables are required:
 
 - `WSS_ADDRESS` = _This is the websocket address of the RPC node_
 - `ORIGIN` = _This is the URL domain origin of your website (frontend)_
@@ -24,23 +52,13 @@ Please, follow the standard and use these names for your environment variables:
 - `DAPP_NAME` = _This should be a custom name for your dApp_
 - `JWT_SIGNER_SECRET` = _This is secret key (string) that signs the Json-Web-Tokens before saving them in the Cookies_
 
-There is a script to facilitate the generation of the environment variables that are needed to set up your decentralized App.
-This script is called `genesisEnvironmentVariables` you can either
-run:
+There is a script to facilitate the generation of the environment variables that are needed to set up your decentralized App (dApp).
+This script is called `./scripts/genesisEnvironmentVariables.ts`.
+You can execute it by running `yarn environment`.
 
-- `yarn  ts-node ./scripts/genesisEnvironmentVariables.ts`
-
-or just:
-
-- `yarn environment`
-
-to execute it once.
-
-It is forseen that you run this file a couple of times and follow the instructions that it provides, depending on your project's state.
+Setting up is a step by step process.
+You will need to run the script repeatedly and follow the instructions that it provides, depending on your project's state.
 After running this script each time, you need to manually copy the output and save it on the .env-file on the main project folder.
-
-Alternatively, you could manually add the values that you created somehow elsewhere.
-But this is only recommended, if you really know what you are doing.
 
 ## Process
 
