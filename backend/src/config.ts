@@ -36,7 +36,8 @@ export async function validateEnvironmentConstants() {
 }
 /**
  * Checks if all the necessary environment constants where defined on the root's directory's `.env`-file.
- * Tests if the given value is `falsy`.
+ *
+ * Throws an error if a constant is `falsy`.
  */
 function allEnvsThere() {
   // Do you have all cups on the shelf?
