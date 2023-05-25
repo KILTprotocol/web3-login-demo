@@ -28,10 +28,7 @@ if (frontendPort || backendPort) {
     packageJson.scripts.start = `PORT=${frontendPort} react-scripts start`
   }
   // Write the updated package.json back to the file
-  fs.writeFileSync(
-    packageJsonPath,
-    JSON.stringify(packageJson, null, 2) + '\r\n'
-  )
+  fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2) + '\n')
 
   console.log('Package.json updated successfully to use custom ports.!')
 } else {
