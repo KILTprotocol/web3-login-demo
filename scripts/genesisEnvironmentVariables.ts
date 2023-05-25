@@ -45,6 +45,7 @@ async function main() {
     "Alternatively, you could create some of the environment values otherwise and let this script do the rest for you. Or (for pros) make them all otherwise and don't use this.\n"
     "Alternatively, you could create some of the environment values otherwise and let this script do the rest for you. Or (for pros) make them all otherwise and don't use this.\n"
   )
+
   // Making the output strong purple
   console.log('\u001B[38;5;201m')
   // Making the output strong purple

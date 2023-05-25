@@ -1,16 +1,17 @@
 {
   "name": "web3-login-demo",
   "version": "0.0.1",
-  "description": "web3 login demo for KILT distillery",
+  "description": "Showcase to login on a website with Kilt-Credentials",
   "main": "index.ts",
   "repository": "git@github.com:KILTprotocol/web3-login-demo.git",
   "author": "KILT <info@kilt.io>",
   "license": "BSD-4-Clause",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
   "scripts": {
-    "install": "concurrently yarn:install:*",
-    "install:backend": "cd backend && yarn install",
-    "install:frontend": "cd frontend&& yarn install",
-    "install:base": "yarn install --ignore-scripts",
     "environment": "ts-node --skipProject ./scripts/genesisEnvironmentVariables.ts",
     "build:client": "cd ./frontend && yarn build",
     "build:well-known": "ts-node --skipProject ./scripts/genesisWellKnownDidConfig.ts",

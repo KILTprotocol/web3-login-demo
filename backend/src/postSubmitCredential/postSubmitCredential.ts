@@ -1,16 +1,20 @@
 import * as Kilt from '@kiltprotocol/sdk-js'
 
-import { NextFunction, Request, Response } from 'express'
+import { Request, Response } from 'express'
 
 import { generateKeypairs } from '../utils/generateKeyPairs'
 import { decryptionCallback } from '../utils/decryptionCallback'
-import { DAPP_DID_MNEMONIC } from '../../configuration'
+import {
+  DAPP_DID_MNEMONIC,
+  JWT_SIGNER_SECRET,
+  emailRequest
+} from '../../config'
 import { getApi } from '../utils/connection'
+import { readCredentialCookie } from '../utils/readCredentialCookie'
 
 export async function postSubmitCredential(
   request: Request,
-  response: Response,
-  next: NextFunction
+  response: Response
 ) {
   try {
     const encryptedMessage = request.body
@@ -29,13 +33,40 @@ export async function postSubmitCredential(
       decryptionCallback(keyAgreement)
     )
 
-    if (decryptedMessage.body.type !== 'submit-credential') {
-      throw new Error('Unexpected message type')
-    }
-    const credential = decryptedMessage.body.content[0]
-    // FIX-ME!:  maybe allow for several credentials in the future
+    // Verifying this is a properly-formatted message
+    Kilt.Message.verify(decryptedMessage)
 
-    await Kilt.Credential.verifyPresentation(credential)
+    if (decryptedMessage.body.type !== 'submit-credential') {
+      throw new Error(`Unexpected message type: ${decryptedMessage.body.type}`)
+    }
+
+    // TODO:  maybe allow for several credentials in the future
+    const credential = decryptedMessage.body.content[0]
+
+    console.log('Decrypted Credential being verify: \n', credential)
+
+    // Know against to what structure you want to compare to:
+    const requestedCTypeHash = emailRequest.cTypes[0].cTypeHash
+    const requestedCTypeDetailed = await Kilt.CType.fetchFromChain(
+      `kilt:ctype:${requestedCTypeHash}`
+    )
+
+    // The function Credential.verifyPresentation can check against a specific cType structure.
+    // This cType needs to match the ICType-interface.
+    // To fullfil this structure we need to remove the 'creator' and 'createdAt' properties from our fetched object.
+    const { $id, $schema, title, properties, type } = requestedCTypeDetailed
+    const requestedCType = { $id, $schema, title, properties, type }
+
+    const challengeOnRequest = await readCredentialCookie(
+      request,
+      response,
+      JWT_SIGNER_SECRET
+    )
+
+    await Kilt.Credential.verifyPresentation(credential, {
+      challenge: challengeOnRequest,
+      ctype: requestedCType
+    })
 
     const attestationChain = await api.query.attestation.attestations(
       credential.rootHash
@@ -48,13 +79,13 @@ export async function postSubmitCredential(
       throw new Error("Credential has been revoked and hence it's not valid.")
     }
 
-    response
-      .status(200)
-      .send(
-        'Credential Successfully Verified!  The user is legitimate. ( ͡° ͜ʖ ͡°)'
-      )
+    console.log('Credential Successfully Verified! User is logged in now.')
+
+    // Send a little something to the frontend, so that the user interface can display who logged in.
+    const plainUserInfo = credential.claim.contents.email
+
+    response.status(200).send(plainUserInfo)
   } catch (error) {
     console.log('Post Submit Credential Error.', error)
-    next(error)
   }
 }

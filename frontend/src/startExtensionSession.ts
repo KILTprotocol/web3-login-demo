@@ -50,7 +50,7 @@ export async function startExtensionSession(): Promise<
 
   const responseToBackend = JSON.stringify({ extensionSession })
 
-  const sessionVerificationResponse = await fetch(`/api/session/settle`, {
+  const sessionVerificationResponse = await fetch(`/api/session/verify`, {
     method: 'POST',
     credentials: 'include',
     headers: {

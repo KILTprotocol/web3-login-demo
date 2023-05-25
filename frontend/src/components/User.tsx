@@ -9,7 +9,7 @@ import { PubSubSessionV1, PubSubSessionV2 } from '../utils/types'
 
 import Button from './Button'
 
-// FIXME!: Define specific Props when there type is settled
+// TODO!: Define specific Props when their types are settled
 interface Props {
   [x: string]: any
 }
@@ -29,7 +29,7 @@ export default function User({ user, connected }: Props): JSX.Element {
 
   async function login() {
     console.log(
-      'Trying to log in. Meaning ask the extension for the specific Type of Credential, a CType.'
+      'Trying to log in. Meaning to ask the extension for a specific Type of Credential - a CType.'
     )
     await tryToLogIn(extensionSession)
   }
