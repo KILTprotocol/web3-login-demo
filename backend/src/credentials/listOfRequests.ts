@@ -1,6 +1,6 @@
 import * as Kilt from '@kiltprotocol/sdk-js'
 
-// Stablish which cTypes our dApp accepts and which attesters we trust:
+// Establish which cTypes our dApp accepts and which attesters we trust:
 
 export const emailRequest: Kilt.IRequestCredentialContent = {
   cTypes: [
@@ -8,7 +8,7 @@ export const emailRequest: Kilt.IRequestCredentialContent = {
       cTypeHash:
         '0x3291bb126e33b4862d421bfaa1d2f272e6cdfc4f96658988fbcffea8914bd9ac',
       trustedAttesters: [
-        'did:kilt:5CqJa4Ct7oMeMESzehTiN9fwYdGLd7tqeirRMpGDh2XxYYyx' as Kilt.DidUri
+        'did:kilt:4pehddkhEanexVTTzWAtrrfo2R7xPnePpuiJLC7shQU894aY'
       ],
       requiredProperties: ['Email']
     }
