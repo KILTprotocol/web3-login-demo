@@ -14,7 +14,7 @@ import { getApi } from './utils/connection'
 
 // Letting the server know where the environment variables are.
 // Since we are inside a monorepo, the `.env` file is not part of this package, but of the parent directory of this package; the root's directory.
-const envPath = path.resolve(__dirname, '../../.env')
+const envPath = path.resolve(__dirname, '../..', '.env')
 dotenv.config({ path: envPath })
 
 export const WSS_ADDRESS = process.env.WSS_ADDRESS || 'wss://peregrine.kilt.io'
@@ -163,18 +163,20 @@ async function corroborateMyIdentity(dAppDidUri: Kilt.DidUri) {
   })
   if (!fileContent) {
     throw new Error(
-      'No well-known-did-configuration file found on your repository.'
+      'No well-known-did-configuration file found on your repository. (or file is empty)'
     )
   }
   const wellKnownDidConfig = JSON.parse(
     fileContent
   ) as VerifiableDomainLinkagePresentation
 
-  if (wellKnownDidConfig.linked_dids[0].credentialSubject.id !== dAppDidUri) {
-    throw new Error(`The __Well-Known DID Configuration__ that your dApp displays was issued with a different DID than the one, that the server has at disposition.\n
-    The Did from the Well-Known: ${wellKnownDidConfig.linked_dids[0].credentialSubject.id}\n
-    The Did as environment constant: ${dAppDidUri} \n
+  if (wellKnownDidConfig.linked_dids[0].credentialSubject.id === dAppDidUri) {
+    throw new Error(`
+    The 'Well-Known DID Configuration' that your dApp displays was issued with a different DID than the one, that the server has at disposition.
     
-    Try running 'build:well-known' to make a new well-known-did-config.  `)
+    The DID from the Well-Known: ${wellKnownDidConfig.linked_dids[0].credentialSubject.id}
+    The DID as environment constant: ${dAppDidUri}
+    
+    Try running \`build:well-known\` to make a new well-known-did-config.  `)
   }
 }
