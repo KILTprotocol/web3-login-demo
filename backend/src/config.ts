@@ -66,7 +66,7 @@ function assertThatAllEnvisAreThere() {
  */
 async function deduceAccountAddress(): Promise<string> {
   await Kilt.init()
-  const dAppAccount = generateAccount(DAPP_ACCOUNT_MNEMONIC as string)
+  const dAppAccount = generateAccount(DAPP_ACCOUNT_MNEMONIC)
 
   return dAppAccount.address
 }
@@ -81,10 +81,6 @@ async function deduceAccountAddress(): Promise<string> {
  * @param didDocument
  */
 async function validateOurKeys(didDocument: Kilt.DidDocument) {
-  if (!DAPP_DID_MNEMONIC) {
-    throw new Error("No mnemonic for your dApp's DID was found.")
-  }
-
   const localKeyPairs = generateKeyPairs(DAPP_DID_MNEMONIC)
 
   if (!didDocument.authentication) {
