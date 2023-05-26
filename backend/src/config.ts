@@ -17,8 +17,8 @@ import { getApi } from './utils/connection'
 const envPath = path.resolve(__dirname, '../..', '.env')
 dotenv.config({ path: envPath })
 
-export const WSS_ADDRESS = process.env.WSS_ADDRESS || 'wss://peregrine.kilt.io'
-export const BACKEND_PORT = process.env.BACKEND_PORT || 3000
+export const WSS_ADDRESS = process.env.WSS_ADDRESS ?? 'wss://peregrine.kilt.io'
+export const BACKEND_PORT = process.env.BACKEND_PORT ?? 3000
 export const DAPP_ACCOUNT_MNEMONIC = process.env.DAPP_ACCOUNT_MNEMONIC as string
 export const DAPP_DID_MNEMONIC = process.env.DAPP_DID_MNEMONIC as string
 export const DAPP_DID_URI = process.env.DAPP_DID_URI as Kilt.DidUri
