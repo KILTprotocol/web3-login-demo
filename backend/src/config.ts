@@ -163,7 +163,7 @@ async function corroborateMyIdentity(dAppDidUri: Kilt.DidUri) {
   })
   if (!fileContent) {
     throw new Error(
-      'No well-known-did-configuration file found on your repository. (or file is empty)'
+      'The well-known-did-configuration file found on your repository is empty.'
     )
   }
   const wellKnownDidConfig = JSON.parse(
