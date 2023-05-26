@@ -170,7 +170,7 @@ async function corroborateMyIdentity(dAppDidUri: Kilt.DidUri) {
     fileContent
   ) as VerifiableDomainLinkagePresentation
 
-  if (wellKnownDidConfig.linked_dids[0].credentialSubject.id === dAppDidUri) {
+  if (wellKnownDidConfig.linked_dids[0].credentialSubject.id !== dAppDidUri) {
     throw new Error(`
     The 'Well-Known DID Configuration' that your dApp displays was issued with a different DID than the one, that the server has at disposition.
     
