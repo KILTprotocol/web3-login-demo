@@ -10,10 +10,11 @@ import { generateAccount } from './utils/generateAccount'
 import { generateKeyPairs } from './utils/generateKeyPairs'
 import { fetchDidDocument } from './utils/fetchDidDocument'
 import { VerifiableDomainLinkagePresentation } from './utils/types'
+import { getApi } from './utils/connection'
 
 // Letting the server know where the environment variables are.
-// Since we are inside a monorepo, the `.env` file is not part of this package, but of the parent directory of this package.
-const envPath = path.resolve(__dirname, '../..', '.env')
+// Since we are inside a monorepo, the `.env` file is not part of this package, but of the parent directory of this package; the root's directory.
+const envPath = path.resolve(__dirname, '../../.env')
 dotenv.config({ path: envPath })
 
 export const WSS_ADDRESS = process.env.WSS_ADDRESS || 'wss://peregrine.kilt.io'
@@ -27,35 +28,34 @@ export const JWT_SIGNER_SECRET = process.env.JWT_SIGNER_SECRET as string
 export let DAPP_ACCOUNT_ADDRESS: string
 
 export async function validateEnvironmentConstants() {
-  allEnvsThere()
+  assertThatAllEnvisAreThere()
+  await getApi()
   DAPP_ACCOUNT_ADDRESS = await deduceAccountAddress()
   Kilt.Did.validateUri(DAPP_DID_URI, 'Did')
   const ourDidDocumentOnChain = await fetchDidDocument()
   await validateOurKeys(ourDidDocumentOnChain)
-  await sureToBeMyself(DAPP_DID_URI)
+  await corroborateMyIdentity(DAPP_DID_URI)
 }
 /**
- * Checks if all the necessary environment constants where defined on the root's directory's `.env`-file.
+ * Checks if all the necessary environment constants where defined.
  *
  * Throws an error if a constant is `falsy`.
  */
-function allEnvsThere() {
+function assertThatAllEnvisAreThere() {
   // Do you have all cups on the shelf?
   const shelf: { [key: string]: string | number | undefined } = {
-    WSS_ADDRESS: WSS_ADDRESS,
-    BACKEND_PORT: BACKEND_PORT,
-    DAPP_ACCOUNT_MNEMONIC: DAPP_ACCOUNT_MNEMONIC,
-    DAPP_DID_MNEMONIC: DAPP_DID_MNEMONIC,
-    DAPP_DID_URI: DAPP_DID_URI,
-    DAPP_NAME: DAPP_NAME,
-    JWT_SIGNER_SECRET: JWT_SIGNER_SECRET
+    WSS_ADDRESS,
+    BACKEND_PORT,
+    DAPP_ACCOUNT_MNEMONIC,
+    DAPP_DID_MNEMONIC,
+    DAPP_DID_URI,
+    DAPP_NAME,
+    JWT_SIGNER_SECRET
   }
   for (const cup in shelf) {
     if (!shelf[cup]) {
       throw new Error(
-        `Environment constant '${cup}' is missing. Define it on the project's root directory '.env'-file. \n
-         Right now '${cup}' is: '${shelf[cup]}' . \n
-        Of type: ${typeof shelf[cup]}.`
+        `Environment constant '${cup}' is missing. Define it on the project's root directory '.env'-file. \n`
       )
     }
   }
@@ -156,7 +156,7 @@ async function validateOurKeys(didDocument: Kilt.DidDocument) {
  *
  * @param DAPP_DID_URI
  */
-async function sureToBeMyself(dAppDidUri: Kilt.DidUri) {
+async function corroborateMyIdentity(dAppDidUri: Kilt.DidUri) {
   // Letting the server know where the current Well-Known-DID-Config is stored
   const wellKnownPath = path.resolve(
     __dirname,
