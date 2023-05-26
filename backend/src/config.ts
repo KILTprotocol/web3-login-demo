@@ -81,6 +81,7 @@ async function deduceAccountAddress(): Promise<string> {
 async function validateOurKeys(didDocument: Kilt.DidDocument) {
   const localKeyPairs = generateKeyPairs(DAPP_DID_MNEMONIC)
 
+  // All DIDs need to have an authentication key, so this first assertion should never fail
   if (!didDocument.authentication) {
     throw new Error('No Key "authentication" for your DID found on chain.')
   }
