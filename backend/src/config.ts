@@ -65,9 +65,7 @@ function assertThatAllEnvisAreThere() {
  * @returns DAPP_ACCOUNT_ADDRESS
  */
 async function deduceAccountAddress(): Promise<string> {
-  await Kilt.init()
   const dAppAccount = generateAccount(DAPP_ACCOUNT_MNEMONIC)
-
   return dAppAccount.address
 }
 
