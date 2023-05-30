@@ -2,6 +2,9 @@ import * as Kilt from '@kiltprotocol/sdk-js'
 
 // Establish which cTypes our dApp accepts and which attesters we trust:
 
+/**
+ * Email Credential Type attested from SocialKYC.io
+ */
 export const emailRequest: Kilt.IRequestCredentialContent = {
   cTypes: [
     {
