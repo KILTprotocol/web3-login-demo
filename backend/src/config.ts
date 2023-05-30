@@ -81,67 +81,46 @@ async function deduceAccountAddress(): Promise<string> {
 async function validateOurKeys(didDocument: Kilt.DidDocument) {
   const localKeyPairs = generateKeyPairs(DAPP_DID_MNEMONIC)
 
-  // All DIDs need to have an authentication key, so this first assertion should never fail
-  if (!didDocument.authentication) {
-    throw new Error('No Key "authentication" for your DID found on chain.')
-  }
-  if (
-    !u8aEq(
-      didDocument.authentication[0].publicKey,
-      localKeyPairs.authentication.publicKey
-    )
-  ) {
-    throw new Error(
-      'Public Key "authentication" on chain does not match what we are generating.'
-    )
-  }
+  // A DID can have several keys of type 'keyAgreement', but only up to one key of each of the other types.
+  // All DIDs need to have an 'authentication' key, so this first assertion should never fail
+  const necessaryTypesOfKeys: Kilt.KeyRelationship[] = [
+    'authentication',
+    'assertionMethod',
+    'keyAgreement'
+  ]
 
-  if (!didDocument.keyAgreement) {
-    throw new Error('No Key "keyAgreement" for your DID found on chain.')
+  for (const keyName of necessaryTypesOfKeys) {
+    await compareKey(didDocument[keyName]?.[0], localKeyPairs[keyName], keyName)
   }
-  if (
-    !u8aEq(
-      didDocument.keyAgreement[0].publicKey,
-      localKeyPairs.keyAgreement.publicKey
+  // don't throw if 'capabilityDelegation' key is missing because it is not really necessary for this project
+  const trivialKey: Kilt.KeyRelationship = 'capabilityDelegation'
+  try {
+    await compareKey(
+      didDocument[trivialKey]?.[0],
+      localKeyPairs[trivialKey],
+      trivialKey
     )
-  ) {
-    throw new Error(
-      'Public Key "keyAgreement" on chain does not match what we are generating.'
-    )
-  }
-
-  if (!didDocument.assertionMethod) {
-    throw new Error('No Key "assertionMethod" for your DID found on chain.')
-  }
-  if (
-    !u8aEq(
-      didDocument.assertionMethod[0].publicKey,
-      localKeyPairs.assertionMethod.publicKey
-    )
-  ) {
-    throw new Error(
-      'Public Key "assertionMethod" on chain does not match what we are generating.'
-    )
-  }
-
-  // don't throw if capabilityDelegation is missing because it is not really necessary for this project
-  if (!didDocument.capabilityDelegation) {
-    console.log('No Key "capabilityDelegation" for your DID found on chain.')
-  }
-
-  if (
-    didDocument.capabilityDelegation &&
-    !u8aEq(
-      didDocument.capabilityDelegation[0].publicKey,
-      localKeyPairs.capabilityDelegation.publicKey
-    )
-  ) {
+  } catch (warning) {
     console.log(
-      'Public Key "capabilityDelegation" on chain does not match what we are generating.'
+      `Non-essential Key "${trivialKey}" not available. Reason: "${warning}" `
     )
   }
+}
 
-  // A DID can have several keys of type 'keyAgreement', but only one key of each of the other types.
+async function compareKey(
+  resolved: Kilt.DidKey | undefined,
+  derived: Kilt.KeyringPair | Kilt.KiltEncryptionKeypair,
+  relationship: Kilt.KeyRelationship
+): Promise<void> {
+  if (!resolved) {
+    throw new Error(`No "${relationship}" Key for your DID found on chain.`)
+  }
+
+  if (!u8aEq(derived.publicKey, resolved.publicKey)) {
+    throw new Error(
+      `Public "${relationship}" Key on chain does not match what we are generating.`
+    )
+  }
 }
 
 /**
