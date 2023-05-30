@@ -37,13 +37,13 @@ export async function validateEnvironmentConstants() {
   await corroborateMyIdentity(DAPP_DID_URI)
 }
 /**
- * Checks if all the necessary environment constants where defined.
+ * Checks if all the necessary environment constants were defined.
  *
  * Throws an error if a constant is `falsy`.
  */
 function assertThatAllEnvisAreThere() {
   // Do you have all cups on the shelf?
-  const shelf: { [key: string]: string | number | undefined } = {
+  const shelf = {
     WSS_ADDRESS,
     BACKEND_PORT,
     DAPP_ACCOUNT_MNEMONIC,
@@ -52,10 +52,11 @@ function assertThatAllEnvisAreThere() {
     DAPP_NAME,
     JWT_SIGNER_SECRET
   }
-  for (const cup in shelf) {
-    if (!shelf[cup]) {
+
+  for (const [place, cup] of Object.entries(shelf)) {
+    if (!cup) {
       throw new Error(
-        `Environment constant '${cup}' is missing. Define it on the project's root directory '.env'-file. \n`
+        `Environment constant '${place}' is missing. Define it on the project's root directory '.env'-file. \n`
       )
     }
   }
