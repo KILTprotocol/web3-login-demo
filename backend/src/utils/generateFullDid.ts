@@ -25,7 +25,7 @@ export async function generateFullDid(
   if (oldDidResolved) {
     console.log('this DID is already registered on chain')
     // true if it was deleted:
-    const deactivated: boolean = oldDidResolved.metadata.deactivated
+    const deactivated = oldDidResolved.metadata.deactivated
     const oldDidDocument = oldDidResolved.document
 
     if (deactivated) {
@@ -64,7 +64,9 @@ export async function generateFullDid(
   const didUri = Kilt.Did.getFullDidUriFromKey(authentication)
   const resolved = await Kilt.Did.resolve(didUri)
   if (!resolved) {
-    throw new Error('Full DID could not be fetch from chain. A.K.A.: resolved')
+    throw new Error(
+      'Full DID could not be fetched from chain. A.K.A.: resolved'
+    )
   }
   const { document: didDocument } = resolved
 
