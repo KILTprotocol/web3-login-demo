@@ -65,7 +65,7 @@ export async function generateFullDid(
   const resolved = await Kilt.Did.resolve(didUri)
   if (!resolved) {
     throw new Error(
-      'Full DID could not be fetched from chain. A.K.A.: resolved'
+      'Full DID could not be fetched from chain. Also referred as: could not be resolved'
     )
   }
   const { document: didDocument } = resolved
