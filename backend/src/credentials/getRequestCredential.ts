@@ -51,7 +51,7 @@ export async function getRequestCredential(
       JSON.stringify(message, null, 2)
     )
 
-    await saveChallengeOnCookie(challenge, response)
+    saveChallengeOnCookie(challenge, response)
 
     const encryptedMessage = await encryptMessage(message, sessionValues)
 
