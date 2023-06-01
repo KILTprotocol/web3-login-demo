@@ -73,18 +73,15 @@ export async function createCredential(
     origin
   }
 
-  // Make sure that the cType we are using is the right one.
-  // Needed, because we are crafting it and not fetching it from the chain.
-  // In order for the Extensions to recognize your dApp, it has to use a standard, broad used cType.
-  // For well-known-did-configurations the cType we use has the following hash id:
-  // "$id": "kilt:ctype:0x9d271c790775ee831352291f01c5d04c7979713a5896dcf5e81708184cc5c643"
-  const digitalFootprintOfCType =
+  // Make sure that `ctypeDomainLinkage` contains the correct Domain Linkage CType.
+  // Extensions expect this specific CTypes other CTypes will not be recognized.
+  const cTypeUri =
     'kilt:ctype:0x9d271c790775ee831352291f01c5d04c7979713a5896dcf5e81708184cc5c643'
-  if (ctypeDomainLinkage.$id !== digitalFootprintOfCType) {
-    console.log('ctypeDomainLinkage.$id', ctypeDomainLinkage.$id)
-    console.log('digitalFootprintOfCType', digitalFootprintOfCType)
+  if (ctypeDomainLinkage.$id !== cTypeUri) {
+    console.log('The following CType URI is not the expected one:', ctypeDomainLinkage.$id)
+    console.log('Expected CType URI', cTypeUri)
     throw new Error(
-      'This is not the needed cType to create a well-known-did-configuration.'
+      'Wrong cType for creating a well-known-did-configuration.'
     )
   }
 
