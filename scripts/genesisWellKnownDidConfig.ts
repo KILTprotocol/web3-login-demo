@@ -6,7 +6,7 @@ import * as Kilt from '@kiltprotocol/sdk-js'
 import dotenv from 'dotenv'
 
 import { generateAccount } from './launchUtils/generateAccount'
-import { generateKeypairs } from './launchUtils/generateKeyPairs'
+import { generateKeyPairs } from './launchUtils/generateKeyPairs'
 import { VerifiableDomainLinkagePresentation } from './launchUtils/types'
 
 import {
@@ -24,10 +24,13 @@ import {
  * @returns a json object from read file.
  */
 async function readCurrentDidConfig(): Promise<VerifiableDomainLinkagePresentation> {
-  const parentDirectory = path.dirname(__dirname)
-  const fullPath = `${parentDirectory}/frontend/public/.well-known/did-configuration.json`
+  const wellKnownPath = path.resolve(
+    __dirname,
+    '..',
+    './frontend/public/.well-known/did-configuration.json'
+  )
 
-  const fileContent = await fs.promises.readFile(fullPath, {
+  const fileContent = await fs.promises.readFile(wellKnownPath, {
     encoding: 'utf8'
   })
 
@@ -36,7 +39,7 @@ async function readCurrentDidConfig(): Promise<VerifiableDomainLinkagePresentati
     console.log(
       '\n\nYour projects repository already has a well-known-did-configuration file.'
     )
-    console.log('You can find it under this path: \n', fullPath)
+    console.log('You can find it under this path: \n', wellKnownPath)
   }
   if (!fileContent) {
     console.log(
@@ -54,12 +57,16 @@ async function main() {
   const dAppURI =
     (process.env.DAPP_DID_URI as Kilt.DidUri) ??
     (`did:kilt:4noURIEstablished` as Kilt.DidUri)
-  // don't put a slash "/" at the end!
-  const domainOrigin = process.env.ORIGIN ?? 'no origin assigned'
   const dAppMnemonic =
     process.env.DAPP_DID_MNEMONIC ?? 'your dApp needs an Identity '
   const fundsMnemonic =
     process.env.DAPP_ACCOUNT_MNEMONIC ?? 'your dApp needs an Sponsor '
+
+  let domainOrigin = 'no origin assigned'
+  if (process.env.FRONTEND_PORT) {
+    // don't put a slash "/" at the end of the origin!
+    domainOrigin = `http://localhost:${process.env.FRONTEND_PORT}`
+  }
 
   // Connect to the webSocket. This tells the Kilt Api to which node to interact, and ergo also the
   // blockchain (Spiritnet or Peregrine)
@@ -74,8 +81,8 @@ async function main() {
 
   console.log(
     '\n',
-    'The environment variables defining the Well-Known-DID-Configuration are: \n',
-    `webSocket=${webSocket} \n`,
+    'The variables defining/verifying the Well-Known-DID-Configuration are: \n',
+    `webSocket=${webSocket}   (tells you the blockchain)\n`,
     `dAppURI=${dAppURI} \n`,
     `domainOrigin=${domainOrigin} \n`,
     `dAppMnemonic=${dAppMnemonic} \n`,
@@ -108,13 +115,13 @@ async function main() {
       return
     } catch (err) {
       console.log(
-        "The current well-known-did-config of your project is not valid (anymore). \n Let's proceed with the first step to make a new one!"
+        "The current well-known-did-config of your project is not valid (anymore). \n Let's proceed to make a new one!"
       )
       // if this is case, don't trow an error to the next catch
     }
   } catch (error) {
     console.log(
-      "No old well-known-did-config was found. Let's proceed with the first step to make one!"
+      "No old well-known-did-config was found. Let's proceed to make one!"
     )
   }
 
@@ -122,7 +129,7 @@ async function main() {
   // First Step: Create a Claim
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  // The claim has to be based on the Domain Linkage CType. This CType is fetched from the Blockchain on './wellKnownDIDConfiguration' and imported here as cTypeDomeinLinkage
+  // The claim has to be based on the Domain Linkage CType. This CType is fetched from the Blockchain on './wellKnownDIDConfiguration' and imported here as cTypeDomainLinkage
 
   const domainCredential = await createCredential(domainOrigin, dAppURI)
 
@@ -132,7 +139,7 @@ async function main() {
 
   // A valid credential requires an attestation. Since the website wants to link itself to the DID just created, it has to self-attest the domain linkage credential, i.e., write the credential attestation on chain using the same DID it is trying to link to.
 
-  const dAppsDidKeys = generateKeypairs(dAppMnemonic)
+  const dAppsDidKeys = generateKeyPairs(dAppMnemonic)
   const dappAccount = generateAccount(fundsMnemonic)
 
   await selfAttestCredential(

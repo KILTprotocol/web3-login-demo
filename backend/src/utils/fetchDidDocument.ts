@@ -1,5 +1,7 @@
 import * as Kilt from '@kiltprotocol/sdk-js'
 
+import { DAPP_DID_URI } from '../config'
+
 import { getApi } from '../utils/connection'
 
 /**
@@ -12,8 +14,6 @@ import { getApi } from '../utils/connection'
 export async function fetchDidDocument(): Promise<Kilt.DidDocument> {
   // connects to the websocket of your, in '.env', specified blockchain
   await getApi()
-
-  const DAPP_DID_URI = process.env.DAPP_DID_URI as Kilt.DidUri
 
   if (!DAPP_DID_URI) {
     throw new Error("enter your dApp's DID URI on the .env-file first")

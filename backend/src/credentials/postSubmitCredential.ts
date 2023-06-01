@@ -2,15 +2,14 @@ import * as Kilt from '@kiltprotocol/sdk-js'
 
 import { Request, Response } from 'express'
 
-import { generateKeypairs } from '../utils/generateKeyPairs'
+import { DAPP_DID_MNEMONIC, JWT_SIGNER_SECRET } from '../config'
+
+import { generateKeyPairs } from '../utils/generateKeyPairs'
 import { decryptionCallback } from '../utils/decryptionCallback'
-import {
-  DAPP_DID_MNEMONIC,
-  JWT_SIGNER_SECRET,
-  emailRequest
-} from '../../config'
 import { getApi } from '../utils/connection'
-import { readCredentialCookie } from '../utils/readCredentialCookie'
+
+import { readCredentialCookie } from './readCredentialCookie'
+import { emailRequest } from './listOfRequests'
 
 export async function postSubmitCredential(
   request: Request,
@@ -27,7 +26,7 @@ export async function postSubmitCredential(
     )
     const api = await getApi()
 
-    const { keyAgreement } = generateKeypairs(DAPP_DID_MNEMONIC)
+    const { keyAgreement } = generateKeyPairs(DAPP_DID_MNEMONIC)
     const decryptedMessage = await Kilt.Message.decrypt(
       encryptedMessage,
       decryptionCallback(keyAgreement)

@@ -3,7 +3,7 @@ import * as Kilt from '@kiltprotocol/sdk-js'
 import jwt from 'jsonwebtoken'
 import { Response, Request } from 'express'
 
-import { SessionValues } from '../session/startSession'
+import { SessionValues } from './startSession'
 /**
  *  Mean to facilitate working with the JSON-Web-Token inside the Cookie.
  *  This function reads, decodes and verifies the 'sessionJWT' Cookie from the browser.
@@ -28,10 +28,10 @@ export async function readSessionCookie(
     response
       .status(401)
       .send(
-        `Could not find Cookie with session values (as JWT). Enable Cookies, Log-in and try again.`
+        `Could not find Cookie with session values (as JWT). Enable Cookies, restart the session and try again.`
       )
     throw new Error(
-      'Cookie with Session JWT not found. Enable Cookies, Log-in and try again.'
+      'Cookie with Session JWT not found. Enable Cookies, restart the session and try again.'
     )
   }
 
