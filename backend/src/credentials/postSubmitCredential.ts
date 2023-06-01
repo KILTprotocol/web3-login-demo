@@ -81,7 +81,13 @@ export async function postSubmitCredential(
     console.log('Credential Successfully Verified! User is logged in now.')
 
     // Send a little something to the frontend, so that the user interface can display who logged in.
-    const plainUserInfo = credential.claim.contents.email
+    // "Email" is capitalized
+    const plainUserInfo = credential.claim.contents.Email
+
+    console.log(
+      'Plain User Info that we are passing to the frontend:',
+      plainUserInfo
+    )
 
     response.status(200).send(plainUserInfo)
   } catch (error) {
