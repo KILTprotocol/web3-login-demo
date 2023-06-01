@@ -7,10 +7,10 @@ import { Response, Request } from 'express'
  * @param request
  * @param response
  */
-export async function deleteSessionCookie(
+export function deleteSessionCookie(
   request: Request,
   response: Response
-): Promise<void> {
+): void {
   // read cookie from browser
   console.log('trying to delete the cookie via deleteSessionCookie()\n')
   const sessionJWT = request.cookies.sessionJWT
