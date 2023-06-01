@@ -7,10 +7,10 @@ import { Response, Request } from 'express'
  * @param request
  * @param response
  */
-export async function deleteCredentialCookie(
+export function deleteCredentialCookie(
   request: Request,
   response: Response
-): Promise<void> {
+): void {
   // read cookie from browser
   console.log('trying to delete the cookie via deleteCredentialCookie()\n')
   const credentialCookie = request.cookies.credentialJWT
