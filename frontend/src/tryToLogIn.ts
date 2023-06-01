@@ -8,7 +8,7 @@ import {
 
 export async function tryToLogIn(
   extensionSession: PubSubSessionV1 | PubSubSessionV2 | null
-) {
+): Promise<string> {
   if (!extensionSession) {
     throw new Error(
       'No Extension Session Object found. Start the Server-Extension-Session first! '
@@ -75,4 +75,12 @@ export async function tryToLogIn(
   if (!credentialVerificationResponse.ok) {
     throw new Error('Login Failed. Error verifying the Credential.')
   }
+
+  const verifiedUserInfo = await credentialVerificationResponse.text()
+  console.log(
+    'Decoded Information that the backend send to the frontend after verifying the credential: ',
+    verifiedUserInfo
+  )
+
+  return verifiedUserInfo
 }
