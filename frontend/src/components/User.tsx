@@ -4,6 +4,7 @@ import styles from './User.module.css'
 
 import { startExtensionSession } from '../startExtensionSession'
 import { tryToLogIn } from '../tryToLogIn'
+import { tryToLogOut } from '../tryToLogOut'
 
 import { PubSubSessionV1, PubSubSessionV2 } from '../utils/types'
 
@@ -32,6 +33,13 @@ export default function User({ user, connected }: Props): JSX.Element {
       'Trying to log in. Meaning to ask the extension for a specific Type of Credential - a CType.'
     )
     await tryToLogIn(extensionSession)
+  }
+
+  async function logOut() {
+    console.log(
+      'Trying to log out. Meaning to delete the credential and session cookies. '
+    )
+    user = await tryToLogOut()
   }
 
   return (
@@ -64,13 +72,18 @@ export default function User({ user, connected }: Props): JSX.Element {
             strokeWidth="1.5"
           />
         </svg>
+
         <span className={styles.text} onClick={login}>
-          {user || 'not logged in yet'}
+          {user || 'untrusted individual'}
         </span>
+
+        <Button className={styles.action} onClick={startSession}>
+          {!connected ? 'connect' : 'disconnect'}
+        </Button>
+        <Button className={styles.action} onClick={logOut}>
+          {!user ? 'logout' : 'login'}
+        </Button>
       </div>
-      <Button className={styles.action} onClick={startSession}>
-        {!connected ? 'connect' : user ? 'logout' : 'login'}
-      </Button>
     </div>
   )
 }
