@@ -15,10 +15,11 @@ interface Props {
   [x: string]: any
 }
 
-export default function User({ user, connected }: Props): JSX.Element {
+export default function User({ connected }: Props): JSX.Element {
   const [extensionSession, setExtensionSession] = useState<
     PubSubSessionV1 | PubSubSessionV2 | null
   >(null)
+  const [userMail, setUserMail] = useState<string | null>(null)
   async function startSession() {
     console.log('trying to start the session! ')
     const extSessHelp = await startExtensionSession()
@@ -32,21 +33,32 @@ export default function User({ user, connected }: Props): JSX.Element {
     console.log(
       'Trying to log in. Meaning to ask the extension for a specific Type of Credential - a CType.'
     )
-    await tryToLogIn(extensionSession)
+    const verifiedUserInfoThatServerSendsBack = await tryToLogIn(
+      extensionSession
+    )
+
+    setUserMail(verifiedUserInfoThatServerSendsBack)
   }
 
   async function logOut() {
     console.log(
       'Trying to log out. Meaning to delete the credential and session cookies. '
     )
-    user = await tryToLogOut()
+    await tryToLogOut()
+  }
+  function accessManager() {
+    if (!userMail) {
+      login()
+    } else {
+      logOut()
+    }
   }
 
   return (
     <div>
       <div className={styles.account}>
         <svg
-          width="24"
+          width="50"
           height="24"
           strokeWidth="1.5"
           viewBox="0 0 24 24"
@@ -73,15 +85,16 @@ export default function User({ user, connected }: Props): JSX.Element {
           />
         </svg>
 
-        <span className={styles.text} onClick={login}>
-          {user || 'untrusted individual'}
+        <span className={styles.text}>
+          {userMail ? `trusted user: ${userMail}` : 'untrusted individual'}
         </span>
-
+      </div>
+      <div className={styles.button_container}>
         <Button className={styles.action} onClick={startSession}>
           {!connected ? 'connect' : 'disconnect'}
         </Button>
-        <Button className={styles.action} onClick={logOut}>
-          {!user ? 'logout' : 'login'}
+        <Button className={styles.action} onClick={accessManager}>
+          {userMail ? 'logout' : 'login'}
         </Button>
       </div>
     </div>
