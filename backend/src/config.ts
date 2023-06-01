@@ -38,7 +38,6 @@ function envLoader(name: string) {
 }
 
 export async function validateEnvironmentConstants() {
-  // assertThatAllEnvisAreThere()
   await getApi()
   DAPP_ACCOUNT_ADDRESS = await deduceAccountAddress()
   Kilt.Did.validateUri(DAPP_DID_URI, 'Did')
@@ -46,31 +45,6 @@ export async function validateEnvironmentConstants() {
   await validateOurKeys(ourDidDocumentOnChain)
   await corroborateMyIdentity(DAPP_DID_URI)
 }
-// /**
-//  * Checks if all the necessary environment constants were defined.
-//  *
-//  * Throws an error if any environment constant is `falsy`.
-//  */
-// function assertThatAllEnvisAreThere() {
-//   // Do you have all cups on the shelf?
-//   const shelf = {
-//     WSS_ADDRESS,
-//     BACKEND_PORT,
-//     DAPP_ACCOUNT_MNEMONIC,
-//     DAPP_DID_MNEMONIC,
-//     DAPP_DID_URI,
-//     DAPP_NAME,
-//     JWT_SIGNER_SECRET
-//   }
-
-//   for (const [cup_name, cup_value] of Object.entries(shelf)) {
-//     if (!cup_value) {
-//       throw new Error(
-//         `Environment constant '${cup_name}' is missing. Define it on the project's root directory '.env'-file. \n`
-//       )
-//     }
-//   }
-// }
 
 /**  To avoid the possibility of having a mnemonic and account that don't match, the address is generated from the mnemonic each time.
  * @returns DAPP_ACCOUNT_ADDRESS
