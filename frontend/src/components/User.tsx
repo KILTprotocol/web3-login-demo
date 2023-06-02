@@ -19,7 +19,7 @@ export default function User({ connected }: Props): JSX.Element {
   const [extensionSession, setExtensionSession] = useState<
     PubSubSessionV1 | PubSubSessionV2 | null
   >(null)
-  const [userMail, setUserMail] = useState<string | null>(null)
+  const [userMail, setUserMail] = useState<string>()
   async function startSession() {
     console.log('trying to start the session! ')
     const extSessHelp = await startExtensionSession()
@@ -45,6 +45,7 @@ export default function User({ connected }: Props): JSX.Element {
       'Trying to log out. Meaning to delete the credential and session cookies. '
     )
     await makeLogOutHappen()
+    setUserMail(undefined)
   }
   function accessManager() {
     if (!userMail) {

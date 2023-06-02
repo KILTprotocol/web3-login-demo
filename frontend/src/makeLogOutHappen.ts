@@ -8,6 +8,6 @@ export async function makeLogOutHappen() {
     }
   })
   if (!logoutResult.ok) {
-    throw Error(logoutResult.statusText)
+    throw new Error(logoutResult.statusText)
   }
 }
