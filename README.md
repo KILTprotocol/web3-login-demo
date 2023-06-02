@@ -1,6 +1,7 @@
 # web3-login-demo
 
 This website demonstrates how to build a logging using KILT Protocol.
+
 During the logging procedure, the user is required to present a credential.
 You can decide which credentials to accept.
 They could be issued by yourself or by other attesters.
