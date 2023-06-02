@@ -19,6 +19,8 @@ import { fetchDidDocument } from './utils/fetchDidDocument'
 import { getRequestCredential } from './credentials/getRequestCredential'
 import { postSubmitCredential } from './credentials/postSubmitCredential'
 
+import { logout } from './logout/logout'
+
 const app: Express = express()
 
 // Activating Middleware:
@@ -74,6 +76,8 @@ app.get('/api/credential/getRequest', (req, res, next) =>
 app.post('/api/credential/postSubmit', (req, res, next) =>
   postSubmitCredential(req, res).catch(next)
 )
+
+app.post('/api/logout', (req, res, next) => logout(req, res).catch(next))
 
 validateEnvironmentConstants()
   .catch((error) => {
