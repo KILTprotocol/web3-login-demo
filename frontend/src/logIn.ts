@@ -6,7 +6,7 @@ import {
   PubSubSessionV2
 } from './utils/types'
 
-export async function makeLogInHappen(
+export async function logIn(
   extensionSession: PubSubSessionV1 | PubSubSessionV2 | null
 ): Promise<string> {
   if (!extensionSession) {

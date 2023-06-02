@@ -3,8 +3,8 @@ import React, { useState } from 'react'
 import styles from './User.module.css'
 
 import { startExtensionSession } from '../startExtensionSession'
-import { makeLogInHappen } from '../makeLogInHappen'
-import { makeLogOutHappen } from '../makeLogOutHappen'
+import { logIn } from '../logIn'
+import { logOut } from '../logOut'
 
 import { PubSubSessionV1, PubSubSessionV2 } from '../utils/types'
 
@@ -33,25 +33,23 @@ export default function User({ connected }: Props): JSX.Element {
     console.log(
       'Trying to log in. Meaning to ask the extension for a specific Type of Credential - a CType.'
     )
-    const verifiedUserInfoThatServerSendsBack = await makeLogInHappen(
-      extensionSession
-    )
+    const verifiedUserInfoThatServerSendsBack = await logIn(extensionSession)
 
     setUserMail(verifiedUserInfoThatServerSendsBack)
   }
 
-  async function logOut() {
+  async function logout() {
     console.log(
       'Trying to log out. Meaning to delete the credential and session cookies. '
     )
-    await makeLogOutHappen()
+    await logOut()
     setUserMail(undefined)
   }
   function accessManager() {
     if (!userMail) {
       login()
     } else {
-      logOut()
+      logout()
     }
   }
 
@@ -92,7 +90,7 @@ export default function User({ connected }: Props): JSX.Element {
       </div>
       <div className={styles.button_container}>
         <Button className={styles.action} onClick={startSession}>
-          {!connected ? 'connect' : 'disconnect'}
+          {connected ? 'disconnect' : 'connect'}
         </Button>
         <Button className={styles.action} onClick={accessManager}>
           {userMail ? 'logout' : 'login'}
