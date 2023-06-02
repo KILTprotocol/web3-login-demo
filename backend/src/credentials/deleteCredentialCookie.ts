@@ -1,7 +1,6 @@
 import { Response, Request } from 'express'
 
 /**
- *
  *  This function deletes 'credentialJWT' Cookie from the browser.
  *
  * @param request

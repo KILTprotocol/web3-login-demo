@@ -3,8 +3,8 @@ import React, { useState } from 'react'
 import styles from './User.module.css'
 
 import { startExtensionSession } from '../startExtensionSession'
-import { tryToLogIn } from '../tryToLogIn'
-import { tryToLogOut } from '../tryToLogOut'
+import { makeLogInHappen } from '../makeLogInHappen'
+import { makeLogOutHappen } from '../makeLogOutHappen'
 
 import { PubSubSessionV1, PubSubSessionV2 } from '../utils/types'
 
@@ -33,7 +33,7 @@ export default function User({ connected }: Props): JSX.Element {
     console.log(
       'Trying to log in. Meaning to ask the extension for a specific Type of Credential - a CType.'
     )
-    const verifiedUserInfoThatServerSendsBack = await tryToLogIn(
+    const verifiedUserInfoThatServerSendsBack = await makeLogInHappen(
       extensionSession
     )
 
@@ -44,7 +44,7 @@ export default function User({ connected }: Props): JSX.Element {
     console.log(
       'Trying to log out. Meaning to delete the credential and session cookies. '
     )
-    await tryToLogOut()
+    await makeLogOutHappen()
   }
   function accessManager() {
     if (!userMail) {

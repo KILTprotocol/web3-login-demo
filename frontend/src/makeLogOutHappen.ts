@@ -1,4 +1,4 @@
-export async function tryToLogOut() {
+export async function makeLogOutHappen() {
   const logoutResult = await fetch(`/api/logout`, {
     method: 'POST',
     credentials: 'include',
