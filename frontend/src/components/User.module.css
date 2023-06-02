@@ -30,12 +30,13 @@
   max-width: 200px;
 }
 
-.action {
-  cursor: pointer;
-  margin-left: 8px;
+.button_container {
+  display: flex;
+  margin: 8px 0;
+  gap: 15px;
 }
 
-.button_container {
-  text-align: center;
-  margin: 8px 0;
+.action {
+  flex: 1;
+  cursor: pointer;
 }
