@@ -28,47 +28,46 @@ export async function startExtensionSession() {
     throw new Error('Trouble generating session values on the backend.')
   }
 
-  console.log('Plain text accompanying the Cookie "sessionJWT": ', plainPayload)
+  console.log(
+    'Plain text accompanying the Cookie "sessionJWT": (The server session values) ',
+    plainPayload
+  )
 
-  try {
-    // destructure the payload:
-    const { dAppName, dAppEncryptionKeyUri, challenge } = plainPayload
+  // destructure the payload:
+  const { dAppName, dAppEncryptionKeyUri, challenge } = plainPayload
 
-    // Let the extension do the counterpart:
-    const extensionSession = await extension.startSession(
-      dAppName,
-      dAppEncryptionKeyUri,
-      challenge
-    )
-    console.log('the session was initialized (¬‿¬)')
-    console.log('session being returned by the extension:', extensionSession)
+  // Let the extension do the counterpart:
+  const extensionSession = await extension.startSession(
+    dAppName,
+    dAppEncryptionKeyUri,
+    challenge
+  )
+  console.log('the session was initialized (¬‿¬)')
+  console.log('session being returned by the extension:', extensionSession)
 
-    // Resolve the `session.encryptionKeyUri` and use this key and the nonce
-    // to decrypt `session.encryptedChallenge` and confirm that it’s equal to the original challenge.
-    // This verification must happen on the server-side.
+  // Resolve the extension `session.encryptionKeyUri` and use this key and the nonce
+  // to decrypt `session.encryptedChallenge` and confirm that it’s equal to the original challenge.
+  // This verification must happen on the server-side.
 
-    const responseToBackend = JSON.stringify({ extensionSession })
+  const responseToBackend = JSON.stringify({ extensionSession })
 
-    const sessionVerificationResponse = await fetch(`/api/session/verify`, {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-type': 'application/json',
-        Accept: 'application/json'
-      },
-      body: responseToBackend
-    })
-    if (!sessionVerificationResponse.ok) {
-      console.log('Session could not be verified.')
-      return
-    }
-
-    console.log(
-      'Session successfully verified. dApp-Server and Extension trust each other.'
-    )
-  } catch (error) {
-    console.error(
-      `Error verifying Session from:  ${extension.name}: ${extension.version},  ${error}`
+  const sessionVerificationResponse = await fetch(`/api/session/verify`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'Content-type': 'application/json',
+      Accept: 'application/json'
+    },
+    body: responseToBackend
+  })
+  if (!sessionVerificationResponse.ok) {
+    throw new Error(
+      `Session could not be verified. Extension: ${extension.name}: ${extension.version}`
     )
   }
+
+  console.log(
+    'Session successfully verified. dApp-Server and Browser-Extension trust each other.'
+  )
+  return extensionSession
 }

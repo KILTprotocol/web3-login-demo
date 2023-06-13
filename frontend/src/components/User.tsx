@@ -1,26 +1,63 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import styles from './User.module.css'
 
 import { startExtensionSession } from '../startExtensionSession'
+import { logIn } from '../logIn'
+import { logOut } from '../logOut'
+
+import { PubSubSessionV1, PubSubSessionV2 } from '../utils/types'
 
 import Button from './Button'
 
+// TODO!: Define specific Props when their types are settled
 interface Props {
   [x: string]: any
 }
 
-async function startSession() {
-  console.log('trying to start the session! ')
-  await startExtensionSession()
-}
+export default function User({ connected }: Props): JSX.Element {
+  const [extensionSession, setExtensionSession] = useState<
+    PubSubSessionV1 | PubSubSessionV2 | null
+  >(null)
+  const [userMail, setUserMail] = useState<string>()
+  async function startSession() {
+    console.log('trying to start the session! ')
+    const extSessHelp = await startExtensionSession()
+    setExtensionSession(extSessHelp)
+  }
 
-export default function User({ user, connected }: Props): JSX.Element {
+  // After startSession(), the Extension-Session-Values should be available for the backend. Done through cookie parser, (but data bank also possible).
+  // The frontend still needs the Session-Object to be able to use its methods (functions). That's why we save on a React-State.
+
+  async function login() {
+    console.log(
+      'Trying to log in. Meaning to ask the extension for a specific Type of Credential - a CType.'
+    )
+    const verifiedUserInfoThatServerSendsBack = await logIn(extensionSession)
+
+    setUserMail(verifiedUserInfoThatServerSendsBack)
+  }
+
+  async function logout() {
+    console.log(
+      'Trying to log out. Meaning to delete the credential and session cookies. '
+    )
+    await logOut()
+    setUserMail(undefined)
+  }
+  function accessManager() {
+    if (!userMail) {
+      login()
+    } else {
+      logout()
+    }
+  }
+
   return (
     <div>
       <div className={styles.account}>
         <svg
-          width="24"
+          width="50"
           height="24"
           strokeWidth="1.5"
           viewBox="0 0 24 24"
@@ -46,11 +83,19 @@ export default function User({ user, connected }: Props): JSX.Element {
             strokeWidth="1.5"
           />
         </svg>
-        <span className={styles.text}>{user || 'guest'}</span>
+
+        <span className={styles.text}>
+          {userMail ? `trusted user: ${userMail}` : 'untrusted individual'}
+        </span>
       </div>
-      <Button className={styles.action} onClick={startSession}>
-        {!connected ? 'connect' : user ? 'logout' : 'login'}
-      </Button>
+      <div className={styles.button_container}>
+        <Button className={styles.action} onClick={startSession}>
+          {connected ? 'disconnect' : 'connect'}
+        </Button>
+        <Button className={styles.action} onClick={accessManager}>
+          {userMail ? 'logout' : 'login'}
+        </Button>
+      </div>
     </div>
   )
 }
