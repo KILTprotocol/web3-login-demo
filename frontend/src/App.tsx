@@ -28,6 +28,7 @@ export default function Home(): JSX.Element {
     })
     return stopWatching
   }, [])
+  const extensionInitialized = typeof (window as any).kilt?.meta !== 'undefined'
 
   return (
     <Page>
@@ -40,6 +41,18 @@ export default function Home(): JSX.Element {
           <Button onClick={testApi}>GO TO SECRET PAGE</Button>
         </Card>
         <Card>
+          <p>Let's walk trough the login process step by step.</p>
+          <h2>1. The Extensions need to be enable</h2>
+          <p>
+            We do this when the website loads. The code for it is inside
+            'index.tsx'.
+          </p>
+          {extensionInitialized && '✅ Extensions loaded'}
+          {!extensionInitialized && '❌ Extensions not loaded'}
+          <p>
+            You can check this by running 'window.kilt' on your browsers
+            console.
+          </p>
           <h2>Extensions</h2>
           <Dropdown
             id="drop"
