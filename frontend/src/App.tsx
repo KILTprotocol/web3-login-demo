@@ -37,15 +37,16 @@ export default function Home(): JSX.Element {
   }, [])
   const extensionInitialized = typeof (window as any).kilt?.meta !== 'undefined'
 
-  async function startSession() {
-    console.log('trying to start the session! ')
-    const extSessHelp = await startExtensionSession()
-    setExtensionSession(extSessHelp)
-  }
   async function testApi() {
     const result = await fetch('/api')
     const message = await result.json()
     console.log(message)
+  }
+
+  async function startSession() {
+    console.log('trying to start the session! ')
+    const extSessHelp = await startExtensionSession()
+    setExtensionSession(extSessHelp)
   }
 
   async function login() {
@@ -75,12 +76,13 @@ export default function Home(): JSX.Element {
     <Page>
       <Page.Header>
         <Logo />
-        <User user={undefined} connected={undefined} onClick={undefined} />
+        <User user={userMail} connected={undefined} onClick={undefined} />
       </Page.Header>
       <Page.Content>
         <Card>
-          <Button onClick={testApi}>GO TO SECRET PAGE</Button>
+          <Button onClick={testApi}>Test Server API</Button>
         </Card>
+
         <Card>
           <p>Let's walk trough the login process step by step.</p>
           <h2>1. The Extensions need to be enable</h2>
@@ -108,7 +110,7 @@ export default function Home(): JSX.Element {
             {extensionSession ? 'disconnect' : 'connect'}
           </Button>
           <h2>4. Login with Credentials</h2>
-          <Button onClick={accessManager}>
+          <Button disabled={!extensionSession} onClick={accessManager}>
             {userMail ? 'logout' : 'login'}
           </Button>
         </Card>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   PubSubSessionV1,
   PubSubSessionV2
@@ -17,11 +17,11 @@ interface Props {
   [x: string]: any
 }
 
-export default function User({ connected }: Props): JSX.Element {
+export default function User({ user, connected }: Props): JSX.Element {
   const [extensionSession, setExtensionSession] = useState<
     PubSubSessionV1 | PubSubSessionV2 | null
   >(null)
-  const [userMail, setUserMail] = useState<string>()
+  const [userMail, setUserMail] = useState<string | undefined>(user)
   async function startSession() {
     console.log('trying to start the session! ')
     const extSessHelp = await startExtensionSession()
@@ -55,6 +55,10 @@ export default function User({ connected }: Props): JSX.Element {
     }
   }
 
+  useEffect(() => {
+    setUserMail(user)
+    return setUserMail(undefined)
+  }, [user])
   return (
     <div>
       <div className={styles.account}>
