@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import {
-  initializeKiltExtensionAPI,
-  watchExtensions,
-  Types
-} from 'kilt-extension-api'
+import { watchExtensions, Types } from 'kilt-extension-api'
 
 import Button from './components/Button'
 import Card from './components/Card'
@@ -27,10 +23,11 @@ export default function Home(): JSX.Element {
 
   // Directly inject the extensions that support the KILT protocol
   useEffect(() => {
-    watchExtensions((extensions) => {
+    const stopWatching = watchExtensions((extensions) => {
       setExtensions(extensions)
     })
-  })
+    return stopWatching
+  }, [])
 
   return (
     <Page>
@@ -41,15 +38,6 @@ export default function Home(): JSX.Element {
       <Page.Content>
         <Card>
           <Button onClick={testApi}>GO TO SECRET PAGE</Button>
-          <Button
-            disabled={typeof (window as any).kilt?.meta !== 'undefined'}
-            onClick={() =>
-              typeof (window as any).kilt?.meta === 'undefined' &&
-              initializeKiltExtensionAPI()
-            }
-          >
-            Enable Extensions
-          </Button>
         </Card>
         <Card>
           <h2>Extensions</h2>
