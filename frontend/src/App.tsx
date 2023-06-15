@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react'
 
 import { watchExtensions, Types } from 'kilt-extension-api'
+import {
+  PubSubSessionV1,
+  PubSubSessionV2
+} from 'kilt-extension-api/dist/types/types'
 
 import Button from './components/Button'
 import Card from './components/Card'
@@ -9,17 +13,20 @@ import Page from './components/Page'
 import User from './components/User'
 import Dropdown from './components/Dropdown'
 
+import { startExtensionSession } from './startExtensionSession'
+import { logIn } from './logIn'
+import { logOut } from './logOut'
+
 export default function Home(): JSX.Element {
   const [extensions, setExtensions] = useState<
     Types.InjectedWindowProvider<
       Types.PubSubSessionV1 | Types.PubSubSessionV2
     >[]
   >([])
-  async function testApi() {
-    const result = await fetch('/api')
-    const message = await result.json()
-    console.log(message)
-  }
+  const [extensionSession, setExtensionSession] = useState<
+    PubSubSessionV1 | PubSubSessionV2 | null
+  >(null)
+  const [userMail, setUserMail] = useState<string>()
 
   // Directly inject the extensions that support the KILT protocol
   useEffect(() => {
@@ -30,6 +37,40 @@ export default function Home(): JSX.Element {
   }, [])
   const extensionInitialized = typeof (window as any).kilt?.meta !== 'undefined'
 
+  async function startSession() {
+    console.log('trying to start the session! ')
+    const extSessHelp = await startExtensionSession()
+    setExtensionSession(extSessHelp)
+  }
+  async function testApi() {
+    const result = await fetch('/api')
+    const message = await result.json()
+    console.log(message)
+  }
+
+  async function login() {
+    console.log(
+      'Trying to log in. Meaning to ask the extension for a specific Type of Credential - a CType.'
+    )
+    const verifiedUserInfoThatServerSendsBack = await logIn(extensionSession)
+
+    setUserMail(verifiedUserInfoThatServerSendsBack)
+  }
+
+  async function logout() {
+    console.log(
+      'Trying to log out. Meaning to delete the credential and session cookies. '
+    )
+    await logOut()
+    setUserMail(undefined)
+  }
+  function accessManager() {
+    if (!userMail) {
+      login()
+    } else {
+      logout()
+    }
+  }
   return (
     <Page>
       <Page.Header>
@@ -50,10 +91,10 @@ export default function Home(): JSX.Element {
           {extensionInitialized && '✅ Extensions loaded'}
           {!extensionInitialized && '❌ Extensions not loaded'}
           <p>
-            You can check this by running 'window.kilt' on your browsers
+            You can check this by running 'window.kilt' on your browser's
             console.
           </p>
-          <h2>Extensions</h2>
+          <h2>2. Choose the Extension you want to use:</h2>
           <Dropdown
             id="drop"
             name="Select Extension"
@@ -62,6 +103,14 @@ export default function Home(): JSX.Element {
               id: i.toString()
             }))}
           />
+          <h2>3. Start the Server-Extension-Session</h2>
+          <Button onClick={startSession}>
+            {extensionSession ? 'disconnect' : 'connect'}
+          </Button>
+          <h2>4. Login with Credentials</h2>
+          <Button onClick={accessManager}>
+            {userMail ? 'logout' : 'login'}
+          </Button>
         </Card>
       </Page.Content>
     </Page>
