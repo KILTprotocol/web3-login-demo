@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
+import {
+  PubSubSessionV1,
+  PubSubSessionV2
+} from 'kilt-extension-api/dist/types/types'
 
 import styles from './User.module.css'
 
 import { startExtensionSession } from '../startExtensionSession'
 import { logIn } from '../logIn'
 import { logOut } from '../logOut'
-
-import { PubSubSessionV1, PubSubSessionV2 } from '../utils/types'
 
 import Button from './Button'
 

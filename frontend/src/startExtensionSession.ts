@@ -1,10 +1,10 @@
 import { getExtensions, watchExtensions } from 'kilt-extension-api'
 
 export async function startExtensionSession() {
-  const extension = getExtensions()[0]
-
-  watchExtensions(() => {
-    console.log('extension injected')
+  const extensions = getExtensions()
+  const extension = extensions[0]
+  watchExtensions((extensions) => {
+    extensions.forEach((ext) => console.log('extension injected: ' + ext.name))
   })
 
   // generate a JSON-Web-Token with session values on the backend and save it on a Cookie on the Browser:
