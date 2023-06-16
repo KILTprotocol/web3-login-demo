@@ -14,6 +14,7 @@ initializeKiltExtensionAPI()
  * So, it is important to be careful (or avoid) calling it inside of any React-Component, because they like to re-run code.
  */
 
+// Display the react app:
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
