@@ -8,6 +8,8 @@ import { generateKeyPairs } from '../utils/generateKeyPairs'
 import { decryptionCallback } from '../utils/decryptionCallback'
 import { getApi } from '../utils/connection'
 
+import { saveAccessOnCookie } from '../login/saveAccessOnCookie'
+
 import { readCredentialCookie } from './readCredentialCookie'
 import { emailRequest } from './listOfRequests'
 
@@ -88,6 +90,13 @@ export async function postSubmitCredential(
       'Plain User Info that we are passing to the frontend:',
       plainUserInfo
     )
+
+    // From here on it's all like web2:
+
+    // Please, replace/complete here with your websites method of encoding authentication tokens:
+    const authenticationToken = plainUserInfo as string
+
+    saveAccessOnCookie(authenticationToken, response)
 
     response.status(200).send(plainUserInfo)
   } catch (error) {

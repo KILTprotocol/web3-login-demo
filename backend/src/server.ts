@@ -20,6 +20,7 @@ import { getRequestCredential } from './credentials/getRequestCredential'
 import { postSubmitCredential } from './credentials/postSubmitCredential'
 
 import { logout } from './logout/logout'
+import { alreadyLogin } from './login/alreadyLogin'
 
 const app: Express = express()
 
@@ -75,6 +76,10 @@ app.get('/api/credential/getRequest', (req, res, next) =>
 )
 app.post('/api/credential/postSubmit', (req, res, next) =>
   postSubmitCredential(req, res).catch(next)
+)
+
+app.get('/api/credential/alreadyLogin', (req, res, next) =>
+  alreadyLogin(req, res).catch(next)
 )
 
 app.post('/api/logout', (req, res, next) => logout(req, res).catch(next))

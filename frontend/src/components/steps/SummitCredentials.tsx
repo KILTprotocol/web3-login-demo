@@ -16,7 +16,7 @@ interface Props {
 }
 
 function SummitCredential({ extensionSession, userMail, setUserMail }: Props) {
-  async function login() {
+  async function handleLogin() {
     console.log(
       'Trying to log in. Meaning to ask the extension for a specific Type of Credential - a CType.'
     )
@@ -25,7 +25,7 @@ function SummitCredential({ extensionSession, userMail, setUserMail }: Props) {
     setUserMail(verifiedUserInfoThatServerSendsBack)
   }
 
-  async function logout() {
+  async function handleLogout() {
     console.log(
       'Trying to log out. Meaning to delete the credential and session cookies. '
     )
@@ -34,9 +34,9 @@ function SummitCredential({ extensionSession, userMail, setUserMail }: Props) {
   }
   function accessManager() {
     if (!userMail) {
-      login()
+      handleLogin()
     } else {
-      logout()
+      handleLogout()
     }
   }
   return (

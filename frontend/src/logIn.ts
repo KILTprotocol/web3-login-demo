@@ -41,8 +41,8 @@ export async function logIn(
 
   // initialize so that typescript don't cry
   let extensionMessage: IEncryptedMessageV1 | IEncryptedMessage = {
-    receiverKeyId: 'did:kilt:4someones#publicKeyAgreement',
-    senderKeyId: 'did:kilt:4YourDecentralizedApp#publicKeyAgreement',
+    receiverKeyId: 'did:kilt:4YourDecentralizedApp#publicKeyAgreement',
+    senderKeyId: 'did:kilt:4someones#publicKeyAgreement',
     ciphertext: 'string',
     nonce: 'string'
   }

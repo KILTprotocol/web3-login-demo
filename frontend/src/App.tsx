@@ -12,6 +12,8 @@ import ChooseExtension from './components/steps/ChooseExtension'
 import StartSession from './components/steps/StartSession'
 import SummitCredential from './components/steps/SummitCredentials'
 
+// import { inspectAccessCookie } from './inspectAccessCookie'
+
 export default function Home(): JSX.Element {
   const [extensions, setExtensions] = useState<
     Types.InjectedWindowProvider<
@@ -31,6 +33,8 @@ export default function Home(): JSX.Element {
   const [extensionSession, setExtensionSession] = useState<
     Types.PubSubSessionV1 | Types.PubSubSessionV2 | null
   >(null)
+
+  // const oldCookieInfo = inspectAccessCookie()
   const [userMail, setUserMail] = useState<string>()
 
   return (

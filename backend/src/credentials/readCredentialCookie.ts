@@ -47,8 +47,6 @@ export async function readCredentialCookie(
     )
   }
 
-  // now make sure that the payload is carrying our type of SessionValues
-
   const { challengeOnRequest } = cookieCredentialJWTPayload
   if (!challengeOnRequest) {
     throw new Error(

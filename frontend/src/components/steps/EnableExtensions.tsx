@@ -30,7 +30,6 @@ export default function EnableExtensions() {
       <div className={styles.refresh_container}>
         {availability && '✅ Extensions enabled'}
         {!availability && '❌ Extensions not enabled'}
-
         <RefreshButton action={refresh}></RefreshButton>
       </div>
       <p>
