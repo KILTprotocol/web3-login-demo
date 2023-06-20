@@ -79,6 +79,7 @@ app.post('/api/credential/postSubmit', (req, res, next) =>
 
 app.post('/api/logout', (req, res, next) => logout(req, res).catch(next))
 
+//Start the server:
 validateEnvironmentConstants()
   .catch((error) => {
     throw new Error(`Trouble validating the environment constants: ${error}`)
@@ -100,11 +101,11 @@ validateEnvironmentConstants()
   })
   .then(
     // connect with the kilt api
-    initializeServer
+    plugServer
     // the server will not crash if this fails
   )
 
-async function initializeServer() {
+async function plugServer() {
   try {
     await Kilt.connect(WSS_ADDRESS)
     console.log(

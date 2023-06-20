@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 
 import { watchExtensions, Types } from 'kilt-extension-api'
 
-import Button from './components/Button'
 import Card from './components/Card'
 import Logo from './components/Logo'
 import Page from './components/Page'
@@ -34,12 +33,6 @@ export default function Home(): JSX.Element {
   >(null)
   const [userMail, setUserMail] = useState<string>()
 
-  async function testApi() {
-    const result = await fetch('/api')
-    const message = await result.json()
-    console.log(message)
-  }
-
   return (
     <Page>
       <Page.Header>
@@ -47,10 +40,6 @@ export default function Home(): JSX.Element {
         <User userMail={userMail} />
       </Page.Header>
       <Page.Content>
-        <Card>
-          <Button onClick={testApi}>Test Server API</Button>
-        </Card>
-
         <Card>
           <p>Let's walk trough the login process step by step.</p>
 
