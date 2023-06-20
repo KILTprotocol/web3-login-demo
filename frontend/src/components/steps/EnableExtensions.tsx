@@ -2,7 +2,9 @@ import React, { useState } from 'react'
 
 import styles from './Step.module.css'
 
-function EnableExtensions() {
+import RefreshButton from '../RefreshButton'
+
+export default function EnableExtensions() {
   const kiltExtensionsApiInitialized =
     typeof (window as any).kilt?.meta !== 'undefined'
 
@@ -25,14 +27,15 @@ function EnableExtensions() {
         We do this when the website loads. The code for it is inside
         'index.tsx'.
       </p>
+      <div className={styles.refresh_container}>
+        {availability && '✅ Extensions enabled'}
+        {!availability && '❌ Extensions not enabled'}
 
-      {availability && '✅ Extensions enabled'}
-      {!availability && '❌ Extensions not enabled'}
-      <p onClick={refresh}>Refresh</p>
+        <RefreshButton action={refresh}></RefreshButton>
+      </div>
       <p>
         You can check this by running 'window.kilt' on your browser's console.
       </p>
     </div>
   )
 }
-export default EnableExtensions
