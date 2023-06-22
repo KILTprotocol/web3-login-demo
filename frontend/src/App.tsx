@@ -25,7 +25,6 @@ export default function Home(): JSX.Element {
     Types.PubSubSessionV1 | Types.PubSubSessionV2 | null
   >(null)
 
-  // const oldCookieInfo = inspectAccessCookie()
   const [userMail, setUserMail] = useState<string>()
 
   useEffect(() => {

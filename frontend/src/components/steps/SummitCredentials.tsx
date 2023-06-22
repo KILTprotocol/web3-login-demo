@@ -26,9 +26,7 @@ function SummitCredential({ extensionSession, userMail, setUserMail }: Props) {
   }
 
   async function handleLogout() {
-    console.log(
-      'Trying to log out. Meaning to delete the credential and session cookies. '
-    )
+    console.log('Trying to log out. Meaning to delete the cookies. ')
     await logOut()
     setUserMail(undefined)
   }
@@ -39,10 +37,11 @@ function SummitCredential({ extensionSession, userMail, setUserMail }: Props) {
       handleLogout()
     }
   }
+
   return (
     <div className={styles.step}>
       <h2>4. Summit attested Credential</h2>
-      <Button disabled={!extensionSession} onClick={accessManager}>
+      <Button disabled={!extensionSession && !userMail} onClick={accessManager}>
         {userMail ? 'logout' : 'login'}
       </Button>
     </div>
