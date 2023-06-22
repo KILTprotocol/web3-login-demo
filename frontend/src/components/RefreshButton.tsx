@@ -10,7 +10,7 @@ function RefreshButton({ action }: Props) {
   const [rotation, setRotation] = useState(0)
 
   const handleRefresh = () => {
-    setRotation(rotation + 540)
+    setRotation(rotation - 540)
     action()
   }
   const buttonStyle = {
@@ -23,7 +23,7 @@ function RefreshButton({ action }: Props) {
       style={buttonStyle}
       onClick={handleRefresh}
     >
-      <b className={`fas fa-sync ${styles.icon}`}>Refresh</b>
+      <b className={`fas fa-sync ${styles.icon}`}>🔄</b>
     </button>
   )
 }
