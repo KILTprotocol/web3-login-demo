@@ -29,7 +29,7 @@ export default function Home(): JSX.Element {
 
   useEffect(() => {
     // check if the user already has access granted
-    const pastChecker = async () => {
+    async function pastChecker() {
       try {
         const oldCookieInfo = await inspectAccessCookie()
         setUserMail(oldCookieInfo)
