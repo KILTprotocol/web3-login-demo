@@ -1,13 +1,9 @@
 import { IEncryptedMessage } from '@kiltprotocol/types'
 
-import {
-  IEncryptedMessageV1,
-  PubSubSessionV1,
-  PubSubSessionV2
-} from 'kilt-extension-api/dist/types/types'
+import { Types } from 'kilt-extension-api'
 
 export async function logIn(
-  extensionSession: PubSubSessionV1 | PubSubSessionV2 | null
+  extensionSession: Types.PubSubSessionV1 | Types.PubSubSessionV2 | null
 ): Promise<string> {
   if (!extensionSession) {
     throw new Error(
@@ -40,7 +36,7 @@ export async function logIn(
   // prepare to receive the credential from the extension
 
   // initialize so that typescript don't cry
-  let extensionMessage: IEncryptedMessageV1 | IEncryptedMessage = {
+  let extensionMessage: Types.IEncryptedMessageV1 | IEncryptedMessage = {
     receiverKeyId: 'did:kilt:4YourDecentralizedApp#publicKeyAgreement',
     senderKeyId: 'did:kilt:4someones#publicKeyAgreement',
     ciphertext: 'string',
