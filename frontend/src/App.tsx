@@ -12,7 +12,7 @@ import ChooseExtension from './components/steps/ChooseExtension'
 import StartSession from './components/steps/StartSession'
 import SummitCredential from './components/steps/SummitCredentials'
 
-// import { inspectAccessCookie } from './inspectAccessCookie'
+import { inspectAccessCookie } from './inspectAccessCookie'
 
 export default function Home(): JSX.Element {
   const [extensions, setExtensions] = useState<
@@ -21,21 +21,32 @@ export default function Home(): JSX.Element {
     >[]
   >([])
 
-  // Directly inject the extensions that support the KILT protocol
-  useEffect(() => {
-    const stopWatching = watchExtensions((extensions) => {
-      setExtensions(extensions)
-    })
-    // the clean-up:
-    return stopWatching
-  }, [])
-
   const [extensionSession, setExtensionSession] = useState<
     Types.PubSubSessionV1 | Types.PubSubSessionV2 | null
   >(null)
 
   // const oldCookieInfo = inspectAccessCookie()
   const [userMail, setUserMail] = useState<string>()
+
+  useEffect(() => {
+    // check if the user already has access granted
+    const pastChecker = async () => {
+      try {
+        const oldCookieInfo = await inspectAccessCookie()
+        setUserMail(oldCookieInfo)
+      } catch (error) {
+        console.log('No user logged in yet.')
+      }
+    }
+    pastChecker()
+
+    // Directly inject the extensions that support the KILT protocol
+    const stopWatching = watchExtensions((extensions) => {
+      setExtensions(extensions)
+    })
+    // the clean-up:
+    return stopWatching
+  }, [])
 
   return (
     <Page>
