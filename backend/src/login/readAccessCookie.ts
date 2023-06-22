@@ -19,7 +19,7 @@ export async function readAccessCookie(
 ): Promise<string> {
   // read cookie from browser
   console.log(
-    'trying to read the cookie via readAccessCookie(). Users with access already granted would have there authentication token here.\n'
+    'trying to read the cookie via readAccessCookie().\n Users with access already granted would have there authentication token here.'
   )
   const accessCookie = request.cookies.accessJWT
   if (!accessCookie) {
