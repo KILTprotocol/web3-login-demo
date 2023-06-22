@@ -18,11 +18,14 @@ function StartSession({ extensionSession, setExtensionSession }: Props) {
     const extSessHelp = await startExtensionSession()
     setExtensionSession(extSessHelp)
   }
+  // After startSession(), the Extension-Session-Values should be available for the backend. Done through cookie parser, (but data bank also possible).
+  // The frontend still needs the Session-Object to be able to use its methods (functions). That's why we save on a React-State.
+
   return (
     <div className={styles.step}>
       <h2>3. Start the Server-Extension-Session</h2>
-      <Button onClick={startSession}>
-        {extensionSession ? 'disconnect' : 'connect'}
+      <Button disabled={extensionSession} onClick={startSession}>
+        connect
       </Button>
     </div>
   )

@@ -7,9 +7,6 @@ interface Props {
 }
 
 export default function User({ userMail }: Props): JSX.Element {
-  // After startSession(), the Extension-Session-Values should be available for the backend. Done through cookie parser, (but data bank also possible).
-  // The frontend still needs the Session-Object to be able to use its methods (functions). That's why we save on a React-State.
-
   return (
     <div>
       <div className={styles.account}>
