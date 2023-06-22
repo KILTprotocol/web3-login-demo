@@ -1,7 +1,7 @@
 import { Response, Request } from 'express'
 
 import { deleteCredentialCookie } from '../credentials/deleteCredentialCookie'
-import { deleteSessionCookie } from '../session/deleteCredentialCookie'
+import { deleteSessionCookie } from '../session/deleteSessionCookie'
 
 export async function logout(
   request: Request,

@@ -11,7 +11,7 @@ export function deleteCredentialCookie(
   response: Response
 ): void {
   // read cookie from browser
-  console.log('trying to delete the cookie via deleteCredentialCookie()\n')
+  console.log('trying to delete the cookie via deleteCredentialCookie()')
   const credentialCookie = request.cookies.credentialJWT
   if (!credentialCookie) {
     console.log(
@@ -23,5 +23,5 @@ export function deleteCredentialCookie(
   // delete the cookie from browser
   response.clearCookie('credentialJWT')
 
-  console.log('Cookie "credentialJWT" deleted from clients browser.')
+  console.log('Cookie "credentialJWT" deleted from clients browser.\n')
 }
