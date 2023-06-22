@@ -2,9 +2,8 @@ import React from 'react'
 
 import styles from './User.module.css'
 
-// TODO!: Define specific Props when their types are settled
 interface Props {
-  [x: string]: any
+  userMail: string | undefined
 }
 
 export default function User({ userMail }: Props): JSX.Element {
