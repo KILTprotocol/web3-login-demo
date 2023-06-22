@@ -8,7 +8,7 @@ export async function inspectAccessCookie() {
       Accept: 'application/json'
     }
   })
-  if (!inspectionResult.ok) {
+  if (!inspectionResult.ok || inspectionResult.status === 204) {
     throw new Error(inspectionResult.statusText)
   }
 

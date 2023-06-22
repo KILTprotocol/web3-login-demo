@@ -30,6 +30,7 @@ export async function alreadyLogin(request: Request, response: Response) {
   } catch (error) {
     const failMessage = `No user is logged in yet. ${error}`
     console.log(failMessage)
-    response.status(401).send(failMessage)
+    // The 204 (No Content) HTTP Status Code response should exclude a message-body
+    response.status(204).send()
   }
 }
