@@ -23,7 +23,7 @@ function RefreshButton({ action }: Props) {
       style={buttonStyle}
       onClick={handleRefresh}
     >
-      <b className={`fas fa-sync ${styles.icon}`}>🔄</b>
+      <b className={styles.icon}>🔄</b>
     </button>
   )
 }
