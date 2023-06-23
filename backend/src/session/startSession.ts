@@ -26,8 +26,9 @@ export interface SessionValues {
 
 // Set Cookie Options: (list of ingredients)
 export const cookieOptions: CookieOptions = {
-  // Indicates the number of seconds until the Cookie expires.
-  maxAge: 60 * 60 * 24,
+  // Indicates the number of milliseconds until the Cookie expires.
+  // On this demo the cookies have a lifetime of 1 hour. The shorter the securest.
+  maxAge: 60 * 60 * 1000,
   // only send over HTTPS
   secure: true,
   // prevent cross-site request forgery attacks
