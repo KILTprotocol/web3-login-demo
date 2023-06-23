@@ -67,6 +67,7 @@ export default function Home(): JSX.Element {
             extensionSession={extensionSession}
             userMail={userMail}
             setUserMail={setUserMail}
+            setExtensionSession={setExtensionSession}
           />
           <p>
             All of these Steps encompass the Login with Credentials process.
