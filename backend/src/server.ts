@@ -106,11 +106,11 @@ validateEnvironmentConstants()
   })
   .then(
     // connect with the kilt api
-    plugServer
+    connectToKiltWebSocket
     // the server will not crash if this fails
   )
 
-async function plugServer() {
+async function connectToKiltWebSocket() {
   try {
     await Kilt.connect(WSS_ADDRESS)
     console.log(
