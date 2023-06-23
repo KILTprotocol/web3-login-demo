@@ -1,7 +1,5 @@
 import React from 'react'
 
-import { Types } from 'kilt-extension-api'
-
 import styles from './Step.module.css'
 
 import Button from '../Button'
