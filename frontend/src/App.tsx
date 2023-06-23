@@ -10,7 +10,7 @@ import User from './components/User'
 import EnableExtensions from './components/steps/EnableExtensions'
 import ChooseExtension from './components/steps/ChooseExtension'
 import StartSession from './components/steps/StartSession'
-import SummitCredential from './components/steps/SummitCredentials'
+import SubmitCredential from './components/steps/SubmitCredentials'
 
 export default function Home(): JSX.Element {
   const [extensions, setExtensions] = useState<
@@ -49,7 +49,7 @@ export default function Home(): JSX.Element {
             extensionSession={extensionSession}
             setExtensionSession={setExtensionSession}
           />
-          <SummitCredential
+          <SubmitCredential
             extensionSession={extensionSession}
             userMail={userMail}
             setUserMail={setUserMail}

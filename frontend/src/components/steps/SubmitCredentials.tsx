@@ -15,7 +15,7 @@ interface Props {
   setUserMail: any
 }
 
-function SummitCredential({ extensionSession, userMail, setUserMail }: Props) {
+function SubmitCredential({ extensionSession, userMail, setUserMail }: Props) {
   async function login() {
     console.log(
       'Trying to log in. Meaning to ask the extension for a specific Type of Credential - a CType.'
@@ -49,4 +49,4 @@ function SummitCredential({ extensionSession, userMail, setUserMail }: Props) {
   )
 }
 
-export default SummitCredential
+export default SubmitCredential
