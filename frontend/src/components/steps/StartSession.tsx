@@ -15,8 +15,8 @@ interface Props {
 function StartSession({ extensionSession, setExtensionSession }: Props) {
   async function startSession() {
     console.log('trying to start the session! ')
-    const extSessHelp = await startExtensionSession()
-    setExtensionSession(extSessHelp)
+    const newSession = await startExtensionSession()
+    setExtensionSession(newSession)
   }
   return (
     <div className={styles.step}>
