@@ -18,14 +18,13 @@ export default function EnableExtensions() {
 
   return (
     <div className={styles.step}>
-      <h2>1. The Extensions need to be Enabled</h2>
+      <h2>1. Enabling the Extensions</h2>
       <p>
-        By this we mean the setup for extensions to inject themselves being
-        done.
+        This refers to the process that allow extensions to inject themselves.
       </p>
       <p>
-        We do this when the website loads. The code for it is inside
-        'index.tsx'.
+        We perform this action when the website is loaded. The relevant code can
+        be found in 'index.tsx'.
       </p>
       <div className={styles.refresh_container}>
         {availability && '✅ Extensions enabled'}
@@ -34,7 +33,7 @@ export default function EnableExtensions() {
         <RefreshButton action={refresh}></RefreshButton>
       </div>
       <p>
-        You can check this by running 'window.kilt' on your browser's console.
+        To verify this, you can execute 'window.kilt' in your browser's console.
       </p>
     </div>
   )
