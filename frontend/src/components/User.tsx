@@ -42,14 +42,6 @@ export default function User({ userMail }: Props): JSX.Element {
           {userMail ? `trusted user: ${userMail}` : 'untrusted individual'}
         </span>
       </div>
-      {/* <div className={styles.button_container}>
-        <Button className={styles.action} onClick={startSession}>
-          {connected ? 'disconnect' : 'connect'}
-        </Button>
-        <Button className={styles.action} onClick={accessManager}>
-          {userMail ? 'logout' : 'login'}
-        </Button>
-      </div> */}
     </div>
   )
 }
