@@ -45,10 +45,7 @@ export default function Home(): JSX.Element {
 
           <EnableExtensions />
           <ChooseExtension extensions={extensions} />
-          <StartSession
-            extensionSession={extensionSession}
-            setExtensionSession={setExtensionSession}
-          />
+          <StartSession setExtensionSession={setExtensionSession} />
           <SubmitCredential
             extensionSession={extensionSession}
             userMail={userMail}

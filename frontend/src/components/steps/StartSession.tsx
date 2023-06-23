@@ -8,11 +8,10 @@ import Button from '../Button'
 import { startExtensionSession } from '../../startExtensionSession'
 
 interface Props {
-  extensionSession: Types.PubSubSessionV1 | Types.PubSubSessionV2 | null
   setExtensionSession: any
 }
 
-function StartSession({ extensionSession, setExtensionSession }: Props) {
+function StartSession({ setExtensionSession }: Props) {
   async function startSession() {
     console.log('trying to start the session! ')
     const newSession = await startExtensionSession()
@@ -22,7 +21,9 @@ function StartSession({ extensionSession, setExtensionSession }: Props) {
     <div className={styles.step}>
       <h2>3. Start the Server-Extension-Session</h2>
       <Button onClick={startSession}>
-        {extensionSession ? 'disconnect' : 'connect'}
+        connect
+        {/* TODO: make a function to end the session => disconnect
+        {extensionSession ? 'disconnect' : 'connect'} */}
       </Button>
     </div>
   )
