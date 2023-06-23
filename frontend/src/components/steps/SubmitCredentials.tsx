@@ -41,7 +41,7 @@ function SubmitCredential({ extensionSession, userMail, setUserMail }: Props) {
   }
   return (
     <div className={styles.step}>
-      <h2>4. Summit attested Credential</h2>
+      <h2>4. Submit attested Credential</h2>
       <Button disabled={!extensionSession} onClick={accessManager}>
         {userMail ? 'logout' : 'login'}
       </Button>
