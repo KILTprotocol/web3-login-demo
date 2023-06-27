@@ -119,6 +119,6 @@ export async function postSubmitCredential(
   } catch (error) {
     const errorMessage = `Post Submit Credential Error. ${error}`
     console.log(errorMessage)
-    response.status(401).send(errorMessage)
+    response.status(420).send(errorMessage)
   }
 }
