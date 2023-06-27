@@ -78,13 +78,6 @@ export async function postSubmitCredential(
       credential.rootHash
     )
 
-    // Debugger:
-    console.log(
-      '\n\n attestationChain:\n',
-      JSON.stringify(attestationChain, null, 2),
-      '\n\n'
-    )
-
     const attestation = Kilt.Attestation.fromChain(
       attestationChain,
       credential.rootHash
@@ -92,13 +85,6 @@ export async function postSubmitCredential(
 
     // this should never fail. #Redundancy
     Kilt.Attestation.verifyAgainstCredential(attestation, credential)
-
-    // Debugger:
-    console.log(
-      '\n\n attestation:\n',
-      JSON.stringify(attestation, null, 2),
-      '\n\n'
-    )
 
     if (attestation.revoked) {
       throw new Error("Credential has been revoked and hence it's not valid.")
