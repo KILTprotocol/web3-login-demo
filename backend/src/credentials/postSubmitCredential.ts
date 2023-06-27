@@ -123,6 +123,8 @@ export async function postSubmitCredential(
 
     response.status(200).send(plainUserInfo)
   } catch (error) {
-    console.log('Post Submit Credential Error.', error)
+    const errorMessage = `Post Submit Credential Error. ${error}`
+    console.log(errorMessage)
+    response.status(401).send(errorMessage)
   }
 }
