@@ -34,13 +34,7 @@ export async function postSubmitCredential(
 
     // Verifying this is a properly-formatted message
     Kilt.Message.verify(decryptedMessage)
-
-    // Debugger:
-    console.log(
-      '\n\n decryptedMessage:\n',
-      JSON.stringify(decryptedMessage, null, 2),
-      '\n\n'
-    )
+    // Here a 400 could be sent, if this fails and you really appreciate Http Status Codes
 
     if (decryptedMessage.body.type !== 'submit-credential') {
       throw new Error(`Unexpected message type: ${decryptedMessage.body.type}`)
