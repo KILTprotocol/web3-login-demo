@@ -1,10 +1,11 @@
-import { getExtensions, apiWindow } from './utils/getExtension'
-import { PubSubSessionV1, PubSubSessionV2 } from './utils/types'
+import { getExtensions, watchExtensions } from 'kilt-extension-api'
 
-export async function startExtensionSession(): Promise<
-  PubSubSessionV1 | PubSubSessionV2
-> {
-  getExtensions()
+export async function startExtensionSession() {
+  const extensions = getExtensions()
+  const extension = extensions[0]
+  watchExtensions((extensions) => {
+    extensions.forEach((ext) => console.log('extension injected: ' + ext.name))
+  })
 
   // generate a JSON-Web-Token with session values on the backend and save it on a Cookie on the Browser:
   const serverSessionStart = await fetch(`/api/session/start`, {
@@ -36,7 +37,7 @@ export async function startExtensionSession(): Promise<
   const { dAppName, dAppEncryptionKeyUri, challenge } = plainPayload
 
   // Let the extension do the counterpart:
-  const extensionSession = await apiWindow.kilt.sporran.startSession(
+  const extensionSession = await extension.startSession(
     dAppName,
     dAppEncryptionKeyUri,
     challenge
@@ -60,7 +61,9 @@ export async function startExtensionSession(): Promise<
     body: responseToBackend
   })
   if (!sessionVerificationResponse.ok) {
-    throw new Error('Session could not be verified.')
+    throw new Error(
+      `Session could not be verified. Extension: ${extension.name}: ${extension.version}`
+    )
   }
 
   console.log(

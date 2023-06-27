@@ -1,57 +1,15 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import styles from './User.module.css'
-
-import { startExtensionSession } from '../startExtensionSession'
-import { logIn } from '../logIn'
-import { logOut } from '../logOut'
-
-import { PubSubSessionV1, PubSubSessionV2 } from '../utils/types'
-
-import Button from './Button'
 
 // TODO!: Define specific Props when their types are settled
 interface Props {
   [x: string]: any
 }
 
-export default function User({ connected }: Props): JSX.Element {
-  const [extensionSession, setExtensionSession] = useState<
-    PubSubSessionV1 | PubSubSessionV2 | null
-  >(null)
-  const [userMail, setUserMail] = useState<string>()
-  async function startSession() {
-    console.log('trying to start the session! ')
-    const extSessHelp = await startExtensionSession()
-    setExtensionSession(extSessHelp)
-  }
-
+export default function User({ userMail }: Props): JSX.Element {
   // After startSession(), the Extension-Session-Values should be available for the backend. Done through cookie parser, (but data bank also possible).
   // The frontend still needs the Session-Object to be able to use its methods (functions). That's why we save on a React-State.
-
-  async function login() {
-    console.log(
-      'Trying to log in. Meaning to ask the extension for a specific Type of Credential - a CType.'
-    )
-    const verifiedUserInfoThatServerSendsBack = await logIn(extensionSession)
-
-    setUserMail(verifiedUserInfoThatServerSendsBack)
-  }
-
-  async function logout() {
-    console.log(
-      'Trying to log out. Meaning to delete the credential and session cookies. '
-    )
-    await logOut()
-    setUserMail(undefined)
-  }
-  function accessManager() {
-    if (!userMail) {
-      login()
-    } else {
-      logout()
-    }
-  }
 
   return (
     <div>
@@ -87,14 +45,6 @@ export default function User({ connected }: Props): JSX.Element {
         <span className={styles.text}>
           {userMail ? `trusted user: ${userMail}` : 'untrusted individual'}
         </span>
-      </div>
-      <div className={styles.button_container}>
-        <Button className={styles.action} onClick={startSession}>
-          {connected ? 'disconnect' : 'connect'}
-        </Button>
-        <Button className={styles.action} onClick={accessManager}>
-          {userMail ? 'logout' : 'login'}
-        </Button>
       </div>
     </div>
   )

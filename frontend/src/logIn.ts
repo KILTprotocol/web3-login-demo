@@ -4,7 +4,7 @@ import {
   IEncryptedMessageV1,
   PubSubSessionV1,
   PubSubSessionV2
-} from './utils/types'
+} from 'kilt-extension-api/dist/types/types'
 
 export async function logIn(
   extensionSession: PubSubSessionV1 | PubSubSessionV2 | null
@@ -78,7 +78,7 @@ export async function logIn(
 
   const verifiedUserInfo = await credentialVerificationResponse.text()
   console.log(
-    'Decoded Information that the backend send to the frontend after verifying the credential: ',
+    'Decoded Information that the backend sent to the frontend after verifying the credential: ',
     verifiedUserInfo
   )
 

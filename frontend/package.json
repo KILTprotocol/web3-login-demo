@@ -8,6 +8,7 @@
     "@kiltprotocol/types": "^0.31.0",
     "@kiltprotocol/vc-export": "^0.31.0",
     "@polkadot/util": "^10.4.2",
+    "kilt-extension-api": "0.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
