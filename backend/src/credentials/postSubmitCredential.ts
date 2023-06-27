@@ -35,6 +35,13 @@ export async function postSubmitCredential(
     // Verifying this is a properly-formatted message
     Kilt.Message.verify(decryptedMessage)
 
+    // Debugger:
+    console.log(
+      '\n\n decryptedMessage:\n',
+      JSON.stringify(decryptedMessage, null, 2),
+      '\n\n'
+    )
+
     if (decryptedMessage.body.type !== 'submit-credential') {
       throw new Error(`Unexpected message type: ${decryptedMessage.body.type}`)
     }
@@ -70,12 +77,51 @@ export async function postSubmitCredential(
     const attestationChain = await api.query.attestation.attestations(
       credential.rootHash
     )
+
+    // Debugger:
+    console.log(
+      '\n\n attestationChain:\n',
+      JSON.stringify(attestationChain, null, 2),
+      '\n\n'
+    )
+
     const attestation = Kilt.Attestation.fromChain(
       attestationChain,
       credential.rootHash
     )
+
+    // this should never fail. #Redundancy
+    Kilt.Attestation.verifyAgainstCredential(attestation, credential)
+
+    // Debugger:
+    console.log(
+      '\n\n attestation:\n',
+      JSON.stringify(attestation, null, 2),
+      '\n\n'
+    )
+
     if (attestation.revoked) {
       throw new Error("Credential has been revoked and hence it's not valid.")
+    }
+
+    // Check if the credentials was issued by one of our "trusted attesters"
+
+    const ourTrustedAttesters = emailRequest.cTypes[0].trustedAttesters
+    const attesterOfTheirCredential = attestation.owner
+
+    // If you don't include a list of trusted attester on the credential-request, this check would be skipped
+    if (ourTrustedAttesters) {
+      let numberOfRecognized = 0
+      for (let index = 0; index < ourTrustedAttesters.length; index++) {
+        if (attesterOfTheirCredential === ourTrustedAttesters[index]) {
+          numberOfRecognized++
+        }
+      }
+      if (!numberOfRecognized) {
+        throw new Error(
+          `This Credential was not issued by any of the Attester that the dApp trusts. \n List of trusted attesters: ${ourTrustedAttesters}`
+        )
+      }
     }
 
     console.log('Credential Successfully Verified! User is logged in now.')
