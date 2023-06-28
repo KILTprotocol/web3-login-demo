@@ -12,12 +12,12 @@ export function saveAccessOnCookie(
 ) {
   // Create a Json-Web-Token:
   // set the expiration of JWT same as the Cookie
-  const optionsJwt = {
+  const jwtOptions = {
     expiresIn: `${cookieOptions.maxAge} seconds`
   }
 
   // default to algorithm: 'HS256'
-  const token = jwt.sign({ authenticationToken }, JWT_SIGNER_SECRET, optionsJwt)
+  const token = jwt.sign({ authenticationToken }, JWT_SIGNER_SECRET, jwtOptions)
 
   // Set a Cookie in the header including the JWT and our options:
   // Using 'cookie-parser' dependency:
