@@ -23,7 +23,7 @@ export async function readAccessCookie(
   )
   const accessCookie = request.cookies.accessJWT
   if (!accessCookie) {
-    throw new Error('Cookie with the access token (as JWT) not found. ')
+    throw new Error('Cookie with the access token (as JWT) not found.')
   }
 
   // decode the JWT and verify if it was signed with our SecretKey
@@ -43,7 +43,7 @@ export async function readAccessCookie(
 
   const { authenticationToken } = cookieAccessJWTPayload
   if (!authenticationToken) {
-    throw new Error('No authentication Token found. ')
+    throw new Error('No authentication Token found.')
   }
 
   return authenticationToken
