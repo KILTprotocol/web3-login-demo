@@ -4,7 +4,7 @@ import { Response, Request } from 'express'
 /**
  *  Mean to facilitate working with the JSON-Web-Token inside the Cookie.
  *  This function reads, decodes and verifies the 'credentialJWT' Cookie from the browser.
- *  Verification in this context means that it will check, that the JWT was signed with the dApp's secret pen (key).
+ *  Verification in this context means that it will check, that the JWT was signed with the dApp's secret key (more like a secret pen)..
  *
  *  Will throw an error if it fail one of it functions.
  *
