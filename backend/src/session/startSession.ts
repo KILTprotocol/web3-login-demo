@@ -26,8 +26,9 @@ export interface SessionValues {
 
 // Set Cookie Options: (list of ingredients)
 export const cookieOptions: CookieOptions = {
-  // Indicates the number of seconds until the Cookie expires.
-  maxAge: 60 * 60 * 24,
+  // Indicates the number of milliseconds until the Cookie expires.
+  // On this demo the cookies have a lifetime of 1 hour. The shorter the securest.
+  maxAge: 60 * 60 * 1000,
   // only send over HTTPS
   secure: true,
   // prevent cross-site request forgery attacks
@@ -84,14 +85,13 @@ export async function startSession(
 
   // Create a Json-Web-Token:
   // set the expiration of JWT same as the Cookie
-  const optionsJwt = {
+  const jwtOptions = {
     expiresIn: `${cookieOptions.maxAge} seconds`
   }
-  // default to algorithm: 'HS256',
-  const token = jwt.sign(payload, JWT_SIGNER_SECRET, optionsJwt)
+  const token = jwt.sign(payload, JWT_SIGNER_SECRET, jwtOptions)
 
   // Set a Cookie in the header including the JWT and our options:
-  // Using 'cookie-parser' dependency:
+
   response.cookie('sessionJWT', token, cookieOptions)
 
   console.log(
