@@ -88,7 +88,6 @@ export async function startSession(
   const jwtOptions = {
     expiresIn: `${cookieOptions.maxAge} seconds`
   }
-  // default to algorithm: 'HS256',
   const token = jwt.sign(payload, JWT_SIGNER_SECRET, jwtOptions)
 
   // Set a Cookie in the header including the JWT and our options:
