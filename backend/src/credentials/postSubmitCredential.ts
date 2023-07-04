@@ -93,7 +93,7 @@ export async function postSubmitCredential(
     if (ourTrustedAttesters) {
       if (!ourTrustedAttesters.includes(attesterOfTheirCredential)) {
         throw new Error(
-          `This Credential was not issued by any of the Attester that the dApp trusts. \n List of trusted attesters: ${ourTrustedAttesters}`
+          `The Credential was not issued by any of the trusted Attesters that the dApp relies on. \n List of trusted attesters: ${ourTrustedAttesters}`
         )
       }
     }
