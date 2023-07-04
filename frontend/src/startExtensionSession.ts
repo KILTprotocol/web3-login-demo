@@ -12,7 +12,6 @@ export async function startExtensionSession() {
     method: 'GET',
     credentials: 'include',
     headers: {
-      accessControlAllowOrigin: '*',
       'Content-type': 'application/json',
       Accept: 'application/json'
     }

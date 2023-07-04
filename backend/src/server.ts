@@ -43,7 +43,7 @@ app.use(
   })
 )
 
-// Utility to read cookies. Backing has never been easier.
+// Utility to handle cookies. Backing has never been easier.
 app.use(cookieParser())
 
 // Print the URL requested

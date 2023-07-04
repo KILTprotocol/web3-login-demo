@@ -3,7 +3,6 @@ export async function inspectAccessCookie() {
     method: 'GET',
     credentials: 'include',
     headers: {
-      accessControlAllowOrigin: '*',
       'Content-type': 'application/json',
       Accept: 'application/json'
     }
