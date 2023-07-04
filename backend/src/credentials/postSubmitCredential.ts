@@ -91,13 +91,7 @@ export async function postSubmitCredential(
 
     // If you don't include a list of trusted attester on the credential-request, this check would be skipped
     if (ourTrustedAttesters) {
-      let numberOfRecognized = 0
-      for (let index = 0; index < ourTrustedAttesters.length; index++) {
-        if (attesterOfTheirCredential === ourTrustedAttesters[index]) {
-          numberOfRecognized++
-        }
-      }
-      if (!numberOfRecognized) {
+      if (!ourTrustedAttesters.includes(attesterOfTheirCredential)) {
         throw new Error(
           `This Credential was not issued by any of the Attester that the dApp trusts. \n List of trusted attesters: ${ourTrustedAttesters}`
         )
