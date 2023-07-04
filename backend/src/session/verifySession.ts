@@ -97,7 +97,7 @@ export async function verifySession(
   const token = jwt.sign(completeSessionValues, JWT_SIGNER_SECRET, optionsJwt)
 
   // Set a Cookie in the header including the JWT and our options:
-  // Using 'cookie-parser' dependency:
+
   response.cookie('sessionJWT', token, cookieOptions)
 
   response

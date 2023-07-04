@@ -19,7 +19,7 @@ export function saveAccessOnCookie(
   const token = jwt.sign({ authenticationToken }, JWT_SIGNER_SECRET, jwtOptions)
 
   // Set a Cookie in the header including the JWT and our options:
-  // Using 'cookie-parser' dependency:
+
   response.cookie('accessJWT', token, cookieOptions)
 
   console.log(

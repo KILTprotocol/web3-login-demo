@@ -124,7 +124,7 @@ function saveChallengeOnCookie(challengeOnRequest: string, response: Response) {
   const token = jwt.sign({ challengeOnRequest }, JWT_SIGNER_SECRET, jwtOptions)
 
   // Set a Cookie in the header including the JWT and our options:
-  // Using 'cookie-parser' dependency:
+
   response.cookie('credentialJWT', token, cookieOptions)
 
   console.log(
