@@ -77,9 +77,6 @@ export async function postSubmitCredential(
       credential.rootHash
     )
 
-    // this should never fail. #Redundancy
-    Kilt.Attestation.verifyAgainstCredential(attestation, credential)
-
     if (attestation.revoked) {
       throw new Error("Credential has been revoked and hence it's not valid.")
     }
