@@ -4,7 +4,7 @@ import { JWT_SIGNER_SECRET } from '../config'
 
 import { readAccessCookie } from './readAccessCookie'
 
-/**Check if the user already logged in.
+/** Check if the user already logged in.
  *
  * Check if the browser already has a valid credential-JWT save on the cookies.
  *

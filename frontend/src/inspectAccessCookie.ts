@@ -7,6 +7,7 @@ export async function inspectAccessCookie() {
       Accept: 'application/json'
     }
   })
+  // status is 204 if no user is logged in yet
   if (!inspectionResult.ok || inspectionResult.status === 204) {
     throw new Error(inspectionResult.statusText)
   }
