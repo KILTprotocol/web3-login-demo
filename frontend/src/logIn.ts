@@ -67,11 +67,16 @@ export async function logIn(
       body: responseToBackend
     }
   )
+  const responseText = await credentialVerificationResponse.text()
+
   if (!credentialVerificationResponse.ok) {
-    throw new Error('Login Failed. Error verifying the Credential.')
+    throw new Error(
+      `Login Failed. Error verifying the Credential. ${responseText}`
+    )
   }
 
-  const verifiedUserInfo = await credentialVerificationResponse.text()
+  const verifiedUserInfo = responseText
+
   console.log(
     'Decoded Information that the backend sent to the frontend after verifying the credential: ',
     verifiedUserInfo

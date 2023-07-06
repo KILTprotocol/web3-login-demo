@@ -36,6 +36,7 @@ export async function postSubmitCredential(
 
     // Verifying this is a properly-formatted message
     Kilt.Message.verify(decryptedMessage)
+    // Here a 400 could be sent, if this fails and you really appreciate Http Status Codes
 
     if (decryptedMessage.body.type !== 'submit-credential') {
       throw new Error(`Unexpected message type: ${decryptedMessage.body.type}`)
@@ -72,12 +73,28 @@ export async function postSubmitCredential(
     const attestationChain = await api.query.attestation.attestations(
       credential.rootHash
     )
+
     const attestation = Kilt.Attestation.fromChain(
       attestationChain,
       credential.rootHash
     )
+
     if (attestation.revoked) {
       throw new Error("Credential has been revoked and hence it's not valid.")
+    }
+
+    // Check if the credentials was issued by one of our "trusted attesters"
+
+    const ourTrustedAttesters = emailRequest.cTypes[0].trustedAttesters
+    const attesterOfTheirCredential = attestation.owner
+
+    // If you don't include a list of trusted attester on the credential-request, this check would be skipped
+    if (ourTrustedAttesters) {
+      if (!ourTrustedAttesters.includes(attesterOfTheirCredential)) {
+        throw new Error(
+          `The Credential was not issued by any of the trusted Attesters that the dApp relies on. \n List of trusted attesters: ${ourTrustedAttesters}`
+        )
+      }
     }
 
     console.log('Credential Successfully Verified! User is logged in now.')
@@ -100,6 +117,8 @@ export async function postSubmitCredential(
 
     response.status(200).send(plainUserInfo)
   } catch (error) {
-    console.log('Post Submit Credential Error.', error)
+    const errorMessage = `Post Submit Credential Error. ${error}`
+    console.log(errorMessage)
+    response.status(420).send(errorMessage)
   }
 }
