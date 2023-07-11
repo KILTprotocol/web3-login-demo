@@ -13,10 +13,16 @@ interface Props {
   extensionSession: Types.PubSubSessionV1 | Types.PubSubSessionV2 | null
   userMail: string | undefined
   setUserMail: any
+  setExtensionSession: any
 }
 
-function SubmitCredential({ extensionSession, userMail, setUserMail }: Props) {
-  async function login() {
+function SubmitCredential({
+  extensionSession,
+  userMail,
+  setUserMail,
+  setExtensionSession
+}: Props) {
+  async function handleLogin() {
     console.log(
       'Trying to log in. Meaning to ask the extension for a specific Type of Credential - a CType.'
     )
@@ -25,24 +31,24 @@ function SubmitCredential({ extensionSession, userMail, setUserMail }: Props) {
     setUserMail(verifiedUserInfoThatServerSendsBack)
   }
 
-  async function logout() {
-    console.log(
-      'Trying to log out. Meaning to delete the credential and session cookies. '
-    )
+  async function handleLogout() {
+    console.log('Trying to log out. Meaning to delete the cookies. ')
     await logOut()
     setUserMail(undefined)
+    setExtensionSession(undefined)
   }
   function accessManager() {
     if (!userMail) {
-      login()
+      handleLogin()
     } else {
-      logout()
+      handleLogout()
     }
   }
+
   return (
     <div className={styles.step}>
       <h2>4. Submit attested Credential</h2>
-      <Button disabled={!extensionSession} onClick={accessManager}>
+      <Button disabled={!extensionSession && !userMail} onClick={accessManager}>
         {userMail ? 'logout' : 'login'}
       </Button>
     </div>

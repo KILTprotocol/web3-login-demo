@@ -12,6 +12,8 @@ import ChooseExtension from './components/steps/ChooseExtension'
 import StartSession from './components/steps/StartSession'
 import SubmitCredential from './components/steps/SubmitCredentials'
 
+import { inspectAccessCookie } from './inspectAccessCookie'
+
 export default function Home(): JSX.Element {
   const [extensions, setExtensions] = useState<
     Types.InjectedWindowProvider<
@@ -19,19 +21,32 @@ export default function Home(): JSX.Element {
     >[]
   >([])
 
-  // Directly inject the extensions that support the KILT protocol
+  const [extensionSession, setExtensionSession] = useState<
+    Types.PubSubSessionV1 | Types.PubSubSessionV2 | null
+  >(null)
+
+  const [userMail, setUserMail] = useState<string>()
+
+  async function pastChecker() {
+    try {
+      const oldCookieInfo = await inspectAccessCookie()
+      setUserMail(oldCookieInfo)
+    } catch (error) {
+      console.log('No user logged in yet.')
+    }
+  }
+
   useEffect(() => {
+    // check if the user already has access granted
+    pastChecker()
+
+    // Directly inject the extensions that support the KILT protocol
     const stopWatching = watchExtensions((extensions) => {
       setExtensions(extensions)
     })
     // the clean-up:
     return stopWatching
   }, [])
-
-  const [extensionSession, setExtensionSession] = useState<
-    Types.PubSubSessionV1 | Types.PubSubSessionV2 | null
-  >(null)
-  const [userMail, setUserMail] = useState<string>()
 
   return (
     <Page>
@@ -41,18 +56,22 @@ export default function Home(): JSX.Element {
       </Page.Header>
       <Page.Content>
         <Card>
-          <p>Let's walk trough the login process step by step.</p>
+          <p>Let's walk trough the Login process step by step.</p>
 
           <EnableExtensions />
           <ChooseExtension extensions={extensions} />
-          <StartSession setExtensionSession={setExtensionSession} />
+          <StartSession
+            extensionSession={extensionSession}
+            setExtensionSession={setExtensionSession}
+          />
           <SubmitCredential
             extensionSession={extensionSession}
             userMail={userMail}
             setUserMail={setUserMail}
+            setExtensionSession={setExtensionSession}
           />
           <p>
-            All of these Steps encompass the Login with Credentials process.
+            All of these steps encompass the Login with Credentials process.
           </p>
           <p>
             You could trigger all of them with just one button, e.g. "Login".
