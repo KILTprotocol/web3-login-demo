@@ -21,6 +21,8 @@ export default function Home(): JSX.Element {
     >[]
   >([])
 
+  const [chosenOne, chooseExtension] = useState(0)
+
   const [extensionSession, setExtensionSession] = useState<
     Types.PubSubSessionV1 | Types.PubSubSessionV2 | null
   >(null)
@@ -59,7 +61,11 @@ export default function Home(): JSX.Element {
           <p>Let's walk trough the Login process step by step.</p>
 
           <EnableExtensions />
-          <ChooseExtension extensions={extensions} />
+          <ChooseExtension
+            extensions={extensions}
+            chooseExtension={chooseExtension}
+            chosenOne={chosenOne}
+          />
           <StartSession
             extensionSession={extensionSession}
             setExtensionSession={setExtensionSession}

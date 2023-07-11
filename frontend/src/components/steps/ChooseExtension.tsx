@@ -10,19 +10,29 @@ interface Props {
   extensions: Types.InjectedWindowProvider<
     Types.PubSubSessionV1 | Types.PubSubSessionV2
   >[]
+  chosenOne: number
+  chooseExtension: any
 }
 
-function ChooseExtension({ extensions }: Props) {
+function ChooseExtension({ extensions, chosenOne, chooseExtension }: Props) {
+  const handleChoosing = (event: { target: { value: any } }) => {
+    const indexOfChosenExtension = event.target.value
+    chooseExtension(indexOfChosenExtension)
+    console.log('An extension is being chosen.')
+    console.log('previous chosenOne: ', chosenOne)
+  }
+
   return (
     <div className={styles.step}>
       <h2>2. Choose the Extension you want to use:</h2>
       <Dropdown
-        id="drop_list"
-        name="Select Extension"
+        dropdownName="List of Extensions to Select from"
         values={extensions.map((ext, i) => ({
           label: ext.name,
-          id: i.toString()
+          index: i
         }))}
+        selectedValue={chosenOne}
+        handleOptionChange={handleChoosing}
       />
     </div>
   )
