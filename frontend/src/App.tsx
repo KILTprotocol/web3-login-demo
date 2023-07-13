@@ -67,6 +67,7 @@ export default function Home(): JSX.Element {
             chosenOne={chosenOne}
           />
           <StartSession
+            chosenOne={chosenOne}
             extensionSession={extensionSession}
             setExtensionSession={setExtensionSession}
           />

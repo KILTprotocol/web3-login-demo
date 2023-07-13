@@ -19,7 +19,6 @@ function ChooseExtension({ extensions, chosenOne, chooseExtension }: Props) {
     const indexOfChosenExtension = event.target.value
     chooseExtension(indexOfChosenExtension)
     console.log('An extension is being chosen.')
-    console.log('previous chosenOne: ', chosenOne)
   }
 
   return (

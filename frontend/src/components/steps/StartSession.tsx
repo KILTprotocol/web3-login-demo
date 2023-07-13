@@ -10,12 +10,17 @@ import { startExtensionSession } from '../../startExtensionSession'
 interface Props {
   extensionSession: Types.PubSubSessionV1 | Types.PubSubSessionV2 | null
   setExtensionSession: any
+  chosenOne: number
 }
 
-function StartSession({ extensionSession, setExtensionSession }: Props) {
+function StartSession({
+  extensionSession,
+  setExtensionSession,
+  chosenOne
+}: Props) {
   async function startSession() {
     console.log('trying to start the session! ')
-    const newSession = await startExtensionSession()
+    const newSession = await startExtensionSession(chosenOne)
     setExtensionSession(newSession)
   }
   // After startSession(), the Extension-Session-Values should be available for the backend. Done through cookie parser, (but data bank also possible).
