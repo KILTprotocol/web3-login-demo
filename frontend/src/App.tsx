@@ -21,7 +21,8 @@ export default function Home(): JSX.Element {
     >[]
   >([])
 
-  const [chosenOne, chooseExtension] = useState(0)
+  // Index of extension to interact with from the extensions (state) array
+  const [chosenExtension, setChosenExtension] = useState(0)
 
   const [extensionSession, setExtensionSession] = useState<
     Types.PubSubSessionV1 | Types.PubSubSessionV2 | null
@@ -63,11 +64,11 @@ export default function Home(): JSX.Element {
           <EnableExtensions />
           <ChooseExtension
             extensions={extensions}
-            chooseExtension={chooseExtension}
-            chosenOne={chosenOne}
+            setChosenExtension={setChosenExtension}
+            chosenExtension={chosenExtension}
           />
           <StartSession
-            chosenOne={chosenOne}
+            chosenExtension={chosenExtension}
             extensionSession={extensionSession}
             setExtensionSession={setExtensionSession}
           />

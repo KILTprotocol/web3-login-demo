@@ -10,14 +10,18 @@ interface Props {
   extensions: Types.InjectedWindowProvider<
     Types.PubSubSessionV1 | Types.PubSubSessionV2
   >[]
-  chosenOne: number
-  chooseExtension: any
+  chosenExtension: number
+  setChosenExtension: any
 }
 
-function ChooseExtension({ extensions, chosenOne, chooseExtension }: Props) {
+function ChooseExtension({
+  extensions,
+  chosenExtension,
+  setChosenExtension
+}: Props) {
   const handleChoosing = (event: { target: { value: any } }) => {
     const indexOfChosenExtension = event.target.value
-    chooseExtension(indexOfChosenExtension)
+    setChosenExtension(indexOfChosenExtension)
     console.log('An extension is being chosen.')
   }
 
@@ -30,7 +34,7 @@ function ChooseExtension({ extensions, chosenOne, chooseExtension }: Props) {
           label: ext.name,
           index: i
         }))}
-        selectedValue={chosenOne}
+        selectedValue={chosenExtension}
         handleOptionChange={handleChoosing}
       />
     </div>
