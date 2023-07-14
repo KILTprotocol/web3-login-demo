@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import styles from './RadioButtons.module.css'
 
@@ -6,14 +6,17 @@ interface Props {
   choices: string[]
   wrapperName: string
   onChange: any
+  selectedValue: string
 }
 
-function RadioButtons({ choices, wrapperName, onChange }: Props) {
-  const [selectedValue, setSelectedValue] = useState('')
-
+function RadioButtons({
+  choices,
+  wrapperName,
+  onChange,
+  selectedValue
+}: Props) {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target
-    setSelectedValue(value)
     onChange(value)
   }
 
