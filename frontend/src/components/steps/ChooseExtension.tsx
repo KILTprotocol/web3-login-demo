@@ -22,7 +22,6 @@ function ChooseExtension({
   const handleChoosing = (value: string) => {
     const nameOfChosenExtension = value
     setChosenExtension(nameOfChosenExtension)
-    console.log('An extension is being chosen with the RadioButtons.')
   }
 
   return (
