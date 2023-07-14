@@ -3,7 +3,7 @@ import styles from './Dropdown.module.css'
 export interface Props {
   dropdownName: string
   values: Array<{ label: string; index: number }>
-  selectedValue: number
+  selectedValue: string
   onChange: any
 }
 
@@ -24,7 +24,7 @@ export default function Dropdown({
       onChange={onChange}
     >
       {values.map(({ label, index }) => (
-        <option key={index} value={index}>
+        <option key={index} value={label}>
           {label}
         </option>
       ))}
