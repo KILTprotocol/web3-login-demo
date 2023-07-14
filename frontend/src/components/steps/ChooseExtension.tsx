@@ -5,7 +5,7 @@ import { Types } from 'kilt-extension-api'
 import styles from './Step.module.css'
 
 import Dropdown from '../Dropdown'
-import RadioButton from '../RadioButton'
+import RadioButtons from '../RadioButtons'
 
 interface Props {
   extensions: Types.InjectedWindowProvider<
@@ -20,10 +20,15 @@ function ChooseExtension({
   chosenExtension,
   setChosenExtension
 }: Props) {
-  const handleChoosing = (event: { target: { value: any } }) => {
+  const handleDropdownChoosing = (event: { target: { value: any } }) => {
     const nameOfChosenExtension = event.target.value
     setChosenExtension(nameOfChosenExtension)
-    console.log('An extension is being chosen.')
+    console.log('An extension is being chosen on the Dropdown.')
+  }
+  const handleChoosing = (value: string) => {
+    const nameOfChosenExtension = value
+    setChosenExtension(nameOfChosenExtension)
+    console.log('An extension is being chosen with the RadioButtons.')
   }
 
   return (
@@ -36,6 +41,11 @@ function ChooseExtension({
           index: i
         }))}
         selectedValue={chosenExtension}
+        onChange={handleDropdownChoosing}
+      />
+      <RadioButtons
+        wrapperName="List of Extensions to Select from"
+        choices={extensions.map((extensionObject) => extensionObject.name)}
         onChange={handleChoosing}
       />
     </div>
