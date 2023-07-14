@@ -24,6 +24,9 @@ export default function Home(): JSX.Element {
   // Name of the extension to interact with from the extensions (state) array
   const [chosenExtension, setChosenExtension] = useState('')
 
+  // Question for my dear college reviewers:
+  // Should I initialize this state with "Sporran" instead?
+
   const [extensionSession, setExtensionSession] = useState<
     Types.PubSubSessionV1 | Types.PubSubSessionV2 | null
   >(null)
