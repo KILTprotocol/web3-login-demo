@@ -4,7 +4,7 @@ export interface Props {
   dropdownName: string
   values: Array<{ label: string; index: number }>
   selectedValue: number
-  handleOptionChange: any
+  onChange: any
 }
 
 /**
@@ -14,14 +14,14 @@ export default function Dropdown({
   dropdownName,
   values,
   selectedValue,
-  handleOptionChange
+  onChange
 }: Props) {
   return (
     <select
       className={styles.button}
       name={dropdownName}
       value={selectedValue}
-      onChange={handleOptionChange}
+      onChange={onChange}
     >
       {values.map(({ label, index }) => (
         <option key={index} value={index}>

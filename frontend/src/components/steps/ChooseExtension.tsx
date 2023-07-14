@@ -35,7 +35,7 @@ function ChooseExtension({
           index: i
         }))}
         selectedValue={chosenExtension}
-        handleOptionChange={handleChoosing}
+        onChange={handleChoosing}
       />
     </div>
   )
