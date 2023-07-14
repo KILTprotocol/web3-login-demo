@@ -5,6 +5,7 @@ import { Types } from 'kilt-extension-api'
 import styles from './Step.module.css'
 
 import Dropdown from '../Dropdown'
+import RadioButton from '../RadioButton'
 
 interface Props {
   extensions: Types.InjectedWindowProvider<
@@ -20,8 +21,8 @@ function ChooseExtension({
   setChosenExtension
 }: Props) {
   const handleChoosing = (event: { target: { value: any } }) => {
-    const indexOfChosenExtension = event.target.value
-    setChosenExtension(indexOfChosenExtension)
+    const nameOfChosenExtension = event.target.value
+    setChosenExtension(nameOfChosenExtension)
     console.log('An extension is being chosen.')
   }
 
