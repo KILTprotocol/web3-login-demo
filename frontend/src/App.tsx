@@ -21,7 +21,7 @@ export default function Home(): JSX.Element {
     >[]
   >([])
 
-  // Index of extension to interact with from the extensions (state) array
+  // Name of the extension to interact with from the extensions (state) array
   const [chosenExtension, setChosenExtension] = useState('')
 
   const [extensionSession, setExtensionSession] = useState<
