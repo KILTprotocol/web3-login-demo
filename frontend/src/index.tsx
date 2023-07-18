@@ -4,6 +4,7 @@ import { initializeKiltExtensionAPI } from 'kilt-extension-api'
 
 import './index.css'
 import App from './App'
+import ErrorBoundary from './components/ErrorBoundary'
 
 initializeKiltExtensionAPI()
 
@@ -18,6 +19,8 @@ initializeKiltExtensionAPI()
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
-    <App />
+    <ErrorBoundary>
+      <App />
+    </ErrorBoundary>
   </React.StrictMode>
 )
