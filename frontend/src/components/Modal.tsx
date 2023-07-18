@@ -5,10 +5,11 @@ import styles from './Modal.module.css'
 interface Props {
   message: string
   modalName: string
+  show: boolean
 }
 
-function Modal({ message, modalName }: Props) {
-  const [isOpen, setIsOpen] = useState(false)
+function Modal({ message, modalName, show }: Props) {
+  const [isOpen, setIsOpen] = useState(show)
 
   const openModal = () => {
     setIsOpen(true)

@@ -31,7 +31,13 @@ function ErrorBoundary({ children }: ErrorBoundaryProps) {
   const [hasError, errorMessage] = useErrorBoundary()
 
   if (hasError) {
-    return <Modal modalName="Error Popup" message={errorMessage} />
+    return (
+      <Modal
+        modalName="Error Popup"
+        message={errorMessage}
+        show={errorMessage ? true : false}
+      />
+    )
   }
 
   return <>{children}</>
