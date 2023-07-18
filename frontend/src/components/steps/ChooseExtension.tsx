@@ -11,7 +11,7 @@ interface Props {
     Types.PubSubSessionV1 | Types.PubSubSessionV2
   >[]
   chosenExtension: string
-  setChosenExtension: any
+  setChosenExtension: (name: string) => void
 }
 
 function ChooseExtension({
@@ -19,11 +19,6 @@ function ChooseExtension({
   chosenExtension,
   setChosenExtension
 }: Props) {
-  const handleChoosing = (value: string) => {
-    const nameOfChosenExtension = value
-    setChosenExtension(nameOfChosenExtension)
-  }
-
   return (
     <div className={styles.step}>
       <h2>2. Choose the Extension you want to use:</h2>
@@ -31,7 +26,7 @@ function ChooseExtension({
         wrapperName="List of Extensions to Select from"
         choices={extensions.map((extensionObject) => extensionObject.name)}
         selectedValue={chosenExtension}
-        onChange={handleChoosing}
+        onChange={setChosenExtension}
       />
     </div>
   )
