@@ -9,7 +9,9 @@ import { startExtensionSession } from '../../startExtensionSession'
 
 interface Props {
   extensionSession: Types.PubSubSessionV1 | Types.PubSubSessionV2 | null
-  setExtensionSession: any
+  setExtensionSession: (
+    injectedExtension: Types.PubSubSessionV1 | Types.PubSubSessionV2
+  ) => void
   chosenExtension: string | undefined
 }
 

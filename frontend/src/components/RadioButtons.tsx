@@ -5,7 +5,7 @@ import styles from './RadioButtons.module.css'
 interface Props {
   choices: string[]
   wrapperName: string
-  onChange: any
+  onChange: (value: string) => void
   selectedValue: string | undefined
 }
 
