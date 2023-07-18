@@ -1,6 +1,8 @@
 import { getExtensions, watchExtensions } from 'kilt-extension-api'
 
-export async function startExtensionSession(nameOfSelectedExtension: string) {
+export async function startExtensionSession(
+  nameOfSelectedExtension: string | undefined
+) {
   // Find all injected extensions
   const extensions = getExtensions()
   watchExtensions((extensions) => {

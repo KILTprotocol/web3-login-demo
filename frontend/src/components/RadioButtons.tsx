@@ -6,12 +6,15 @@ interface Props {
   choices: string[]
   wrapperName: string
   onChange: any
-  selectedValue: string
+  selectedValue: string | undefined
 }
 
+/**
+ * Generic Radio Buttons component. Multiple options as rectangular buttons, single selection allowed.
+ */
 function RadioButtons({
-  choices,
   wrapperName,
+  choices,
   onChange,
   selectedValue
 }: Props) {

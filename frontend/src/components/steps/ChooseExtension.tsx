@@ -10,7 +10,7 @@ interface Props {
   extensions: Types.InjectedWindowProvider<
     Types.PubSubSessionV1 | Types.PubSubSessionV2
   >[]
-  chosenExtension: string
+  chosenExtension: string | undefined
   setChosenExtension: (name: string) => void
 }
 

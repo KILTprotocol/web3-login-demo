@@ -10,7 +10,7 @@ import { startExtensionSession } from '../../startExtensionSession'
 interface Props {
   extensionSession: Types.PubSubSessionV1 | Types.PubSubSessionV2 | null
   setExtensionSession: any
-  chosenExtension: string
+  chosenExtension: string | undefined
 }
 
 function StartSession({
