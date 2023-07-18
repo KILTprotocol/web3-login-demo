@@ -64,19 +64,20 @@ export default function Home(): JSX.Element {
           <EnableExtensions />
           <ChooseExtension
             extensions={extensions}
-            setChosenExtension={setChosenExtension}
             chosenExtension={chosenExtension}
+            setChosenExtension={setChosenExtension}
           />
           <StartSession
             chosenExtension={chosenExtension}
+            setChosenExtension={setChosenExtension}
             extensionSession={extensionSession}
             setExtensionSession={setExtensionSession}
           />
           <SubmitCredential
             extensionSession={extensionSession}
+            setExtensionSession={setExtensionSession}
             userMail={userMail}
             setUserMail={setUserMail}
-            setExtensionSession={setExtensionSession}
           />
           <p>
             All of these steps encompass the Login with Credentials process.

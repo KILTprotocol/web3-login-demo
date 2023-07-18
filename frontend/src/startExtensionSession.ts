@@ -82,5 +82,5 @@ export async function startExtensionSession(
   console.log(
     'Session successfully verified. dApp-Server and Browser-Extension trust each other.'
   )
-  return extensionSession
+  return { newSession: extensionSession, nameOfUsedExtension: extension.name }
 }
