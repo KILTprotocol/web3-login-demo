@@ -13,6 +13,7 @@ import StartSession from './components/steps/StartSession'
 import SubmitCredential from './components/steps/SubmitCredentials'
 
 import { inspectAccessCookie } from './inspectAccessCookie'
+import Modal from './components/Modal'
 
 export default function Home(): JSX.Element {
   const [extensions, setExtensions] = useState<
@@ -55,6 +56,8 @@ export default function Home(): JSX.Element {
         <User userMail={userMail} />
       </Page.Header>
       <Page.Content>
+        <Modal modalName="button on page" message="Tell me why?!" />
+
         <Card>
           <p>Let's walk trough the Login process step by step.</p>
 
