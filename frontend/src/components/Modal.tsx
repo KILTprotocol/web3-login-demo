@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import styles from './Modal.module.css'
 
@@ -7,11 +7,11 @@ import Button from './Button'
 interface Props {
   modalName: string
   message: string | undefined
-  show: boolean
+  // show: boolean
 }
 
-function Modal({ modalName, message, show }: Props) {
-  const [isOpen, setIsOpen] = useState(show)
+function Modal({ modalName, message }: Props) {
+  const [isOpen, setIsOpen] = useState(false)
 
   const openModal = () => {
     setIsOpen(true)
@@ -26,6 +26,11 @@ function Modal({ modalName, message, show }: Props) {
       setIsOpen(false)
     }
   }
+
+  useEffect(() => {
+    // if a message is newly passed, show the modal
+    message && setIsOpen(true)
+  }, [message])
 
   return (
     <>

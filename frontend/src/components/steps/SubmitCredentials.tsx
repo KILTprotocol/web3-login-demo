@@ -51,7 +51,7 @@ function SubmitCredential({
       }
     } catch (err) {
       setShowOnModal(
-        `Error on the 4th Step Submitting the attested Credential: ${err}`
+        `Error on the 4th Step "Submitting attested Credential": ${err}`
       )
     }
   }

@@ -59,42 +59,42 @@ export default function Home(): JSX.Element {
         <User userMail={userMail} />
       </Page.Header>
       <Page.Content>
-        {/* <Modal modalName="button on page" message="Tell me why?!" /> */}
+        <Page.Section>
+          <Card>
+            <p>Let's walk trough the Login process step by step.</p>
 
-        <Card>
-          <p>Let's walk trough the Login process step by step.</p>
-
-          <EnableExtensions />
-          <ChooseExtension extensions={extensions} />
-          <StartSession
-            extensionSession={extensionSession}
-            setExtensionSession={setExtensionSession}
+            <EnableExtensions />
+            <ChooseExtension extensions={extensions} />
+            <StartSession
+              extensionSession={extensionSession}
+              setExtensionSession={setExtensionSession}
+            />
+            <SubmitCredential
+              extensionSession={extensionSession}
+              userMail={userMail}
+              setUserMail={setUserMail}
+              setExtensionSession={setExtensionSession}
+              showOnModal={showOnModal}
+              setShowOnModal={setShowOnModal}
+            />
+            <p>
+              All of these steps encompass the Login with Credentials process.
+            </p>
+            <p>
+              You could trigger all of them with just one button, e.g. "Login".
+              <br />
+              Here we break them down for an easier understanding of what is
+              happening.
+              <br />
+              The order of the steps is not flexible.
+            </p>
+          </Card>
+          <Modal
+            modalName="Error during the Step by Step Process"
+            message={showOnModal}
+            // show={showOnModal ? true : false}
           />
-          <SubmitCredential
-            extensionSession={extensionSession}
-            userMail={userMail}
-            setUserMail={setUserMail}
-            setExtensionSession={setExtensionSession}
-            showOnModal={showOnModal}
-            setShowOnModal={setShowOnModal}
-          />
-          <p>
-            All of these steps encompass the Login with Credentials process.
-          </p>
-          <p>
-            You could trigger all of them with just one button, e.g. "Login".
-            <br />
-            Here we break them down for an easier understanding of what is
-            happening.
-            <br />
-            The order of the steps is not flexible.
-          </p>
-        </Card>
-        <Modal
-          modalName="Error during the Step by Step Process"
-          message={showOnModal}
-          show={showOnModal ? true : false}
-        />
+        </Page.Section>
       </Page.Content>
     </Page>
   )

@@ -7,20 +7,20 @@
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.36);
 }
 
 .modalContent {
-  background-color: #fefefe;
+  background-color: rgba(255, 255, 255, 0.9);
   margin: 15% auto;
   padding: 20px;
-  border: 1px solid #888;
+  border: 2px solid #888;
   width: 80%;
   border-radius: 8px;
 }
 
 .close {
-  color: #aaa;
+  color: #427496;
   float: right;
   font-size: 28px;
   font-weight: bold;
@@ -29,7 +29,7 @@
 
 .close:hover,
 .close:focus {
-  color: black;
+  color: rgb(183, 41, 41);
   text-decoration: none;
   cursor: pointer;
 }

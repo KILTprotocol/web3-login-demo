@@ -14,7 +14,7 @@ function BoundedFallBack({ error }: FallBacksProps) {
     <div role="alert">
       <p>Something went wrong:</p>
       <pre style={{ color: 'red' }}>{error.message}</pre>
-      <Modal modalName="Error Modal" message={error.message} show={true} />
+      <Modal modalName="Error Modal" message={error.message} />
     </div>
   )
 }
