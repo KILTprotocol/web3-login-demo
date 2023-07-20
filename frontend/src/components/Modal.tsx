@@ -55,7 +55,7 @@ function Modal({ modalName, message }: Props) {
             <span className={styles.close} onClick={closeModal}>
               &times;
             </span>
-            <h2>{modalName}</h2>
+            <h2 style={{ color: 'rgb(188, 50, 73)' }}>{modalName}</h2>
             <p>{message}</p>
           </div>
         </div>
