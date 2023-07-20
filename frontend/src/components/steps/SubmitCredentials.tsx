@@ -14,7 +14,6 @@ interface Props {
   userMail: string | undefined
   setUserMail: any
   setExtensionSession: any
-  showOnModal: string | undefined
   setShowOnModal: (message: string) => void
 }
 
@@ -23,7 +22,6 @@ function SubmitCredential({
   userMail,
   setUserMail,
   setExtensionSession,
-  showOnModal,
   setShowOnModal
 }: Props) {
   async function handleLogin() {
@@ -43,7 +41,6 @@ function SubmitCredential({
   }
   async function accessManager() {
     try {
-      console.log('showOnModal: ', showOnModal)
       if (!userMail) {
         await handleLogin()
       } else {

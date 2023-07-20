@@ -74,7 +74,6 @@ export default function Home(): JSX.Element {
               userMail={userMail}
               setUserMail={setUserMail}
               setExtensionSession={setExtensionSession}
-              showOnModal={showOnModal}
               setShowOnModal={setShowOnModal}
             />
             <p>
@@ -92,7 +91,6 @@ export default function Home(): JSX.Element {
           <Modal
             modalName="Error during the Step by Step Process"
             message={showOnModal}
-            // show={showOnModal ? true : false}
           />
         </Page.Section>
       </Page.Content>
