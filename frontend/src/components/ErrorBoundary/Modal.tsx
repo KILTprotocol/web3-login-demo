@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 
 import styles from './Modal.module.css'
 
+import Button from '../Button'
+
 interface Props {
   message: string
   modalName: string
@@ -27,9 +29,15 @@ function Modal({ message, modalName, show }: Props) {
 
   return (
     <>
-      <button id="myBtn" onClick={openModal}>
-        Abrir Modal
-      </button>
+      <Button
+        id="showModal"
+        onClick={openModal}
+        style={{ textTransform: 'none' }}
+      >
+        🚨 Please, 🚨
+        <br />
+        show message again!
+      </Button>
       {isOpen && (
         <div
           id={modalName}
@@ -41,6 +49,7 @@ function Modal({ message, modalName, show }: Props) {
               &times;
             </span>
             <h2>Modal Title</h2>
+            isOpen = {isOpen}
             <p>
               Modal content goes here...
               {message}

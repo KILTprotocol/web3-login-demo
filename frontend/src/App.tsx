@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import { watchExtensions, Types } from 'kilt-extension-api'
+import { ErrorBoundary } from 'react-error-boundary'
 
 import Card from './components/Card'
 import Logo from './components/Logo'
@@ -13,6 +14,9 @@ import StartSession from './components/steps/StartSession'
 import SubmitCredential from './components/steps/SubmitCredentials'
 
 import { inspectAccessCookie } from './inspectAccessCookie'
+import BoundedFallBack, {
+  logError
+} from './components/ErrorBoundary/BoundedFallBack'
 // import Modal from './components/Modal'
 
 export default function Home(): JSX.Element {
@@ -51,41 +55,43 @@ export default function Home(): JSX.Element {
 
   return (
     <Page>
-      <Page.Header>
-        <Logo />
-        <User userMail={userMail} />
-      </Page.Header>
-      <Page.Content>
-        {/* <Modal modalName="button on page" message="Tell me why?!" /> */}
+      <ErrorBoundary FallbackComponent={BoundedFallBack} onError={logError}>
+        <Page.Header>
+          <Logo />
+          <User userMail={userMail} />
+        </Page.Header>
+        <Page.Content>
+          {/* <Modal modalName="button on page" message="Tell me why?!" /> */}
 
-        <Card>
-          <p>Let's walk trough the Login process step by step.</p>
+          <Card>
+            <p>Let's walk trough the Login process step by step.</p>
 
-          <EnableExtensions />
-          <ChooseExtension extensions={extensions} />
-          <StartSession
-            extensionSession={extensionSession}
-            setExtensionSession={setExtensionSession}
-          />
-          <SubmitCredential
-            extensionSession={extensionSession}
-            userMail={userMail}
-            setUserMail={setUserMail}
-            setExtensionSession={setExtensionSession}
-          />
-          <p>
-            All of these steps encompass the Login with Credentials process.
-          </p>
-          <p>
-            You could trigger all of them with just one button, e.g. "Login".
-            <br />
-            Here we break them down for an easier understanding of what is
-            happening.
-            <br />
-            The order of the steps is not flexible.
-          </p>
-        </Card>
-      </Page.Content>
+            <EnableExtensions />
+            <ChooseExtension extensions={extensions} />
+            <StartSession
+              extensionSession={extensionSession}
+              setExtensionSession={setExtensionSession}
+            />
+            <SubmitCredential
+              extensionSession={extensionSession}
+              userMail={userMail}
+              setUserMail={setUserMail}
+              setExtensionSession={setExtensionSession}
+            />
+            <p>
+              All of these steps encompass the Login with Credentials process.
+            </p>
+            <p>
+              You could trigger all of them with just one button, e.g. "Login".
+              <br />
+              Here we break them down for an easier understanding of what is
+              happening.
+              <br />
+              The order of the steps is not flexible.
+            </p>
+          </Card>
+        </Page.Content>
+      </ErrorBoundary>
     </Page>
   )
 }

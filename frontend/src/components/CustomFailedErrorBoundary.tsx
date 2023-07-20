@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
-import Modal from './Modal'
+// import Modal from './Modal'
+import Button from './Button'
 
 interface ErrorBoundaryProps {
   children: React.ReactNode
@@ -16,8 +17,12 @@ const useErrorBoundary = (): [boolean, string] => {
       setErrorMessage(event.message)
       console.log('error message inside the boundary:', event.message)
     }
+    console.log('The Effect is being used.')
 
-    window.addEventListener('error', errorHandler)
+    window.addEventListener('error', (e) => {
+      console.log('Error being listen: ', e)
+      errorHandler(e)
+    })
 
     return () => {
       window.removeEventListener('error', errorHandler)
@@ -27,20 +32,16 @@ const useErrorBoundary = (): [boolean, string] => {
   return [hasError, errorMessage]
 }
 
-function ErrorBoundary({ children }: ErrorBoundaryProps) {
+function CustomFailedErrorBoundary({ children }: ErrorBoundaryProps) {
   const [hasError, errorMessage] = useErrorBoundary()
 
   if (hasError) {
     return (
-      <Modal
-        modalName="Error Popup"
-        message={errorMessage}
-        show={errorMessage ? true : false}
-      />
+      <Button modalName="Error Popup" message={errorMessage} show={hasError} />
     )
   }
 
   return <>{children}</>
 }
 
-export default ErrorBoundary
+export default CustomFailedErrorBoundary
