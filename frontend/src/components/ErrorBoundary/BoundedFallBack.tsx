@@ -1,6 +1,6 @@
 import { ErrorBoundary } from 'react-error-boundary'
 
-import Modal from './Modal'
+import Modal from '../Modal'
 
 interface FallBacksProps {
   error: Error

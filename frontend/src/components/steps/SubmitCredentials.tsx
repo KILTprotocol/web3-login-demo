@@ -2,8 +2,6 @@ import React from 'react'
 
 import { Types } from 'kilt-extension-api'
 
-import { useErrorBoundary } from 'react-error-boundary'
-
 import styles from './Step.module.css'
 
 import Button from '../Button'
@@ -16,16 +14,18 @@ interface Props {
   userMail: string | undefined
   setUserMail: any
   setExtensionSession: any
+  showOnModal: string | undefined
+  setShowOnModal: (message: string) => void
 }
 
 function SubmitCredential({
   extensionSession,
   userMail,
   setUserMail,
-  setExtensionSession
+  setExtensionSession,
+  showOnModal,
+  setShowOnModal
 }: Props) {
-  const { showBoundary } = useErrorBoundary()
-
   async function handleLogin() {
     console.log(
       'Trying to log in. Meaning to ask the extension for a specific Type of Credential - a CType.'
@@ -43,13 +43,16 @@ function SubmitCredential({
   }
   async function accessManager() {
     try {
+      console.log('showOnModal: ', showOnModal)
       if (!userMail) {
         await handleLogin()
       } else {
         await handleLogout()
       }
     } catch (err) {
-      showBoundary(err)
+      setShowOnModal(
+        `Error on the 4th Step Submitting the attested Credential: ${err}`
+      )
     }
   }
 

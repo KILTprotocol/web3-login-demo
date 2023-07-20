@@ -2,15 +2,15 @@ import React, { useState } from 'react'
 
 import styles from './Modal.module.css'
 
-import Button from '../Button'
+import Button from './Button'
 
 interface Props {
-  message: string
   modalName: string
+  message: string | undefined
   show: boolean
 }
 
-function Modal({ message, modalName, show }: Props) {
+function Modal({ modalName, message, show }: Props) {
   const [isOpen, setIsOpen] = useState(show)
 
   const openModal = () => {
@@ -29,15 +29,17 @@ function Modal({ message, modalName, show }: Props) {
 
   return (
     <>
-      <Button
-        id="showModal"
-        onClick={openModal}
-        style={{ textTransform: 'none' }}
-      >
-        🚨 Please, 🚨
-        <br />
-        show message again!
-      </Button>
+      {message && (
+        <Button
+          id="showModal"
+          onClick={openModal}
+          style={{ textTransform: 'none' }}
+        >
+          🚨 Please, 🚨
+          <br />
+          show message again!
+        </Button>
+      )}
       {isOpen && (
         <div
           id={modalName}
@@ -48,12 +50,8 @@ function Modal({ message, modalName, show }: Props) {
             <span className={styles.close} onClick={closeModal}>
               &times;
             </span>
-            <h2>Modal Title</h2>
-            isOpen = {isOpen}
-            <p>
-              Modal content goes here...
-              {message}
-            </p>
+            <h2>{modalName}</h2>
+            <p>{message}</p>
           </div>
         </div>
       )}
