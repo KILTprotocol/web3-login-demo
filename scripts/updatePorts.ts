@@ -24,7 +24,7 @@ if (
   const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'))
   if (backendPort) {
     // Update the value for the backend port in the package.json
-    packageJson.proxy = `http://localhost:${backendPort}`
+    packageJson.options.proxy = `http://localhost:${backendPort}`
   }
   if (frontendPort) {
     // Update the value for the frontend port in the package.json
