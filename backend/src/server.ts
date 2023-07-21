@@ -1,6 +1,6 @@
 import * as Kilt from '@kiltprotocol/sdk-js'
 import express, { Express, NextFunction, Request, Response } from 'express'
-// import cors from 'cors'
+import cors from 'cors'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 
@@ -34,15 +34,15 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 // Tell the browser that only these URLs should be allowed to make request to this server.
 // If you host the app using a different URL, you need to add it here.
-// app.use(
-//   cors({
-//     origin: [
-//       `http://localhost:${BACKEND_PORT}`,
-//       `http://127.0.0.1:${BACKEND_PORT}`,
-//       `http://[::1]:${BACKEND_PORT}`
-//     ]
-//   })
-// )
+app.use(
+  cors({
+    origin: [
+      `http://localhost:${BACKEND_PORT}`,
+      `http://127.0.0.1:${BACKEND_PORT}`,
+      `http://[::1]:${BACKEND_PORT}`
+    ]
+  })
+)
 
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', `http://localhost:${FRONTEND_PORT}`)
