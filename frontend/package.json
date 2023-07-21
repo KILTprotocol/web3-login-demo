@@ -8,6 +8,7 @@
       ".localhost"
     ],
     "proxy": "http://localhost:3000"
+
   },
   "dependencies": {
     "@kiltprotocol/sdk-js": "^0.32.0",

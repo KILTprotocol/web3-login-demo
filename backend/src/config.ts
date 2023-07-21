@@ -19,6 +19,7 @@ dotenv.config({ path: envPath })
 
 export const WSS_ADDRESS = process.env.WSS_ADDRESS ?? 'wss://peregrine.kilt.io'
 export const BACKEND_PORT = process.env.BACKEND_PORT ?? 3000
+export const FRONTEND_PORT = process.env.FRONTEND_PORT ?? 8080
 export const DAPP_ACCOUNT_MNEMONIC = loadEnv('DAPP_ACCOUNT_MNEMONIC')
 export const DAPP_DID_MNEMONIC = loadEnv('DAPP_DID_MNEMONIC')
 export const DAPP_DID_URI = loadEnv('DAPP_DID_URI') as Kilt.DidUri
