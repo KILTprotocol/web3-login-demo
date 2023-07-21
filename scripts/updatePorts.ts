@@ -9,19 +9,22 @@ import dotenv from 'dotenv'
 dotenv.config()
 const frontendPort = process.env.FRONTEND_PORT
 const backendPort = process.env.BACKEND_PORT
-console.log(
-  `custom backendPort: ${backendPort}`,
-  `custom frontendPort: ${frontendPort}`
-)
 
-// Continues only if at least one of the variables was define on the `.env` file
-if (frontendPort || backendPort) {
+// Continues only if at least one of the variables was define on the `.env` file and are different than the defaults
+if (
+  (frontendPort && frontendPort !== '8080') ||
+  (backendPort && backendPort !== '3000')
+) {
+  console.log(
+    `custom backendPort: ${backendPort}`,
+    `custom frontendPort: ${frontendPort}`
+  )
   // Read the package.json file
   const packageJsonPath = './frontend/package.json'
   const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'))
   if (backendPort) {
     // Update the value for the backend port in the package.json
-    packageJson.proxy = `http://localhost:${backendPort}/`
+    packageJson.proxy = `http://localhost:${backendPort}`
   }
   if (frontendPort) {
     // Update the value for the frontend port in the package.json
