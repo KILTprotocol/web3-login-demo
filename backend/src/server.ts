@@ -7,7 +7,7 @@ import cookieParser from 'cookie-parser'
 // Getting necessary environment constants:
 import {
   BACKEND_PORT,
-  FRONTEND_PORT,
+  // FRONTEND_PORT,
   WSS_ADDRESS,
   validateEnvironmentConstants
 } from './config'
@@ -43,15 +43,6 @@ app.use(
     ]
   })
 )
-
-app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', `http://localhost:${FRONTEND_PORT}`)
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept'
-  )
-  next()
-})
 
 // Utility to handle cookies. Backing has never been easier.
 app.use(cookieParser())
