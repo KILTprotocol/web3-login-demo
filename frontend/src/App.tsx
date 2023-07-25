@@ -77,6 +77,7 @@ export default function Home(): JSX.Element {
               setChosenExtension={setChosenExtension}
               extensionSession={extensionSession}
               setExtensionSession={setExtensionSession}
+              onError={setShowOnModal}
             />
             <SubmitCredential
               extensionSession={extensionSession}
