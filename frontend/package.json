@@ -6,11 +6,9 @@
     "allowedHosts": [
       "localhost",
       ".localhost"
-    ],
-    "proxy": {
-      "/api": "http://localhost:3000"
-    }
+    ]
   },
+  "proxy": "http://localhost:3000",
   "dependencies": {
     "@kiltprotocol/sdk-js": "^0.32.0",
     "@kiltprotocol/types": "^0.31.0",
