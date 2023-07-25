@@ -83,7 +83,7 @@ export default function Home(): JSX.Element {
               setExtensionSession={setExtensionSession}
               userMail={userMail}
               setUserMail={setUserMail}
-              setShowOnModal={setShowOnModal}
+              onError={setShowOnModal}
             />
             <p>
               All of these steps encompass the Login with Credentials process.

@@ -12,9 +12,11 @@ import { logOut } from '../../logOut'
 interface Props {
   extensionSession: Types.PubSubSessionV1 | Types.PubSubSessionV2 | null
   userMail: string | undefined
-  setUserMail: any
-  setExtensionSession: any
-  setShowOnModal: (message: string) => void
+  setUserMail: (userMail: string | undefined) => void
+  setExtensionSession: (
+    injectedExtension: Types.PubSubSessionV1 | Types.PubSubSessionV2 | null
+  ) => void
+  onError: (message: string) => void
 }
 
 function SubmitCredential({
@@ -22,7 +24,7 @@ function SubmitCredential({
   userMail,
   setUserMail,
   setExtensionSession,
-  setShowOnModal
+  onError
 }: Props) {
   async function handleLogin() {
     console.log(
@@ -37,7 +39,7 @@ function SubmitCredential({
     console.log('Trying to log out. Meaning to delete the cookies. ')
     await logOut()
     setUserMail(undefined)
-    setExtensionSession(undefined)
+    setExtensionSession(null)
   }
   async function accessManager() {
     try {
@@ -47,9 +49,7 @@ function SubmitCredential({
         await handleLogout()
       }
     } catch (err) {
-      setShowOnModal(
-        `Error on the 4th Step "Submitting attested Credential": ${err}`
-      )
+      onError(`Error on the 4th Step "Submitting attested Credential": ${err}`)
     }
   }
 
