@@ -1,0 +1,25 @@
+.radioButton {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.radioButtonLabel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 4px 4px;
+}
+
+.radioButtonLabel.selected {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+.radioButton input[type='radio'] {
+  display: none;
+}

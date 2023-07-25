@@ -22,6 +22,9 @@ export default function Home(): JSX.Element {
     >[]
   >([])
 
+  // Name of the extension to interact with from the extensions (state) array
+  const [chosenExtension, setChosenExtension] = useState<string>()
+
   const [extensionSession, setExtensionSession] = useState<
     Types.PubSubSessionV1 | Types.PubSubSessionV2 | null
   >(null)
@@ -64,16 +67,22 @@ export default function Home(): JSX.Element {
             <p>Let's walk trough the Login process step by step.</p>
 
             <EnableExtensions />
-            <ChooseExtension extensions={extensions} />
+            <ChooseExtension
+              extensions={extensions}
+              chosenExtension={chosenExtension}
+              setChosenExtension={setChosenExtension}
+            />
             <StartSession
+              chosenExtension={chosenExtension}
+              setChosenExtension={setChosenExtension}
               extensionSession={extensionSession}
               setExtensionSession={setExtensionSession}
             />
             <SubmitCredential
               extensionSession={extensionSession}
+              setExtensionSession={setExtensionSession}
               userMail={userMail}
               setUserMail={setUserMail}
-              setExtensionSession={setExtensionSession}
               setShowOnModal={setShowOnModal}
             />
             <p>
