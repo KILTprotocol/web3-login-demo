@@ -1,3 +1,5 @@
+import React from 'react'
+
 import styles from './Dropdown.module.css'
 
 export interface Props {
