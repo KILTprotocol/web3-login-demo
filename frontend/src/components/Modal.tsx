@@ -7,7 +7,6 @@ import Button from './Button'
 interface Props {
   modalName: string
   message: string | undefined
-  // show: boolean
 }
 
 function Modal({ modalName, message }: Props) {
@@ -35,14 +34,8 @@ function Modal({ modalName, message }: Props) {
   return (
     <>
       {message && (
-        <Button
-          id="showModal"
-          onClick={openModal}
-          style={{ textTransform: 'none' }}
-        >
-          🚨 Please, 🚨
-          <br />
-          show message again!
+        <Button id="showModal" onClick={openModal}>
+          🚨
         </Button>
       )}
       {isOpen && (
