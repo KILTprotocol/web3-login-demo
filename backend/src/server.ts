@@ -3,7 +3,6 @@ import express, { Express, NextFunction, Request, Response } from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
-import { createProxyMiddleware } from 'http-proxy-middleware'
 
 // Getting necessary environment constants:
 import {
@@ -28,20 +27,12 @@ const app: Express = express()
 
 // Activating Middleware:
 
-app.use(
-  '/api',
-  createProxyMiddleware({
-    target: `https://example.org/`,
-    changeOrigin: true
-  })
-)
-
 // for parsing application/json
 app.use(bodyParser.json())
 // for parsing application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }))
 
-// The server will only take requests from this URLs
+// Tell the browser that only these URLs should be allowed to make request to this server.
 // If you host the app using a different URL, you need to add it here.
 app.use(
   cors({

@@ -8582,7 +8582,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"http-proxy-middleware@npm:^2.0.3, http-proxy-middleware@npm:^2.0.6":
+"http-proxy-middleware@npm:^2.0.3":
   version: 2.0.6
   resolution: "http-proxy-middleware@npm:2.0.6"
   dependencies:
@@ -15044,7 +15044,6 @@ __metadata:
     cors: ^2.8.5
     dotenv: ^16.0.3
     express: ^4.18.2
-    http-proxy-middleware: ^2.0.6
     jsonwebtoken: ^9.0.0
     memory-cache: ^0.2.0
     nodemon: ^2.0.20
