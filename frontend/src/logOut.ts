@@ -10,4 +10,5 @@ export async function logOut() {
   if (!logoutResult.ok) {
     throw new Error(logoutResult.statusText)
   }
+  console.log('Successfully logged out.')
 }
