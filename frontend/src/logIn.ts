@@ -82,5 +82,7 @@ export async function logIn(
     verifiedUserInfo
   )
 
+  console.log('Login process completed.')
+
   return verifiedUserInfo
 }
