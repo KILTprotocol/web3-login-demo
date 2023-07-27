@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react'
 
 import styles from './Modal.module.css'
 
-import Button from './Button'
-
 interface Props {
   modalName: string
   message: string | undefined
@@ -11,10 +9,6 @@ interface Props {
 
 function Modal({ modalName, message }: Props) {
   const [isOpen, setIsOpen] = useState(false)
-
-  const openModal = () => {
-    setIsOpen(true)
-  }
 
   const closeModal = () => {
     setIsOpen(false)
@@ -33,11 +27,6 @@ function Modal({ modalName, message }: Props) {
 
   return (
     <>
-      {message && (
-        <Button id="showModal" onClick={openModal}>
-          🚨 Show Modal 🚨
-        </Button>
-      )}
       {isOpen && (
         <div
           id={modalName}
