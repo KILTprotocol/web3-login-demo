@@ -34,12 +34,8 @@ function Modal({ modalName, message }: Props) {
   return (
     <>
       {message && (
-        <Button
-          id="showModal"
-          onClick={openModal}
-          style={{ background: 'none', border: 'none' }}
-        >
-          🚨
+        <Button id="showModal" onClick={openModal}>
+          🚨 Show Modal 🚨
         </Button>
       )}
       {isOpen && (
