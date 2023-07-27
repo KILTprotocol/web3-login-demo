@@ -32,7 +32,7 @@ export default function Home(): JSX.Element {
   const [userMail, setUserMail] = useState<string>()
 
   // Controls when to pop up a modal with a message to the UI
-  const [showOnModal, setShowOnModal] = useState<string | undefined>()
+  const [messageForModal, setMessageForModal] = useState<string | undefined>()
 
   async function pastChecker() {
     try {
@@ -65,7 +65,7 @@ export default function Home(): JSX.Element {
         <Page.Section>
           <Modal
             modalName="Error during the Step by Step Process"
-            message={showOnModal}
+            message={messageForModal}
           />
           <Card>
             <p>Let's walk trough the Login process step by step.</p>
@@ -81,14 +81,14 @@ export default function Home(): JSX.Element {
               setChosenExtension={setChosenExtension}
               extensionSession={extensionSession}
               setExtensionSession={setExtensionSession}
-              onError={setShowOnModal}
+              onError={setMessageForModal}
             />
             <SubmitCredential
               extensionSession={extensionSession}
               setExtensionSession={setExtensionSession}
               userMail={userMail}
               setUserMail={setUserMail}
-              onError={setShowOnModal}
+              onError={setMessageForModal}
             />
             <p>
               All of these steps encompass the Login with Credentials process.
