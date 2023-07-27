@@ -80,7 +80,7 @@ app.post('/api/credential/postSubmit', (req, res, next) =>
   postLoginSubmitCredential(req, res).catch(next)
 )
 
-app.get('/api/credential/alreadyLogin', (req, res, next) =>
+app.get('/api/access/alreadyLogin', (req, res, next) =>
   alreadyLogin(req, res).catch(next)
 )
 

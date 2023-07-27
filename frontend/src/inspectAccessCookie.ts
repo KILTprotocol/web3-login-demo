@@ -1,5 +1,5 @@
 export async function inspectAccessCookie() {
-  const inspectionResult = await fetch(`/api/credential/alreadyLogin`, {
+  const inspectionResult = await fetch(`/api/access/alreadyLogin`, {
     method: 'GET',
     credentials: 'include',
     headers: {
