@@ -1,25 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 
 import styles from './Modal.module.css'
-
-import Button from './Button'
 
 interface Props {
   modalName: string
   message: string | undefined
-  onClose: (message: string | undefined) => void
+  setMessageForModal: (message: string | undefined) => void
 }
 
-function Modal({ modalName, message, onClose }: Props) {
-  const [isOpen, setIsOpen] = useState(false)
-
-  const openModal = () => {
-    setIsOpen(true)
-  }
-
+function Modal({ modalName, message, setMessageForModal }: Props) {
   const closeModal = () => {
-    setIsOpen(false)
-    onClose(undefined)
+    setMessageForModal(undefined)
   }
 
   const handleOutsideClick = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -30,17 +21,12 @@ function Modal({ modalName, message, onClose }: Props) {
 
   useEffect(() => {
     // if a message is newly passed, show the modal
-    message && setIsOpen(true)
+    message
   }, [message])
 
   return (
     <>
       {message && (
-        <Button id="showModal" onClick={openModal}>
-          🚨 Show Modal 🚨
-        </Button>
-      )}
-      {isOpen && (
         <div
           id={modalName}
           className={styles.modal}
