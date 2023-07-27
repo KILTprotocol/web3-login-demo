@@ -2,12 +2,6 @@
   "name": "web3-login-demo-frontend",
   "version": "0.1.0",
   "private": true,
-  "options": {
-    "allowedHosts": [
-      "localhost",
-      ".localhost"
-    ]
-  },
   "proxy": "http://localhost:3000",
   "dependencies": {
     "@kiltprotocol/sdk-js": "^0.32.0",
