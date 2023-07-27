@@ -8,7 +8,7 @@ import { postSubmitCredential } from '../credentials/postSubmitCredential'
 import { saveAccessOnCookie } from './saveAccessOnCookie'
 
 /** First half of the login with credentials */
-export async function sendCredentialRequest(
+export async function getLoginCredentialRequest(
   request: Request,
   response: Response
 ): Promise<void> {
@@ -26,7 +26,7 @@ export async function sendCredentialRequest(
 }
 
 /** Second half of the login with credentials */
-export async function submitCredential(
+export async function postLoginSubmitCredential(
   request: Request,
   response: Response
 ): Promise<void> {
