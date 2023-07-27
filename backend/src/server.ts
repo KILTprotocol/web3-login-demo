@@ -16,16 +16,13 @@ import { verifySession } from './session/verifySession'
 
 import { fetchDidDocument } from './utils/fetchDidDocument'
 
-// import { getRequestCredential } from './credentials/getRequestCredential'
-// import { postSubmitCredential } from './credentials/postSubmitCredential'
-
 import {
   getLoginCredentialRequest,
   postLoginSubmitCredential
-} from './login/login'
+} from './access/login'
 
-import { logout } from './logout/logout'
-import { alreadyLogin } from './login/alreadyLogin'
+import { logout } from './access/logout'
+import { alreadyLogin } from './access/alreadyLogin'
 
 const app: Express = express()
 
@@ -74,7 +71,7 @@ app.post('/api/session/verify', (req, res, next) =>
   verifySession(req, res).catch(next)
 )
 
-// Manage Credentials:
+// Manage Credentials and Access:
 
 app.get('/api/credential/getRequest', (req, res, next) =>
   getLoginCredentialRequest(req, res).catch(next)

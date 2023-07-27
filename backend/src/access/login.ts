@@ -36,7 +36,6 @@ export async function postLoginSubmitCredential(
       response,
       emailRequest
     )
-    // With this, the extension will know what kind of credential to share
 
     // Send a little something to the frontend, so that the user interface can display who logged in.
     // "Email" is capitalized
