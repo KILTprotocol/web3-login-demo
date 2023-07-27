@@ -16,7 +16,7 @@
     "build:client": "cd ./frontend && yarn build",
     "build:well-known": "ts-node --skipProject ./scripts/genesisWellKnownDidConfig.ts",
     "build": "yarn build:well-known && yarn build:client",
-    "start:client": "ts-node ./scripts/updatePorts.ts && cd ./frontend && yarn start",
+    "start:client": "cd ./frontend && yarn start",
     "start:server": "cd ./backend && yarn start",
     "start": "concurrently 'yarn:start:*'",
     "test": "react-scripts test",
