@@ -63,6 +63,10 @@ export default function Home(): JSX.Element {
       </Page.Header>
       <Page.Content>
         <Page.Section>
+          <Modal
+            modalName="Error during the Step by Step Process"
+            message={showOnModal}
+          />
           <Card>
             <p>Let's walk trough the Login process step by step.</p>
 
@@ -98,10 +102,6 @@ export default function Home(): JSX.Element {
               The order of the steps is not flexible.
             </p>
           </Card>
-          <Modal
-            modalName="Error during the Step by Step Process"
-            message={showOnModal}
-          />
         </Page.Section>
       </Page.Content>
     </Page>
