@@ -101,6 +101,7 @@ export default function Home(): JSX.Element {
           <Modal
             modalName="Error during the Step by Step Process"
             message={messageForModal}
+            onClose={setMessageForModal}
           />
         </Page.Section>
       </Page.Content>

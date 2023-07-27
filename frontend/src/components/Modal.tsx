@@ -7,9 +7,10 @@ import Button from './Button'
 interface Props {
   modalName: string
   message: string | undefined
+  onClose: (message: string | undefined) => void
 }
 
-function Modal({ modalName, message }: Props) {
+function Modal({ modalName, message, onClose }: Props) {
   const [isOpen, setIsOpen] = useState(false)
 
   const openModal = () => {
@@ -18,11 +19,12 @@ function Modal({ modalName, message }: Props) {
 
   const closeModal = () => {
     setIsOpen(false)
+    onClose(undefined)
   }
 
   const handleOutsideClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
-      setIsOpen(false)
+      closeModal()
     }
   }
 
