@@ -16,8 +16,10 @@ import { verifySession } from './session/verifySession'
 
 import { fetchDidDocument } from './utils/fetchDidDocument'
 
-import { getRequestCredential } from './credentials/getRequestCredential'
-import { postSubmitCredential } from './credentials/postSubmitCredential'
+// import { getRequestCredential } from './credentials/getRequestCredential'
+// import { postSubmitCredential } from './credentials/postSubmitCredential'
+
+import { sendCredentialRequest, submitCredential } from './login/login'
 
 import { logout } from './logout/logout'
 import { alreadyLogin } from './login/alreadyLogin'
@@ -72,10 +74,10 @@ app.post('/api/session/verify', (req, res, next) =>
 // Manage Credentials:
 
 app.get('/api/credential/getRequest', (req, res, next) =>
-  getRequestCredential(req, res).catch(next)
+  sendCredentialRequest(req, res).catch(next)
 )
 app.post('/api/credential/postSubmit', (req, res, next) =>
-  postSubmitCredential(req, res).catch(next)
+  submitCredential(req, res).catch(next)
 )
 
 app.get('/api/credential/alreadyLogin', (req, res, next) =>

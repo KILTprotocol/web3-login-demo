@@ -12,53 +12,44 @@ import { readSessionCookie } from '../session/readSessionCookie'
 
 import { SessionValues, cookieOptions } from '../session/startSession'
 
-import { emailRequest } from './listOfRequests'
-
 export async function getRequestCredential(
   request: Request,
-  response: Response
+  response: Response,
+  cTypeRequest: Kilt.IRequestCredentialContent
 ) {
-  try {
-    // read cookie from browser
-    const sessionValues: SessionValues = await readSessionCookie(
-      request,
-      response,
-      JWT_SIGNER_SECRET
+  // read cookie from browser
+  const sessionValues: SessionValues = await readSessionCookie(
+    request,
+    response,
+    JWT_SIGNER_SECRET
+  )
+
+  if (!sessionValues.extension) {
+    throw new Error(
+      'Extension Session Values not found. Try restarting and verifying the server-extension-session.'
     )
-
-    if (!sessionValues.extension) {
-      throw new Error(
-        'Extension Session Values not found. Try restarting and verifying the server-extension-session.'
-      )
-    }
-
-    // We need the encryptionKeyUri from the Extension
-    const { did: claimerSessionDidUri } = Kilt.Did.parse(
-      sessionValues.extension.encryptionKeyUri
-    )
-
-    // It is encouraged that you customize your challenge creation
-    const challenge = randomAsHex()
-
-    const message = requestWrapper(
-      emailRequest,
-      challenge,
-      claimerSessionDidUri
-    )
-
-    console.log(
-      'the message with the Credential-Request before encryption: ',
-      JSON.stringify(message, null, 2)
-    )
-
-    saveChallengeOnCookie(challenge, response)
-
-    const encryptedMessage = await encryptMessage(message, sessionValues)
-
-    return response.send(encryptedMessage)
-  } catch (error) {
-    console.log('Get Request Credential Error.', error)
   }
+
+  // We need the encryptionKeyUri from the Extension
+  const { did: claimerSessionDidUri } = Kilt.Did.parse(
+    sessionValues.extension.encryptionKeyUri
+  )
+
+  // It is encouraged that you customize your challenge creation
+  const challenge = randomAsHex()
+
+  const message = requestWrapper(cTypeRequest, challenge, claimerSessionDidUri)
+
+  console.log(
+    'the message with the Credential-Request before encryption: ',
+    JSON.stringify(message, null, 2)
+  )
+
+  saveChallengeOnCookie(challenge, response)
+
+  const encryptedMessage = await encryptMessage(message, sessionValues)
+
+  return encryptedMessage
 }
 
 /** Turns the Credential Request into a Kilt.Message.
