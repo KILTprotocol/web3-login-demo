@@ -7,7 +7,6 @@ import cookieParser from 'cookie-parser'
 // Getting necessary environment constants:
 import {
   BACKEND_PORT,
-  // FRONTEND_PORT,
   WSS_ADDRESS,
   validateEnvironmentConstants
 } from './config'
