@@ -7,6 +7,7 @@ interface Props {
   wrapperName: string
   onChange: (value: string) => void
   selectedValue: string | undefined
+  disabled: boolean
 }
 
 /**
@@ -16,7 +17,8 @@ function RadioButtons({
   wrapperName,
   choices,
   onChange,
-  selectedValue
+  selectedValue,
+  disabled
 }: Props) {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target
@@ -32,6 +34,7 @@ function RadioButtons({
             value={choice}
             checked={selectedValue === choice}
             onChange={handleChange}
+            disabled={disabled}
           />
           <div
             className={`${styles.radioButtonLabel} ${
