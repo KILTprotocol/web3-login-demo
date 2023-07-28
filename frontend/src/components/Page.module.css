@@ -3,7 +3,8 @@
   height: 100%;
   width: 99%;
   padding: 20px;
-  background: transparent url('../../public/background-tile.svg') no-repeat center center fixed;
+  background: transparent url('../../public/background-tile.svg') no-repeat
+    center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -36,4 +37,11 @@
   align-items: flex-start;
   padding: 40px 0px;
   flex-grow: 1;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

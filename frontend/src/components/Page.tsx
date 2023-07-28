@@ -23,4 +23,11 @@ Page.Content = function ({ children }: Props): JSX.Element {
 //@ts-ignore
 Page.Content.displayName = 'Page.Content'
 
+Page.Section = function ({ children }: Props): JSX.Element {
+  return <section className={styles.section}>{children}</section>
+}
+
+//@ts-ignore
+Page.Section.displayName = 'Page.Section'
+
 export default Page

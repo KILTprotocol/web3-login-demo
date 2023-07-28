@@ -55,7 +55,9 @@ export async function startExtensionSession(
     dAppEncryptionKeyUri,
     challenge
   )
-  console.log('the session was initialized (¬‿¬)')
+  console.log(
+    'the session was initialized from server side. (¬‿¬) \n Waiting for extension response now...'
+  )
   console.log('session being returned by the extension:', extensionSession)
 
   // Resolve the extension `session.encryptionKeyUri` and use this key and the nonce

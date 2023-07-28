@@ -13,6 +13,7 @@ import StartSession from './components/steps/StartSession'
 import SubmitCredential from './components/steps/SubmitCredentials'
 
 import { inspectAccessCookie } from './inspectAccessCookie'
+import Modal from './components/Modal'
 
 export default function Home(): JSX.Element {
   const [extensions, setExtensions] = useState<
@@ -29,6 +30,9 @@ export default function Home(): JSX.Element {
   >(null)
 
   const [userMail, setUserMail] = useState<string>()
+
+  // Controls when to pop up a modal with a message to the UI
+  const [messageForModal, setMessageForModal] = useState<string | undefined>()
 
   async function pastChecker() {
     try {
@@ -58,39 +62,48 @@ export default function Home(): JSX.Element {
         <User userMail={userMail} />
       </Page.Header>
       <Page.Content>
-        <Card>
-          <p>Let's walk trough the Login process step by step.</p>
+        <Page.Section>
+          <Card>
+            <p>Let's walk trough the Login process step by step.</p>
 
-          <EnableExtensions />
-          <ChooseExtension
-            extensions={extensions}
-            chosenExtension={chosenExtension}
-            setChosenExtension={setChosenExtension}
+            <EnableExtensions />
+            <ChooseExtension
+              extensions={extensions}
+              chosenExtension={chosenExtension}
+              setChosenExtension={setChosenExtension}
+            />
+            <StartSession
+              chosenExtension={chosenExtension}
+              setChosenExtension={setChosenExtension}
+              extensionSession={extensionSession}
+              setExtensionSession={setExtensionSession}
+              onError={setMessageForModal}
+            />
+            <SubmitCredential
+              extensionSession={extensionSession}
+              setExtensionSession={setExtensionSession}
+              userMail={userMail}
+              setUserMail={setUserMail}
+              onError={setMessageForModal}
+            />
+            <p>
+              All of these steps encompass the Login with Credentials process.
+            </p>
+            <p>
+              You could trigger all of them with just one button, e.g. "Login".
+              <br />
+              Here we break them down for an easier understanding of what is
+              happening.
+              <br />
+              The order of the steps is not flexible.
+            </p>
+          </Card>
+          <Modal
+            modalName="Error during the Step by Step Process"
+            message={messageForModal}
+            setMessageForModal={setMessageForModal}
           />
-          <StartSession
-            chosenExtension={chosenExtension}
-            setChosenExtension={setChosenExtension}
-            extensionSession={extensionSession}
-            setExtensionSession={setExtensionSession}
-          />
-          <SubmitCredential
-            extensionSession={extensionSession}
-            setExtensionSession={setExtensionSession}
-            userMail={userMail}
-            setUserMail={setUserMail}
-          />
-          <p>
-            All of these steps encompass the Login with Credentials process.
-          </p>
-          <p>
-            You could trigger all of them with just one button, e.g. "Login".
-            <br />
-            Here we break them down for an easier understanding of what is
-            happening.
-            <br />
-            The order of the steps is not flexible.
-          </p>
-        </Card>
+        </Page.Section>
       </Page.Content>
     </Page>
   )
