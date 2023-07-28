@@ -1,10 +1,9 @@
 .page {
   position: absolute;
-  height: 100%;
-  width: 99%;
+  height: auto;
+  width: 98%;
   padding: 20px;
-  background: transparent url('../../public/background-tile.svg') no-repeat
-    center center fixed;
+  background-image: url('../../public/background-tile.svg');
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
