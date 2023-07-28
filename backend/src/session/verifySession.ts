@@ -2,7 +2,7 @@ import * as Kilt from '@kiltprotocol/sdk-js'
 import { Response, Request } from 'express'
 import jwt from 'jsonwebtoken'
 
-import { DAPP_DID_MNEMONIC, JWT_SIGNER_SECRET } from '../config'
+import { DAPP_DID_MNEMONIC, JWT_SIGNER_SECRET, cookieOptions } from '../config'
 
 import { getApi } from '../utils/connection'
 import { SessionValues } from '../utils/types'
@@ -10,8 +10,6 @@ import { generateKeyPairs } from '../utils/generateKeyPairs'
 import { extractEncryptionKeyUri } from '../utils/extractEncryptionKeyUri'
 
 import { readSessionCookie } from './readSessionCookie'
-
-import { cookieOptions } from './startSession'
 
 export async function verifySession(
   request: Request,

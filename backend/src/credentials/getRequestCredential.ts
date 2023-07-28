@@ -4,15 +4,18 @@ import jwt from 'jsonwebtoken'
 
 import { Request, Response } from 'express'
 
-import { DAPP_DID_MNEMONIC, DAPP_DID_URI, JWT_SIGNER_SECRET } from '../config'
+import {
+  DAPP_DID_MNEMONIC,
+  DAPP_DID_URI,
+  JWT_SIGNER_SECRET,
+  cookieOptions
+} from '../config'
 
 import { SessionValues } from '../utils/types'
 import { encryptionCallback } from '../utils/encryptionCallback'
 import { generateKeyPairs } from '../utils/generateKeyPairs'
 
 import { readSessionCookie } from '../session/readSessionCookie'
-
-import { cookieOptions } from '../session/startSession'
 
 export async function getRequestCredential(
   request: Request,

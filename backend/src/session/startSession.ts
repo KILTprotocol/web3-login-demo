@@ -1,25 +1,10 @@
 import * as Kilt from '@kiltprotocol/sdk-js'
-import { Response, Request, CookieOptions } from 'express'
+import { Response, Request } from 'express'
 import jwt from 'jsonwebtoken'
 
 import { getApi } from '../utils/connection'
-import { DAPP_NAME, JWT_SIGNER_SECRET } from '../config'
+import { DAPP_NAME, JWT_SIGNER_SECRET, cookieOptions } from '../config'
 import { SessionValues } from '../utils/types'
-
-// Set Cookie Options: (list of ingredients)
-export const cookieOptions: CookieOptions = {
-  // Indicates the number of milliseconds until the Cookie expires.
-  // On this demo the cookies have a lifetime of 1 hour. The shorter the securest.
-  maxAge: 60 * 60 * 1000,
-  // only send over HTTPS
-  secure: true,
-  // prevent cross-site request forgery attacks
-  sameSite: 'strict',
-  // restricts URL that can request the Cookie from the browser. '/' works for the entire domain.
-  path: '/',
-  // Forbids JavaScript from accessing the cookie
-  httpOnly: true
-}
 
 export async function generateSessionValues(
   didDocument: Kilt.DidDocument

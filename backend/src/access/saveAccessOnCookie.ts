@@ -2,9 +2,7 @@ import { Response } from 'express'
 
 import jwt from 'jsonwebtoken'
 
-import { JWT_SIGNER_SECRET } from '../config'
-
-import { cookieOptions } from '../session/startSession'
+import { JWT_SIGNER_SECRET, cookieOptions } from '../config'
 
 export function saveAccessOnCookie(
   authenticationToken: string,

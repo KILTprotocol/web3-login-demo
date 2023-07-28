@@ -5,6 +5,7 @@ import dotenv from 'dotenv'
 
 import * as Kilt from '@kiltprotocol/sdk-js'
 import { u8aEq } from '@polkadot/util'
+import { CookieOptions } from 'express'
 
 import { generateAccount } from './utils/generateAccount'
 import { generateKeyPairs } from './utils/generateKeyPairs'
@@ -144,4 +145,19 @@ async function corroborateMyIdentity(dAppDidUri: Kilt.DidUri) {
     
     Try running \`build:well-known\` to make a new well-known-did-config.  `)
   }
+}
+
+// Set Cookie Options: (list of ingredients)
+export const cookieOptions: CookieOptions = {
+  // Indicates the number of milliseconds until the Cookie expires.
+  // On this demo the cookies have a lifetime of 1 hour. The shorter the securest.
+  maxAge: 60 * 60 * 1000,
+  // only send over HTTPS
+  secure: true,
+  // prevent cross-site request forgery attacks
+  sameSite: 'strict',
+  // restricts URL that can request the Cookie from the browser. '/' works for the entire domain.
+  path: '/',
+  // Forbids JavaScript from accessing the cookie
+  httpOnly: true
 }
