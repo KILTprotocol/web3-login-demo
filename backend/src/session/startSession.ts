@@ -4,25 +4,7 @@ import jwt from 'jsonwebtoken'
 
 import { getApi } from '../utils/connection'
 import { DAPP_NAME, JWT_SIGNER_SECRET } from '../config'
-
-/**
- * Define how the Session Values are packaged.
- *
- * At the start, we only have the values from the server.
- * After verification, we also save the values that the extension (wallet) send us.
- */
-export interface SessionValues {
-  server: {
-    dAppName: string
-    dAppEncryptionKeyUri: Kilt.DidResourceUri
-    challenge: string
-  }
-  extension?: {
-    encryptedChallenge: string
-    encryptionKeyUri: Kilt.DidResourceUri
-    nonce: string
-  }
-}
+import { SessionValues } from '../utils/types'
 
 // Set Cookie Options: (list of ingredients)
 export const cookieOptions: CookieOptions = {

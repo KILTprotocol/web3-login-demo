@@ -1,4 +1,4 @@
-import { DidUri, Hash } from '@kiltprotocol/types'
+import { DidUri, DidResourceUri, Hash } from '@kiltprotocol/types'
 import {
   SelfSignedProof,
   VerifiableCredential,
@@ -31,4 +31,23 @@ export interface DomainLinkageCredential
 export interface VerifiableDomainLinkagePresentation {
   '@context': string
   linked_dids: [DomainLinkageCredential]
+}
+
+/**
+ * Define how the Session Values are packaged.
+ *
+ * At the start, we only have the values from the server.
+ * After verification, we also save the values that the extension (wallet) send us.
+ */
+export interface SessionValues {
+  server: {
+    dAppName: string
+    dAppEncryptionKeyUri: DidResourceUri
+    challenge: string
+  }
+  extension?: {
+    encryptedChallenge: string
+    encryptionKeyUri: DidResourceUri
+    nonce: string
+  }
 }

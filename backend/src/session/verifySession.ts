@@ -4,13 +4,14 @@ import jwt from 'jsonwebtoken'
 
 import { DAPP_DID_MNEMONIC, JWT_SIGNER_SECRET } from '../config'
 
-import { generateKeyPairs } from '../utils/generateKeyPairs'
 import { getApi } from '../utils/connection'
+import { SessionValues } from '../utils/types'
+import { generateKeyPairs } from '../utils/generateKeyPairs'
 import { extractEncryptionKeyUri } from '../utils/extractEncryptionKeyUri'
 
 import { readSessionCookie } from './readSessionCookie'
 
-import { cookieOptions, SessionValues } from './startSession'
+import { cookieOptions } from './startSession'
 
 export async function verifySession(
   request: Request,
