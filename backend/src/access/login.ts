@@ -1,11 +1,14 @@
 import { Response, Request } from 'express'
 
-// Change which ctype your dApp request by changing which one you import from the list
 import { emailRequest } from '../credentials/listOfRequests'
 import { getRequestCredential } from '../credentials/getRequestCredential'
 import { postSubmitCredential } from '../credentials/postSubmitCredential'
 
 import { saveAccessOnCookie } from './saveAccessOnCookie'
+
+// Here you can set which type of credential (cType) your dApp will request users to login.
+// You can change it by importing a different one from the list.
+const requestedCTypeForLogin = emailRequest
 
 /** First half of the login with credentials */
 export async function getLoginCredentialRequest(
@@ -16,7 +19,7 @@ export async function getLoginCredentialRequest(
     const encryptedCredentialRequest = await getRequestCredential(
       request,
       response,
-      emailRequest
+      requestedCTypeForLogin
     )
     // With this, the extension will know what kind of credential to share
     response.status(200).send(encryptedCredentialRequest)
@@ -34,11 +37,11 @@ export async function postLoginSubmitCredential(
     const verifiedCredential = await postSubmitCredential(
       request,
       response,
-      emailRequest
+      requestedCTypeForLogin
     )
 
     // Send a little something to the frontend, so that the user interface can display who logged in.
-    // "Email" is capitalized
+    // "Email" is capitalized on this cType schema
     const plainUserInfo = verifiedCredential.claim.contents.Email
 
     console.log(
