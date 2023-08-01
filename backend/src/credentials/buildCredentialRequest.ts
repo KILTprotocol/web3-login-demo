@@ -17,7 +17,7 @@ export async function buildCredentialRequest(
   request: Request,
   response: Response,
   cTypeRequest: Kilt.IRequestCredentialContent
-) {
+): Promise<Kilt.IEncryptedMessage> {
   // read cookie from browser
   const sessionValues: SessionValues = await readSessionCookie(
     request,
@@ -48,9 +48,7 @@ export async function buildCredentialRequest(
 
   setCredentialCookie(challenge, response)
 
-  const encryptedMessage = await encryptMessage(message, sessionValues)
-
-  return encryptedMessage
+  return await encryptMessage(message, sessionValues)
 }
 
 /** Turns the Credential Request into a Kilt.Message.

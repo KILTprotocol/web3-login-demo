@@ -14,7 +14,7 @@ export async function verifySubmittedCredential(
   request: Request,
   response: Response,
   cTypeRequested: Kilt.IRequestCredentialContent
-) {
+): Promise<Kilt.ICredentialPresentation> {
   const encryptedMessage = request.body
   console.log(
     `encrypted Message that the server obtained ${JSON.stringify(
