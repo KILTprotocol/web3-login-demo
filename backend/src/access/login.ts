@@ -10,7 +10,7 @@ import { setAccessCookie } from './setAccessCookie'
 // You can change it by importing a different one from the list.
 const requestedCTypeForLogin = emailRequest
 
-/** First half of the login with credentials */
+/** First half of the login with credentials.*/
 export async function buildLoginCredentialRequest(
   request: Request,
   response: Response
@@ -28,8 +28,8 @@ export async function buildLoginCredentialRequest(
   }
 }
 
-/** Second half of the login with credentials */
-export async function verifySubmittedLoginCredential(
+/** Second half of the login with credentials. */
+export async function handleLoginCredentialSubmission(
   request: Request,
   response: Response
 ): Promise<void> {

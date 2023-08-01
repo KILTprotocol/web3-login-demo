@@ -18,7 +18,7 @@ import { fetchDidDocument } from './utils/fetchDidDocument'
 
 import {
   buildLoginCredentialRequest,
-  verifySubmittedLoginCredential
+  handleLoginCredentialSubmission
 } from './access/login'
 
 import { logout } from './access/logout'
@@ -71,13 +71,13 @@ app.post('/api/session/verify', (req, res, next) =>
   verifySession(req, res).catch(next)
 )
 
-// Manage Credentials and Access:
+// Manage Access:
 
 app.get('/api/credential/login/getRequest', (req, res, next) =>
   buildLoginCredentialRequest(req, res).catch(next)
 )
 app.post('/api/credential/login/postSubmit', (req, res, next) =>
-  verifySubmittedLoginCredential(req, res).catch(next)
+  handleLoginCredentialSubmission(req, res).catch(next)
 )
 
 app.get('/api/access/inspectAccess', (req, res, next) =>
