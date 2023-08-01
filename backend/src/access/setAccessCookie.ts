@@ -4,9 +4,9 @@ import jwt from 'jsonwebtoken'
 
 import { JWT_SIGNER_SECRET, cookieOptions } from '../config'
 
-export function saveAccessOnCookie(
-  authenticationToken: string,
-  response: Response
+export function setAccessCookie(
+  response: Response,
+  authenticationToken: string
 ) {
   // Create a Json-Web-Token:
   // set the expiration of JWT same as the Cookie

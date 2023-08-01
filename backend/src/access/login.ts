@@ -4,7 +4,7 @@ import { emailRequest } from '../credentials/listOfRequests'
 import { buildCredentialRequest } from '../credentials/buildCredentialRequest'
 import { verifySubmittedCredential } from '../credentials/verifySubmittedCredential'
 
-import { saveAccessOnCookie } from './saveAccessOnCookie'
+import { setAccessCookie } from './setAccessCookie'
 
 // Here you can set which type of credential (cType) your dApp will request users to login.
 // You can change it by importing a different one from the list.
@@ -54,7 +54,7 @@ export async function verifySubmittedLoginCredential(
     // Please, replace/complete here with your websites method of encoding authentication tokens:
     const authenticationToken = plainUserInfo as string
 
-    saveAccessOnCookie(authenticationToken, response)
+    setAccessCookie(response, authenticationToken)
 
     response.status(200).send(plainUserInfo)
   } catch (error) {
