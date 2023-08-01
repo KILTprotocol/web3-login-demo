@@ -10,7 +10,7 @@ import { getApi } from '../utils/connection'
 
 import { readCredentialCookie } from './readCredentialCookie'
 
-export async function postSubmitCredential(
+export async function verifySubmittedCredential(
   request: Request,
   response: Response,
   cTypeRequested: Kilt.IRequestCredentialContent

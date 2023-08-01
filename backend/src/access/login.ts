@@ -2,7 +2,7 @@ import { Response, Request } from 'express'
 
 import { emailRequest } from '../credentials/listOfRequests'
 import { buildCredentialRequest } from '../credentials/getRequestCredential'
-import { postSubmitCredential } from '../credentials/postSubmitCredential'
+import { verifySubmittedCredential } from '../credentials/verifySubmittedCredential'
 
 import { saveAccessOnCookie } from './saveAccessOnCookie'
 
@@ -29,12 +29,12 @@ export async function buildLoginCredentialRequest(
 }
 
 /** Second half of the login with credentials */
-export async function postLoginSubmitCredential(
+export async function verifySubmittedLoginCredential(
   request: Request,
   response: Response
 ): Promise<void> {
   try {
-    const verifiedCredential = await postSubmitCredential(
+    const verifiedCredential = await verifySubmittedCredential(
       request,
       response,
       requestedCTypeForLogin
