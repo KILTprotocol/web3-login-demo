@@ -73,10 +73,10 @@ app.post('/api/session/verify', (req, res, next) =>
 
 // Manage Credentials and Access:
 
-app.get('/api/credential/getRequestForLogin', (req, res, next) =>
+app.get('/api/credential/login/getRequest', (req, res, next) =>
   buildLoginCredentialRequest(req, res).catch(next)
 )
-app.post('/api/credential/postSubmitForLogin', (req, res, next) =>
+app.post('/api/credential/login/postSubmit', (req, res, next) =>
   verifySubmittedLoginCredential(req, res).catch(next)
 )
 
