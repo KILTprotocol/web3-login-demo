@@ -12,12 +12,14 @@ interface Props {
   >[]
   chosenExtension: string | undefined
   setChosenExtension: (name: string) => void
+  extensionSession: Types.PubSubSessionV1 | Types.PubSubSessionV2 | null
 }
 
 function ChooseExtension({
   extensions,
   chosenExtension,
-  setChosenExtension
+  setChosenExtension,
+  extensionSession
 }: Props) {
   return (
     <div className={styles.step}>
@@ -27,6 +29,7 @@ function ChooseExtension({
         choices={extensions.map((extensionObject) => extensionObject.name)}
         selectedValue={chosenExtension}
         onChange={setChosenExtension}
+        disabled={Boolean(extensionSession)}
       />
     </div>
   )
