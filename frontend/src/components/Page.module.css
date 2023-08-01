@@ -3,11 +3,7 @@
   height: auto;
   width: 98%;
   padding: 20px;
-  background-image: url('../../public/background-tile.svg');
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+  background: url('../../public/background-tile.svg') no-repeat center/cover;
   z-index: 0;
   display: flex;
   flex-direction: column;
