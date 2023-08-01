@@ -1,7 +1,7 @@
 import { Response, Request } from 'express'
 
 import { emailRequest } from '../credentials/listOfRequests'
-import { buildCredentialRequest } from '../credentials/getRequestCredential'
+import { buildCredentialRequest } from '../credentials/buildCredentialRequest'
 import { verifySubmittedCredential } from '../credentials/verifySubmittedCredential'
 
 import { saveAccessOnCookie } from './saveAccessOnCookie'
