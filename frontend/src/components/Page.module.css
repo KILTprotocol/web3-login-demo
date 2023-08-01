@@ -1,29 +1,9 @@
 .page {
-  position: absolute;
-  height: 100%;
-  width: 99%;
+  height: 100vh;
   padding: 20px;
-  background: transparent url('../../public/background-tile.svg') no-repeat
-    center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  z-index: 0;
+  background: url('../../public/background-tile.svg') no-repeat center/cover;
   display: flex;
   flex-direction: column;
-}
-
-.page::before {
-  content: '';
-  position: absolute;
-  height: 100%;
-  width: 95%;
-  top: 0;
-  left: 0;
-  opacity: 0.7;
-  transform: translate3d(0, 0, 0);
-  z-index: -1;
 }
 
 .header {
