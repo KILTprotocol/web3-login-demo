@@ -17,7 +17,7 @@ import { generateKeyPairs } from '../utils/generateKeyPairs'
 
 import { readSessionCookie } from '../session/readSessionCookie'
 
-export async function getRequestCredential(
+export async function buildCredentialRequest(
   request: Request,
   response: Response,
   cTypeRequest: Kilt.IRequestCredentialContent

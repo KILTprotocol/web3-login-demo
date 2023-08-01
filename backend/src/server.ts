@@ -17,7 +17,7 @@ import { verifySession } from './session/verifySession'
 import { fetchDidDocument } from './utils/fetchDidDocument'
 
 import {
-  getLoginCredentialRequest,
+  buildLoginCredentialRequest,
   postLoginSubmitCredential
 } from './access/login'
 
@@ -73,8 +73,8 @@ app.post('/api/session/verify', (req, res, next) =>
 
 // Manage Credentials and Access:
 
-app.get('/api/credential/getRequest', (req, res, next) =>
-  getLoginCredentialRequest(req, res).catch(next)
+app.get('/api/credential/getRequestForLogin', (req, res, next) =>
+  buildLoginCredentialRequest(req, res).catch(next)
 )
 app.post('/api/credential/postSubmit', (req, res, next) =>
   postLoginSubmitCredential(req, res).catch(next)

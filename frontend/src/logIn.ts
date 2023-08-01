@@ -11,7 +11,7 @@ export async function logIn(
     )
   }
 
-  const getRequestResponse = await fetch(`/api/credential/getRequest`, {
+  const getRequestResponse = await fetch(`/api/credential/getRequestForLogin`, {
     method: 'GET',
     credentials: 'include',
     headers: {

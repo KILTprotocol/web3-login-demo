@@ -1,7 +1,7 @@
 import { Response, Request } from 'express'
 
 import { emailRequest } from '../credentials/listOfRequests'
-import { getRequestCredential } from '../credentials/getRequestCredential'
+import { buildCredentialRequest } from '../credentials/getRequestCredential'
 import { postSubmitCredential } from '../credentials/postSubmitCredential'
 
 import { saveAccessOnCookie } from './saveAccessOnCookie'
@@ -11,12 +11,12 @@ import { saveAccessOnCookie } from './saveAccessOnCookie'
 const requestedCTypeForLogin = emailRequest
 
 /** First half of the login with credentials */
-export async function getLoginCredentialRequest(
+export async function buildLoginCredentialRequest(
   request: Request,
   response: Response
 ): Promise<void> {
   try {
-    const encryptedCredentialRequest = await getRequestCredential(
+    const encryptedCredentialRequest = await buildCredentialRequest(
       request,
       response,
       requestedCTypeForLogin
