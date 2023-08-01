@@ -29,7 +29,7 @@ function ChooseExtension({
         choices={extensions.map((extensionObject) => extensionObject.name)}
         selectedValue={chosenExtension}
         onChange={setChosenExtension}
-        disabled={extensionSession !== null}
+        disabled={Boolean(extensionSession)}
       />
     </div>
   )
