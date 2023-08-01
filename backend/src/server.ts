@@ -22,7 +22,7 @@ import {
 } from './access/login'
 
 import { logout } from './access/logout'
-import { alreadyLogin } from './access/alreadyLogin'
+import { inspectAccess } from './access/inspectAccess'
 
 const app: Express = express()
 
@@ -80,8 +80,8 @@ app.post('/api/credential/postSubmit', (req, res, next) =>
   postLoginSubmitCredential(req, res).catch(next)
 )
 
-app.get('/api/access/alreadyLogin', (req, res, next) =>
-  alreadyLogin(req, res).catch(next)
+app.get('/api/access/inspectAccess', (req, res, next) =>
+  inspectAccess(req, res).catch(next)
 )
 
 app.post('/api/logout', (req, res, next) => logout(req, res).catch(next))
