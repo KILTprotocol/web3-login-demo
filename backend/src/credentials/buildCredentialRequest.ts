@@ -1,21 +1,17 @@
 import * as Kilt from '@kiltprotocol/sdk-js'
 import { randomAsHex } from '@polkadot/util-crypto'
-import jwt from 'jsonwebtoken'
 
 import { Request, Response } from 'express'
 
-import {
-  DAPP_DID_MNEMONIC,
-  DAPP_DID_URI,
-  JWT_SIGNER_SECRET,
-  cookieOptions
-} from '../config'
+import { DAPP_DID_MNEMONIC, DAPP_DID_URI, JWT_SIGNER_SECRET } from '../config'
 
 import { SessionValues } from '../utils/types'
 import { encryptionCallback } from '../utils/encryptionCallback'
 import { generateKeyPairs } from '../utils/generateKeyPairs'
 
 import { readSessionCookie } from '../session/readSessionCookie'
+
+import { setCredentialCookie } from './setCredentialCookie'
 
 export async function buildCredentialRequest(
   request: Request,
@@ -50,7 +46,7 @@ export async function buildCredentialRequest(
     JSON.stringify(message, null, 2)
   )
 
-  saveChallengeOnCookie(challenge, response)
+  setCredentialCookie(challenge, response)
 
   const encryptedMessage = await encryptMessage(message, sessionValues)
 
@@ -108,22 +104,4 @@ async function encryptMessage(
   )
 
   return cypheredMessage
-}
-
-function saveChallengeOnCookie(challengeOnRequest: string, response: Response) {
-  // Create a Json-Web-Token:
-  // set the expiration of JWT same as the Cookie
-  const jwtOptions = {
-    expiresIn: `${cookieOptions.maxAge} seconds`
-  }
-
-  const token = jwt.sign({ challengeOnRequest }, JWT_SIGNER_SECRET, jwtOptions)
-
-  // Set a Cookie in the header including the JWT and our options:
-
-  response.cookie('credentialJWT', token, cookieOptions)
-
-  console.log(
-    "The Challenge included on the Credential-Request is now saved on the 'credentialJWT'-Cookie."
-  )
 }
