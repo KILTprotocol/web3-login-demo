@@ -45,7 +45,7 @@ export async function verifySubmittedLoginCredential(
     const plainUserInfo = verifiedCredential.claim.contents.Email
 
     console.log(
-      'Plain User Info that we are passing to the frontend:',
+      'Decrypted User Info that we are passing to the frontend:',
       plainUserInfo
     )
 
