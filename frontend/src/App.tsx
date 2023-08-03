@@ -12,7 +12,7 @@ import ChooseExtension from './components/steps/ChooseExtension'
 import StartSession from './components/steps/StartSession'
 import SubmitCredential from './components/steps/SubmitCredentials'
 
-import { checkAccessCookie } from './inspectAccessCookie'
+import { checkAccessCookie } from './api/checkAccessCookie'
 import Modal from './components/Modal'
 
 export default function Home(): JSX.Element {
