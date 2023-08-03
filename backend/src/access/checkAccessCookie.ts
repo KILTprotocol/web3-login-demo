@@ -11,7 +11,7 @@ import { readAccessCookie } from './readAccessCookie'
  * @param request
  * @param response
  */
-export async function inspectAccess(request: Request, response: Response) {
+export async function checkAccessCookie(request: Request, response: Response) {
   try {
     // "readAccessCookie" will throw if something is fishy
     const authenticationToken = await readAccessCookie(

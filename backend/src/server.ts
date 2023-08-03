@@ -22,7 +22,7 @@ import {
 } from './access/login'
 
 import { logout } from './access/logout'
-import { inspectAccess } from './access/inspectAccess'
+import { checkAccessCookie } from './access/checkAccessCookie'
 
 const app: Express = express()
 
@@ -81,7 +81,7 @@ app.post('/api/credential/login/postSubmit', (req, res, next) =>
 )
 
 app.get('/api/access/inspectAccess', (req, res, next) =>
-  inspectAccess(req, res).catch(next)
+  checkAccessCookie(req, res).catch(next)
 )
 
 app.post('/api/logout', (req, res, next) => logout(req, res).catch(next))
