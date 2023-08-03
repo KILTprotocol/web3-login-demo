@@ -41,6 +41,7 @@ export async function handleLoginCredentialSubmission(
     )
 
     // Send a little something to the frontend, so that the user interface can display who logged in.
+    // The frontend can't read the encrypted credential; only the backend has the key to decrypt it.
     // "Email" is capitalized on this cType schema
     const plainUserInfo = verifiedCredential.claim.contents.Email
 
