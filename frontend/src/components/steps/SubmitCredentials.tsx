@@ -6,8 +6,8 @@ import styles from './Step.module.css'
 
 import Button from '../Button'
 
-import { logIn } from '../../logIn'
-import { logOut } from '../../logOut'
+import { logIn } from '../../api/logIn'
+import { logOut } from '../../api/logOut'
 
 interface Props {
   extensionSession: Types.PubSubSessionV1 | Types.PubSubSessionV2 | null

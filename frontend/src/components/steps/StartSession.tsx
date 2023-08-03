@@ -5,7 +5,7 @@ import { Types } from 'kilt-extension-api'
 import styles from './Step.module.css'
 
 import Button from '../Button'
-import { startExtensionSession } from '../../startExtensionSession'
+import { startExtensionSession } from '../../api/startExtensionSession'
 
 interface Props {
   extensionSession: Types.PubSubSessionV1 | Types.PubSubSessionV2 | null
