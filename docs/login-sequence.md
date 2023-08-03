@@ -17,13 +17,14 @@ note left of Server: Verify sessionJWT.\nDecrypt challenge using nonce and encry
 Server->Browser: 200 OK\nset-cookie: sessionJWT={{dAppName, dAppEncryptionKeyUri, challenge},\n{encryptionKeyId, encryptedChallenge, nonce}}
 note left of Browser: Server-Extension-Session established ✉️ ⛓️
 note right of Browser: User clicks on Login
-Browser->Server: GET /api/credential/login/getRequest\nCookie: sessionJWT
+Browser->Server: GET /api/credential/login/request\nCookie: sessionJWT
 note left of Server: The Server is asking for a Credential of a cType from the User.
 Server->Browser: 200 OK\nset-cookie: credentialJWT={challengeOnRequest}\nKiltMsg{request-credential}
 Browser->Extension: send(KiltMsg{request-credential})
 note right of Extension: User approves the request\nand selects credential to share.
 Extension->Browser: KiltMsg{submit-credential}
-Browser->Server: Post /api/credential/login/postSubmit\nCookie: credentialJWT\nKiltMsg{submit-credential}
+Browser->Server: Post /api/credential/login/submit\nCookie: credentialJWT\nKiltMsg{submit-credential}
 note left of Server: Verify the credential.\nNote the DID inside the credential.\nIf verification was successful,\nDID was authenticated with provided credentials.
+note left of Server: The login with credential process was completed.\nAn authentication token is given to the user. It's all like web2 from here on.
 Server->Browser: 200 OK\nset-cookie: accessJWT{authenticationToken}
 ```
