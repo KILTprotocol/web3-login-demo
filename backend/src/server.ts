@@ -80,7 +80,7 @@ app.post('/api/credential/login/postSubmit', (req, res, next) =>
   handleLoginCredentialSubmission(req, res).catch(next)
 )
 
-app.get('/api/access/inspectAccess', (req, res, next) =>
+app.get('/api/access/checkAccess', (req, res, next) =>
   checkAccessCookie(req, res).catch(next)
 )
 
