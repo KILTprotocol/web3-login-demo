@@ -3,7 +3,8 @@ import * as Kilt from '@kiltprotocol/sdk-js'
 import jwt from 'jsonwebtoken'
 import { Response, Request } from 'express'
 
-import { SessionValues } from './startSession'
+import { SessionValues } from '../utils/types'
+
 /**
  *  Mean to facilitate working with the JSON-Web-Token inside the Cookie.
  *  This function reads, decodes and verifies the 'sessionJWT' Cookie from the browser.

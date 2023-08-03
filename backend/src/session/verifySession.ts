@@ -1,16 +1,15 @@
 import * as Kilt from '@kiltprotocol/sdk-js'
 import { Response, Request } from 'express'
-import jwt from 'jsonwebtoken'
 
 import { DAPP_DID_MNEMONIC, JWT_SIGNER_SECRET } from '../config'
 
-import { generateKeyPairs } from '../utils/generateKeyPairs'
 import { getApi } from '../utils/connection'
+import { SessionValues } from '../utils/types'
+import { generateKeyPairs } from '../utils/generateKeyPairs'
 import { extractEncryptionKeyUri } from '../utils/extractEncryptionKeyUri'
 
 import { readSessionCookie } from './readSessionCookie'
-
-import { cookieOptions, SessionValues } from './startSession'
+import { setSessionCookie } from './setSessionCookie'
 
 export async function verifySession(
   request: Request,
@@ -88,17 +87,7 @@ export async function verifySession(
     }
   }
 
-  // Create a Json-Web-Token:
-  // cookieOptions are imported from startSession for unanimity
-  // set the expiration of JWT same as the Cookie
-  const optionsJwt = {
-    expiresIn: `${cookieOptions.maxAge} seconds`
-  }
-  const token = jwt.sign(completeSessionValues, JWT_SIGNER_SECRET, optionsJwt)
-
-  // Set a Cookie in the header including the JWT and our options:
-
-  response.cookie('sessionJWT', token, cookieOptions)
+  setSessionCookie(completeSessionValues, response)
 
   response
     .status(200)

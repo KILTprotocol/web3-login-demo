@@ -1,5 +1,5 @@
-export async function inspectAccessCookie() {
-  const inspectionResult = await fetch(`/api/credential/alreadyLogin`, {
+export async function checkAccessCookie() {
+  const result = await fetch(`/api/access/checkAccess`, {
     method: 'GET',
     credentials: 'include',
     headers: {
@@ -8,15 +8,15 @@ export async function inspectAccessCookie() {
     }
   })
   // status is 204 if no user is logged in yet
-  if (!inspectionResult.ok || inspectionResult.status === 204) {
-    throw new Error(inspectionResult.statusText)
+  if (!result.ok || result.status === 204) {
+    throw new Error(result.statusText)
   }
 
-  const plainUserInfo = await inspectionResult.text()
+  const userInfo = await result.text()
   console.log(
     `Users information sent by the server after verifying the users authentication token, from 'accessJWT':`,
-    plainUserInfo
+    userInfo
   )
 
-  return plainUserInfo
+  return userInfo
 }

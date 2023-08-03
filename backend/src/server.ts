@@ -16,11 +16,13 @@ import { verifySession } from './session/verifySession'
 
 import { fetchDidDocument } from './utils/fetchDidDocument'
 
-import { getRequestCredential } from './credentials/getRequestCredential'
-import { postSubmitCredential } from './credentials/postSubmitCredential'
+import {
+  buildLoginCredentialRequest,
+  handleLoginCredentialSubmission
+} from './access/login'
 
-import { logout } from './logout/logout'
-import { alreadyLogin } from './login/alreadyLogin'
+import { logout } from './access/logout'
+import { checkAccessCookie } from './access/checkAccessCookie'
 
 const app: Express = express()
 
@@ -69,17 +71,17 @@ app.post('/api/session/verify', (req, res, next) =>
   verifySession(req, res).catch(next)
 )
 
-// Manage Credentials:
+// Manage Access:
 
-app.get('/api/credential/getRequest', (req, res, next) =>
-  getRequestCredential(req, res).catch(next)
+app.get('/api/credential/login/getRequest', (req, res, next) =>
+  buildLoginCredentialRequest(req, res).catch(next)
 )
-app.post('/api/credential/postSubmit', (req, res, next) =>
-  postSubmitCredential(req, res).catch(next)
+app.post('/api/credential/login/postSubmit', (req, res, next) =>
+  handleLoginCredentialSubmission(req, res).catch(next)
 )
 
-app.get('/api/credential/alreadyLogin', (req, res, next) =>
-  alreadyLogin(req, res).catch(next)
+app.get('/api/access/inspectAccess', (req, res, next) =>
+  checkAccessCookie(req, res).catch(next)
 )
 
 app.post('/api/logout', (req, res, next) => logout(req, res).catch(next))

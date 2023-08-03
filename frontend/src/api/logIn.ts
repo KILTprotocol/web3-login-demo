@@ -11,7 +11,7 @@ export async function logIn(
     )
   }
 
-  const getRequestResponse = await fetch(`/api/credential/getRequest`, {
+  const getRequestResponse = await fetch(`/api/credential/login/getRequest`, {
     method: 'GET',
     credentials: 'include',
     headers: {
@@ -56,7 +56,7 @@ export async function logIn(
   const responseToBackend = JSON.stringify(extensionMessage)
 
   const credentialVerificationResponse = await fetch(
-    '/api/credential/postSubmit',
+    '/api/credential/login/postSubmit',
     {
       method: 'POST',
       credentials: 'include',
@@ -81,6 +81,8 @@ export async function logIn(
     'Decoded Information that the backend sent to the frontend after verifying the credential: ',
     verifiedUserInfo
   )
+
+  console.log('Login process completed.')
 
   return verifiedUserInfo
 }
