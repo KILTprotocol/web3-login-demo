@@ -1,5 +1,5 @@
 export async function triggerLogout() {
-  const logoutResponse = await fetch(`/api/logout`, {
+  const logoutResponse = await fetch(`/api/access/logout`, {
     method: 'POST',
     credentials: 'include',
     headers: {

@@ -56,7 +56,7 @@ export async function triggerLogin(
   const responseToBackend = JSON.stringify(extensionMessage)
 
   const credentialVerificationResponse = await fetch(
-    '/api/credential/login/postSubmit',
+    '/api/credential/login/submit',
     {
       method: 'POST',
       credentials: 'include',
