@@ -6,8 +6,8 @@ import styles from './Step.module.css'
 
 import Button from '../Button'
 
-import { logIn } from '../../api/logIn'
-import { logOut } from '../../api/logOut'
+import { triggerLogin } from '../../api/triggerLogin'
+import { triggerLogout } from '../../api/triggerLogout'
 
 interface Props {
   extensionSession: Types.PubSubSessionV1 | Types.PubSubSessionV2 | null
@@ -30,14 +30,16 @@ function SubmitCredential({
     console.log(
       'Trying to log in. Meaning to ask the extension for a specific Type of Credential - a CType.'
     )
-    const verifiedUserInfoThatServerSendsBack = await logIn(extensionSession)
+    const verifiedUserInfoThatServerSendsBack = await triggerLogin(
+      extensionSession
+    )
 
     setUserMail(verifiedUserInfoThatServerSendsBack)
   }
 
   async function handleLogout() {
     console.log('Trying to log out. Meaning to delete the cookies. ')
-    await logOut()
+    await triggerLogout()
     setUserMail(undefined)
     setExtensionSession(null)
   }

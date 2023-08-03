@@ -2,7 +2,7 @@ import { IEncryptedMessage } from '@kiltprotocol/types'
 
 import { Types } from 'kilt-extension-api'
 
-export async function logIn(
+export async function triggerLogin(
   extensionSession: Types.PubSubSessionV1 | Types.PubSubSessionV2 | null
 ): Promise<string> {
   if (!extensionSession) {
@@ -11,7 +11,7 @@ export async function logIn(
     )
   }
 
-  const getRequestResponse = await fetch(`/api/credential/login/getRequest`, {
+  const response = await fetch(`/api/credential/login/request`, {
     method: 'GET',
     credentials: 'include',
     headers: {
@@ -19,11 +19,11 @@ export async function logIn(
       Accept: 'application/json'
     }
   })
-  if (!getRequestResponse.ok) {
-    throw Error(getRequestResponse.statusText)
+  if (!response.ok) {
+    throw Error(response.statusText)
   }
 
-  const encryptedCredentialRequest = await getRequestResponse.json()
+  const encryptedCredentialRequest = await response.json()
   console.log(
     `encryptedCredentialRequest gotten from the server: ${JSON.stringify(
       encryptedCredentialRequest,

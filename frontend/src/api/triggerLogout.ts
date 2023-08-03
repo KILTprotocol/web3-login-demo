@@ -1,5 +1,5 @@
-export async function logOut() {
-  const logoutResult = await fetch(`/api/logout`, {
+export async function triggerLogout() {
+  const logoutResponse = await fetch(`/api/logout`, {
     method: 'POST',
     credentials: 'include',
     headers: {
@@ -7,8 +7,8 @@ export async function logOut() {
       Accept: 'application/json'
     }
   })
-  if (!logoutResult.ok) {
-    throw new Error(logoutResult.statusText)
+  if (!logoutResponse.ok) {
+    throw new Error(logoutResponse.statusText)
   }
   console.log('Successfully logged out.')
 }

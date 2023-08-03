@@ -73,10 +73,10 @@ app.post('/api/session/verify', (req, res, next) =>
 
 // Manage Access:
 
-app.get('/api/credential/login/getRequest', (req, res, next) =>
+app.get('/api/credential/login/request', (req, res, next) =>
   buildLoginCredentialRequest(req, res).catch(next)
 )
-app.post('/api/credential/login/postSubmit', (req, res, next) =>
+app.post('/api/credential/login/submit', (req, res, next) =>
   handleLoginCredentialSubmission(req, res).catch(next)
 )
 
@@ -84,7 +84,7 @@ app.get('/api/access/checkAccess', (req, res, next) =>
   checkAccessCookie(req, res).catch(next)
 )
 
-app.post('/api/logout', (req, res, next) => logout(req, res).catch(next))
+app.post('/api/access/logout', (req, res, next) => logout(req, res).catch(next))
 
 //Start the server:
 validateEnvironmentConstants()
