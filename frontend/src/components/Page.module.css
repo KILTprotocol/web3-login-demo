@@ -1,5 +1,5 @@
 .page {
-  height: 100vh;
+  height: 150vh;
   padding: 20px;
   background: url('../../public/background-tile.svg') no-repeat center/cover;
   display: flex;
