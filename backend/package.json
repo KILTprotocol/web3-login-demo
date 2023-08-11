@@ -6,7 +6,8 @@
   "repository": "git@github.com:KILTprotocol/web3-login-demo.git",
   "license": "BSD-4-Clause",
   "scripts": {
-    "start": "nodemon"
+    "start": "nodemon",
+    "start-prod": "ts-node ./src/server.ts"
   },
   "dependencies": {
     "@kiltprotocol/sdk-js": "^0.32.0",
