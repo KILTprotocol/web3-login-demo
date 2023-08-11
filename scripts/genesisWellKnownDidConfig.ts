@@ -169,7 +169,7 @@ async function main() {
 
   const presentationSignCallback = async ({
     data
-  }: any): Promise<Kilt.SignResponseData> => {
+  }): Promise<Kilt.SignResponseData> => {
     return {
       signature: dAppsDidKeys.assertionMethod.sign(data),
       keyUri: `${dAppURI}${assertionMethodKeyId}`,
