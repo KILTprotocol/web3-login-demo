@@ -263,7 +263,7 @@ export async function selfAttestCredential(
 
   let submitTx: Kilt.SubmittableExtrinsic
 
-  const signCallback = async ({ data }) => ({
+  const signCallback = async ({ data }: { data: string | Uint8Array }) => ({
     signature: assertionMethodKey.sign(data),
     keyType: assertionMethodKey.type
   })

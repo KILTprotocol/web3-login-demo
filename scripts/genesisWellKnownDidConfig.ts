@@ -169,6 +169,8 @@ async function main() {
 
   const presentationSignCallback = async ({
     data
+  }: {
+    data: string | Uint8Array
   }): Promise<Kilt.SignResponseData> => {
     return {
       signature: dAppsDidKeys.assertionMethod.sign(data),
