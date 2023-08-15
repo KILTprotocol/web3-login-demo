@@ -7,7 +7,7 @@
   "license": "BSD-4-Clause",
   "scripts": {
     "start": "nodemon",
-    "start-prod": "node ./build/server.ts",
+    "start-prod": "node ./build/server.js",
     "build": "npx tsc"
   },
   "dependencies": {
