@@ -15,8 +15,8 @@
     "node": ">= v18.17.0"
   },
   "scripts": {
-    "environment": "ts-node --skipProject ./scripts/genesisEnvironmentVariables.ts",
-    "well-known-config": "ts-node --skipProject ./scripts/genesisWellKnownDidConfig.ts",
+    "environment": "ts-node ./scripts/genesisEnvironmentVariables.ts",
+    "well-known-config": "ts-node ./scripts/genesisWellKnownDidConfig.ts",
     "build:frontend": "cd ./frontend && yarn build",
     "build:backend": "cd ./backend && yarn build",
     "build": "yarn build:frontend && yarn build:backend",
