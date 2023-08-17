@@ -104,7 +104,8 @@ validateEnvironmentConstants()
     })
 
     // Ensure all inactive connections are terminated by the ALB, by setting this a few seconds higher than the ALB idle timeout
-    server.keepAliveTimeout = 61 * 1000
+    server.keepAliveTimeout =
+      parseInt(process.env.NODE_KEEP_ALIVE_TIMEOUT || '0') || 600 * 1000
     // Ensure the headersTimeout is set higher than the keepAliveTimeout due to this nodejs regression bug: https://github.com/nodejs/node/issues/27363
     server.headersTimeout = 62 * 1000
   })
