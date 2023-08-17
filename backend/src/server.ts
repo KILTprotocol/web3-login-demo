@@ -99,9 +99,14 @@ validateEnvironmentConstants()
   .then((doccy) => {
     app.locals.dappDidDocument = doccy
     // wait for fetched document before server starts listening:
-    app.listen(BACKEND_PORT, () => {
+    const server = app.listen(BACKEND_PORT, () => {
       console.log(`⚡️ Server is running at http://localhost:${BACKEND_PORT}`)
     })
+
+    // Ensure all inactive connections are terminated by the ALB, by setting this a few seconds higher than the ALB idle timeout
+    server.keepAliveTimeout = 61 * 1000
+    // Ensure the headersTimeout is set higher than the keepAliveTimeout due to this nodejs regression bug: https://github.com/nodejs/node/issues/27363
+    server.headersTimeout = 62 * 1000
   })
   .catch((error) => {
     throw new Error(`\n ❌ Could not start server! ${error} \n`)
