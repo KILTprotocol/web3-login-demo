@@ -14,4 +14,6 @@ RUN yarn build:backend
 # remove all devDependencies again
 RUN yarn workspaces focus web3-login-demo-backend --production
 
+EXPOSE 8000
+
 CMD [ "yarn", "start:backend-prod" ]
