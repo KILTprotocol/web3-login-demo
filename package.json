@@ -11,16 +11,19 @@
     "frontend",
     "backend"
   ],
+  "engines": {
+    "node": ">= v18.17.0"
+  },
   "scripts": {
-    "environment": "ts-node --skipProject ./scripts/genesisEnvironmentVariables.ts",
-    "build:client": "cd ./frontend && yarn build",
-    "build:well-known": "ts-node --skipProject ./scripts/genesisWellKnownDidConfig.ts",
-    "build": "yarn build:well-known && yarn build:client",
-    "start:client": "ts-node ./scripts/updatePorts.ts && cd ./frontend && yarn start",
-    "start:server": "cd ./backend && yarn start",
+    "environment": "ts-node ./scripts/genesisEnvironmentVariables.ts",
+    "well-known-config": "ts-node ./scripts/genesisWellKnownDidConfig.ts",
+    "build:frontend": "cd ./frontend && yarn build",
+    "build:backend": "cd ./backend && yarn build",
+    "build": "yarn build:frontend && yarn build:backend",
+    "start:frontend": "ts-node ./scripts/updatePorts.ts && cd ./frontend && yarn start",
+    "start:backend": "cd ./backend && yarn start",
+    "start:backend-prod": "cd ./backend && yarn start-prod",
     "start": "concurrently 'yarn:start:*'",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
     "lint": "concurrently 'yarn:lint:*'",
     "lint:frontend": "eslint --ext .js,.ts --config ./.eslintrc.json \"frontend/**/*.ts\"",
     "lint:backend": "eslint --ext .js,.ts --config ./.eslintrc.json \"backend/**/*.ts\"",
@@ -62,5 +65,6 @@
     "@polkadot/util": "10.4.2",
     "@polkadot/util-crypto": "10.4.2",
     "@polkadot/types": "9.10.2"
-  }
+  },
+  "packageManager": "yarn@3.6.1"
 }

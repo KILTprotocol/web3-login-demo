@@ -10,7 +10,6 @@ import { CookieOptions } from 'express'
 import { generateAccount } from './utils/generateAccount'
 import { generateKeyPairs } from './utils/generateKeyPairs'
 import { fetchDidDocument } from './utils/fetchDidDocument'
-import { VerifiableDomainLinkagePresentation } from './utils/types'
 import { getApi } from './utils/connection'
 
 // Letting the server know where the environment variables are.
@@ -44,7 +43,6 @@ export async function validateEnvironmentConstants() {
   Kilt.Did.validateUri(DAPP_DID_URI, 'Did')
   const ourDidDocumentOnChain = await fetchDidDocument()
   await validateOurKeys(ourDidDocumentOnChain)
-  await corroborateMyIdentity(DAPP_DID_URI)
 }
 
 /**  To avoid the possibility of having a mnemonic and account that don't match, the address is generated from the mnemonic each time.
@@ -109,43 +107,6 @@ async function compareKey(
   }
 }
 
-/**
- * Check if the **Well-Known DID Configuration** being displayed on the website uses the same DID URI as the one on the `.env`-file.
- *
- * If the DID URIs do not match, the extensions would not trust us. Your ID would be saying a different name as what you claim.
- *
- * @param DAPP_DID_URI
- */
-async function corroborateMyIdentity(dAppDidUri: Kilt.DidUri) {
-  // Letting the server know where the current Well-Known-DID-Config is stored
-  const wellKnownPath = path.resolve(
-    __dirname,
-    '../..',
-    './frontend/public/.well-known/did-configuration.json'
-  )
-
-  const fileContent = await fs.promises.readFile(wellKnownPath, {
-    encoding: 'utf8'
-  })
-  if (!fileContent) {
-    throw new Error(
-      'The well-known-did-configuration file found on your repository is empty.'
-    )
-  }
-  const wellKnownDidConfig = JSON.parse(
-    fileContent
-  ) as VerifiableDomainLinkagePresentation
-
-  if (wellKnownDidConfig.linked_dids[0].credentialSubject.id !== dAppDidUri) {
-    throw new Error(`
-    The 'Well-Known DID Configuration' that your dApp displays was issued with a different DID than the one, that the server has at disposition.
-    
-    The DID from the Well-Known: ${wellKnownDidConfig.linked_dids[0].credentialSubject.id}
-    The DID as environment constant: ${dAppDidUri}
-    
-    Try running \`build:well-known\` to make a new well-known-did-config.  `)
-  }
-}
 
 // Set Cookie Options: (list of ingredients)
 export const cookieOptions: CookieOptions = {

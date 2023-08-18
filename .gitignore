@@ -5,7 +5,14 @@
 node_modules
 package_lock.json
 package-lock.json
-.yarn
+
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
 
 **/.yalc
 **/yalc.lock
@@ -30,4 +37,4 @@ dist
 .env.test.local
 .env.production.local
 .vscode
-
+tmp/
