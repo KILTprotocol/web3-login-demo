@@ -8,7 +8,7 @@
   "scripts": {
     "start": "nodemon",
     "start-prod": "node ./build/server.js",
-    "build": "npx tsc"
+    "build": "tsc"
   },
   "dependencies": {
     "@kiltprotocol/sdk-js": "^0.32.0",
