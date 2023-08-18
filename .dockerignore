@@ -5,3 +5,6 @@
 /dist
 /.dockerignore
 /Dockerfile
+.env*
+/**/build
+/tmp

@@ -13,6 +13,7 @@ RUN yarn workspaces focus web3-login-demo-backend
 RUN yarn build:backend
 # remove all devDependencies again
 RUN yarn workspaces focus web3-login-demo-backend --production
+RUN yarn cache clean
 
 EXPOSE 8000
 
