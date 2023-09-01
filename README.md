@@ -17,10 +17,11 @@ In order for a **dApp** to support logging in with KILT Credentials, it needs:
 
 - This DID is used so that the user knows the parties to whom they talk.
 
-2. It's Domain linkage credential
+2. It's Domain Linkage Credential
 
 - Bind your DID to a specific domain.
 - This prevents Man-in-the-Middle attacks.
+- Also known as the _well-known-did-configuration_.
 
 3. A CType to request from the user
 - The type of credentials you consider valid. 
@@ -28,7 +29,8 @@ In order for a **dApp** to support logging in with KILT Credentials, it needs:
 For that we rely on [SocialKYC](https://socialkyc.io) to issue email credentials after verifing the user owns it.
 You could easily modified this. 
 
-If you don't have some of the above, make sure to go though the [setup section](#setup).
+
+Falsch: If you don't have some of the above, make sure to go though the [setup section](#setup).
 
 ## Prerequisite
 
@@ -38,7 +40,7 @@ If you are not familiar with some of these, we recommend to first get an overvie
 - [decentralized identifier (DID)](https://docs.kilt.io/docs/concepts/did)
 - [typescript](https://www.typescriptlang.org/)
 - [JSON](https://www.json.org/json-en.html)
-- [JSON Web Token](https://en.wikipedia.org/wiki/JSON_Web_Token)
+- [JSON Web Token (JWT)](https://en.wikipedia.org/wiki/JSON_Web_Token)
 - [express.js](https://expressjs.com/)
 - [react.js](https://react.dev/)
 
@@ -64,13 +66,29 @@ The following variables are required:
 - `DAPP_NAME` = _This should be a custom name for your dApp_
 - `JWT_SIGNER_SECRET` = _This is secret key (string) that signs the Json-Web-Tokens before saving them in the Cookies_
 
-There is a script to facilitate the generation of the environment variables that are needed to set up your decentralized App (dApp).
-This script is called `./scripts/genesisEnvironmentVariables.ts`.
-You can execute it by running `yarn environment`.
+### How do I get mine? 
+You have three different options: 
 
-Setting up is a step by step process.
-You will need to run the script repeatedly and follow the instructions that it provides, depending on your project's state.
-After running this script each time, you need to manually copy the output and save it on the .env-file on the main project folder.
+1. Using `yarn environment`:
+   
+      There is a script to facilitate the generation of the environment variables inside of this repository.
+      This script is called `./scripts/genesisEnvironmentVariables.ts`.
+
+      You can execute it by running `yarn environment`.
+
+      Setting up your environment with this script is a step by step process.
+      You will need to run the script repeatedly and follow the instructions that it provides, depending on your project's state.
+      After running this script each time, you need to manually copy the output and save it on the `.env`-file . 
+
+3. Usign the [kilt-distillery-cli](https://github.com/KILTprotocol/kilt-distillery-cli)
+   
+      This is a _Command Line Interface_ tool that can help you obtaining this variables and also does other common tasks (unrelated to this project).
+      The distillery uses the same key derivation as this repository, wich means that it is highly compatible. 
+
+5. Without help:
+   
+      If you are a _pro_, you could defined and generate them externally and add them to the `.env`-file. 
+      You would probably have to modify the `generateKeyPairs.ts` files (on _scripts_ and _backend_) to match your key derivation though.  
 
 ## Process
 
