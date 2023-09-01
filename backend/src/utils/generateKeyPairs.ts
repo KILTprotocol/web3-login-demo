@@ -17,7 +17,8 @@ export function generateKeyPairs(mnemonic: string) {
     Kilt.Utils.Crypto.mnemonicToMiniSecret(mnemonic)
   )
 
-  // This key is not necessary for this project:
+  // This key is not necessary for this project.
+  // for the sake of completeness, your dApp's DID also gets one
   const capabilityDelegation = Kilt.Utils.Crypto.makeKeypairFromUri(
     mnemonic,
     signingKeyPairType
