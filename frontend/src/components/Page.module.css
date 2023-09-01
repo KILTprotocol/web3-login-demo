@@ -1,6 +1,5 @@
 .page {
   padding: 20px;
-  background: url('../../public/background-tile.svg') no-repeat center/cover;
   display: flex;
   flex-direction: column;
 }
