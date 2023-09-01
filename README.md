@@ -6,7 +6,7 @@ During the login procedure, the user is required to present a credential.
 You can decide which credentials to accept.
 They could be issued by yourself or by other attesters.
 
-This is basically like asking for an ID-Card insead of a customer number, in order to provide a personalized service.
+This is basically like asking for an ID-Card instead of a customer number, in order to provide a personalized service.
 This means that each user does not need to setup an account and password just for your website.
 Additionally, this avoids third parties (usually powerfull data-collecting companies) from tracking your interactions with your clients. Not even the KILT developers can track it. 
 
@@ -131,7 +131,7 @@ After running this script each time, you need to manually copy the output and sa
       |                                                              |                             {encryptionKeyId, encryptedChallenge, nonce}} |
       |                                                              |<--------------------------------------------------------------------------|
       |               ---------------------------------------------\ |                                                                           |
-      |               | Server-Extension-Session established ✉️ ⛓️ |-|                                                                           |
+      |               | Server-Extension-Session established ✉️ ⛓️ |-|                                                                            |
       |               |--------------------------------------------| |                                                                           |
       |                                                              | -----------------------\                                                  |
       |                                                              |-| User clicks on Login |                                                  |
