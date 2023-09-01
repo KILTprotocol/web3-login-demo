@@ -22,7 +22,7 @@
     "build": "yarn build:frontend && yarn build:backend",
     "start:frontend": "ts-node ./scripts/updatePorts.ts && cd ./frontend && yarn start",
     "start:backend": "cd ./backend && yarn start",
-    "start:backend-prod": "cd ./backend && yarn start-prod",
+    "start-prod:backend": "cd ./backend && yarn start-prod",
     "start": "concurrently 'yarn:start:*'",
     "lint": "concurrently 'yarn:lint:*'",
     "lint:frontend": "eslint --ext .js,.ts --config ./.eslintrc.json \"frontend/**/*.ts\"",

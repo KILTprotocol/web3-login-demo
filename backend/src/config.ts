@@ -1,5 +1,4 @@
 import path from 'path'
-import fs from 'fs'
 
 import dotenv from 'dotenv'
 
@@ -106,7 +105,6 @@ async function compareKey(
     )
   }
 }
-
 
 // Set Cookie Options: (list of ingredients)
 export const cookieOptions: CookieOptions = {
