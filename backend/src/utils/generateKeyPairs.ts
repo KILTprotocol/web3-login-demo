@@ -17,9 +17,16 @@ export function generateKeyPairs(mnemonic: string) {
     Kilt.Utils.Crypto.mnemonicToMiniSecret(mnemonic)
   )
 
+  // This key is not necessary for this project:
+  const capabilityDelegation = Kilt.Utils.Crypto.makeKeypairFromUri(
+    mnemonic,
+    signingKeyPairType
+  )
+
   return {
     authentication,
     assertionMethod,
-    keyAgreement
+    keyAgreement,
+    capabilityDelegation
   }
 }
