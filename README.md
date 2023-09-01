@@ -51,12 +51,13 @@ Defining them is part of the set up of your project.
 The `.env`-file should be on the root directory of this repository.
 _This file maybe hidden._
 It is included on the `.gitignore` list so that the secrets that are contained in the file never get pushed to GitHub.
+On the root directory, there is a `.env.example`-file that depicts the how your variables should look like.
 
 The following variables are required:
 
 - `WSS_ADDRESS` = _This is the websocket address of the RPC node_
-- `FRONTEND_PORT` = _This is the local Port on which your website (client-side) would be reachable (frontend)_
-- `BACKEND_PORT` = _This is the local Port on which your server would be reachable (backend)_
+- `FRONTEND_PORT` = _This is the local Port on which your website (client-side) would be reachable_
+- `BACKEND_PORT` = _This is the local Port on which your server would be reachable_
 - `DAPP_ACCOUNT_MNEMONIC` = _This is the mnemonic of the Kilt account paying for all transactions_
 - `DAPP_DID_MNEMONIC` = _This is the mnemonic of the Kilt DID that identifies your dApp_
 - `DAPP_DID_URI` = _This is the URI of the Kilt DID that identifies your dApp_
