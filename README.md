@@ -1,27 +1,32 @@
 # web3-login-demo
 
-This website demonstrates how to build a logging using KILT Protocol.
+This project demonstrates how to enable **login using KILT Protocol**.
 
-During the logging procedure, the user is required to present a credential.
+During the login procedure, the user is required to present a credential.
 You can decide which credentials to accept.
 They could be issued by yourself or by other attesters.
-In this demo we request a credential that contains an email address that the user owns.
-For that we rely on https://socialkyc.io to issue email credentials.
+
+This is basically like asking for an ID-Card insead of a customer number, in order to provide a personalized service.
+This means that each user does not need to setup an account and password just for your website.
+Additionally, this avoids third parties (usually powerfull data-collecting companies) from tracking your interactions with your clients. Not even the KILT developers can track it. 
+
 
 In order for a **dApp** to support logging in with KILT Credentials, it needs:
 
-1. An on-chain DID
+1. It's on-chain DID
 
-- This DID is used so that the user knows the parties to whom they talk
+- This DID is used so that the user knows the parties to whom they talk.
 
-2. Domain linkage credential
+2. It's Domain linkage credential
 
-- Bind your DID to a specific domain
-- This prevents Man-in-the-Middle attacks
+- Bind your DID to a specific domain.
+- This prevents Man-in-the-Middle attacks.
 
-3. A CType you want to request from the user
-
-- In this example, we use the email CType, but you could use any CType you want
+3. A CType to request from the user
+- The type of credentials you consider valid. 
+- In this demo, as a default, we request a credential that contains an email address.
+For that we rely on [SocialKYC](https://socialkyc.io) to issue email credentials after verifing the user owns it.
+You could easily modified this. 
 
 If you don't have some of the above, make sure to go though the [setup section](#setup).
 
@@ -37,7 +42,7 @@ If you are not familiar with some of these, we recommend to first get an overvie
 - [express.js](https://expressjs.com/)
 - [react.js](https://react.dev/)
 
-## Setup
+## Environment Variables
 
 Before you can run this project, you need to setup your environment variables.
 This variables specify which blockchain we use and they hold the secrets for your DID and to sign JWTs.
