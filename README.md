@@ -8,7 +8,7 @@ You can decide which credentials to accept.
 They could be issued by yourself or by other attesters.
 
 This is basically like asking for an ID-Card instead of a customer number, in order to provide a personalized service.
-This means that each user does not need to setup an account and password just for your website.
+This means that users don't not need to setup an account and password just for your website.
 Additionally, this avoids third parties (usually powerfull data-collecting companies) from tracking your interactions with your clients.
 Not even the KILT developers can track it. 
 
@@ -26,7 +26,7 @@ In order for a **dApp** to support logging in with KILT Credentials, it needs:
 - Also known as the _well-known-did-configuration_.
 
 3. A CType to request from the user
-- The type of credentials you consider valid. 
+- The type of credentials the dApp considers valid. 
 - In this demo, as a default, we request a credential that contains an email address.
 For that we rely on [SocialKYC](https://socialkyc.io) to issue email credentials after verifing the user owns it.
 You could easily modified this. 
@@ -41,7 +41,6 @@ If you want to implement KILT Login without understanding it, we also have a sol
 There is a [containerized version under this repository](https://github.com/KILTprotocol/kilt-login). 
 
 
-
 ## Prerequisite
 
 This code makes use of a mix of different technologies.
@@ -53,6 +52,11 @@ If you are not familiar with some of these, we recommend to first get an overvie
 - [JSON Web Token (JWT)](https://en.wikipedia.org/wiki/JSON_Web_Token)
 - [express.js](https://expressjs.com/)
 - [react.js](https://react.dev/)
+
+## Installation
+After [cloning the repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) to install all required modules,
+
++ run: `yarn install`.
 
 ## Environment Variables
 
@@ -84,7 +88,7 @@ You have three different options:
       There is a script to facilitate the generation of the environment variables inside of this repository.
       This script is called `./scripts/genesisEnvironmentVariables.ts`.
 
-      You can execute it by running `yarn environment`.
+     + You can execute it by running `yarn environment`.
 
       Setting up your environment with this script is a step by step process.
       You will need to run the script repeatedly and follow the instructions that it provides, depending on your project's state.
