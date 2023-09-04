@@ -1,7 +1,7 @@
 # web3-login-demo
 
 This project demonstrates how to enable **login using KILT Protocol**. 
-It is an educational project, everything is broken down to little steps and has explanations to eaise your understanding. 
+It is an educational project, everything is broken down to little steps and has explanations to ease your understanding. 
 
 During the login procedure, the user is required to present a credential.
 You can decide which credentials to accept.
