@@ -113,6 +113,15 @@ After having all your enviorement variables, to build a **Domain Linkage Credent
 If you want know more about this, check out the [Identity Foundation Documentation](https://identity.foundation/.well-known/resources/did-configuration/). 
 [Our dApp documentation also have a section about this.](https://docs.kilt.io/docs/develop/dApp/well-known-did-config)
 
+## Build 
+After having all your enviorement variables and your well-known-did-configuration: 
+
++ run `yarn build`. 
+
+##  Starting the dApp locally 
+After having all your enviorement variables, your well-known-did-configuration and a build version:
+
++ run `yarn start`. 
 ## Process
 
 ```
