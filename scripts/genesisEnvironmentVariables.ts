@@ -124,7 +124,7 @@ function imploreWebSocket() {
 
     'Please, define a value for WSS_ADDRESS on the .env-file to continue \n',
     'To connect to the KILT-Test-Blockchain, named Peregrine (recommended), please save the following: \n\n',
-    'WSS_ADDRESS=wss://peregrine.kilt.io/parachain-public-ws',
+    'WSS_ADDRESS=wss://peregrine.kilt.io/',
     '\n\n',
 
     'In the future, if you wish to interact with the production KILT-Blockchain, named Spiritnet, change the address to a web-socket (public Endpoint) of Spiritnet.',
