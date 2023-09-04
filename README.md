@@ -19,7 +19,7 @@ In order for a **dApp** to support logging in with KILT Credentials, it needs:
 
 - This DID is used so that the user knows the parties to whom they talk.
 
-2. It's Domain Linkage Credential
+2. It's [Domain Linkage Credential](#Well-Known-DID-Configuration)
 
 - Bind your DID to a specific domain.
 - This prevents Man-in-the-Middle attacks.
@@ -32,10 +32,10 @@ For that we rely on [SocialKYC](https://socialkyc.io) to issue email credentials
 You could easily modified this. 
 
 
-If you don't have some of the above, don't worry, we help you get them on the seccions below. 
+If you don't have some of the above, don't worry, we help you get them on the sections below. 
 
 After setting up and running this project locally on your computer, you will know how the [login process](#Process) works and have code that you can implement on your website. 
-We incorage you customize the code for your specific usecase, just keep in mind the [specifications](https://github.com/KILTprotocol/spec-ext-credential-api) to retain compatibility. 
+We encourage you to customize the code for your specific usecase, just keep in mind the [specifications](https://github.com/KILTprotocol/spec-ext-credential-api) to retain compatibility. 
 
 If you want to implement KILT Login without understanding it, we also have a solution for you. 
 There is a [containerized version under this repository](https://github.com/KILTprotocol/kilt-login). 
@@ -99,6 +99,15 @@ You have three different options:
    
       If you are a _pro_, you could defined and generate them externally and add them to the `.env`-file. 
       You would probably have to modify the `generateKeyPairs.ts` files (on _scripts_ and _backend_) to match your key derivation though.  
+
+## Well-Known-DID-Configuration
+
+After having all your enviorement variables, to build a **Domain Linkage Credential**:
+
++ run: `yarn well-known-config`.
+
+If you want know more about this, check out the [Identity Foundation Documentation](https://identity.foundation/.well-known/resources/did-configuration/). 
+[Our dApp documentation also have a section about this.](https://docs.kilt.io/docs/develop/dApp/well-known-did-config)
 
 ## Process
 
