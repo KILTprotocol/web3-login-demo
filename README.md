@@ -1,6 +1,7 @@
 # web3-login-demo
 
-This project demonstrates how to enable **login using KILT Protocol**.
+This project demonstrates how to enable **login using KILT Protocol**. 
+It is an educational project, everything is broken down to little steps and has explanations to eaise your understanding. 
 
 During the login procedure, the user is required to present a credential.
 You can decide which credentials to accept.
@@ -8,7 +9,8 @@ They could be issued by yourself or by other attesters.
 
 This is basically like asking for an ID-Card instead of a customer number, in order to provide a personalized service.
 This means that each user does not need to setup an account and password just for your website.
-Additionally, this avoids third parties (usually powerfull data-collecting companies) from tracking your interactions with your clients. Not even the KILT developers can track it. 
+Additionally, this avoids third parties (usually powerfull data-collecting companies) from tracking your interactions with your clients.
+Not even the KILT developers can track it. 
 
 
 In order for a **dApp** to support logging in with KILT Credentials, it needs:
@@ -30,7 +32,15 @@ For that we rely on [SocialKYC](https://socialkyc.io) to issue email credentials
 You could easily modified this. 
 
 
-Falsch: If you don't have some of the above, make sure to go though the [setup section](#setup).
+If you don't have some of the above, don't worry, we help you get them on the seccions below. 
+
+After setting up and running this project locally on your computer, you will know how the [login process](#Process) works and have code that you can implement on your website. 
+We incorage you customize the code for your specific usecase, just keep in mind the [specifications](https://github.com/KILTprotocol/spec-ext-credential-api) to retain compatibility. 
+
+If you want to implement KILT Login without understanding it, we also have a solution for you. 
+There is a [containerized version under this repository](https://github.com/KILTprotocol/kilt-login). 
+
+
 
 ## Prerequisite
 
