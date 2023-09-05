@@ -57,8 +57,8 @@ async function main() {
   ]
 
   // find the first element in the array "stairs" that it is still undefined.
-  step = stairs.indexOf(undefined)
-  // The indexOf() method returns the first index at which a given element can be found in the array, or -1 if it is not present.
+  step = stairs.findIndex((value) => value === undefined || value === '')
+  // `.findIndex()`returns -1 on no match.
 
   // Go through the current step:
   switch (step) {
@@ -120,8 +120,6 @@ async function main() {
 // So the main function can use the following functions without problem.
 function imploreWebSocket() {
   console.log(
-    'Trouble reading the address of the WebSocket \n\n',
-
     'Please, define a value for WSS_ADDRESS on the .env-file to continue \n',
     'To connect to the KILT-Test-Blockchain, named Peregrine (recommended), please save the following: \n\n',
     'WSS_ADDRESS=wss://peregrine.kilt.io/',
@@ -135,7 +133,6 @@ function imploreWebSocket() {
 
 function imploreClientSidePort() {
   console.log(
-    "\nTrouble reading the local port of your dApp' Website (FrontEnd)\n",
     'Please, define a value for FRONTEND_PORT on the .env-file to continue\n',
     'For this demonstration the dApp should only run locally. You can use a custom IP or just the default:\n\n',
     'Default dApps domain port: \n',
@@ -146,7 +143,6 @@ function imploreClientSidePort() {
 
 function imploreServerPort() {
   console.log(
-    "\nTrouble reading the Port of your dApp' Server (BackEnd)\n",
     'Please, define a value for PORT on the .env-file to continue\n',
     'You can use a custom IP or just the default:\n\n',
     "Default dApp-Server's port: \n",
@@ -156,10 +152,7 @@ function imploreServerPort() {
 }
 
 async function spawnAccount() {
-  console.log(
-    "\nTrouble reading the account's mnemonic of your dApp\n",
-    'An account is being generated for your dApp.'
-  )
+  console.log('An account is being generated for your dApp...')
   await Kilt.init()
   // You could also pass a specific mnemonic, but here we generate a random mnemonic.
   // for custom, replace here with a string of 12 BIP-39 words
@@ -176,7 +169,6 @@ async function spawnAccount() {
 }
 
 async function spawnDid() {
-  console.log("\ntrouble reading the mnemonic of your dApp's DID\n")
   await Kilt.connect(WSS_ADDRESS as string)
   console.log(
     '\n\nA decentralized identity (DID) is trying to be generated for your dApp.',
@@ -201,10 +193,7 @@ async function spawnDid() {
 }
 
 async function getURI(mnemonic: string) {
-  console.log(
-    "\nTrouble reading the URI of your dApp's DID\n",
-    'getting the URI of the DID corresponding the provided mnemonic'
-  )
+  console.log('getting the URI of the DID corresponding the provided mnemonic')
   await Kilt.connect(WSS_ADDRESS as string)
   const { authentication } = generateKeyPairs(mnemonic)
   const dAppDidUri = Kilt.Did.getFullDidUriFromKey(authentication)
@@ -226,16 +215,15 @@ async function getURI(mnemonic: string) {
 
 function imploreName() {
   console.log(
-    "\ntrouble reading your dApp's Name\n",
-    'Please provide a name inside the .env file using this constant name: \n',
+    'Please provide a name for your dApp inside the .env file using this constant name: \n',
     `DAPP_NAME={your dApp's name here}\n`
   )
 }
 
 function imploreJwtSecretKey() {
   console.log(
-    '\ntrouble reading the Secret Key your dApps use to encode the JSON-Web-Tokens\n',
     `Please provide a string value for 'JWT_SIGNER_SECRET' inside the .env file. \n`,
+    '\nThis is would be a Secret Key your dApps use to encode the JSON-Web-Tokens\n',
     `JWT_SIGNER_SECRET={Oh my God, you are so cryptic!}\n`
   )
 }
