@@ -49,7 +49,7 @@ If you are not familiar with some of these, we recommend to first get an overvie
 - [decentralized identifier (DID)](https://docs.kilt.io/docs/concepts/did)
 - [typescript](https://www.typescriptlang.org/)
 - [JSON](https://www.json.org/json-en.html)
-- [JSON Web Token (JWT)](https://en.wikipedia.org/wiki/JSON_Web_Token)
+- [JSON Web Token (JWT)](https://datatracker.ietf.org/doc/html/rfc7519)
 - [express.js](https://expressjs.com/)
 - [react.js](https://react.dev/)
 
