@@ -36,7 +36,7 @@ In order for a **dApp** to support logging in with KILT Credentials, it needs:
 If you don't have some of the above, don't worry, we help you get them on the sections below.
 
 After setting up and running this project locally on your computer, you will know how the [login process](#Process) works and have code that you can implement on your website.
-We encourage you to customize the code for your specific usecase, just keep in mind the [specifications](https://github.com/KILTprotocol/spec-ext-credential-api) to retain compatibility.
+We encourage you to customize the code for your specific use case, just keep in mind the [specifications](https://github.com/KILTprotocol/spec-ext-credential-api) to retain compatibility.
 
 If you want to implement KILT Login without understanding it, we also have a solution for you.
 There is a [containerized version under this repository](https://github.com/KILTprotocol/kilt-login).
@@ -44,9 +44,9 @@ There is a [containerized version under this repository](https://github.com/KILT
 ## Steps to launch the website locally
 
 1. [Clone repository and install all necessary modules.](##Installation)
-2. [Define your environment variables](##Environment Variables)
+2. [Define your environment variables](##Environment-Variables)
 3. [Build a **Domain Linkage Credential**](#Well-Known-DID-Configuration)
-4. [Start your dApp](##Starting the dApp locally)
+4. [Start your dApp](##Starting-the-dApp-locally)
 
 ## Prerequisite
 
