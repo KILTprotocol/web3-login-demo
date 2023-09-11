@@ -1,5 +1,7 @@
 # web3-login-demo
 
+_Explanatorily Tutorial for websites to implement logging in with web3 credentials using the KILT Protocol._
+
 ## Intro
 
 This project demonstrates how to enable **login using KILT Protocol**.
