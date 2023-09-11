@@ -1,5 +1,7 @@
 # web3-login-demo
 
+## Intro
+
 This project demonstrates how to enable **login using KILT Protocol**.
 It is an educational project, everything is broken down to little steps and has explanations to ease your understanding.
 
