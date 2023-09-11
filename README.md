@@ -41,6 +41,13 @@ We encourage you to customize the code for your specific usecase, just keep in m
 If you want to implement KILT Login without understanding it, we also have a solution for you.
 There is a [containerized version under this repository](https://github.com/KILTprotocol/kilt-login).
 
+## Steps to launch the website locally
+
+1. [Clone repository and install all necessary modules.](##Installation)
+2. [Define your environment variables](##Environment Variables)
+3. [Build a **Domain Linkage Credential**](#Well-Known-DID-Configuration)
+4. [Start your dApp](##Starting the dApp locally)
+
 ## Prerequisite
 
 This code makes use of a mix of different technologies.
@@ -96,10 +103,10 @@ You have three different options:
    You will need to run the script repeatedly and follow the instructions that it provides, depending on your project's state.
    After running this script each time, you need to manually copy the output and save it on the `.env`-file .
 
-2. Usign the [kilt-distillery-cli](https://github.com/KILTprotocol/kilt-distillery-cli)
+2. Using the [kilt-distillery-cli](https://github.com/KILTprotocol/kilt-distillery-cli)
 
    This is a _Command Line Interface_ tool that can help you obtaining this variables and also does other common tasks (unrelated to this project).
-   The distillery uses the same key derivation as this repository, wich means that it is highly compatible.
+   The distillery uses the same key derivation as this repository, which means that it is highly compatible.
 
 3. Without help:
 
@@ -108,24 +115,25 @@ You have three different options:
 
 ## Well-Known-DID-Configuration
 
-After having all your enviorement variables, to build a **Domain Linkage Credential**:
+After having all your environment variables, to build a **Domain Linkage Credential**:
 
 - run: `yarn well-known-config`.
 
 If you want know more about this, check out the [Identity Foundation Documentation](https://identity.foundation/.well-known/resources/did-configuration/).
 [Our dApp documentation also have a section about this.](https://docs.kilt.io/docs/develop/dApp/well-known-did-config)
 
-## Build
+## Starting the dApp locally
 
 After having all your environment variables and your well-known-did-configuration:
 
-- run `yarn build`.
-
-## Starting the dApp locally
-
-After having all your environment variables, your well-known-did-configuration and a build version:
-
 - run `yarn start`.
+
+## Build
+
+To get a production version of the app, you can bundle the frontend of the app into static files.
+For this, after having all your environment variables and your well-known-did-configuration:
+
+- run `yarn build`.
 
 ## Login Process
 
