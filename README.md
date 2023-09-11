@@ -77,7 +77,8 @@ Defining them is part of the set up of your project.
 The `.env`-file should be on the root directory of this repository.
 _This file maybe hidden._
 It is included on the `.gitignore` list so that the secrets that are contained in the file never get pushed to GitHub.
-On the root directory, there is a `.env.example`-file that depicts the how your variables should look like.
+There is a `.env.example`-file that also list how your variables should be named.
+The `.env`-file should be added to the same level (directory) where `.env.example`-file is found.
 
 The following variables are required:
 
