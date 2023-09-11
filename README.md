@@ -1,7 +1,7 @@
 # web3-login-demo
 
-This project demonstrates how to enable **login using KILT Protocol**. 
-It is an educational project, everything is broken down to little steps and has explanations to ease your understanding. 
+This project demonstrates how to enable **login using KILT Protocol**.
+It is an educational project, everything is broken down to little steps and has explanations to ease your understanding.
 
 During the login procedure, the user is required to present a credential.
 You can decide which credentials to accept.
@@ -10,8 +10,7 @@ They could be issued by yourself or by other attesters.
 This is basically like asking for an ID-Card instead of a customer number, in order to provide a personalized service.
 This means that users don't not need to setup an account and password just for your website.
 Additionally, this avoids third parties (usually powerfull data-collecting companies) from tracking your interactions with your clients.
-Not even the KILT developers can track it. 
-
+Not even the KILT developers can track it.
 
 In order for a **dApp** to support logging in with KILT Credentials, it needs:
 
@@ -26,20 +25,19 @@ In order for a **dApp** to support logging in with KILT Credentials, it needs:
 - Also known as the _well-known-did-configuration_.
 
 3. A CType to request from the user
-- The type of credentials the dApp considers valid. 
+
+- The type of credentials the dApp considers valid.
 - In this demo, as a default, we request a credential that contains an email address.
-For that we rely on [SocialKYC](https://socialkyc.io) to issue email credentials after verifing the user owns it.
-You could easily modified this. 
+  For that we rely on [SocialKYC](https://socialkyc.io) to issue email credentials after verifing the user owns it.
+  You could easily modified this.
 
+If you don't have some of the above, don't worry, we help you get them on the sections below.
 
-If you don't have some of the above, don't worry, we help you get them on the sections below. 
+After setting up and running this project locally on your computer, you will know how the [login process](#Process) works and have code that you can implement on your website.
+We encourage you to customize the code for your specific usecase, just keep in mind the [specifications](https://github.com/KILTprotocol/spec-ext-credential-api) to retain compatibility.
 
-After setting up and running this project locally on your computer, you will know how the [login process](#Process) works and have code that you can implement on your website. 
-We encourage you to customize the code for your specific usecase, just keep in mind the [specifications](https://github.com/KILTprotocol/spec-ext-credential-api) to retain compatibility. 
-
-If you want to implement KILT Login without understanding it, we also have a solution for you. 
-There is a [containerized version under this repository](https://github.com/KILTprotocol/kilt-login). 
-
+If you want to implement KILT Login without understanding it, we also have a solution for you.
+There is a [containerized version under this repository](https://github.com/KILTprotocol/kilt-login).
 
 ## Prerequisite
 
@@ -54,9 +52,10 @@ If you are not familiar with some of these, we recommend to first get an overvie
 - [react.js](https://react.dev/)
 
 ## Installation
+
 After [cloning the repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) to install all required modules,
 
-+ run: `yarn install`.
+- run: `yarn install`.
 
 ## Environment Variables
 
@@ -80,49 +79,63 @@ The following variables are required:
 - `DAPP_NAME` = _This should be a custom name for your dApp_
 - `JWT_SIGNER_SECRET` = _This is secret key (string) that signs the Json-Web-Tokens before saving them in the Cookies_
 
-### How do I get mine? 
-You have three different options: 
+### How do I get mine?
+
+You have three different options:
 
 1. Using `yarn environment`:
-   
-      There is a script to facilitate the generation of the environment variables inside of this repository.
-      This script is called `./scripts/genesisEnvironmentVariables.ts`.
 
-     + You can execute it by running `yarn environment`.
+   There is a script to facilitate the generation of the environment variables inside of this repository.
+   This script is called `./scripts/genesisEnvironmentVariables.ts`.
 
-      Setting up your environment with this script is a step by step process.
-      You will need to run the script repeatedly and follow the instructions that it provides, depending on your project's state.
-      After running this script each time, you need to manually copy the output and save it on the `.env`-file . 
+   - You can execute it by running `yarn environment`.
 
-3. Usign the [kilt-distillery-cli](https://github.com/KILTprotocol/kilt-distillery-cli)
-   
-      This is a _Command Line Interface_ tool that can help you obtaining this variables and also does other common tasks (unrelated to this project).
-      The distillery uses the same key derivation as this repository, wich means that it is highly compatible. 
+   Setting up your environment with this script is a step by step process.
+   You will need to run the script repeatedly and follow the instructions that it provides, depending on your project's state.
+   After running this script each time, you need to manually copy the output and save it on the `.env`-file .
 
-5. Without help:
-   
-      If you are a _pro_, you could defined and generate them externally and add them to the `.env`-file. 
-      You would probably have to modify the `generateKeyPairs.ts` files (on _scripts_ and _backend_) to match your key derivation though.  
+2. Usign the [kilt-distillery-cli](https://github.com/KILTprotocol/kilt-distillery-cli)
+
+   This is a _Command Line Interface_ tool that can help you obtaining this variables and also does other common tasks (unrelated to this project).
+   The distillery uses the same key derivation as this repository, wich means that it is highly compatible.
+
+3. Without help:
+
+   If you are a _pro_, you could defined and generate them externally and add them to the `.env`-file.
+   You would probably have to modify the `generateKeyPairs.ts` files (on _scripts_ and _backend_) to match your key derivation though.
 
 ## Well-Known-DID-Configuration
 
 After having all your enviorement variables, to build a **Domain Linkage Credential**:
 
-+ run: `yarn well-known-config`.
+- run: `yarn well-known-config`.
 
-If you want know more about this, check out the [Identity Foundation Documentation](https://identity.foundation/.well-known/resources/did-configuration/). 
+If you want know more about this, check out the [Identity Foundation Documentation](https://identity.foundation/.well-known/resources/did-configuration/).
 [Our dApp documentation also have a section about this.](https://docs.kilt.io/docs/develop/dApp/well-known-did-config)
 
-## Build 
-After having all your enviorement variables and your well-known-did-configuration: 
+## Build
 
-+ run `yarn build`. 
+After having all your environment variables and your well-known-did-configuration:
 
-##  Starting the dApp locally 
-After having all your enviorement variables, your well-known-did-configuration and a build version:
+- run `yarn build`.
 
-+ run `yarn start`. 
-## Process
+## Starting the dApp locally
+
+After having all your environment variables, your well-known-did-configuration and a build version:
+
+- run `yarn start`.
+
+## Login Process
+
+After having set up the whole project, when the website is up and running, the login process can take place.
+Each user that wants to login would trigger the process that is displayed below.
+The process is full of HTTPS queries and extension-api's messages.
+
+A user could trigger the whole process with just one click on the website, for example "Login with extension X" or "Login with extension Y".
+
+On this example project, several (2-3) interactions are need because it is broken down on steps.
+We encourage you to open and read the browser's and backend's consoles.
+Try to understand what is happening on each step, which function is responsible for what, how did the cookies changed.
 
 ```
 +-----------+                                                   +---------+                                                                 +---------+
