@@ -3,13 +3,13 @@
 This project demonstrates how to enable **login using KILT Protocol**.
 It is an educational project, everything is broken down to little steps and has explanations to ease your understanding.
 
-During the login procedure, the user is required to present a credential.
+During [the login procedure](#login-process), the user is required to present a credential.
 You can decide which credentials to accept.
 They could be issued by yourself or by other attesters.
 
 This is basically like asking for an ID-Card instead of a customer number, in order to provide a personalized service.
 This means that users don't not need to setup an account and password just for your website.
-Additionally, this avoids third parties (usually powerfull data-collecting companies) from tracking your interactions with your clients.
+Additionally, this avoids third parties (usually powerful data-collecting companies) from tracking your interactions with your clients.
 Not even the KILT developers can track it.
 
 In order for a **dApp** to support logging in with KILT Credentials, it needs:
@@ -28,7 +28,7 @@ In order for a **dApp** to support logging in with KILT Credentials, it needs:
 
 - The type of credentials the dApp considers valid.
 - In this demo, as a default, we request a credential that contains an email address.
-  For that we rely on [SocialKYC](https://socialkyc.io) to issue email credentials after verifing the user owns it.
+  For that we rely on [SocialKYC](https://socialkyc.io) to issue email credentials after verifying the user owns it.
   You could easily modified this.
 
 If you don't have some of the above, don't worry, we help you get them on the sections below.
