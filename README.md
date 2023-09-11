@@ -43,10 +43,10 @@ There is a [containerized version under this repository](https://github.com/KILT
 
 ## Steps to launch the website locally
 
-1. [Clone repository and install all necessary modules.](##Installation)
-2. [Define your environment variables](##Environment-Variables)
+1. [Clone repository and **install** all necessary modules.](#Installation)
+2. [Define your **environment variables**](#Environment-Variables)
 3. [Build a **Domain Linkage Credential**](#Well-Known-DID-Configuration)
-4. [Start your dApp](##Starting-the-dApp-locally)
+4. [**Start** your dApp](#Starting-the-dApp-locally)
 
 ## Prerequisite
 
