@@ -37,11 +37,13 @@ In order for a **dApp** to support logging in with KILT Credentials, it needs:
 
 If you don't have some of the above, don't worry, we help you get them on the sections below.
 
-After setting up and running this project locally on your computer, you will know how the [login process](#Process) works and have code that you can implement on your website.
-We encourage you to customize the code for your specific use case, just keep in mind the [specifications](https://github.com/KILTprotocol/spec-ext-credential-api) to retain compatibility.
+After setting up and running this project locally on your computer, you will know how the [login process](#Process) works.
+You are free to copy code from here, but we do encourage you to customize the code for your specific use case.
+Just keep in mind the [specifications](https://github.com/KILTprotocol/spec-ext-credential-api) to retain compatibility with the wallets/extensions.
 
 If you want to implement KILT Login without understanding it, we also have a solution for you.
-There is a [containerized version under this repository](https://github.com/KILTprotocol/kilt-login).
+There is a [containerized version called openDID](https://github.com/KILTprotocol/openDID).
+On that solution the whole process takes place in a extra container and only a autehtification token is passed to the main website.
 
 ## Steps to launch the website locally
 
@@ -133,7 +135,10 @@ After having all your environment variables and your well-known-did-configuratio
 
 ## Build
 
-To get a production version of the app, you can bundle the frontend of the app into static files.
+You don't need to do this to run the app locally on your computer.
+This only needed for deployment, not for the tutorial.
+
+To get a production version of the app, you can bundle the frontend and backend of the app into static files.
 For this, after having all your environment variables and your well-known-did-configuration:
 
 - run `yarn build`.
