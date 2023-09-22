@@ -11,9 +11,9 @@ dotenv.config()
 const {
   // This is the websocket address of the rpc node
   WSS_ADDRESS,
-  // This is the local Port on which your website (client-side) be reachable (frontend)
+  // This is the local Port on which your website (client-side) will be reachable
   FRONTEND_PORT,
-  // This is the local Port on which your server would be reachable (backend)
+  // This is the local Port on which your server will be reachable
   BACKEND_PORT,
   // This is the mnemonic of the Kilt account paying for all transactions
   DAPP_ACCOUNT_MNEMONIC,
@@ -45,7 +45,7 @@ async function main() {
   console.log('\u001B[38;5;201m')
   // figure out your project's current state:
   let step = 0
-  const stairs: (string | undefined)[] = [
+  const stairs = {
     WSS_ADDRESS,
     FRONTEND_PORT,
     BACKEND_PORT,
@@ -54,12 +54,21 @@ async function main() {
     DAPP_DID_URI,
     DAPP_NAME,
     JWT_SIGNER_SECRET
-  ]
+  }
 
-  // find the first element in the array "stairs" that it is still undefined.
-  step = stairs.findIndex((value) => value === undefined || value === '')
+  // find the first element in the object "stairs" that still has an undefined value.
+  step = Object.values(stairs).findIndex(
+    (value) => value === undefined || value === ''
+  )
   // `.findIndex()`returns -1 on no match.
 
+  if (step > 0) {
+    console.log(
+      `The environment variable "${
+        Object.keys(stairs)[step]
+      }" has not been defined yet. \n`
+    )
+  }
   // Go through the current step:
   switch (step) {
     // first assign a websocket of the blockchain you want to interact with:
@@ -103,8 +112,11 @@ async function main() {
       break
     // if (step = -1):
     default:
-      console.log(`It seems like all environment variables are already defined.\n
-               >> Take in consideration, that this script does not verify if the environment values already defined are valid. <<\n\n`)
+      console.log(
+        `It seems like all environment variables are already defined.\n
+               >> Take in consideration, that this script does not verify if the environment values already defined are valid. <<\n\n`,
+        'If you want new values, delete the old ones first.\n'
+      )
       break
   }
   // Making the output light purple
@@ -134,9 +146,9 @@ function imploreWebSocket() {
 function imploreClientSidePort() {
   console.log(
     'Please, define a value for FRONTEND_PORT on the .env-file to continue\n',
-    'For this demonstration the dApp should only run locally. You can use a custom IP or just the default:\n\n',
+    'For this demonstration the dApp should only run locally. You can use a custom IP-port or just the default:\n\n',
     'Default dApps domain port: \n',
-    'FRONTEND_PORT=8080',
+    'FRONTEND_PORT=6565',
     '\n\n'
   )
 }
@@ -144,9 +156,9 @@ function imploreClientSidePort() {
 function imploreServerPort() {
   console.log(
     'Please, define a value for PORT on the .env-file to continue\n',
-    'You can use a custom IP or just the default:\n\n',
+    'You can use a custom IP-port or just the default:\n\n',
     "Default dApp-Server's port: \n",
-    'BACKEND_PORT=3000',
+    'BACKEND_PORT=2525',
     '\n\n'
   )
 }
