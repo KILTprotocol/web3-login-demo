@@ -45,7 +45,7 @@ If you want to implement KILT Login without understanding it, we also have a sol
 There is a [containerized version called openDID](https://github.com/KILTprotocol/openDID).
 On that solution the whole process takes place in a extra container and only a autehtification token is passed to the main website.
 
-## Steps to launch the website locally
+## Steps to launch the dApp locally
 
 1. [Clone repository and **install** all necessary modules.](#Installation)
 2. [Define your **environment variables**](#Environment-Variables)
@@ -271,3 +271,38 @@ To get a production version of the app, you can bundle the frontend and backend 
 For this, after having all your environment variables and your well-known-did-configuration:
 
 - run `yarn build`.
+
+## Users requirements
+
+It is off course important, that the dApp an the user interact with information from the same chain.
+There is the **KILT Test Chain** aliased **_Peregrine_**.
+And there is the **real KILT Chain** aliased **_Spiritnet_**.
+
+For a user to login using KILT, it needs:
+
+1. It's on-chain DID
+
+- If you are using **Sporran** here is [how to get one.](https://www.kilt.io/build-your-identity)
+
+2. A Credential that the dApp considers valid.
+
+This means the credential has to be:
+
+- of one of the accepted cTypes .
+- issued by one of the attesters the dApp trusts.
+
+As a default, this demo accepts email credentials issued by **SocialKYC**.
+
+Get yours
+
+- for **_Peregrine_** here https://test.socialkyc.io.
+- for **_Spiritnet_** here https://socialkyc.io.
+
+3. A compatible wallet or extension.
+
+- This means they follow the [KILT credential api specifications](https://github.com/KILTprotocol/spec-ext-credential-api).
+
+Get **Sporran**
+
+- for **_Peregrine_** here [from the Sporran GitHub](https://github.com/BTE-Trusted-Entity/sporran-extension/releases).
+- for **_Spiritnet_** here https://www.kilt.io/services/sporran.
