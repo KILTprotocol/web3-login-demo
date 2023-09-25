@@ -284,10 +284,10 @@ For a user to login using KILT, it needs:
 
 - This means they follow the [KILT credential api specifications](https://github.com/KILTprotocol/spec-ext-credential-api).
 
-Get **Sporran**
+- Get **Sporran**
 
-- for **_Peregrine_** [here](https://github.com/BTE-Trusted-Entity/sporran-extension/releases).
-- for **_Spiritnet_** [here](https://www.kilt.io/services/sporran).
+  - for **_Peregrine_** [here](https://github.com/BTE-Trusted-Entity/sporran-extension/releases).
+  - for **_Spiritnet_** [here](https://www.kilt.io/services/sporran).
 
 2. It's on-chain DID
 
@@ -295,11 +295,10 @@ Get **Sporran**
 
 3. A Credential that the dApp considers valid.
 
-This means the credential has to be:
+- This means the credential has to (simultaneously) be:
 
-- of one of the accepted cTypes.
-  and
-- issued by one of the attesters the dApp trusts.
+  - one of the cTypes accepted by the dApp.
+  - issued by one of the attesters the dApp trusts.
 
 As a default, this demo accepts email credentials issued by **SocialKYC**.
 
