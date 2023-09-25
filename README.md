@@ -1,6 +1,6 @@
 # web3-login-demo
 
-_Explanatorily Tutorial for websites to implement logging in with web3 credentials using the KILT Protocol._
+_Explanatory Tutorial for websites to implement logging in with web3 credentials using the KILT Protocol._
 
 ## Intro
 
@@ -133,16 +133,6 @@ After having all your environment variables and your well-known-did-configuratio
 
 - run `yarn start`.
 
-## Build
-
-You don't need to do this to run the app locally on your computer.
-This only needed for deployment, not for the tutorial.
-
-To get a production version of the app, you can bundle the frontend and backend of the app into static files.
-For this, after having all your environment variables and your well-known-did-configuration:
-
-- run `yarn build`.
-
 ## Login Process
 
 After having set up the whole project, when the website is up and running, the login process can take place.
@@ -261,3 +251,23 @@ Try to understand what is happening on each step, which function is responsible 
       |                                                              |<--------------------------------------------------------------------------|
       |                                                              |                                                                           |
 ```
+
+## Deployed Version
+
+We have deployed this demo dApp as well, making it accessible online.
+This allows the developers to compare their results.
+It also makes is possible for non-coders to it check out.
+
+Reach the version connected to the **KILT Test Net** aliased **_Peregrine_**:
+
+- under: https://login-demo-peregrine.kilt.io/
+
+## Build
+
+You don't need to do this to run the app locally on your computer.
+This only needed for deployment, not for the tutorial.
+
+To get a production version of the app, you can bundle the frontend and backend of the app into static files.
+For this, after having all your environment variables and your well-known-did-configuration:
+
+- run `yarn build`.
