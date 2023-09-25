@@ -33,7 +33,7 @@ In order for a **dApp** to support logging in with KILT Credentials, it needs:
 - The type of credentials the dApp considers valid.
 - The issuer of this credentials can also be important.
   Your dApp can opt to accept only credentials coming from _trusted attesters_.
-  This is the default on this demo.
+  We recommend always doing this and it is default on this demo.
 
 If you don't have some of the above, don't worry, we help you get them on the sections below.
 
