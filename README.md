@@ -71,7 +71,7 @@ For a user to login using KILT, it needs:
 - This means the credential has to (simultaneously) be:
 
   - one of the cTypes accepted by the dApp.
-  - issued by one of the attesters the dApp trusts.
+  - issued by one of the dApps _trusted attesters_.
 
 - In this demo, as a default, the dApp requests a credential that contains an email address.
   For that we rely on **SocialKYC** to issue email credentials after verifying the user owns it.
