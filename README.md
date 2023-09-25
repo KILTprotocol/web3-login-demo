@@ -256,7 +256,7 @@ Try to understand what is happening on each step, which function is responsible 
 
 We have deployed this demo dApp as well, making it accessible online.
 This allows the developers to compare their results.
-It also makes is possible for non-coders to it check out.
+It also makes it possible for non-coders to it check out.
 
 Reach the version connected to the **KILT Test Net** aliased **_Peregrine_**:
 
@@ -280,29 +280,30 @@ And there is the **real KILT Chain** aliased **_Spiritnet_**.
 
 For a user to login using KILT, it needs:
 
-1. It's on-chain DID
+1. A compatible wallet or extension.
 
-- If you are using **Sporran** here is [how to get one.](https://www.kilt.io/build-your-identity)
+- This means they follow the [KILT credential api specifications](https://github.com/KILTprotocol/spec-ext-credential-api).
 
-2. A Credential that the dApp considers valid.
+Get **Sporran**
+
+- for **_Peregrine_** [here](https://github.com/BTE-Trusted-Entity/sporran-extension/releases).
+- for **_Spiritnet_** [here](https://www.kilt.io/services/sporran).
+
+2. It's on-chain DID
+
+- If you are using Sporran, here is [how to get one.](https://www.kilt.io/build-your-identity)
+
+3. A Credential that the dApp considers valid.
 
 This means the credential has to be:
 
-- of one of the accepted cTypes .
+- of one of the accepted cTypes.
+  and
 - issued by one of the attesters the dApp trusts.
 
 As a default, this demo accepts email credentials issued by **SocialKYC**.
 
 Get yours
 
-- for **_Peregrine_** here https://test.socialkyc.io.
-- for **_Spiritnet_** here https://socialkyc.io.
-
-3. A compatible wallet or extension.
-
-- This means they follow the [KILT credential api specifications](https://github.com/KILTprotocol/spec-ext-credential-api).
-
-Get **Sporran**
-
-- for **_Peregrine_** here [from the Sporran GitHub](https://github.com/BTE-Trusted-Entity/sporran-extension/releases).
-- for **_Spiritnet_** here https://www.kilt.io/services/sporran.
+- for **_Peregrine_** [here](https://test.socialkyc.io).
+- for **_Spiritnet_** [here](https://socialkyc.io).
