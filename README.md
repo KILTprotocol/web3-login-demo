@@ -299,10 +299,10 @@ Reach the version connected to the **KILT Test Net** aliased **_Peregrine_**:
 
 ## Build
 
-You don't need to do this to run the app locally on your computer.
-This only needed for deployment, not for the tutorial.
+Running the app locally on your computer doesn't require this step.
+It's only necessary when you plan to deploy the app, not for the tutorial.
 
-To get a production version of the app, you can bundle the frontend and backend of the app into static files.
+To obtain a production-ready version of the app, you can compile both the frontend and backend code into Docker images.
 For this, after having all your environment variables and your well-known-did-configuration:
 
 - run `yarn build`.
