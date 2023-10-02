@@ -33,9 +33,10 @@ In order for a **dApp** to support logging in with KILT Credentials, it needs:
 3. A CType to request from the user
 
 - The type of credentials the dApp considers valid.
-- The issuer of this credentials can also be important.
-  Your dApp can opt to accept only credentials coming from _trusted attesters_.
-  We recommend always doing this and it is default on this demo.
+- The CType defines the structure and semantics of the credential you accept.
+- The issuer of this credentials is important.
+  Anyone can issue a credential of a CType, but not everybody can be trusted as a source of truth.
+- To be secure, your dApp should accept credentials coming from it's _trusted attesters_.
 
 If you don't have some of the above, don't worry, we help you get them on the sections below.
 
