@@ -11,7 +11,9 @@ During [the login procedure](#login-process), the user is required to present a 
 You can decide which credentials to accept.
 They could be issued by yourself or by other attesters.
 
-This is basically like asking for an ID-Card instead of a customer number, in order to provide a personalized service.
+If you require the credentials to be attested by yourself, the credentials become similar to membership cards.
+If you also accept credentials from other attesters, you open your system up to also accept other membership cards.
+
 This means that users don't not need to setup an account and password just for your website.
 Additionally, this avoids third parties (usually powerful data-collecting companies) from tracking your interactions with your clients.
 Not even the KILT developers can track it.
