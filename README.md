@@ -40,9 +40,9 @@ In order for a **dApp** to support logging in with KILT Credentials, it needs:
 
 If you don't have some of the above, don't worry, we help you get them on the sections below.
 
-After setting up and running this project locally on your computer, you will know how the [login process](#Process) works.
+After setting up and running this project locally on your computer, you will have representation of how the [login process](#Process) works.
 You are free to copy code from here, but we do encourage you to customize the code for your specific use case.
-Just keep in mind the [specifications](https://github.com/KILTprotocol/spec-ext-credential-api) to retain compatibility with the wallets/extensions.
+Just keep in mind to follow the [specifications](https://github.com/KILTprotocol/spec-ext-credential-api) to retain compatibility with the wallets/extensions.
 
 If you want to implement KILT Login without understanding it, we also have a solution for you.
 There is a [containerized version called openDID](https://github.com/KILTprotocol/openDID).
