@@ -44,7 +44,8 @@ After setting up and running this project locally on your computer, you will hav
 You are free to copy code from here, but we do encourage you to customize the code for your specific use case.
 Just keep in mind to follow the [specifications](https://github.com/KILTprotocol/spec-ext-credential-api) to retain compatibility with the wallets/extensions.
 
-If you are rather looking for a Plug-and-Play solution, we provide [the openDID project](https://github.com/KILTprotocol/openDID) which implements the [OpenID-Connect implicit flow](https://openid.net/specs/openid-connect-implicit-1_0.html#ImplicitFlow) to authenticate your users, which reduces the complexity of the integration.
+If you are rather looking for a Plug-and-Play solution, we provide [the openDID project](https://github.com/KILTprotocol/openDID) which implements the [OpenID-Connect implicit flow](https://openid.net/specs/openid-connect-implicit-1_0.html#ImplicitFlow) to authenticate your users.
+[OpenDID ](https://github.com/KILTprotocol/openDID) substantially reduces the complexity of integration.
 
 ## Users requirements
 
