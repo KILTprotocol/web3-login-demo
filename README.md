@@ -103,7 +103,7 @@ If you are not familiar with some of these, we recommend to first get an overvie
 
 ## Installation
 
-After [cloning the repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) to install all required modules,
+After [cloning the repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository), to install all required modules
 
 - run: `yarn install`.
 
