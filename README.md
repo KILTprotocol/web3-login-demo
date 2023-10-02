@@ -56,16 +56,16 @@ For a user to log in with KILT, it requires:
 
 1. A compatible wallet or extension.
 
-- This means they follow the [KILT credential api specifications](https://github.com/KILTprotocol/spec-ext-credential-api).
+- The wallet is required to follow the [KILT credential API specifications](https://github.com/KILTprotocol/spec-ext-credential-api).
 
-- Get the **Sporran Wallet**
+- The **Sporran Wallet** is one example for such an extension.
 
-  - for **_Peregrine_** [here](https://github.com/BTE-Trusted-Entity/sporran-extension/releases).
-  - for **_Spiritnet_** [here](https://www.kilt.io/services/sporran).
+  - [Download Sporran for **_Peregrine_** here](https://github.com/BTE-Trusted-Entity/sporran-extension/releases).
+  - [Download Sporran for **_Spiritnet_** here](https://www.kilt.io/services/sporran).
 
 2. An on-chain DID
 
-- If you are using Sporran, here is [how to get one.](https://www.kilt.io/build-your-identity)
+- If you are using Sporran, here is [how to get a DID.](https://www.kilt.io/build-your-identity)
 
 3. A Credential that the dApp considers valid.
 
@@ -76,10 +76,10 @@ For a user to log in with KILT, it requires:
 
 - In this demo, as a default, the dApp requests a credential that contains an email address.
   For that we rely on **SocialKYC** to issue email credentials after verifying the user owns it.
-  Get yours
+  Get your
 
-  - for **_Peregrine_** [here](https://test.socialkyc.io).
-  - for **_Spiritnet_** [here](https://socialkyc.io).
+  - [credential attested by **SocialKYC** on **_Peregrine_** here](https://test.socialkyc.io).
+  - [credential attested by **SocialKYC** on **_Spiritnet_** here](https://socialkyc.io).
 
 ## Steps to launch the dApp locally
 
