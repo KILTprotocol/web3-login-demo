@@ -48,7 +48,7 @@ If you are rather looking for a Plug-and-Play solution, we provide [the openDID 
 
 ## Users requirements
 
-It is off course important, that the dApp an the user interact with information from the same chain.
+It is important, that the dApp and the user interact with information from the same chain.
 There is the **KILT Test Chain** aliased **_Peregrine_**.
 And there is the **real KILT Chain** aliased **_Spiritnet_**.
 
