@@ -50,7 +50,7 @@ If you are rather looking for a Plug-and-Play solution, we provide [the openDID 
 
 It is important, that the dApp and the user interact with information from the same chain.
 There is the **KILT Test Chain** aliased **_Peregrine_**.
-And there is the **real KILT Chain** aliased **_Spiritnet_**.
+And there is the **production KILT Chain** aliased **_Spiritnet_**.
 
 For a user to login using KILT, it needs:
 
