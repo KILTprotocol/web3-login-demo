@@ -52,7 +52,7 @@ It is important, that the dApp and the user interact with information from the s
 There is the **KILT Test Chain** aliased **_Peregrine_**.
 And there is the **production KILT Chain** aliased **_Spiritnet_**.
 
-For a user to login using KILT, it needs:
+For a user to log in with KILT, it requires:
 
 1. A compatible wallet or extension.
 
