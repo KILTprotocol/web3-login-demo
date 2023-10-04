@@ -155,7 +155,7 @@ You have three different options:
    If you are a _pro_, you could defined and generate them externally and add them to the `.env`-file.
    You would probably have to modify the `generateKeyPairs.ts` files (on _scripts_ and _backend_) to match your key derivation though.
 
-## Well-Known-DID-Configuration
+## Well-Known DID Configuration
 
 After having all your environment variables, to build a **Domain Linkage Credential**:
 
