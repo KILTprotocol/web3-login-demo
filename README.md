@@ -16,7 +16,7 @@ If you also accept credentials from other attesters, you open your system up to 
 
 This means that users don't not need to setup an account and password just for your website.
 Additionally, this avoids third parties (usually powerful data-collecting companies) from tracking your interactions with your clients.
-There is no trace on the KILT blockchain about the interaction between you and yor client.
+There is no trace on the KILT blockchain about the interaction between you and your client.
 
 In order for a **dApp** to support logging in with KILT Credentials, it needs:
 
