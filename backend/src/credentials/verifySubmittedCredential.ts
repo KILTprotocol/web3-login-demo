@@ -82,21 +82,13 @@ export async function verifySubmittedCredential(
 
   // Check if the credentials was issued by one of our "trusted attesters"
   const attesterOfTheirCredential = attestation.owner
-  const ourTrustedAttesters = cTypeRequested.cTypes.find((ctype) => {
-    if (!ctype.trustedAttesters) {
-      throw new Error('no trusted attester')
-    }
-    if (ctype.cTypeHash !== credential.claim.cTypeHash) {
-      throw new Error(
-        'CType hash does not match with the corresponding trusted attester'
-      )
-    }
-    return ctype.trustedAttesters[0] === attesterOfTheirCredential
-  })
+    const ourTrustedAttesters = cTypeRequested.cTypes.find((ctype) => {
+    ctype.cTypeHash === credential.claim.cTypeHash
+  })?.trustedAttesters
 
   // If you don't include a list of trusted attester on the credential-request, this check would be skipped
   if (ourTrustedAttesters) {
-    if (!ourTrustedAttesters) {
+  if (!ourTrustedAttesters.includes(attesterOfTheirCredential)) {
       throw new Error(
         `The Credential was not issued by any of the trusted Attesters that the dApp relies on. \n List of trusted attesters: ${ourTrustedAttesters}`
       )
