@@ -161,20 +161,20 @@ After having all your environment variables, execute the following to build a **
 
 - `yarn well-known-config`.
 
-If you want know more about this, check out the [Identity Foundation Documentation](https://identity.foundation/.well-known/resources/did-configuration/).
+If you want know more about this, check out the [Identity Foundation Documentation on Well-Known DID Configuration](https://identity.foundation/.well-known/resources/did-configuration/).
 [Our dApp documentation also have a section about this.](https://docs.kilt.io/docs/develop/dApp/well-known-did-config)
 
 ## Starting the dApp locally
 
-After having all your environment variables and your well-known-did-configuration:
+After having all your environment variables and your well-known DID configuration run:
 
-- run `yarn start`.
+- `yarn start`.
 
 ## Login Process
 
 After having set up the whole project, when the website is up and running, the login process can take place.
 Each user that wants to login would trigger the process that is displayed below.
-The process is full of HTTPS queries and extension-api's messages.
+The process is interactions between the Client (browser), the extension/wallet and the server (backend).
 
 A user could trigger the whole process with just one click on the website, for example "Login with extension X" or "Login with extension Y".
 
