@@ -130,7 +130,7 @@ The following variables are required:
 - `DAPP_NAME` = _This should be a custom name for your dApp_
 - `JWT_SIGNER_SECRET` = _This is secret key (string) that signs the Json-Web-Tokens before saving them in the Cookies_
 
-### How do I get mine?
+### Setup your environment
 
 You have three different options:
 
