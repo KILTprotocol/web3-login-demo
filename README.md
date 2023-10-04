@@ -305,6 +305,6 @@ Running the app locally on your computer doesn't require this step.
 It's only necessary when you plan to deploy the app, not for the tutorial.
 
 To obtain a production-ready version of the app, you can compile both the frontend and backend code into Docker images.
-For this, after having all your environment variables and your well-known-did-configuration:
+For this, after having all your environment variables and your well-known DID configuration:
 
 - run `yarn build`.
