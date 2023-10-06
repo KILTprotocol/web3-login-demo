@@ -81,9 +81,10 @@ export async function verifySubmittedCredential(
   }
 
   // Check if the credentials was issued by one of our "trusted attesters"
-
-  const ourTrustedAttesters = cTypeRequested.cTypes[0].trustedAttesters
   const attesterOfTheirCredential = attestation.owner
+  const ourTrustedAttesters = cTypeRequested.cTypes.find((ctype) => {
+    ctype.cTypeHash === credential.claim.cTypeHash
+  })?.trustedAttesters
 
   // If you don't include a list of trusted attester on the credential-request, this check would be skipped
   if (ourTrustedAttesters) {

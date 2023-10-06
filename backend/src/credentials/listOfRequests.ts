@@ -14,6 +14,14 @@ export const emailRequest: Kilt.IRequestCredentialContent = {
         'did:kilt:4pehddkhEanexVTTzWAtrrfo2R7xPnePpuiJLC7shQU894aY'
       ],
       requiredProperties: ['Email']
+    },
+    {
+      cTypeHash:
+        '0xae5bc64e500eb576b7b137288cec5d532094e103be46872f1ad54641e477d9fe',
+      trustedAttesters: [
+        'did:kilt:4pehddkhEanexVTTzWAtrrfo2R7xPnePpuiJLC7shQU894aY'
+      ],
+      requiredProperties: ['Email']
     }
   ]
 }
