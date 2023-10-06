@@ -174,8 +174,8 @@ After having all your environment variables and your well-known DID configuratio
 
 After having set up the whole project, when the website is up and running, the login process can take place.
 Each user that wants to login would trigger the process that is displayed below.
-The process is abundant of HTTP(S) queries and extension-api's messages.
-Therefore, interactions between the client (browser), the extension/wallet and the server (backend).
+The process consist of multiple HTTP(S) queries, including extension-api's messages.
+Interactions are between the client (browser), the extension/wallet and the server (backend).
 
 A user could trigger the whole process with just one click on the website, for example "Login with extension X" or "Login with extension Y".
 
