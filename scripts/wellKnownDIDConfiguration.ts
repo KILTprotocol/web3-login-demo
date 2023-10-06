@@ -78,11 +78,12 @@ export async function createCredential(
   const cTypeUri =
     'kilt:ctype:0x9d271c790775ee831352291f01c5d04c7979713a5896dcf5e81708184cc5c643'
   if (ctypeDomainLinkage.$id !== cTypeUri) {
-    console.log('The following CType URI is not the expected one:', ctypeDomainLinkage.$id)
-    console.log('Expected CType URI', cTypeUri)
-    throw new Error(
-      'Wrong cType for creating a well-known-did-configuration.'
+    console.log(
+      'The following CType URI is not the expected one:',
+      ctypeDomainLinkage.$id
     )
+    console.log('Expected CType URI', cTypeUri)
+    throw new Error('Wrong cType for creating a well-known-did-configuration.')
   }
 
   const claim = Kilt.Claim.fromCTypeAndClaimContents(
@@ -262,7 +263,7 @@ export async function selfAttestCredential(
 
   let submitTx: Kilt.SubmittableExtrinsic
 
-  const signCallback = async ({ data }: any) => ({
+  const signCallback = async ({ data }: { data: string | Uint8Array }) => ({
     signature: assertionMethodKey.sign(data),
     keyType: assertionMethodKey.type
   })

@@ -98,6 +98,9 @@ validateEnvironmentConstants()
   )
   .then((doccy) => {
     app.locals.dappDidDocument = doccy
+
+    app.enable('trust proxy')
+
     // wait for fetched document before server starts listening:
     app.listen(BACKEND_PORT, () => {
       console.log(`⚡️ Server is running at http://localhost:${BACKEND_PORT}`)
