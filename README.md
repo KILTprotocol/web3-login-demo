@@ -181,7 +181,7 @@ A user could trigger the whole process with just one click on the website, for e
 
 On this example project, several (2-3) interactions are need because it is broken down into little steps.
 We encourage you to open and read the browser's and backend's consoles.
-This should help you to understand what is happening on each step, which function is responsible for what, how did the cookies changed.
+This should help you understand what is happening on each step, which function is responsible for what, how did the cookies changed.
 
 ```
 +-----------+                                                   +---------+                                                                 +---------+
