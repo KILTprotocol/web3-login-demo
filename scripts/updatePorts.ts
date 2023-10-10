@@ -10,7 +10,7 @@ dotenv.config()
 const frontendPort = process.env.FRONTEND_PORT
 const backendPort = process.env.BACKEND_PORT
 console.log(
-  `custom backendPort: ${backendPort}`,
+  `custom backendPort: ${backendPort} ; `,
   `custom frontendPort: ${frontendPort}`
 )
 
@@ -30,7 +30,7 @@ if (frontendPort || backendPort) {
   // Write the updated package.json back to the file
   fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2) + '\n')
 
-  console.log('Package.json updated successfully to use custom ports.!')
+  console.log('Package.json updated successfully to use custom ports!')
 } else {
   console.log('Using default Ports for server and client-side. ')
 }

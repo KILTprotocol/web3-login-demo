@@ -11,9 +11,9 @@ dotenv.config()
 const {
   // This is the websocket address of the rpc node
   WSS_ADDRESS,
-  // This is the local Port on which your website (client-side) be reachable (frontend)
+  // This is the local Port on which your website (client-side) will be reachable
   FRONTEND_PORT,
-  // This is the local Port on which your server would be reachable (backend)
+  // This is the local Port on which your server will be reachable
   BACKEND_PORT,
   // This is the mnemonic of the Kilt account paying for all transactions
   DAPP_ACCOUNT_MNEMONIC,
@@ -45,7 +45,7 @@ async function main() {
   console.log('\u001B[38;5;201m')
   // figure out your project's current state:
   let step = 0
-  const stairs: (string | undefined)[] = [
+  const stairs = {
     WSS_ADDRESS,
     FRONTEND_PORT,
     BACKEND_PORT,
@@ -54,12 +54,21 @@ async function main() {
     DAPP_DID_URI,
     DAPP_NAME,
     JWT_SIGNER_SECRET
-  ]
+  }
 
-  // find the first element in the array "stairs" that it is still undefined.
-  step = stairs.indexOf(undefined)
-  // The indexOf() method returns the first index at which a given element can be found in the array, or -1 if it is not present.
+  // find the first element in the object "stairs" that still has an undefined value.
+  step = Object.values(stairs).findIndex(
+    (value) => value === undefined || value === ''
+  )
+  // `.findIndex()`returns -1 on no match.
 
+  if (step > 0) {
+    console.log(
+      `The environment variable "${
+        Object.keys(stairs)[step]
+      }" has not been defined yet. \n`
+    )
+  }
   // Go through the current step:
   switch (step) {
     // first assign a websocket of the blockchain you want to interact with:
@@ -103,8 +112,11 @@ async function main() {
       break
     // if (step = -1):
     default:
-      console.log(`It seems like all environment variables are already defined.\n
-               >> Take in consideration, that this script does not verify if the environment values already defined are valid. <<\n\n`)
+      console.log(
+        `It seems like all environment variables are already defined.\n
+               >> Take in consideration, that this script does not verify if the environment values already defined are valid. <<\n\n`,
+        'If you want new values, delete the old ones first.\n'
+      )
       break
   }
   // Making the output light purple
@@ -120,8 +132,6 @@ async function main() {
 // So the main function can use the following functions without problem.
 function imploreWebSocket() {
   console.log(
-    'Trouble reading the address of the WebSocket \n\n',
-
     'Please, define a value for WSS_ADDRESS on the .env-file to continue \n',
     'To connect to the KILT-Test-Blockchain, named Peregrine (recommended), please save the following: \n\n',
     'WSS_ADDRESS=wss://peregrine.kilt.io/',
@@ -135,31 +145,26 @@ function imploreWebSocket() {
 
 function imploreClientSidePort() {
   console.log(
-    "\nTrouble reading the local port of your dApp' Website (FrontEnd)\n",
     'Please, define a value for FRONTEND_PORT on the .env-file to continue\n',
-    'For this demonstration the dApp should only run locally. You can use a custom IP or just the default:\n\n',
+    'For this demonstration the dApp should only run locally. You can use a custom IP-port or just the default:\n\n',
     'Default dApps domain port: \n',
-    'FRONTEND_PORT=8080',
+    'FRONTEND_PORT=6565',
     '\n\n'
   )
 }
 
 function imploreServerPort() {
   console.log(
-    "\nTrouble reading the Port of your dApp' Server (BackEnd)\n",
     'Please, define a value for PORT on the .env-file to continue\n',
-    'You can use a custom IP or just the default:\n\n',
+    'You can use a custom IP-port or just the default:\n\n',
     "Default dApp-Server's port: \n",
-    'BACKEND_PORT=3000',
+    'BACKEND_PORT=2525',
     '\n\n'
   )
 }
 
 async function spawnAccount() {
-  console.log(
-    "\nTrouble reading the account's mnemonic of your dApp\n",
-    'An account is being generated for your dApp.'
-  )
+  console.log('An account is being generated for your dApp...')
   await Kilt.init()
   // You could also pass a specific mnemonic, but here we generate a random mnemonic.
   // for custom, replace here with a string of 12 BIP-39 words
@@ -176,7 +181,6 @@ async function spawnAccount() {
 }
 
 async function spawnDid() {
-  console.log("\ntrouble reading the mnemonic of your dApp's DID\n")
   await Kilt.connect(WSS_ADDRESS as string)
   console.log(
     '\n\nA decentralized identity (DID) is trying to be generated for your dApp.',
@@ -201,10 +205,7 @@ async function spawnDid() {
 }
 
 async function getURI(mnemonic: string) {
-  console.log(
-    "\nTrouble reading the URI of your dApp's DID\n",
-    'getting the URI of the DID corresponding the provided mnemonic'
-  )
+  console.log('getting the URI of the DID corresponding the provided mnemonic')
   await Kilt.connect(WSS_ADDRESS as string)
   const { authentication } = generateKeyPairs(mnemonic)
   const dAppDidUri = Kilt.Did.getFullDidUriFromKey(authentication)
@@ -226,16 +227,15 @@ async function getURI(mnemonic: string) {
 
 function imploreName() {
   console.log(
-    "\ntrouble reading your dApp's Name\n",
-    'Please provide a name inside the .env file using this constant name: \n',
+    'Please provide a name for your dApp inside the .env file using this constant name: \n',
     `DAPP_NAME={your dApp's name here}\n`
   )
 }
 
 function imploreJwtSecretKey() {
   console.log(
-    '\ntrouble reading the Secret Key your dApps use to encode the JSON-Web-Tokens\n',
     `Please provide a string value for 'JWT_SIGNER_SECRET' inside the .env file. \n`,
+    '\nThis is would be a Secret Key your dApps use to encode the JSON-Web-Tokens\n',
     `JWT_SIGNER_SECRET={Oh my God, you are so cryptic!}\n`
   )
 }
