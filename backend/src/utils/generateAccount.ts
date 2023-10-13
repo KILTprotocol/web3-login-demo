@@ -16,7 +16,7 @@ export function generateAccount(mnemonic: string): Kilt.KiltKeyringPair {
   const mnemonicToU8A = mnemonicToMiniSecret(mnemonic)
   const account = Kilt.Utils.Crypto.makeKeypairFromSeed(
     mnemonicToU8A,
-    'sr25519'
+    'ed25519'
   )
 
   return account
