@@ -142,6 +142,7 @@ async function main() {
   const dAppsDidKeys = generateKeyPairs(dAppMnemonic)
   const dappAccount = generateAccount(fundsMnemonic)
 
+  // Writes the attestation on the blockchain
   await selfAttestCredential(
     domainCredential,
     dAppsDidKeys.assertionMethod,
