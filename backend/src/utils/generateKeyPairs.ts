@@ -1,6 +1,6 @@
 import * as Kilt from '@kiltprotocol/sdk-js'
 
-const signingKeyPairType = 'sr25519'
+const signingKeyPairType = 'ed25519'
 
 export function generateKeyPairs(mnemonic: string) {
   const authentication = Kilt.Utils.Crypto.makeKeypairFromUri(
