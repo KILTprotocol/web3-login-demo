@@ -3,31 +3,31 @@ import React from 'react'
 import styles from './Page.module.css'
 
 interface Props {
-  [x: string]: any
+  children: React.ReactNode
 }
 
 function Page({ children }: Props): JSX.Element {
   return <div className={styles.page}>{children}</div>
 }
 
-Page.Header = function ({ children }: Props): JSX.Element {
+function PageHeader({ children }: Props): JSX.Element {
   return <header className={styles.header}>{children}</header>
 }
-//@ts-ignore
-Page.Header.displayName = 'Page.Header'
 
-Page.Content = function ({ children }: Props): JSX.Element {
+function PageContent({ children }: Props): JSX.Element {
   return <section className={styles.content}>{children}</section>
 }
 
-//@ts-ignore
-Page.Content.displayName = 'Page.Content'
-
-Page.Section = function ({ children }: Props): JSX.Element {
+function PageSection({ children }: Props): JSX.Element {
   return <section className={styles.section}>{children}</section>
 }
 
-//@ts-ignore
-Page.Section.displayName = 'Page.Section'
+Page.Header = PageHeader
+Page.Content = PageContent
+Page.Section = PageSection
+
+PageHeader.displayName = 'Page.Header'
+PageContent.displayName = 'Page.Content'
+PageSection.displayName = 'Page.Section'
 
 export default Page

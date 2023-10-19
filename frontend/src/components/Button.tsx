@@ -3,7 +3,7 @@ import React from 'react'
 import styles from './Button.module.css'
 
 interface Props {
-  [x: string]: any
+  children: React.ReactNode
 }
 
 export default function Button({ children, ...props }: Props) {
