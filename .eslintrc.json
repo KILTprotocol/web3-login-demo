@@ -20,7 +20,14 @@
     "react/react-in-jsx-scope": "off",
     "react-hooks/exhaustive-deps": "error",
     "import/no-extraneous-dependencies": "error",
-    "import/no-unresolved": ["error", { "ignore": ["\\.js$"] }],
+    "import/no-unresolved": [
+      "error",
+      {
+        "ignore": [
+          "\\.js$"
+        ]
+      }
+    ],
     "import/order": [
       "warn",
       {
@@ -37,7 +44,9 @@
         ],
         "pathGroups": [
           {
-            "patternOptions": { "matchBase": true },
+            "patternOptions": {
+              "matchBase": true
+            },
             "pattern": "*.module.css",
             "group": "internal",
             "position": "before"
@@ -45,6 +54,7 @@
         ]
       }
     ],
+    "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/ban-ts-comment": "warn"
   },
