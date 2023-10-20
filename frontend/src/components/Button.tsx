@@ -3,7 +3,9 @@ import React from 'react'
 import styles from './Button.module.css'
 
 interface Props {
-  [x: string]: any
+  children: React.ReactNode
+  disabled?: boolean
+  onClick?: () => void
 }
 
 export default function Button({ children, ...props }: Props) {

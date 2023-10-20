@@ -44,7 +44,7 @@ function StartSession({
   return (
     <div className={styles.step}>
       <h2>3. Start the Server-Extension-Session</h2>
-      <Button disabled={extensionSession} onClick={startSession}>
+      <Button disabled={Boolean(extensionSession)} onClick={startSession}>
         connect
       </Button>
     </div>
