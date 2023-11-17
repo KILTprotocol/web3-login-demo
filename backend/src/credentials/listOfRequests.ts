@@ -1,5 +1,7 @@
 import * as Kilt from '@kiltprotocol/sdk-js'
 
+import { CTYPE_HASH, REQUIRED_PROPERTIES, TRUSTED_ATTESTERS } from '../config'
+
 // Establish which cTypes our dApp accepts and which attesters we trust:
 
 /**
@@ -14,14 +16,29 @@ export const emailRequest: Kilt.IRequestCredentialContent = {
         'did:kilt:4pehddkhEanexVTTzWAtrrfo2R7xPnePpuiJLC7shQU894aY'
       ],
       requiredProperties: ['Email']
-    },
+    }
+  ]
+}
+const trustedAttestersValues = TRUSTED_ATTESTERS.split(',')
+const requiredPropertiesValues = REQUIRED_PROPERTIES.split(',')
+
+const requiredProperties = requiredPropertiesValues.map(
+  (requiredProperties) => requiredProperties
+)
+
+const trustedAttesters = trustedAttestersValues.map(
+  (trustedAttesters) => trustedAttesters as Kilt.DidUri
+)
+
+/**
+ * Email Credential Type attested from SocialKYC.io
+ */
+export const requestedCType: Kilt.IRequestCredentialContent = {
+  cTypes: [
     {
-      cTypeHash:
-        '0xae5bc64e500eb576b7b137288cec5d532094e103be46872f1ad54641e477d9fe',
-      trustedAttesters: [
-        'did:kilt:4pehddkhEanexVTTzWAtrrfo2R7xPnePpuiJLC7shQU894aY'
-      ],
-      requiredProperties: ['Email']
+      cTypeHash: CTYPE_HASH as `0x${string}`,
+      trustedAttesters,
+      requiredProperties
     }
   ]
 }
