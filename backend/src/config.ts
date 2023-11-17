@@ -23,6 +23,14 @@ export const DAPP_DID_MNEMONIC = loadEnv('DAPP_DID_MNEMONIC')
 export const DAPP_DID_URI = loadEnv('DAPP_DID_URI') as Kilt.DidUri
 export const DAPP_NAME = process.env.DAPP_NAME ?? 'Web3-Login-Demo'
 export const JWT_SIGNER_SECRET = loadEnv('JWT_SIGNER_SECRET')
+export const CTYPE_HASH =
+  loadEnv('CTYPE_HASH') ||
+  '0x3291bb126e33b4862d421bfaa1d2f272e6cdfc4f96658988fbcffea8914bd9ac'
+export const TRUSTED_ATTESTERS =
+  loadEnv('TRUSTED_ATTESTERS') ||
+  'did:kilt:4pehddkhEanexVTTzWAtrrfo2R7xPnePpuiJLC7shQU894aY'
+
+export const REQUIRED_PROPERTIES = loadEnv('REQUIRED_PROPERTIES') || 'Email'
 
 export let DAPP_ACCOUNT_ADDRESS: string
 
