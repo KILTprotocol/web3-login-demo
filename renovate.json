@@ -1,0 +1,30 @@
+{
+  "extends": ["config:base"],
+  "rangeStrategy": "bump",
+  "postUpdateOptions": ["yarnDedupeHighest"],
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true
+    },
+    {
+      "matchDepTypes": ["devDependencies"],
+      "automerge": true
+    },
+    {
+      "matchPackagePatterns": ["kiltprotocol"],
+      "groupName": "kiltprotocol",
+      "automerge": false
+    },
+    {
+      "matchPackagePatterns": ["polkadot"],
+      "groupName": "polkadot",
+      "automerge": false
+    },
+    {
+      "matchPackagePatterns": ["node"],
+      "groupName": "node",
+      "automerge": false
+    }
+  ]
+}
