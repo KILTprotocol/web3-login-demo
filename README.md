@@ -159,7 +159,7 @@ You have three different options:
 
 After having all your environment variables, execute the following to build a **Domain Linkage Credential**:
 
-- `yarn well-known-config`.
+- `yarn run did-configuration`.
 
 If you want know more about this, check out the [Identity Foundation Documentation on Well-Known DID Configuration](https://identity.foundation/.well-known/resources/did-configuration/).
 [Our dApp documentation also have a section about this.](https://docs.kilt.io/docs/develop/dApp/well-known-did-config)

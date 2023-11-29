@@ -16,7 +16,7 @@
   },
   "scripts": {
     "environment": "ts-node ./scripts/genesisEnvironmentVariables.ts",
-    "well-known-config": "ts-node ./scripts/genesisWellKnownDidConfig.ts",
+    "did-configuration": "ts-node ./scripts/genesisWellKnownDidConfig.ts",
     "build:frontend": "cd ./frontend && yarn build",
     "build:backend": "cd ./backend && yarn build",
     "build": "yarn build:frontend && yarn build:backend",
