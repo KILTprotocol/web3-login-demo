@@ -1,6 +1,6 @@
 {
   "name": "web3-login-demo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Showcase to login on a website with Kilt-Credentials",
   "main": "index.ts",
   "repository": "git@github.com:KILTprotocol/web3-login-demo.git",
