@@ -17,4 +17,4 @@ RUN yarn cache clean
 
 EXPOSE 8000
 
-CMD [ "yarn", "start:backend-prod" ]
+CMD [ "yarn", "start-prod:backend" ]
