@@ -6,7 +6,7 @@ import * as Kilt from '@kiltprotocol/sdk-js'
  * Usually, attesters have different DIDs depending on the blockchain, i.e. production or testnet.
  *
  * On the other hand, a cType Hash is calculated from the cType structure.
- * If exactly the same structure is used on the test and production, the cType Hash would be the same.
+ * If exactly the same structure is used on the test and production, the cType Hash will be the same.
  */
 
 /**
