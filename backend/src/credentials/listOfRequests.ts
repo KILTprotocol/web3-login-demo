@@ -4,7 +4,12 @@ import { WSS_ADDRESS } from '../config'
 
 // Establish which cTypes our dApp accepts and which attesters we trust:
 
-// DIDs and cType-Hashes are different depending on the blockchain:
+/**
+ * Usually, attesters have different DIDs depending on the blockchain, i.e. production or testnet.
+ *
+ * The cType Hash is calculated from the cType structure.
+ * If exactly the same structure is used on the test and production, the cType hash would be the same.
+ */
 
 /**
  * Email Credential Type attested from SocialKYC.io
@@ -26,6 +31,8 @@ if (WSS_ADDRESS.includes('peregrine')) {
         requiredProperties: ['Email']
       },
       {
+        // SocialKYC will use this cType on the future.
+        // includes "'additionalProperties': false,"
         cTypeHash:
           '0xae5bc64e500eb576b7b137288cec5d532094e103be46872f1ad54641e477d9fe',
         trustedAttesters: [
