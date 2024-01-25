@@ -62,11 +62,7 @@ async function main() {
   const fundsMnemonic =
     process.env.DAPP_ACCOUNT_MNEMONIC ?? 'your dApp needs an Sponsor '
 
-  let domainOrigin = 'no origin assigned'
-  if (process.env.FRONTEND_PORT) {
-    // don't put a slash "/" at the end of the origin!
-    domainOrigin = `http://localhost:${process.env.FRONTEND_PORT}`
-  }
+  const domainOrigin = process.env.DOMAIN_ORIGIN ?? 'no origin assigned'
 
   // Connect to the webSocket. This tells the Kilt Api to which node to interact, and ergo also the
   // blockchain (Spiritnet or Peregrine)
