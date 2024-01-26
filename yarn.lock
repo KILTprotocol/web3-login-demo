@@ -5768,7 +5768,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"concurrently@npm:^8.0.1":
+"concurrently@npm:^8.2.2":
   version: 8.2.2
   resolution: "concurrently@npm:8.2.2"
   dependencies:
@@ -15265,7 +15265,7 @@ __metadata:
     "@types/valid-url": ^1.0.3
     "@typescript-eslint/eslint-plugin": ^5.62.0
     "@typescript-eslint/parser": ^5.62.0
-    concurrently: ^8.0.1
+    concurrently: ^8.2.2
     dotenv: ^16.0.3
     eslint: ">=8.31.0"
     eslint-config-prettier: ^8.10.0
