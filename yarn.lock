@@ -3781,7 +3781,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/memory-cache@npm:^0.2.2":
+"@types/memory-cache@npm:^0.2.5":
   version: 0.2.5
   resolution: "@types/memory-cache@npm:0.2.5"
   checksum: 7cd8f93ddda2fd5d7597f1559ff8edb3102ff16fa2a6ab77a624736d6ae404af01ab06b4a9872921914f04a8d4e10aac4e3ab2cd260bdc072515457064f7b74a
@@ -15213,7 +15213,7 @@ __metadata:
     "@types/express": ^4.17.21
     "@types/jest": ^27.5.2
     "@types/jsonwebtoken": ^9.0.1
-    "@types/memory-cache": ^0.2.2
+    "@types/memory-cache": ^0.2.5
     "@types/node": ^18.11.9
     "@types/react": ^18.0.28
     body-parser: ^1.20.1
