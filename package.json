@@ -54,7 +54,7 @@
     "@kiltprotocol/vc-export": "^0.32.0",
     "@polkadot/util": "10.4.2",
     "@polkadot/util-crypto": "10.4.2",
-    "@types/valid-url": "^1.0.3",
+    "@types/valid-url": "^1.0.7",
     "dotenv": "^16.0.3",
     "ts-node": "^10.9.1",
     "valid-url": "^1.0.9"
