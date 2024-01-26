@@ -5,6 +5,9 @@ import path from 'path'
 import * as Kilt from '@kiltprotocol/sdk-js'
 import dotenv from 'dotenv'
 
+import { validateOurKeys } from '../backend/src/config'
+import { fetchDidDocument } from '../backend/src/utils/fetchDidDocument'
+
 import { generateAccount } from './launchUtils/generateAccount'
 import { generateKeyPairs } from './launchUtils/generateKeyPairs'
 import { VerifiableDomainLinkagePresentation } from './launchUtils/types'
@@ -141,6 +144,10 @@ async function main() {
 
   const dAppsDidKeys = generateKeyPairs(dAppMnemonic)
   const dappAccount = generateAccount(fundsMnemonic)
+
+  // Check that the DID keys saved on the blockchain match the one being derived from your mnemonic
+  const ourDidDocumentOnChain = await fetchDidDocument()
+  await validateOurKeys(ourDidDocumentOnChain)
 
   // Writes the attestation on the blockchain
   await selfAttestCredential(
