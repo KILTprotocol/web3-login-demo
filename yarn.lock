@@ -3888,23 +3888,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^18.0.0, @types/react-dom@npm:^18.0.10":
-  version: 18.2.15
-  resolution: "@types/react-dom@npm:18.2.15"
+"@types/react-dom@npm:^18.0.0, @types/react-dom@npm:^18.2.18":
+  version: 18.2.18
+  resolution: "@types/react-dom@npm:18.2.18"
   dependencies:
     "@types/react": "*"
-  checksum: 8e9631600c21ff561328e38a951d1991b3b3b20f538af4c0efbd1327c883a5573a63f50e1b945c34fa51b114b30e1ca5e62317bd54f21e063d6697b4be843a03
+  checksum: 8e3da404c980e2b2a76da3852f812ea6d8b9d0e7f5923fbaf3bfbbbfa1d59116ff91c129de8f68e9b7668a67ae34484fe9df74d5a7518cf8591ec07a0c4dad57
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^18.0.26, @types/react@npm:^18.0.28":
-  version: 18.2.37
-  resolution: "@types/react@npm:18.2.37"
+"@types/react@npm:*, @types/react@npm:^18.2.48":
+  version: 18.2.48
+  resolution: "@types/react@npm:18.2.48"
   dependencies:
     "@types/prop-types": "*"
     "@types/scheduler": "*"
     csstype: ^3.0.2
-  checksum: 2d2599f1a09e4f678509161fea8baeaf76d21deee460f4f3ccc1ca431ebe85f896d7d0b906127de17e97ed57240cec61955eb97d0b5d9cbf4e97fd6620b1acdb
+  checksum: c9ca43ed2995389b7e09492c24e6f911a8439bb8276dd17cc66a2fbebbf0b42daf7b2ad177043256533607c2ca644d7d928fdfce37a67af1f8646d2bac988900
   languageName: node
   linkType: hard
 
@@ -15215,7 +15215,7 @@ __metadata:
     "@types/jsonwebtoken": ^9.0.1
     "@types/memory-cache": ^0.2.5
     "@types/node": ^18.11.9
-    "@types/react": ^18.0.28
+    "@types/react": ^18.2.48
     body-parser: ^1.20.1
     cookie-parser: ^1.4.6
     cors: ^2.8.5
@@ -15242,8 +15242,8 @@ __metadata:
     "@testing-library/user-event": ^13.5.0
     "@types/jest": ^27.5.2
     "@types/node": ^16.18.11
-    "@types/react": ^18.0.26
-    "@types/react-dom": ^18.0.10
+    "@types/react": ^18.2.48
+    "@types/react-dom": ^18.2.18
     kilt-extension-api: 0.1.0
     react: ^18.2.0
     react-dom: ^18.2.0
