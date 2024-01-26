@@ -4050,7 +4050,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:^5.5.0, @typescript-eslint/eslint-plugin@npm:^5.57.0":
+"@typescript-eslint/eslint-plugin@npm:^5.5.0, @typescript-eslint/eslint-plugin@npm:^5.62.0":
   version: 5.62.0
   resolution: "@typescript-eslint/eslint-plugin@npm:5.62.0"
   dependencies:
@@ -4085,7 +4085,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:^5.5.0, @typescript-eslint/parser@npm:^5.57.0":
+"@typescript-eslint/parser@npm:^5.5.0, @typescript-eslint/parser@npm:^5.62.0":
   version: 5.62.0
   resolution: "@typescript-eslint/parser@npm:5.62.0"
   dependencies:
@@ -15263,8 +15263,8 @@ __metadata:
     "@polkadot/util-crypto": 10.4.2
     "@types/node": ^20.9.1
     "@types/valid-url": ^1.0.3
-    "@typescript-eslint/eslint-plugin": ^5.57.0
-    "@typescript-eslint/parser": ^5.57.0
+    "@typescript-eslint/eslint-plugin": ^5.62.0
+    "@typescript-eslint/parser": ^5.62.0
     concurrently: ^8.0.1
     dotenv: ^16.0.3
     eslint: ">=8.31.0"
