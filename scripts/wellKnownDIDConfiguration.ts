@@ -285,9 +285,16 @@ export async function selfAttestCredential(
   const result = await Kilt.Blockchain.signAndSubmitTx(
     submitTx,
     submitterAccount
-  )
+  ).catch((reason) => {
+    throw new Error(
+      'Could not sing and submit transaction:' +
+        JSON.stringify(reason, null, 2) +
+        '\n' +
+        'Make sure the keys saved on chain match the ones being derived from your mnemonic on this projects.'
+    )
+  })
 
-  if (result.isError) {
+  if (result?.isError) {
     throw new Error('Attestation failed')
   } else {
     console.log('Attestation successful')
