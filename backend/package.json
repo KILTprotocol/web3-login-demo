@@ -35,7 +35,7 @@
     "@types/jsonwebtoken": "^9.0.1",
     "@types/memory-cache": "^0.2.2",
     "@types/node": "^18.11.9",
-    "@types/react": "^18.0.28",
+    "@types/react": "^18.2.48",
     "cors": "^2.8.5",
     "nodemon": "^2.0.20",
     "typescript": "^5.1.6"
