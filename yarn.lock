@@ -4000,7 +4000,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/valid-url@npm:^1.0.3":
+"@types/valid-url@npm:^1.0.7":
   version: 1.0.7
   resolution: "@types/valid-url@npm:1.0.7"
   checksum: c596c4101cd6c4b280277027f1bfa2cf4eb643f1d893a714c8d4a6bc47e9f24dc012f9ba5a0984bd1df983c1914c3f0fa69af2df6a6e48e81999062c6e75fbfc
@@ -15262,7 +15262,7 @@ __metadata:
     "@polkadot/util": 10.4.2
     "@polkadot/util-crypto": 10.4.2
     "@types/node": ^20.9.1
-    "@types/valid-url": ^1.0.3
+    "@types/valid-url": ^1.0.7
     "@typescript-eslint/eslint-plugin": ^5.62.0
     "@typescript-eslint/parser": ^5.62.0
     concurrently: ^8.0.1
