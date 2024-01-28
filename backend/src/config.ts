@@ -16,13 +16,30 @@ import { getApi } from './utils/connection'
 const envPath = path.resolve(__dirname, '../..', '.env')
 dotenv.config({ path: envPath })
 
+// Blockchain address with a default of Peregrine the testnet
 export const WSS_ADDRESS = process.env.WSS_ADDRESS ?? 'wss://peregrine.kilt.io'
-export const BACKEND_PORT = process.env.BACKEND_PORT ?? 2525
+export const BACKEND_PORT = process.env.BACKEND_PORT ?? 3000
 export const DAPP_ACCOUNT_MNEMONIC = loadEnv('DAPP_ACCOUNT_MNEMONIC')
 export const DAPP_DID_MNEMONIC = loadEnv('DAPP_DID_MNEMONIC')
 export const DAPP_DID_URI = loadEnv('DAPP_DID_URI') as Kilt.DidUri
 export const DAPP_NAME = process.env.DAPP_NAME ?? 'Web3-Login-Demo'
 export const JWT_SIGNER_SECRET = loadEnv('JWT_SIGNER_SECRET')
+
+// CType information
+const SOCIAL_KYC_EMAIL_CTYPE =
+  '0x3291bb126e33b4862d421bfaa1d2f272e6cdfc4f96658988fbcffea8914bd9ac'
+// Required properties for socialKYC
+export const SOCIAL_KYC_EMAIL_REQUIRED_PORPERTIES = 'Email'
+// Social KYC Trusted Attester
+export const SOCIAL_KYC_ATTESTER =
+  'did:kilt:4pehddkhEanexVTTzWAtrrfo2R7xPnePpuiJLC7shQU894aY'
+
+// Configerable Credential types
+export const CTYPE_HASH = loadEnv('CTYPE_HASH') || SOCIAL_KYC_EMAIL_CTYPE
+export const TRUSTED_ATTESTERS =
+  loadEnv('TRUSTED_ATTESTERS') || SOCIAL_KYC_ATTESTER
+export const REQUIRED_PROPERTIES =
+  loadEnv('REQUIRED_PROPERTIES') || SOCIAL_KYC_EMAIL_REQUIRED_PORPERTIES
 
 export let DAPP_ACCOUNT_ADDRESS: string
 
