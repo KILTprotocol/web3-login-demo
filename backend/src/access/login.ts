@@ -1,14 +1,11 @@
 import { Response, Request } from 'express'
 
-import { emailRequest } from '../credentials/listOfRequests'
+import { requestedCTypeForLogin } from '../credentials/listOfRequests'
 import { buildCredentialRequest } from '../credentials/buildCredentialRequest'
 import { verifySubmittedCredential } from '../credentials/verifySubmittedCredential'
 
 import { setAccessCookie } from './setAccessCookie'
 
-// Here you can set which type of credential (cType) your dApp will request users to login.
-// You can change it by importing a different one from the list.
-const requestedCTypeForLogin = emailRequest
 
 /** First half of the login with credentials.*/
 export async function buildLoginCredentialRequest(

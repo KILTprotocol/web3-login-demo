@@ -1,0 +1,8 @@
+WSS_ADDRESS=wss://peregrine.kilt.io/;
+FRONTEND_PORT=6565
+BACKEND_PORT=2525
+DAPP_ACCOUNT_MNEMONIC=pottery own enforce glory infant weekend sheriff timber magnet core among certain
+DAPP_DID_MNEMONIC=route frog lazy display tape bomb crisp frequent gym emerge history sock
+DAPP_DID_URI=did:kilt:4sr7LmcWSL3ow1qMQSqs9oyCAXkvbKHm6ZET2W79iJ4Feehz
+DAPP_NAME=TEST
+JWT_SIGNER_SECRET=281x6Sj0Aycg4r5SeFcj8wD3CHpXpudM8dCt48T6Iap_gMDBu3wE4BaY1o2Ke4znkMvqDR4B_BoSlJIMZ9e-YA
