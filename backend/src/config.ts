@@ -61,7 +61,7 @@ async function deduceAccountAddress(): Promise<string> {
  *
  * @param didDocument
  */
-async function validateOurKeys(didDocument: Kilt.DidDocument) {
+export async function validateOurKeys(didDocument: Kilt.DidDocument) {
   const localKeyPairs = generateKeyPairs(DAPP_DID_MNEMONIC)
 
   // A DID can have several keys of type 'keyAgreement', but only up to one key of each of the other types.
