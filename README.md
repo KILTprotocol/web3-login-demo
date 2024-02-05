@@ -133,6 +133,20 @@ The following variables are required:
 - `TRUSTED_ATTESTERS` = _This is the DID that identifies the attestors whose attestations are accepted_
 - `REQUIRED_PROPERTIES` = _These are the required properties that identify the CType; it is 'Email' by default_
 
+To proceed, you may select the desired credential through the CType Environment Variables listed below, allowing you to tailor the authentication process to your needs.
+
+| Socail KYC | CTYPE_HASH                                                         | TRUSTED_ATTESTERS(spiritnet)                              | TRUSTED_ATTESTERS(peregrine)                              | REQUIRED_PROPERTIES |
+|------------|--------------------------------------------------------------------|-----------------------------------------------------------|-----------------------------------------------------------|---------------------|
+| Email      | 0x3291bb126e33b4862d421bfaa1d2f272e6cdfc4f96658988fbcffea8914bd9ac | did:kilt:4pnfkRn5UurBJTW92d9TaVLR2CqJdY4z5HPjrEbpGyBykare | did:kilt:4pehddkhEanexVTTzWAtrrfo2R7xPnePpuiJLC7shQU894aY | Email               |
+| Twitter    | 0x47d04c42bdf7fdd3fc5a194bcaa367b2f4766a6b16ae3df628927656d818f420 | did:kilt:4pnfkRn5UurBJTW92d9TaVLR2CqJdY4z5HPjrEbpGyBykare | did:kilt:4pehddkhEanexVTTzWAtrrfo2R7xPnePpuiJLC7shQU894aY | Twitter             |
+| Discord    | 0xd8c61a235204cb9e3c6acb1898d78880488846a7247d325b833243b46d923abe | did:kilt:4pnfkRn5UurBJTW92d9TaVLR2CqJdY4z5HPjrEbpGyBykare | did:kilt:4pehddkhEanexVTTzWAtrrfo2R7xPnePpuiJLC7shQU894aY | Discord             |
+| GitHub     | 0xad52bd7a8bd8a52e03181a99d2743e00d0a5e96fdc0182626655fcf0c0a776d0 | did:kilt:4pnfkRn5UurBJTW92d9TaVLR2CqJdY4z5HPjrEbpGyBykare | did:kilt:4pehddkhEanexVTTzWAtrrfo2R7xPnePpuiJLC7shQU894aY | GitHub              |
+| Twitch     | 0x568ec5ffd7771c4677a5470771adcdea1ea4d6b566f060dc419ff133a0089d80 | did:kilt:4pnfkRn5UurBJTW92d9TaVLR2CqJdY4z5HPjrEbpGyBykare | did:kilt:4pehddkhEanexVTTzWAtrrfo2R7xPnePpuiJLC7shQU894aY | Twitch              |
+| Telegram   | 0xcef8f3fe5aa7379faea95327942fd77287e1c144e3f53243e55705f11e890a4c | did:kilt:4pnfkRn5UurBJTW92d9TaVLR2CqJdY4z5HPjrEbpGyBykare | did:kilt:4pehddkhEanexVTTzWAtrrfo2R7xPnePpuiJLC7shQU894aY | Telegram            |
+| Youtube    | 0x329a2a5861ea63c250763e5e4c4d4a18fe4470a31e541365c7fb831e5432b940 | did:kilt:4pnfkRn5UurBJTW92d9TaVLR2CqJdY4z5HPjrEbpGyBykare | did:kilt:4pehddkhEanexVTTzWAtrrfo2R7xPnePpuiJLC7shQU894aY | Youtube             |
+
+Additionally, for access to a broader range of CType Hashes, consider visiting the [CType Hub](https://ctypehub.galaniprojects.de/).
+
 ### Setup your environment
 
 You have three different options:
