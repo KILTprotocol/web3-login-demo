@@ -129,6 +129,9 @@ The following variables are required:
 - `DAPP_DID_URI` = _This is the URI of the Kilt DID that identifies your dApp_
 - `DAPP_NAME` = _This should be a custom name for your dApp_
 - `JWT_SIGNER_SECRET` = _This is secret key (string) that signs the Json-Web-Tokens before saving them in the Cookies_
+- `CTYPE_HASH` = _This is type of credential (CType) your dApp will request from users for login_
+- `TRUSTED_ATTESTERS` = _This is the DID that identifies the attestors whose attestations are accepted_
+- `REQUIRED_PROPERTIES` = _These are the required properties that identify the CType; it is 'Email' by default_
 
 ### Setup your environment
 

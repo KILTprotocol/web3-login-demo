@@ -1,6 +1,6 @@
 import { Response, Request } from 'express'
 
-import { requestedCTypeForLogin } from '../credentials/listOfRequests'
+import { cTypeToRequest } from '../credentials/ctypeRequest'
 import { buildCredentialRequest } from '../credentials/buildCredentialRequest'
 import { verifySubmittedCredential } from '../credentials/verifySubmittedCredential'
 
@@ -16,7 +16,7 @@ export async function buildLoginCredentialRequest(
     const encryptedCredentialRequest = await buildCredentialRequest(
       request,
       response,
-      requestedCTypeForLogin
+      cTypeToRequest
     )
     // With this, the extension will know what kind of credential to share
     response.status(200).send(encryptedCredentialRequest)
@@ -34,13 +34,16 @@ export async function handleLoginCredentialSubmission(
     const verifiedCredential = await verifySubmittedCredential(
       request,
       response,
-      requestedCTypeForLogin
+      cTypeToRequest
     )
 
     // Send a little something to the frontend, so that the user interface can display who logged in.
     // The frontend can't read the encrypted credential; only the backend has the key to decrypt it.
-    // "Email" is capitalized on this cType schema
-    const plainUserInfo = verifiedCredential.claim.contents.Email
+    const claimContents = verifiedCredential.claim.contents;
+    // Check if any properties have been provided. If not, log in as 'Anonymous User'. 
+    // If any property exists, send the object's first value as 'authenticationToken' 
+    // to ensure login with any 'ctype'.
+    const plainUserInfo = Object.keys(claimContents).length === 0 ? 'Anonymous User' : claimContents[Object.keys(claimContents)[0]];
 
     console.log(
       'Decrypted User Info that we are passing to the frontend:',

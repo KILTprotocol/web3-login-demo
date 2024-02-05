@@ -28,17 +28,17 @@ export const JWT_SIGNER_SECRET = loadEnv('JWT_SIGNER_SECRET')
 const SOCIAL_KYC_EMAIL_CTYPE = 
 '0x3291bb126e33b4862d421bfaa1d2f272e6cdfc4f96658988fbcffea8914bd9ac' 
 // Required properties for socialKYC  
-export const SOCIAL_KYC_EMAIL_REQUIRED_PORPERTIES = 'Email' 
+const SOCIAL_KYC_EMAIL_REQUIRED_PROPERTIES = 'Email' 
 // Specify the Social KYC Trusted Attester DID. Credentials issued by this Attester will be accepted.
-export const SOCIAL_KYC_ATTESTER = 
-'did:kilt:4pehddkhEanexVTTzWAtrrfo2R7xPnePpuiJLC7shQU894aY' 
+const SOCIAL_KYC_ATTESTER = (WSS_ADDRESS === 'wss://peregrine.kilt.io' ) ?
+'did:kilt:4pehddkhEanexVTTzWAtrrfo2R7xPnePpuiJLC7shQU894aY' : 'did:kilt:4pnfkRn5UurBJTW92d9TaVLR2CqJdY4z5HPjrEbpGyBykare'
 
-// Configerable Credential types 
-export const CTYPE_HASH = loadEnv('CTYPE_HASH') || SOCIAL_KYC_EMAIL_CTYPE 
+// Configurable Credential types 
+export const CTYPE_HASH = process.env.CTYPE_HASH || SOCIAL_KYC_EMAIL_CTYPE 
 export const TRUSTED_ATTESTERS = 
-loadEnv('TRUSTED_ATTESTERS') || SOCIAL_KYC_ATTESTER 
+process.env.TRUSTED_ATTESTERS || SOCIAL_KYC_ATTESTER 
 export const REQUIRED_PROPERTIES = 
-loadEnv('REQUIRED_PROPERTIES') || SOCIAL_KYC_EMAIL_REQUIRED_PORPERTIES
+process.env.REQUIRED_PROPERTIES || SOCIAL_KYC_EMAIL_REQUIRED_PROPERTIES
 
 export let DAPP_ACCOUNT_ADDRESS: string
 
