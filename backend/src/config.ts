@@ -24,21 +24,13 @@ export const DAPP_DID_URI = loadEnv('DAPP_DID_URI') as Kilt.DidUri
 export const DAPP_NAME = process.env.DAPP_NAME ?? 'Web3-Login-Demo'
 export const JWT_SIGNER_SECRET = loadEnv('JWT_SIGNER_SECRET')
 
-// To determine which CType to use, refer to the CType Hash
-const SOCIAL_KYC_EMAIL_CTYPE = 
-'0x3291bb126e33b4862d421bfaa1d2f272e6cdfc4f96658988fbcffea8914bd9ac' 
-// Required properties for socialKYC  
-const SOCIAL_KYC_EMAIL_REQUIRED_PROPERTIES = 'Email' 
-// Specify the Social KYC Trusted Attester DID. Credentials issued by this Attester will be accepted.
-const SOCIAL_KYC_ATTESTER = (WSS_ADDRESS === 'wss://peregrine.kilt.io' ) ?
-'did:kilt:4pehddkhEanexVTTzWAtrrfo2R7xPnePpuiJLC7shQU894aY' : 'did:kilt:4pnfkRn5UurBJTW92d9TaVLR2CqJdY4z5HPjrEbpGyBykare'
 
 // Configurable Credential types 
-export const CTYPE_HASH = process.env.CTYPE_HASH || SOCIAL_KYC_EMAIL_CTYPE 
+export const CTYPE_HASH = loadEnv("CTYPE_HASH") 
 export const TRUSTED_ATTESTERS = 
-process.env.TRUSTED_ATTESTERS || SOCIAL_KYC_ATTESTER 
+loadEnv("TRUSTED_ATTESTERS") 
 export const REQUIRED_PROPERTIES = 
-process.env.REQUIRED_PROPERTIES || SOCIAL_KYC_EMAIL_REQUIRED_PROPERTIES
+loadEnv("REQUIRED_PROPERTIES") 
 
 export let DAPP_ACCOUNT_ADDRESS: string
 
