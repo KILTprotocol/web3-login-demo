@@ -4,23 +4,16 @@ import { CTYPE_HASH, REQUIRED_PROPERTIES, TRUSTED_ATTESTERS } from '../config'
 
 // Here you can set which type of credential (cType) your dApp will request users to login.
 // You can change it by importing a different one.
-// The default is the Email CType by SocialKYC and SocialKYC as the Issuer
 // Establish which cTypes our dApp accepts and which attesters we trust:
 
-const trustedAttestersValues = TRUSTED_ATTESTERS.split(',') as Kilt.DidUri[]
-const requiredPropertiesValues = REQUIRED_PROPERTIES.split(',')
+const trustedAttesters = TRUSTED_ATTESTERS.split(',').map((s)=> {
+  const trimmed = s.trim()
+  Kilt.Did.validateUri(trimmed)
+  return trimmed as Kilt.DidUri
+})
+const requiredProperties = REQUIRED_PROPERTIES.split(',').map((s)=> s.trim())
 
-const requiredProperties = requiredPropertiesValues.map(
-  (requiredProperties) => requiredProperties
-)
 
-const trustedAttesters = trustedAttestersValues.map(
-  (trustedAttesters) => trustedAttesters as Kilt.DidUri
-)
-
-/**
- * Credential for users to configure default as SocialKYC Email Credential
- */
 export const cTypeToRequest: Kilt.IRequestCredentialContent = {
   cTypes: [
     {

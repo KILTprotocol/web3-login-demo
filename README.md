@@ -131,7 +131,7 @@ The following variables are required:
 - `JWT_SIGNER_SECRET` = _This is secret key (string) that signs the Json-Web-Tokens before saving them in the Cookies_
 - `CTYPE_HASH` = _This is type of credential (CType) your dApp will request from users for login_
 - `TRUSTED_ATTESTERS` = _This is the DID that identifies the attestors whose attestations are accepted_
-- `REQUIRED_PROPERTIES` = _These are the required properties that identify the CType; it is 'Email' by default_
+- `REQUIRED_PROPERTIES` = _These are the required properties that identify the CType_
 
 To proceed, you may select the desired credential through the CType Environment Variables listed below, allowing you to tailor the authentication process to your needs.
 
