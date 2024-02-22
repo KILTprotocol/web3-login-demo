@@ -296,7 +296,11 @@ We have deployed this demo dApp as well, making it accessible online.
 This allows the developers to compare their results.
 It also makes it possible for non-coders to it check out.
 
-Reach the version connected to the **KILT Test Net** aliased **_Peregrine_**:
+Reach the version connected to the **KILT Production Chain** aliased **_Spiritnet_**:
+
+- under: https://login-demo.kilt.io/
+
+Reach the version connected to the **KILT Development Chain** aliased **_Peregrine_**:
 
 - under: https://login-demo-peregrine.kilt.io/
 
