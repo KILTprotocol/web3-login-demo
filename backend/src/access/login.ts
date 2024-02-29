@@ -40,9 +40,9 @@ export async function handleLoginCredentialSubmission(
     // Send a little something to the frontend, so that the user interface can display who logged in.
     // The frontend can't read the encrypted credential; only the backend has the key to decrypt it.
     const claimContents = verifiedCredential.claim.contents;
-    // Check if any properties have been provided. If not, log in as 'Anonymous User'. 
-    // If any property exists, send the object's first value as 'authenticationToken' 
-    // to ensure login with any 'ctype'.
+    // Check if any properties have been provided. If not, send 'Anonymous User' to display on the frontend. 
+    // If any property exists, send object's first attribute value, 
+    // ensuring compatibility with any 'cType'.
     const plainUserInfo = Object.keys(claimContents).length === 0 ? 'Anonymous User' : claimContents[Object.keys(claimContents)[0]];
 
     console.log(

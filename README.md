@@ -75,12 +75,6 @@ For a user to log in with KILT, it requires:
   - one of the cTypes accepted by the dApp.
   - issued by one of the dApps _trusted attesters_.
 
-- In this demo, as a default, the dApp requests a credential that contains an email address.
-  For that we rely on **SocialKYC** to issue email credentials after verifying the user owns it.
-  Get your
-
-  - [credential attested by **SocialKYC** on **_Peregrine_** here](https://test.socialkyc.io).
-  - [credential attested by **SocialKYC** on **_Spiritnet_** here](https://socialkyc.io).
 
 ## Steps to launch the dApp locally
 
@@ -130,20 +124,29 @@ The following variables are required:
 - `DAPP_NAME` = _This should be a custom name for your dApp_
 - `JWT_SIGNER_SECRET` = _This is secret key (string) that signs the Json-Web-Tokens before saving them in the Cookies_
 - `CTYPE_HASH` = _This is type of credential (CType) your dApp will request from users for login_
-- `TRUSTED_ATTESTERS` = _This is the DID that identifies the attestors whose attestations are accepted_
-- `REQUIRED_PROPERTIES` = _These are the required properties that identify the CType_
+- `TRUSTED_ATTESTERS` = _This is a list of attesters DIDs (c.s.v.`,`). Only credentials issued by them will be considered valid_
+- `REQUIRED_PROPERTIES` = _This is a subset of CType properties (c.s.v.`,`) required to be exposed on credential presentation_
 
-To proceed, you may select the desired credential through the CType Environment Variables listed below, allowing you to tailor the authentication process to your needs.
+### Info about Example/Recommended cTypes
 
-| Socail KYC | CTYPE_HASH                                                         | TRUSTED_ATTESTERS(spiritnet)                              | TRUSTED_ATTESTERS(peregrine)                              | REQUIRED_PROPERTIES |
-|------------|--------------------------------------------------------------------|-----------------------------------------------------------|-----------------------------------------------------------|---------------------|
-| Email      | 0x3291bb126e33b4862d421bfaa1d2f272e6cdfc4f96658988fbcffea8914bd9ac | did:kilt:4pnfkRn5UurBJTW92d9TaVLR2CqJdY4z5HPjrEbpGyBykare | did:kilt:4pehddkhEanexVTTzWAtrrfo2R7xPnePpuiJLC7shQU894aY | Email               |
-| Twitter    | 0x47d04c42bdf7fdd3fc5a194bcaa367b2f4766a6b16ae3df628927656d818f420 | did:kilt:4pnfkRn5UurBJTW92d9TaVLR2CqJdY4z5HPjrEbpGyBykare | did:kilt:4pehddkhEanexVTTzWAtrrfo2R7xPnePpuiJLC7shQU894aY | Twitter             |
-| Discord    | 0xd8c61a235204cb9e3c6acb1898d78880488846a7247d325b833243b46d923abe | did:kilt:4pnfkRn5UurBJTW92d9TaVLR2CqJdY4z5HPjrEbpGyBykare | did:kilt:4pehddkhEanexVTTzWAtrrfo2R7xPnePpuiJLC7shQU894aY | Discord             |
-| GitHub     | 0xad52bd7a8bd8a52e03181a99d2743e00d0a5e96fdc0182626655fcf0c0a776d0 | did:kilt:4pnfkRn5UurBJTW92d9TaVLR2CqJdY4z5HPjrEbpGyBykare | did:kilt:4pehddkhEanexVTTzWAtrrfo2R7xPnePpuiJLC7shQU894aY | GitHub              |
-| Twitch     | 0x568ec5ffd7771c4677a5470771adcdea1ea4d6b566f060dc419ff133a0089d80 | did:kilt:4pnfkRn5UurBJTW92d9TaVLR2CqJdY4z5HPjrEbpGyBykare | did:kilt:4pehddkhEanexVTTzWAtrrfo2R7xPnePpuiJLC7shQU894aY | Twitch              |
-| Telegram   | 0xcef8f3fe5aa7379faea95327942fd77287e1c144e3f53243e55705f11e890a4c | did:kilt:4pnfkRn5UurBJTW92d9TaVLR2CqJdY4z5HPjrEbpGyBykare | did:kilt:4pehddkhEanexVTTzWAtrrfo2R7xPnePpuiJLC7shQU894aY | Telegram            |
-| Youtube    | 0x329a2a5861ea63c250763e5e4c4d4a18fe4470a31e541365c7fb831e5432b940 | did:kilt:4pnfkRn5UurBJTW92d9TaVLR2CqJdY4z5HPjrEbpGyBykare | did:kilt:4pehddkhEanexVTTzWAtrrfo2R7xPnePpuiJLC7shQU894aY | Youtube             |
+This table provides information on recommended cTypes for SocialKYC credential issuance. SocialKYC is a platform that issues credentials based on user social media presence. The cType-hash is consistent across both Spiritnet and Peregrine to ensure interoperability and consistent verification across the KILT network by using universal identifiers stored on archive nodes.
+
+#### SocialKYC on Spiritnet: did:kilt:4pnfkRn5UurBJTW92d9TaVLR2CqJdY4z5HPjrEbpGyBykare
+#### SocialKYC on Peregrine: did:kilt:4pehddkhEanexVTTzWAtrrfo2R7xPnePpuiJLC7shQU894aY
+
+Here are the cTypes recommended for SocialKYC:
+
+| Title     | CTYPE_HASH                                                         | SocialKYC on Spiritnet                              | SocialKYC on Peregrine                              | Properties      |
+|-----------|--------------------------------------------------------------------|-----------------------------------------------------------|-----------------------------------------------------------|-----------------|
+| Email     | 0x3291bb126e33b4862d421bfaa1d2f272e6cdfc4f96658988fbcffea8914bd9ac | [prod. Spiritnet](#SocialKYC-on-Spiritnet) | [prod. Peregrine](#SocialKYC-on-Peregrine) | Email |
+| Twitter   | 0x47d04c42bdf7fdd3fc5a194bcaa367b2f4766a6b16ae3df628927656d818f420 | [prod. Spiritnet](#SocialKYC-on-Spiritnet) | [prod. Peregrine](#SocialKYC-on-Peregrine) | Twitter |
+| Discord   | 0xd8c61a235204cb9e3c6acb1898d78880488846a7247d325b833243b46d923abe | [prod. Spiritnet](#SocialKYC-on-Spiritnet) | [prod. Peregrine](#SocialKYC-on-Peregrine) | Discriminator, User ID, Username |
+| GitHub    | 0xad52bd7a8bd8a52e03181a99d2743e00d0a5e96fdc0182626655fcf0c0a776d0 | [prod. Spiritnet](#SocialKYC-on-Spiritnet) | [prod. Peregrine](#SocialKYC-on-Peregrine) | GitHubUsername, Username |
+| Twitch    | 0x568ec5ffd7771c4677a5470771adcdea1ea4d6b566f060dc419ff133a0089d80 | [prod. Spiritnet](#SocialKYC-on-Spiritnet) | [prod. Peregrine](#SocialKYC-on-Peregrine) | User ID, Username |
+| Telegram  | 0xcef8f3fe5aa7379faea95327942fd77287e1c144e3f53243e55705f11e890a4c | [prod. Spiritnet](#SocialKYC-on-Spiritnet) | [prod. Peregrine](#SocialKYC-on-Peregrine) | First name, Last name, User ID, Username |
+| YoutubeChannel | 0x329a2a5861ea63c250763e5e4c4d4a18fe4470a31e541365c7fb831e5432b940 | [prod. Spiritnet](#SocialKYC-on-Spiritnet) | [prod. Peregrine](#SocialKYC-on-Peregrine) | Channel ID, Channel Name |
+
+Note: We only recommend these cTypes and properties for SocialKYC verification. Users are advised to select the appropriate properties based on their verification needs.
 
 Additionally, for access to a broader range of CType Hashes, consider visiting the [CType Hub](https://ctypehub.galaniprojects.de/).
 
