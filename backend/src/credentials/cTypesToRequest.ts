@@ -38,5 +38,3 @@ for (let i = 0; i < cTypeHashes.length; i++) {
 export const cTypesToRequest: Kilt.IRequestCredentialContent = {
   cTypes
 }
-
-console.log(cTypes)
