@@ -24,7 +24,13 @@ const {
   // This should be a custom name for your dApp
   DAPP_NAME,
   // This is secret key (string) that signs the Json-Web-Tokens before saving them in the Cookies
-  JWT_SIGNER_SECRET
+  JWT_SIGNER_SECRET,
+  // This is the CType hash for Email credentials from SocialKYC
+  CTYPE_HASH,
+  // These are the trusted attesters for the CType
+  TRUSTED_ATTESTERS,
+  // These are the required properties for the CType
+  REQUIRED_PROPERTIES
 } = process.env
 
 async function main() {
@@ -53,7 +59,10 @@ async function main() {
     DAPP_DID_MNEMONIC,
     DAPP_DID_URI,
     DAPP_NAME,
-    JWT_SIGNER_SECRET
+    JWT_SIGNER_SECRET,
+    CTYPE_HASH,
+    TRUSTED_ATTESTERS,
+    REQUIRED_PROPERTIES
   }
 
   // find the first element in the object "stairs" that still has an undefined value.
@@ -110,6 +119,18 @@ async function main() {
     case 7:
       imploreJwtSecretKey()
       break
+    case 8:
+      imploreCtypeHash()
+      break
+    // ask you to choose a Ctype Hash
+    case 9:
+      imploreTrustedAttesters()
+      break
+    // ask you to choose a Ctype Hash
+    case 10:
+      imploreRequestedProperties()
+      break
+    // ask you to choose a Ctype Hash
     // if (step = -1):
     default:
       console.log(
@@ -237,6 +258,32 @@ function imploreJwtSecretKey() {
     `Please provide a string value for 'JWT_SIGNER_SECRET' inside the .env file. \n`,
     '\nThis is would be a Secret Key your dApps use to encode the JSON-Web-Tokens\n',
     `JWT_SIGNER_SECRET={Oh my God, you are so cryptic!}\n`
+  )
+}
+
+function imploreCtypeHash() {
+  console.log(
+    'Please provide the CType Hash(es) inside the .env file using this constant name:.\n',
+    'Your dApp will only accept credentials of this given Claim Type(s).',
+    `CTYPE_HASH={CType IDs your dApp consider valid}\n`,
+    `If you wish to use the default Email Credential settings, please add the following line to your .env file:\n`,
+    `CTYPE_HASH=0x3291bb126e33b4862d421bfaa1d2f272e6cdfc4f96658988fbcffea8914bd9ac\n`
+  )
+}
+function imploreTrustedAttesters() {
+  console.log(
+    'Please provide a list for your Trusted Attesters inside the .env file using this constant name: \n',
+    `TRUSTED_ATTESTERS={lists of trusted attesters}\n`,
+    `If you wish to use the default Email Credential settings, please add the following line to your .env file:\n`,
+    `TRUSTED_ATTESTERS=did:kilt:4pehddkhEanexVTTzWAtrrfo2R7xPnePpuiJLC7shQU894aY\n`
+  )
+}
+function imploreRequestedProperties() {
+  console.log(
+    'Please provide a list of Required Properties inside the .env file using this constant name: \n',
+    `REQUIRED_PROPERTIES={lists of Properties users should be Required to disclose}\n`,
+    `If you wish to use the default Email Credential settings, please add the following line to your .env file:\n`,
+    `REQUIRED_PROPERTIES=Email\n`
   )
 }
 
