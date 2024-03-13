@@ -123,9 +123,9 @@ The following variables are required:
 - `DAPP_DID_URI` = _This is the URI of the Kilt DID that identifies your dApp_
 - `DAPP_NAME` = _This should be a custom name for your dApp_
 - `JWT_SIGNER_SECRET` = _This is secret key (string) that signs the Json-Web-Tokens before saving them in the Cookies_
-- `CTYPE_HASH` = _This is type of credential (CType) your dApp will request from users for login_
-- `TRUSTED_ATTESTERS` = _This is a list of attesters DIDs (c.s.v.`,`). Only credentials issued by them will be considered valid_
-- `REQUIRED_PROPERTIES` = _This is a subset of CType properties (c.s.v.`,`) required to be exposed on credential presentation_
+- `CTYPE_HASH` = _This is the type of credential (CType) your dApp will request from users for login. If you want to specify more than one CType, you can do so by adding a '/' sign between them_
+- `TRUSTED_ATTESTERS` = _This is a list of attester DIDs (CSV, separated by ','). Only credentials issued by these attesters will be considered valid. If you are using more than one CType, you can specify the trusted attesters by adding a '/' sign between them_
+- `REQUIRED_PROPERTIES` = _This is a subset of CType properties (CSV, separated by ',') required to be exposed on credential presentation. If you are using more than one CType, you can specify the required properties by adding a '/' sign between them._
 
 ### Info about Example/Recommended cTypes
 
