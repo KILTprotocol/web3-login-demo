@@ -62,7 +62,7 @@ async function main() {
     JWT_SIGNER_SECRET,
     CTYPE_HASH,
     TRUSTED_ATTESTERS,
-    REQUIRED_PROPERTIES,
+    REQUIRED_PROPERTIES
   }
 
   // find the first element in the object "stairs" that still has an undefined value.
@@ -261,7 +261,7 @@ function imploreJwtSecretKey() {
   )
 }
 
-function imploreCtypeHash(){
+function imploreCtypeHash() {
   console.log(
     'Please provide a name for your CTYPE_HASH inside the .env file using this constant name: \n',
     `CTYPE_HASH={your CType Hash}\n`,
@@ -269,7 +269,7 @@ function imploreCtypeHash(){
     `CTYPE_HASH=0x3291bb126e33b4862d421bfaa1d2f272e6cdfc4f96658988fbcffea8914bd9ac\n`
   )
 }
-function imploreTrustedAttesters(){
+function imploreTrustedAttesters() {
   console.log(
     'Please provide a list for your Trusted Attesters inside the .env file using this constant name: \n',
     `TRUSTED_ATTESTERS={lists of trusted attesters}\n`,
@@ -277,7 +277,7 @@ function imploreTrustedAttesters(){
     `TRUSTED_ATTESTERS=did:kilt:4pehddkhEanexVTTzWAtrrfo2R7xPnePpuiJLC7shQU894aY\n`
   )
 }
-function imploreRequestedProperties(){
+function imploreRequestedProperties() {
   console.log(
     'Please provide a list for your Requested Properties inside the .env file using this constant name: \n',
     `REQUIRED_PROPERTIES={lists of Requested Properties}\n`,

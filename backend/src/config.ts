@@ -24,13 +24,10 @@ export const DAPP_DID_URI = loadEnv('DAPP_DID_URI') as Kilt.DidUri
 export const DAPP_NAME = process.env.DAPP_NAME ?? 'Web3-Login-Demo'
 export const JWT_SIGNER_SECRET = loadEnv('JWT_SIGNER_SECRET')
 
-
-// Configurable Credential types 
-export const CTYPE_HASH = loadEnv("CTYPE_HASH") 
-export const TRUSTED_ATTESTERS = 
-loadEnv("TRUSTED_ATTESTERS") 
-export const REQUIRED_PROPERTIES = 
-loadEnv("REQUIRED_PROPERTIES") 
+// Configurable Credential types
+export const CTYPE_HASH = loadEnv('CTYPE_HASH')
+export const TRUSTED_ATTESTERS = loadEnv('TRUSTED_ATTESTERS')
+export const REQUIRED_PROPERTIES = loadEnv('REQUIRED_PROPERTIES')
 
 export let DAPP_ACCOUNT_ADDRESS: string
 

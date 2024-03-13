@@ -6,7 +6,6 @@ import { verifySubmittedCredential } from '../credentials/verifySubmittedCredent
 
 import { setAccessCookie } from './setAccessCookie'
 
-
 /** First half of the login with credentials.*/
 export async function buildLoginCredentialRequest(
   request: Request,
@@ -39,11 +38,14 @@ export async function handleLoginCredentialSubmission(
 
     // Send a little something to the frontend, so that the user interface can display who logged in.
     // The frontend can't read the encrypted credential; only the backend has the key to decrypt it.
-    const claimContents = verifiedCredential.claim.contents;
-    // Check if any properties have been provided. If not, send 'Anonymous User' to display on the frontend. 
-    // If any property exists, send object's first attribute value, 
+    const claimContents = verifiedCredential.claim.contents
+    // Check if any properties have been provided. If not, send 'Anonymous User' to display on the frontend.
+    // If any property exists, send object's first attribute value,
     // ensuring compatibility with any 'cType'.
-    const plainUserInfo = Object.keys(claimContents).length === 0 ? 'Anonymous User' : claimContents[Object.keys(claimContents)[0]];
+    const plainUserInfo =
+      Object.keys(claimContents).length === 0
+        ? 'Anonymous User'
+        : claimContents[Object.keys(claimContents)[0]]
 
     console.log(
       'Decrypted User Info that we are passing to the frontend:',
