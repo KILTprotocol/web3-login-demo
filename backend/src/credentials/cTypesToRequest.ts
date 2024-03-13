@@ -17,7 +17,11 @@ const requiredPropertiesList = REQUIRED_PROPERTIES.split('/').map((s) =>
   s.trim()
 )
 
-let cTypes: { cTypeHash: `0x${string}`; trustedAttesters: Kilt.DidUri[]; requiredProperties: string[]; }[] = [];
+const cTypes: {
+  cTypeHash: `0x${string}`
+  trustedAttesters: Kilt.DidUri[]
+  requiredProperties: string[]
+}[] = []
 
 for (let i = 0; i < cTypeHashes.length; i++) {
   const trustedAttesters = trustedAttesterList[i].split(',').map((s) => {
