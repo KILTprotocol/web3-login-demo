@@ -263,8 +263,9 @@ function imploreJwtSecretKey() {
 
 function imploreCtypeHash() {
   console.log(
-    'Please provide a name for your CTYPE_HASH inside the .env file using this constant name: \n',
-    `CTYPE_HASH={your CType Hash}\n`,
+    'Please provide the CType Hash(es) inside the .env file using this constant name:.\n',
+    'Your dApp will only accept credentials of this given Claim Type(s).',
+    `CTYPE_HASH={CType IDs your dApp consider valid}\n`,
     `If you wish to use the default Email Credential settings, please add the following line to your .env file:\n`,
     `CTYPE_HASH=0x3291bb126e33b4862d421bfaa1d2f272e6cdfc4f96658988fbcffea8914bd9ac\n`
   )
@@ -279,8 +280,8 @@ function imploreTrustedAttesters() {
 }
 function imploreRequestedProperties() {
   console.log(
-    'Please provide a list for your Requested Properties inside the .env file using this constant name: \n',
-    `REQUIRED_PROPERTIES={lists of Requested Properties}\n`,
+    'Please provide a list of Required Properties inside the .env file using this constant name: \n',
+    `REQUIRED_PROPERTIES={lists of Properties users should be Required to disclose}\n`,
     `If you wish to use the default Email Credential settings, please add the following line to your .env file:\n`,
     `REQUIRED_PROPERTIES=Email\n`
   )

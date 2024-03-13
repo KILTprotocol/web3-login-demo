@@ -2,9 +2,12 @@ import * as Kilt from '@kiltprotocol/sdk-js'
 
 import { CTYPE_HASH, REQUIRED_PROPERTIES, TRUSTED_ATTESTERS } from '../config'
 
-// Here you can set which type of credential (cType) your dApp will request users to login.
-// You can change it by importing a different one.
-// Establish which cTypes our dApp accepts and which attesters we trust:
+/** Establish the types of credentials (cTypes) that our dApp will request from users to log in,
+ * identify which properties are necessary, and specify which attesters we trust.
+ *
+ * These settings are defined by the constants imported from the config file.
+ * Modify the `env` file to adapt it to your preferences.
+ */
 
 const cTypeHashes = CTYPE_HASH.split('/').map((s) => s.trim())
 
@@ -32,7 +35,7 @@ for (let i = 0; i < cTypeHashes.length; i++) {
   }
   cTypes.push(cType)
 }
-export const cTypeToRequest: Kilt.IRequestCredentialContent = {
+export const cTypesToRequest: Kilt.IRequestCredentialContent = {
   cTypes
 }
 

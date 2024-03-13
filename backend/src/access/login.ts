@@ -1,6 +1,6 @@
 import { Response, Request } from 'express'
 
-import { cTypeToRequest } from '../credentials/ctypeRequest'
+import { cTypesToRequest } from '../credentials/cTypesToRequest'
 import { buildCredentialRequest } from '../credentials/buildCredentialRequest'
 import { verifySubmittedCredential } from '../credentials/verifySubmittedCredential'
 
@@ -15,7 +15,7 @@ export async function buildLoginCredentialRequest(
     const encryptedCredentialRequest = await buildCredentialRequest(
       request,
       response,
-      cTypeToRequest
+      cTypesToRequest
     )
     // With this, the extension will know what kind of credential to share
     response.status(200).send(encryptedCredentialRequest)
@@ -33,7 +33,7 @@ export async function handleLoginCredentialSubmission(
     const verifiedCredential = await verifySubmittedCredential(
       request,
       response,
-      cTypeToRequest
+      cTypesToRequest
     )
 
     // Send a little something to the frontend, so that the user interface can display who logged in.

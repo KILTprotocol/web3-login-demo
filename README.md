@@ -123,16 +123,20 @@ The following variables are required:
 - `DAPP_NAME` = _This should be a custom name for your dApp_
 - `JWT_SIGNER_SECRET` = _This is secret key (string) that signs the Json-Web-Tokens before saving them in the Cookies_
 - `CTYPE_HASH` = _This is the type of credential (CType) your dApp will request from users for login. If you want to specify more than one CType, you can do so by adding a '/' sign between them_
-- `TRUSTED_ATTESTERS` = _This is a list of attester DIDs (CSV, separated by ','). Only credentials issued by these attesters will be considered valid. If you are using more than one CType, you can specify the trusted attesters by adding a '/' sign between them_
-- `REQUIRED_PROPERTIES` = _This is a subset of CType properties (CSV, separated by ',') required to be exposed on credential presentation. If you are using more than one CType, you can specify the required properties by adding a '/' sign between them._
+- `TRUSTED_ATTESTERS` = _This is a list of attester DIDs (CSV, separated by ','). Only credentials issued by these attesters will be considered valid. If you are using more than one CType, indicate the groups of trusted attesters by respectively separating them with a '/' sign._
+- `REQUIRED_PROPERTIES` = _This is a subset of CType properties (CSV, separated by ',') required to be exposed on credential presentation. If you are using more than one CType, indicate the groups of required properties by respectively separating them with a '/' sign._
 
 ### Info about Example/Recommended cTypes
 
 This table provides information on recommended cTypes for SocialKYC credential issuance. SocialKYC is a platform that issues credentials based on user social media presence. The cType-hash is consistent across both Spiritnet and Peregrine to ensure interoperability and consistent verification across the KILT network by using universal identifiers stored on archive nodes.
 
-#### SocialKYC on Spiritnet: did:kilt:4pnfkRn5UurBJTW92d9TaVLR2CqJdY4z5HPjrEbpGyBykare
+#### SocialKYC on Spiritnet:
 
-#### SocialKYC on Peregrine: did:kilt:4pehddkhEanexVTTzWAtrrfo2R7xPnePpuiJLC7shQU894aY
+did:kilt:4pnfkRn5UurBJTW92d9TaVLR2CqJdY4z5HPjrEbpGyBykare
+
+#### SocialKYC on Peregrine:
+
+did:kilt:4pehddkhEanexVTTzWAtrrfo2R7xPnePpuiJLC7shQU894aY
 
 Here are the cTypes recommended for SocialKYC:
 
