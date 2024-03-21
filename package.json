@@ -46,7 +46,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "nodemon": "^2.0.20",
     "prettier": "^2.8.8",
-    "typescript": "^5.0.4"
+    "typescript": "^5.4.3"
   },
   "dependencies": {
     "@kiltprotocol/sdk-js": "^0.32.0",
