@@ -46,15 +46,9 @@ export async function verifySubmittedCredential(
 
   // Know against to what structure you want to compare to:
   const requestedCTypeHash = cTypeRequested.cTypes[0].cTypeHash
-  const requestedCTypeDetailed = await Kilt.CType.fetchFromChain(
+  const { cType: requestedCType } = await Kilt.CType.fetchFromChain(
     `kilt:ctype:${requestedCTypeHash}`
   )
-
-  // The function Credential.verifyPresentation can check against a specific cType structure.
-  // This cType needs to match the ICType-interface.
-  // To fullfil this structure we need to remove the 'creator' and 'createdAt' properties from our fetched object.
-  const { $id, $schema, title, properties, type } = requestedCTypeDetailed
-  const requestedCType = { $id, $schema, title, properties, type }
 
   const challengeOnRequest = await readCredentialCookie(
     request,
