@@ -57,7 +57,10 @@ export async function verifySubmittedCredential(
   }
 
   // Know against to what structure you want to compare to:
-  const requestedCTypeHash = chosenCType.cTypeHash
+  // const requestedCTypeHash = chosenCType.cTypeHash
+  // Bugger:
+  // Hard coded version to show bogus behavior
+  const requestedCTypeHash = cTypesRequested.cTypes[0].cTypeHash
   const { cType: requestedCType } = await Kilt.CType.fetchFromChain(
     `kilt:ctype:${requestedCTypeHash}`
   )
@@ -68,7 +71,7 @@ export async function verifySubmittedCredential(
     JWT_SIGNER_SECRET
   )
   // Debugger:
-  console.log('requestedCType: \n', requestedCType)
+  console.log('requestedCType used for verification: \n', requestedCType)
 
   // this should be throwing but it is not.
   // Am I doing something wrong? Is the SDK broken here?
