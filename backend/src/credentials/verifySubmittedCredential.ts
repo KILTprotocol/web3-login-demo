@@ -44,6 +44,11 @@ export async function verifySubmittedCredential(
 
   console.log('Decrypted Credential being verify: \n', credential)
 
+  // Debugger:
+  console.log('cTypeRequested.cTypes: \n', cTypeRequested.cTypes)
+  console.log('cTypeRequested.cTypes[0]: \n', cTypeRequested.cTypes[0])
+  console.log('cTypeRequested.cTypes[1]: \n', cTypeRequested.cTypes[1])
+
   // Know against to what structure you want to compare to:
   const requestedCTypeHash = cTypeRequested.cTypes[0].cTypeHash
   const { cType: requestedCType } = await Kilt.CType.fetchFromChain(
@@ -55,7 +60,11 @@ export async function verifySubmittedCredential(
     response,
     JWT_SIGNER_SECRET
   )
+  // Debugger:
+  console.log('requestedCType: \n', requestedCType)
 
+  // this should be throwing but it is not.
+  // Am I doing something wrong? Is the SDK broken here?
   const verifiedCredential = await Kilt.Credential.verifyPresentation(
     credential,
     {
@@ -63,6 +72,8 @@ export async function verifySubmittedCredential(
       ctype: requestedCType
     }
   )
+  // Debugger:
+  console.log('verifiedCredential: \n', verifiedCredential)
 
   if (verifiedCredential.revoked) {
     throw new Error("Credential has been revoked and hence it's not valid.")
