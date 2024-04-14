@@ -13,7 +13,7 @@ import { readCredentialCookie } from './readCredentialCookie'
 export async function verifySubmittedCredential(
   request: Request,
   response: Response,
-  cTypeRequested: Kilt.IRequestCredentialContent
+  cTypesRequested: Kilt.IRequestCredentialContent
 ): Promise<Kilt.ICredentialPresentation> {
   const encryptedMessage = request.body
   console.log(
@@ -44,13 +44,20 @@ export async function verifySubmittedCredential(
 
   console.log('Decrypted Credential being verify: \n', credential)
 
+  const chosenCType = cTypesRequested.cTypes.find(
+    (ctype) => ctype.cTypeHash === credential.claim.cTypeHash
+  )
   // Debugger:
-  console.log('cTypeRequested.cTypes: \n', cTypeRequested.cTypes)
-  console.log('cTypeRequested.cTypes[0]: \n', cTypeRequested.cTypes[0])
-  console.log('cTypeRequested.cTypes[1]: \n', cTypeRequested.cTypes[1])
+  console.log('chosenCType: \n', chosenCType)
+
+  if (!chosenCType) {
+    throw new Error(
+      "The User did not complied to the Credential Request. The Server does not accept the submitted Credential's Type."
+    )
+  }
 
   // Know against to what structure you want to compare to:
-  const requestedCTypeHash = cTypeRequested.cTypes[0].cTypeHash
+  const requestedCTypeHash = chosenCType.cTypeHash
   const { cType: requestedCType } = await Kilt.CType.fetchFromChain(
     `kilt:ctype:${requestedCTypeHash}`
   )
@@ -80,9 +87,7 @@ export async function verifySubmittedCredential(
   }
 
   // Check if the credentials was issued by one of our "trusted attesters"
-  const ourTrustedAttesters = cTypeRequested.cTypes.find((ctype) => {
-    ctype.cTypeHash === credential.claim.cTypeHash
-  })?.trustedAttesters
+  const ourTrustedAttesters = chosenCType.trustedAttesters
 
   // If you don't include a list of trusted attester on the credential-request, this check would be skipped
   if (ourTrustedAttesters) {
