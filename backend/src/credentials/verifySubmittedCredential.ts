@@ -23,7 +23,7 @@ export async function verifySubmittedCredential(
       2
     )}`
   )
-  const api = await getApi()
+  await getApi()
 
   const { keyAgreement } = generateKeyPairs(DAPP_DID_MNEMONIC)
   const decryptedMessage = await Kilt.Message.decrypt(
@@ -56,33 +56,26 @@ export async function verifySubmittedCredential(
     JWT_SIGNER_SECRET
   )
 
-  await Kilt.Credential.verifyPresentation(credential, {
-    challenge: challengeOnRequest,
-    ctype: requestedCType
-  })
-
-  const attestationChain = await api.query.attestation.attestations(
-    credential.rootHash
+  const verifiedCredential = await Kilt.Credential.verifyPresentation(
+    credential,
+    {
+      challenge: challengeOnRequest,
+      ctype: requestedCType
+    }
   )
 
-  const attestation = Kilt.Attestation.fromChain(
-    attestationChain,
-    credential.rootHash
-  )
-
-  if (attestation.revoked) {
+  if (verifiedCredential.revoked) {
     throw new Error("Credential has been revoked and hence it's not valid.")
   }
 
   // Check if the credentials was issued by one of our "trusted attesters"
-  const attesterOfTheirCredential = attestation.owner
   const ourTrustedAttesters = cTypeRequested.cTypes.find((ctype) => {
     ctype.cTypeHash === credential.claim.cTypeHash
   })?.trustedAttesters
 
   // If you don't include a list of trusted attester on the credential-request, this check would be skipped
   if (ourTrustedAttesters) {
-    if (!ourTrustedAttesters.includes(attesterOfTheirCredential)) {
+    if (!ourTrustedAttesters.includes(verifiedCredential.attester)) {
       throw new Error(
         `The Credential was not issued by any of the trusted Attesters that the dApp relies on. \n List of trusted attesters: ${ourTrustedAttesters}`
       )
