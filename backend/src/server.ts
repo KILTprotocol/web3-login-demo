@@ -1,4 +1,3 @@
-import * as Kilt from '@kiltprotocol/sdk-js'
 import express, { Express, NextFunction, Request, Response } from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser'
@@ -23,6 +22,7 @@ import {
 
 import { logout } from './access/logout'
 import { checkAccessCookie } from './access/checkAccessCookie'
+import { getApi } from './utils/connection'
 
 const app: Express = express()
 
@@ -117,7 +117,8 @@ validateEnvironmentConstants()
 
 async function connectToKiltWebSocket() {
   try {
-    await Kilt.connect(WSS_ADDRESS)
+    // internally calls Kilt.connect(WSS_ADDRESS)
+    await getApi()
     console.log(
       `🔗[websocket]: Connected to WebSocket server at ${WSS_ADDRESS}`
     )

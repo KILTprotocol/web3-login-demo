@@ -44,7 +44,5 @@ export async function fetchDidDocument(): Promise<Kilt.DidDocument> {
     )
   }
 
-  Kilt.disconnect()
-
   return didDocument
 }

@@ -76,7 +76,7 @@ export async function createCredential(
   // Make sure that `ctypeDomainLinkage` contains the correct Domain Linkage CType.
   // Extensions expect this specific CTypes other CTypes will not be recognized.
   const cTypeUri =
-    'kilt:ctype:0x9d271c790775ee831352291f01c5d04c7979713a5896dcf5e81708184cc5c643'
+    'kilt:ctype:0xb08800a574c436831a2b9fce00fd16e9df489b2b3695e88a0895d148eca0311e'
   if (ctypeDomainLinkage.$id !== cTypeUri) {
     console.log(
       'The following CType URI is not the expected one:',
