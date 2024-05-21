@@ -6,13 +6,12 @@ import * as Kilt from '@kiltprotocol/sdk-js'
 import dotenv from 'dotenv'
 
 import {
+  VerifiableDomainLinkagePresentation,
   fetchDidDocument,
-  validateOurKeys,
-  VerifiableDomainLinkagePresentation
+  generateAccount,
+  generateKeyPairs,
+  validateOurKeys
 } from './launchUtils'
-
-import { generateAccount } from './launchUtils/generateAccount'
-import { generateKeyPairs } from './launchUtils/generateKeyPairs'
 
 import {
   createCredential,

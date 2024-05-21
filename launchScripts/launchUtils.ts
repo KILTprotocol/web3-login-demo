@@ -26,7 +26,17 @@ export {
 // Import and Export Functions:
 //
 
-import { validateOurKeys } from '../backend/src/config'
+import { getApi } from '../backend/src/utils/connection'
+import { generateKeyPairs } from '../backend/src/utils/generateKeyPairs'
+import { generateAccount } from '../backend/src/utils/generateAccount'
 import { fetchDidDocument } from '../backend/src/utils/fetchDidDocument'
 
-export { validateOurKeys, fetchDidDocument }
+import { validateOurKeys } from '../backend/src/config'
+
+export {
+  getApi,
+  generateAccount,
+  generateKeyPairs,
+  validateOurKeys,
+  fetchDidDocument
+}
