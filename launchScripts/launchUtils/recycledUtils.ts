@@ -1,5 +1,5 @@
 /**
- * There are some utilities needed during the set-up that are also needed by the backend.
+ * Most of the utilities needed during the set-up that are also needed by the backend.
  * It is important that this utilities correlate so that the backend can use what was configured during set-up (launch).
  * To avoid duplicated code and discrepancies, it is better to import from the backend the utilities needed for the set-up.
  * That is what is done here.
@@ -13,7 +13,7 @@ import {
   CredentialSubject,
   DomainLinkageCredential,
   VerifiableDomainLinkagePresentation
-} from '../backend/src/utils/types'
+} from '../../backend/src/utils/types'
 
 export type This = typeof globalThis
 export {
@@ -26,12 +26,12 @@ export {
 // Import and Export Functions:
 //
 
-import { getApi } from '../backend/src/utils/connection'
-import { generateKeyPairs } from '../backend/src/utils/generateKeyPairs'
-import { generateAccount } from '../backend/src/utils/generateAccount'
-import { fetchDidDocument } from '../backend/src/utils/fetchDidDocument'
+import { getApi } from '../../backend/src/utils/connection'
+import { generateKeyPairs } from '../../backend/src/utils/generateKeyPairs'
+import { generateAccount } from '../../backend/src/utils/generateAccount'
+import { fetchDidDocument } from '../../backend/src/utils/fetchDidDocument'
 
-import { validateOurKeys } from '../backend/src/config'
+import { validateOurKeys } from '../../backend/src/config'
 
 export {
   getApi,
