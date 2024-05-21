@@ -5,6 +5,27 @@
  * That is what is done here.
  */
 
+//
+// Import and Export Types:
+//
+
+import {
+  CredentialSubject,
+  DomainLinkageCredential,
+  VerifiableDomainLinkagePresentation
+} from '../backend/src/utils/types'
+
+export type This = typeof globalThis
+export {
+  CredentialSubject,
+  DomainLinkageCredential,
+  VerifiableDomainLinkagePresentation
+}
+
+//
+// Import and Export Functions:
+//
+
 import { validateOurKeys } from '../backend/src/config'
 import { fetchDidDocument } from '../backend/src/utils/fetchDidDocument'
 

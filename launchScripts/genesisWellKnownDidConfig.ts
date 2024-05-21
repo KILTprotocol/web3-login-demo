@@ -5,11 +5,14 @@ import path from 'path'
 import * as Kilt from '@kiltprotocol/sdk-js'
 import dotenv from 'dotenv'
 
-import { fetchDidDocument, validateOurKeys } from './launchUtils'
+import {
+  fetchDidDocument,
+  validateOurKeys,
+  VerifiableDomainLinkagePresentation
+} from './launchUtils'
 
 import { generateAccount } from './launchUtils/generateAccount'
 import { generateKeyPairs } from './launchUtils/generateKeyPairs'
-import { VerifiableDomainLinkagePresentation } from './launchUtils/types'
 
 import {
   createCredential,
