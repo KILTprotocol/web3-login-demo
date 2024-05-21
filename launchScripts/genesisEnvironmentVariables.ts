@@ -263,25 +263,28 @@ function imploreJwtSecretKey() {
 
 function imploreCtypeHash() {
   console.log(
-    'Please provide the CType Hash(es) inside the .env file using this constant name:.\n',
-    'Your dApp will only accept credentials of this given Claim Type(s).',
-    `CTYPE_HASH={CType IDs your dApp consider valid}\n`,
-    `If you wish to use the default Email Credential settings, please add the following line to your .env file:\n`,
-    `CTYPE_HASH=0x3291bb126e33b4862d421bfaa1d2f272e6cdfc4f96658988fbcffea8914bd9ac\n`
+    `Please specify with types of credentials your dApp should consider valid.`,
+    `For this, please, provide the CType Hash(es) inside the .env file using the constant name 'CTYPE_HASH'. \n`,
+    'Your dApp will only accept credentials of the given Claim Type(s).\n\n',
+
+    `If you wish to accept Email Credentials, as the ones issued by SocialKYC.io, please add the following line to your .env file:\n`,
+    `CTYPE_HASH=0x3291bb126e33b4862d421bfaa1d2f272e6cdfc4f96658988fbcffea8914bd9ac\n\n`,
+
+    `If you rather work with other CTypes, we recommend checking out the registry under https://ctypehub.galaniprojects.de/.`
   )
 }
 function imploreTrustedAttesters() {
   console.log(
-    'Please provide a list for your Trusted Attesters inside the .env file using this constant name: \n',
-    `TRUSTED_ATTESTERS={lists of trusted attesters}\n`,
-    `If you wish to use the default Email Credential settings, please add the following line to your .env file:\n`,
+    `Please provide a list your dApp's Trusted Attesters (Credential Issuers) inside the .env file using the constant name 'TRUSTED_ATTESTERS'. \n`,
+    'Only credentials attested on chain by one the specified DIDs will be accepted by your dApp.\n\n',
+    `If you wish to accept Credentials issued by the peregrine (test) version of SocialKYC.io, please add the following line to your .env file:\n`,
     `TRUSTED_ATTESTERS=did:kilt:4pehddkhEanexVTTzWAtrrfo2R7xPnePpuiJLC7shQU894aY\n`
   )
 }
 function imploreRequestedProperties() {
   console.log(
-    'Please provide a list of Required Properties inside the .env file using this constant name: \n',
-    `REQUIRED_PROPERTIES={lists of Properties users should be Required to disclose}\n`,
+    `Please provide a list of Required Properties inside the .env file using this constant name 'REQUIRED_PROPERTIES' \n`,
+    `The users will only be Required to disclose the listed Properties during credential presentation (≙login).\n\n`,
     `If you wish to use the default Email Credential settings, please add the following line to your .env file:\n`,
     `REQUIRED_PROPERTIES=Email\n`
   )
