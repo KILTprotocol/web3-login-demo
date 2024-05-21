@@ -126,11 +126,11 @@ async function main() {
     case 9:
       imploreTrustedAttesters()
       break
-    // ask you to choose a Ctype Hash
+    // ask you to specify trusted credential issuers
     case 10:
       imploreRequestedProperties()
       break
-    // ask you to choose a Ctype Hash
+    // ask you to choose which credential-properties the user will have to disclose to login
     // if (step = -1):
     default:
       console.log(
