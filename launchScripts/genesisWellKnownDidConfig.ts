@@ -5,8 +5,7 @@ import path from 'path'
 import * as Kilt from '@kiltprotocol/sdk-js'
 import dotenv from 'dotenv'
 
-import { validateOurKeys } from '../backend/src/config'
-import { fetchDidDocument } from '../backend/src/utils/fetchDidDocument'
+import { fetchDidDocument, validateOurKeys } from './launchUtils'
 
 import { generateAccount } from './launchUtils/generateAccount'
 import { generateKeyPairs } from './launchUtils/generateKeyPairs'
@@ -15,8 +14,8 @@ import { VerifiableDomainLinkagePresentation } from './launchUtils/types'
 import {
   createCredential,
   createPresentation,
-  selfAttestCredential,
   getDomainLinkagePresentation,
+  selfAttestCredential,
   verifyDidConfigPresentation
 } from './wellKnownDIDConfiguration'
 
