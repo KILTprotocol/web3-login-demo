@@ -26,7 +26,7 @@ export {
 // Import and Export Functions:
 //
 
-import { getApi } from '../../backend/src/utils/connection'
+// import { getApi } from '../../backend/src/utils/connection'
 import { generateKeyPairs } from '../../backend/src/utils/generateKeyPairs'
 import { generateAccount } from '../../backend/src/utils/generateAccount'
 import { fetchDidDocument } from '../../backend/src/utils/fetchDidDocument'
@@ -34,7 +34,7 @@ import { fetchDidDocument } from '../../backend/src/utils/fetchDidDocument'
 import { validateOurKeys } from '../../backend/src/config'
 
 export {
-  getApi,
+  // getApi,
   generateAccount,
   generateKeyPairs,
   validateOurKeys,

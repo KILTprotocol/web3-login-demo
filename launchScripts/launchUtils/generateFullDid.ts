@@ -1,19 +1,28 @@
 import * as Kilt from '@kiltprotocol/sdk-js'
 
-import { getApi, generateKeyPairs } from './recycledUtils'
+import { generateKeyPairs } from './recycledUtils'
 
 export async function generateFullDid(
   submitterAccount: Kilt.KiltKeyringPair,
   mnemonic: string
 ): Promise<Kilt.DidDocument> {
-  await getApi()
-  const didMnemonic = mnemonic
+  const endpointAddress = process.env.WSS_ADDRESS
+  if (typeof endpointAddress === 'undefined') {
+    throw new Error(
+      'You need to specify an endpoint address to know where to register your DID at. \n\n ' +
+        'You can use the BOTLabs Endpoints: \n' +
+        '* For the KILT Production Chain "Spiritnet":   wss://spiritnet.kilt.io/ \n' +
+        '* For the KILT Test Chain "Peregrine":   wss://peregrine.kilt.io/ \n'
+    )
+  }
+  await Kilt.connect(endpointAddress)
+
   const {
     authentication,
     keyAgreement,
     assertionMethod,
     capabilityDelegation
-  } = generateKeyPairs(didMnemonic)
+  } = generateKeyPairs(mnemonic)
 
   // Before submitting the transaction, it is worth it to assure that the DID does not already exist.
   // If the DID already exist, the transaction will fail, but it will still costs the fee. Better to avoid this.
