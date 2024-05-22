@@ -1,6 +1,6 @@
 import * as Kilt from '@kiltprotocol/sdk-js'
 
-import { generateKeyPairs } from './recycledUtils'
+import { generateKeyPairs } from './recycledUtils/preEnvironment'
 
 export async function generateFullDid(
   submitterAccount: Kilt.KiltKeyringPair,

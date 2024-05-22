@@ -2,7 +2,10 @@ import * as Kilt from '@kiltprotocol/sdk-js'
 import { mnemonicGenerate } from '@polkadot/util-crypto'
 import dotenv from 'dotenv'
 
-import { generateAccount, generateKeyPairs } from './launchUtils/recycledUtils'
+import {
+  generateAccount,
+  generateKeyPairs
+} from './launchUtils/recycledUtils/preEnvironment'
 import { generateFullDid } from './launchUtils/generateFullDid'
 
 // try to read the variables from the .env-file:

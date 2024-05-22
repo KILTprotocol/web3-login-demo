@@ -13,7 +13,7 @@ import {
   CredentialSubject,
   DomainLinkageCredential,
   VerifiableDomainLinkagePresentation
-} from '../../backend/src/utils/types'
+} from '../../../backend/src/utils/types'
 
 export type This = typeof globalThis
 export {
@@ -27,11 +27,11 @@ export {
 //
 
 // import { getApi } from '../../backend/src/utils/connection'
-import { generateKeyPairs } from '../../backend/src/utils/generateKeyPairs'
-import { generateAccount } from '../../backend/src/utils/generateAccount'
-import { fetchDidDocument } from '../../backend/src/utils/fetchDidDocument'
+import { generateKeyPairs } from '../../../backend/src/utils/generateKeyPairs'
+import { generateAccount } from '../../../backend/src/utils/generateAccount'
+import { fetchDidDocument } from '../../../backend/src/utils/fetchDidDocument'
 
-import { validateOurKeys } from '../../backend/src/config'
+import { validateOurKeys } from '../../../backend/src/config'
 
 export {
   // getApi,

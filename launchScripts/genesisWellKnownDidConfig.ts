@@ -11,7 +11,7 @@ import {
   generateAccount,
   generateKeyPairs,
   validateOurKeys
-} from './launchUtils/recycledUtils'
+} from './launchUtils/recycledUtils/preEnvironment'
 
 import {
   createCredential,
