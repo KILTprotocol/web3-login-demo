@@ -29,16 +29,16 @@ export {
 // import { getApi } from '../../backend/src/utils/connection'
 import { generateKeyPairs } from '../../../backend/src/utils/generateKeyPairs'
 import { generateAccount } from '../../../backend/src/utils/generateAccount'
-import { fetchDidDocument } from '../../../backend/src/utils/fetchDidDocument'
+// import { fetchDidDocument } from '../../../backend/src/utils/fetchDidDocument'
 
-import { validateOurKeys } from '../../../backend/src/config'
+// import { validateOurKeys } from '../../../backend/src/config'
 
 export {
   // getApi,
   generateAccount,
-  generateKeyPairs,
-  validateOurKeys,
-  fetchDidDocument
+  generateKeyPairs
+  // validateOurKeys,
+  // fetchDidDocument
 }
 
 // Problem, the config from the backend try to loads all the env-constants and throws if one is missing.

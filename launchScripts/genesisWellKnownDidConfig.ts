@@ -7,11 +7,14 @@ import dotenv from 'dotenv'
 
 import {
   VerifiableDomainLinkagePresentation,
-  fetchDidDocument,
   generateAccount,
-  generateKeyPairs,
-  validateOurKeys
+  generateKeyPairs
 } from './launchUtils/recycledUtils/preEnvironment'
+
+import {
+  fetchDidDocument,
+  validateOurKeys
+} from './launchUtils/recycledUtils/postEnvironment'
 
 import {
   createCredential,
