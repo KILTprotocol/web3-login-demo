@@ -40,3 +40,9 @@ export {
   validateOurKeys,
   fetchDidDocument
 }
+
+// Problem, the config from the backend try to loads all the env-constants and throws if one is missing.
+// Functions that use the config from the backend:
+// - getApi
+// - fetchDidDocument
+// - validateOurKeys
