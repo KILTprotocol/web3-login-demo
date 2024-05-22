@@ -1,21 +1,30 @@
 import * as Kilt from '@kiltprotocol/sdk-js'
 
-import { getApi } from './connection'
+import { generateKeyPairs } from './recycledUtils/preEnvironment'
 
-import { generateKeyPairs } from './generateKeyPairs'
-
+/**
+ * Generates a on-chain DID from a mnemonic.
+ *
+ * You need to be connected to a KILT Endpoint beforehand, to know where to register your DID at.
+ * For that, use 'Kilt.connect(<Endpoint's Websocket Address>)'.
+ *
+ * You could use the BOTLabs Endpoints:
+ * For the KILT Production Chain "Spiritnet":   wss://spiritnet.kilt.io/
+ * For the KILT Test Chain "Peregrine":   wss://peregrine.kilt.io/
+ *
+ * @param mnemonic
+ * @returns
+ */
 export async function generateFullDid(
   submitterAccount: Kilt.KiltKeyringPair,
   mnemonic: string
 ): Promise<Kilt.DidDocument> {
-  await getApi()
-  const didMnemonic = mnemonic
   const {
     authentication,
     keyAgreement,
     assertionMethod,
     capabilityDelegation
-  } = generateKeyPairs(didMnemonic)
+  } = generateKeyPairs(mnemonic)
 
   // Before submitting the transaction, it is worth it to assure that the DID does not already exist.
   // If the DID already exist, the transaction will fail, but it will still costs the fee. Better to avoid this.
@@ -73,6 +82,5 @@ export async function generateFullDid(
     throw new Error('Full DID was not successfully fetched.')
   }
 
-  Kilt.disconnect()
   return didDocument
 }

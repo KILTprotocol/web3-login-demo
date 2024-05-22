@@ -15,23 +15,23 @@
     "node": ">= v18.17.0"
   },
   "scripts": {
-    "environment": "ts-node ./scripts/genesisEnvironmentVariables.ts",
-    "did-configuration": "ts-node ./scripts/genesisWellKnownDidConfig.ts",
+    "environment": "ts-node ./launchScripts/genesisEnvironmentVariables.ts",
+    "did-configuration": "ts-node ./launchScripts/genesisWellKnownDidConfig.ts",
     "build:frontend": "cd ./frontend && yarn build",
     "build:backend": "cd ./backend && yarn build",
     "build": "yarn build:frontend && yarn build:backend",
-    "start:frontend": "ts-node ./scripts/updatePorts.ts && cd ./frontend && yarn start",
+    "start:frontend": "ts-node ./launchScripts/updatePorts.ts && cd ./frontend && yarn start",
     "start:backend": "cd ./backend && yarn start",
     "start-prod:backend": "cd ./backend && yarn start-prod",
     "start": "concurrently 'yarn:start:*'",
     "lint": "concurrently 'yarn:lint:*'",
     "lint:frontend": "eslint --ext .js,.ts --config ./.eslintrc.json \"frontend/**/*.ts\"",
     "lint:backend": "eslint --ext .js,.ts --config ./.eslintrc.json \"backend/**/*.ts\"",
-    "lint:scripts": "eslint --ext .js,.ts --config ./.eslintrc.json \"scripts/**/*.ts\"",
+    "lint:scripts": "eslint --ext .js,.ts --config ./.eslintrc.json \"launchScripts/**/*.ts\"",
     "fix": "concurrently 'yarn:fix:*'",
     "fix:frontend": "eslint --ext .js,.ts --config ./.eslintrc.json --fix \"frontend/**/*.ts\"",
     "fix:backend": "eslint --ext .js,.ts --config ./.eslintrc.json --fix \"backend/**/*.ts\"",
-    "fix:scripts": "eslint --ext .js,.ts --config ./.eslintrc.json --fix \"scripts/**/*.ts\""
+    "fix:scripts": "eslint --ext .js,.ts --config ./.eslintrc.json --fix \"launchScripts/**/*.ts\""
   },
   "devDependencies": {
     "@types/node": "^20.9.1",
