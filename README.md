@@ -161,7 +161,7 @@ You have three different options:
 1. Using `yarn environment`:
 
    There is a script to facilitate the generation of the environment variables inside of this repository.
-   This script is called `./scripts/genesisEnvironmentVariables.ts`.
+   This script is called `./launchScripts/genesisEnvironmentVariables.ts`.
 
    - You can execute it by running `yarn environment`.
 
@@ -177,7 +177,7 @@ You have three different options:
 3. Without help:
 
    If you are a _pro_, you could defined and generate them externally and add them to the `.env`-file.
-   You would probably have to modify the `generateKeyPairs.ts` files (on _scripts_ and _backend_) to match your key derivation though.
+   You would probably have to modify the `generateKeyPairs.ts` files (on the _backend_) to match your key derivation though.
 
 ## Well-Known DID Configuration
 
