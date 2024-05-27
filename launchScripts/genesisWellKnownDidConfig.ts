@@ -204,7 +204,7 @@ async function main() {
   await Kilt.disconnect()
 
   console.log(
-    'this is the well-known-DID-configuration of your dApp that was just created: \n',
+    "this is your dApp's Domain Linkage Credential (well-known-DID-configuration) that was just created: \n",
     JSON.stringify(wellKnownDidconfig, null, 2)
   )
 
