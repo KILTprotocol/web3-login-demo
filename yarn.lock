@@ -3877,28 +3877,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^20.9.1":
-  version: 20.9.1
-  resolution: "@types/node@npm:20.9.1"
+"@types/node@npm:*, @types/node@npm:^20.14.2":
+  version: 20.14.2
+  resolution: "@types/node@npm:20.14.2"
   dependencies:
     undici-types: ~5.26.4
-  checksum: bb893c6790733dac32818c1ca170fa466622dec39a0ade4639463e1358cb811771e242accbd065e7a1bfe59adc989c0ee59be65e462d3a0ab49043426f0b7637
+  checksum: 265362479b8f3b50fcd1e3f9e9af6121feb01a478dff0335ae67cccc3babfe45d0f12209d3d350595eebd7e67471762697b877c380513f8e5d27a238fa50c805
   languageName: node
   linkType: hard
 
-"@types/node@npm:^16.18.11":
-  version: 16.18.61
-  resolution: "@types/node@npm:16.18.61"
-  checksum: fdd162829eddc9b0b82a1ec485ba3876428ff3bd94c5869b13f4a36eb2aa9bddd22ea7e8ee3b2faa91a0f70ff08d8fd8d4be7dd0d143f8ee776907d6a1d2ed25
+"@types/node@npm:^16.18.98":
+  version: 16.18.98
+  resolution: "@types/node@npm:16.18.98"
+  checksum: 2b746140502759ff2e83f691a2905025ca7b05254497e960f2b2ea75c4b2570170a68163df74035d6b7c3b00283eb19d69a2660344bcb9f48d6678154c2e428a
   languageName: node
   linkType: hard
 
-"@types/node@npm:^18.11.9":
-  version: 18.18.9
-  resolution: "@types/node@npm:18.18.9"
+"@types/node@npm:^18.19.34":
+  version: 18.19.34
+  resolution: "@types/node@npm:18.19.34"
   dependencies:
     undici-types: ~5.26.4
-  checksum: 629ce20357586144031cb43d601617eef45e59460dea6b1e123f708e6885664f44d54f65e5b72b2614af5b8613f3652ced832649c0b991accbc6a85139befa51
+  checksum: ae6369baa1529ec3564da29611ec7eb8ccb219080d717292151b6b899820d25290243d01c9240f11a63d1a42e47198cd6310fab67b6d17bea723221fea07b644
   languageName: node
   linkType: hard
 
@@ -11101,7 +11101,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nodemon@npm:^2.0.20":
+"nodemon@npm:^2.0.22":
   version: 2.0.22
   resolution: "nodemon@npm:2.0.22"
   dependencies:
@@ -14643,9 +14643,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-node@npm:^10.9.1":
-  version: 10.9.1
-  resolution: "ts-node@npm:10.9.1"
+"ts-node@npm:^10.9.2":
+  version: 10.9.2
+  resolution: "ts-node@npm:10.9.2"
   dependencies:
     "@cspotcode/source-map-support": ^0.8.0
     "@tsconfig/node10": ^1.0.7
@@ -14677,7 +14677,7 @@ __metadata:
     ts-node-script: dist/bin-script.js
     ts-node-transpile-only: dist/bin-transpile.js
     ts-script: dist/bin-script-deprecated.js
-  checksum: 090adff1302ab20bd3486e6b4799e90f97726ed39e02b39e566f8ab674fd5bd5f727f43615debbfc580d33c6d9d1c6b1b3ce7d8e3cca3e20530a145ffa232c35
+  checksum: fde256c9073969e234526e2cfead42591b9a2aec5222bac154b0de2fa9e4ceb30efcd717ee8bc785a56f3a119bdd5aa27b333d9dbec94ed254bd26f8944c67ac
   languageName: node
   linkType: hard
 
@@ -15277,7 +15277,7 @@ __metadata:
     "@types/jest": ^27.5.2
     "@types/jsonwebtoken": ^9.0.1
     "@types/memory-cache": ^0.2.5
-    "@types/node": ^18.11.9
+    "@types/node": ^18.19.34
     "@types/react": ^18.2.48
     body-parser: ^1.20.1
     cookie-parser: ^1.4.6
@@ -15286,8 +15286,8 @@ __metadata:
     express: ^4.18.2
     jsonwebtoken: ^9.0.0
     memory-cache: ^0.2.0
-    nodemon: ^2.0.20
-    ts-node: ^10.9.1
+    nodemon: ^2.0.22
+    ts-node: ^10.9.2
     typescript: ^5.1.6
   languageName: unknown
   linkType: soft
@@ -15304,7 +15304,7 @@ __metadata:
     "@testing-library/react": ^13.4.0
     "@testing-library/user-event": ^13.5.0
     "@types/jest": ^27.5.2
-    "@types/node": ^16.18.11
+    "@types/node": ^16.18.98
     "@types/react": ^18.2.48
     "@types/react-dom": ^18.2.18
     kilt-extension-api: 0.1.0
@@ -15324,7 +15324,7 @@ __metadata:
     "@kiltprotocol/vc-export": ^0.35.2
     "@polkadot/util": 10.4.2
     "@polkadot/util-crypto": 10.4.2
-    "@types/node": ^20.9.1
+    "@types/node": ^20.14.2
     "@types/valid-url": ^1.0.7
     "@typescript-eslint/eslint-plugin": ^5.62.0
     "@typescript-eslint/parser": ^5.62.0
@@ -15336,9 +15336,9 @@ __metadata:
     eslint-plugin-prettier: ^4.2.1
     eslint-plugin-react: ^7.33.2
     eslint-plugin-react-hooks: ^4.6.0
-    nodemon: ^2.0.20
+    nodemon: ^2.0.22
     prettier: ^2.8.8
-    ts-node: ^10.9.1
+    ts-node: ^10.9.2
     typescript: ^5.0.4
     valid-url: ^1.0.9
   languageName: unknown
