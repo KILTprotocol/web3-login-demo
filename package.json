@@ -11,8 +11,9 @@
     "frontend",
     "backend"
   ],
+  "packageManager": "yarn@3.6.1",
   "engines": {
-    "node": ">= 20.14.0"
+    "node": ">= 20.0"
   },
   "scripts": {
     "environment": "ts-node ./launchScripts/genesisEnvironmentVariables.ts",
@@ -66,6 +67,5 @@
     "@polkadot/util": "10.4.2",
     "@polkadot/util-crypto": "10.4.2",
     "@polkadot/types": "9.10.2"
-  },
-  "packageManager": "yarn@3.6.1"
+  }
 }
