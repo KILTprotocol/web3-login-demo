@@ -12,7 +12,7 @@
     "backend"
   ],
   "engines": {
-    "node": ">= 20.14.0"
+    "node": ">= 20.0"
   },
   "scripts": {
     "environment": "ts-node ./launchScripts/genesisEnvironmentVariables.ts",
