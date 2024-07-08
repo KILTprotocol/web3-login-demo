@@ -4,27 +4,27 @@ sequenceDiagram
     participant Server
 
     Note right of Browser: User visits web3login
-    Note right of Browser: User chooses an Extension X \nand clicks on the "Connect" button.
+    Note right of Browser: User chooses an Extension X <br/>and clicks on the "Connect" button.
     Browser->>Extension: please allow use on this page
     Note right of Extension: Only the "Extension X" pops up, only the first time.
-    Note right of Extension: The Domain Linkage Credentials under\n.well-known/did-configuration.json\nis verified.
+    Note right of Extension: The Domain Linkage Credentials under<br/>.well-known/did-configuration.json<br/>is verified.
     Extension->>Browser: User granted access
     Browser->>Server: GET /api/session/start
-    Server->>Browser: 200 OK\nset-cookie: sessionJWT={dAppName, dAppEncryptionKeyUri, challenge}\n{dAppName, dAppEncryptionKeyUri, challenge}
+    Server->>Browser: 200 OK<br/>set-cookie: sessionJWT={dAppName, dAppEncryptionKeyUri, challenge}<br/>{dAppName, dAppEncryptionKeyUri, challenge}
     Browser->>Extension: startSession(dAppName, dAppEncryptionKeyUri, challenge)
     Extension->>Browser: {encryptionKeyId, encryptedChallenge, nonce}
-    Browser->>Server: POST /api/session/verify\nCookie: sessionJWT={dAppName, dAppEncryptionKeyUri, challenge}\n{encryptionKeyId, encryptedChallenge, nonce}
-    Note left of Server: Verify sessionJWT.\nDecrypt challenge using nonce and encryptionKeyId\nVerify Extension Session: \n Assert that jwt-challenge (our)\nand decrypted-challenge (theirs) match.
-    Server->>Browser: 200 OK\nset-cookie: sessionJWT={{dAppName, dAppEncryptionKeyUri, challenge},\n{encryptionKeyId, encryptedChallenge, nonce}}
+    Browser->>Server: POST /api/session/verify<br/>Cookie: sessionJWT={dAppName, dAppEncryptionKeyUri, challenge}<br/>{encryptionKeyId, encryptedChallenge, nonce}
+    Note left of Server: Verify sessionJWT.<br/>Decrypt challenge using nonce and encryptionKeyId<br/>Verify Extension Session: <br/> Assert that jwt-challenge (our)<br/>and decrypted-challenge (theirs) match.
+    Server->>Browser: 200 OK<br/>set-cookie: sessionJWT={{dAppName, dAppEncryptionKeyUri, challenge},<br/>{encryptionKeyId, encryptedChallenge, nonce}}
     Note left of Browser: Server-Extension-Session established ✉️ ⛓️
     Note right of Browser: User clicks on Login
-    Browser->>Server: GET /api/credential/login/request\nCookie: sessionJWT
+    Browser->>Server: GET /api/credential/login/request<br/>Cookie: sessionJWT
     Note left of Server: The Server is asking for a Credential of a cType from the User.
-    Server->>Browser: 200 OK\nset-cookie: credentialJWT={challengeOnRequest}\nKiltMsg{request-credential}
+    Server->>Browser: 200 OK<br/>set-cookie: credentialJWT={challengeOnRequest}<br/>KiltMsg{request-credential}
     Browser->>Extension: send(KiltMsg{request-credential})
-    Note right of Extension: User approves the request\nand selects credential to share.
+    Note right of Extension: User approves the request<br/>and selects credential to share.
     Extension->>Browser: KiltMsg{submit-credential}
-    Browser->>Server: Post /api/credential/login/submit\nCookie: credentialJWT\nKiltMsg{submit-credential}
-    Note left of Server: Verify the credential.\nNote the DID inside the credential.\nIf verification was successful,\nDID was authenticated with provided credentials.
-    Note left of Server: The login with credential process was completed.\nAn authentication token is given to the user.\n It's all like web2 from here on.
-    Server->>Browser: 200 OK\nset-cookie: accessJWT{authenticationToken}
+    Browser->>Server: Post /api/credential/login/submit<br/>Cookie: credentialJWT<br/>KiltMsg{submit-credential}
+    Note left of Server: Verify the credential.<br/>Note the DID inside the credential.<br/>If verification was successful,<br/>DID was authenticated with provided credentials.
+    Note left of Server: The login with credential process was completed.<br/>An authentication token is given to the user.<br/> It's all like web2 from here on.
+    Server->>Browser: 200 OK<br/>set-cookie: accessJWT{authenticationToken}
