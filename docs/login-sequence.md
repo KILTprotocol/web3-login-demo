@@ -1,4 +1,4 @@
-generated with https://weidagang.github.io/text-diagram/
+generate with https://weidagang.github.io/text-diagram/
 
 ```
 object Extension Browser Server
