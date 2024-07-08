@@ -61,11 +61,11 @@
     "valid-url": "^1.0.9"
   },
   "resolutions": {
-    "@polkadot/api": "9.10.2",
-    "@polkadot/rpc-provider": "9.10.2",
+    "@polkadot/api": "9.14.2",
+    "@polkadot/rpc-provider": "9.14.2",
     "@polkadot/keyring": "10.4.2",
     "@polkadot/util": "10.4.2",
     "@polkadot/util-crypto": "10.4.2",
-    "@polkadot/types": "9.10.2"
+    "@polkadot/types": "9.14.2"
   }
 }
