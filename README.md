@@ -96,9 +96,9 @@ If you are not familiar with some of these, we recommend to first get an overvie
 
 ## Installation
 
-After [cloning the repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository), to install all required modules
+After [cloning the repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository), to install all required modules, run:
 
-- run: `yarn install`.
+- `yarn install`.
 
 ## Environment Variables
 
@@ -161,9 +161,9 @@ You have three different options:
 1. Using `yarn environment`:
 
    There is a script to facilitate the generation of the environment variables inside of this repository.
-   This script is called `./launchScripts/genesisEnvironmentVariables.ts`.
+   This script is called `./launchScripts/genesisEnvironmentVariables.ts`. You can execute it by running:
 
-   - You can execute it by running `yarn environment`.
+   - `yarn environment`.
 
    Setting up your environment with this script is a step by step process.
    You will need to run the script repeatedly and follow the instructions that it provides, depending on your project's state.
@@ -181,16 +181,16 @@ You have three different options:
 
 ## Well-Known DID Configuration
 
-After having all your environment variables, execute the following to build a **Domain Linkage Credential**:
+After having all your environment variables, to build a **Domain Linkage Credential**, execute:
 
-- `yarn run did-configuration`.
+- `yarn did-configuration`.
 
 If you want know more about this, check out the [Identity Foundation Documentation on Well-Known DID Configuration](https://identity.foundation/.well-known/resources/did-configuration/).
 [Our dApp documentation also have a section about this.](https://docs.kilt.io/docs/develop/dApp/well-known-did-config)
 
 ## Starting the dApp locally
 
-After having all your environment variables and your well-known DID configuration run:
+After having all your environment variables and your well-known DID configuration, to start the dApp, run:
 
 - `yarn start`.
 
@@ -334,6 +334,6 @@ Running the app locally on your computer doesn't require this step.
 It's only necessary when you plan to deploy the app, not for the tutorial.
 
 To obtain a production-ready version of the app, you can compile both the frontend and backend code into Docker images.
-For this, after having all your environment variables and your well-known DID configuration:
+For this, after having all your environment variables and your well-known DID configuration, run:
 
-- run `yarn build`.
+- `yarn build`.
