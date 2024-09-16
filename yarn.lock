@@ -3828,12 +3828,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jsonwebtoken@npm:^9.0.1":
-  version: 9.0.5
-  resolution: "@types/jsonwebtoken@npm:9.0.5"
+"@types/jsonwebtoken@npm:^9.0.7":
+  version: 9.0.7
+  resolution: "@types/jsonwebtoken@npm:9.0.7"
   dependencies:
     "@types/node": "*"
-  checksum: 07ab6fee602e5bd3fb5c6dfe4ec400769dc20f1d7fce901feecb4c3af5f5f08323b03ea55de3e49b1aa41e171a59008f6f4318738a735588c5268a63eba25337
+  checksum: 872b62e2a50ec399d695402ccddfeb5cd66a6c3d28511f27453b932b6b67eb82c2d0ecaa864939848b88b3a8276c2492647bf5707bc82a6ac7e420d3412b9047
   languageName: node
   linkType: hard
 
@@ -10201,7 +10201,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsonwebtoken@npm:^9.0.0":
+"jsonwebtoken@npm:^9.0.2":
   version: 9.0.2
   resolution: "jsonwebtoken@npm:9.0.2"
   dependencies:
@@ -15275,7 +15275,7 @@ __metadata:
     "@types/cors": ^2.8.17
     "@types/express": ^4.17.21
     "@types/jest": ^27.5.2
-    "@types/jsonwebtoken": ^9.0.1
+    "@types/jsonwebtoken": ^9.0.7
     "@types/memory-cache": ^0.2.5
     "@types/node": ^18.19.34
     "@types/react": ^18.2.48
@@ -15284,7 +15284,7 @@ __metadata:
     cors: ^2.8.5
     dotenv: ^16.0.3
     express: ^4.18.2
-    jsonwebtoken: ^9.0.0
+    jsonwebtoken: ^9.0.2
     memory-cache: ^0.2.0
     nodemon: ^2.0.22
     ts-node: ^10.9.2
