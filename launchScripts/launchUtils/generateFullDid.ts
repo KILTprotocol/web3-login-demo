@@ -8,7 +8,7 @@ import { generateKeyPairs } from './recycledUtils/preEnvironment'
  * You need to be connected to a KILT Endpoint beforehand, to know where to register your DID at.
  * For that, use 'Kilt.connect(<Endpoint's Websocket Address>)'.
  *
- * You could use the BOTLabs Endpoints:
+ * You could use the KILT Foundation Endpoints:
  * For the KILT Production Chain "Spiritnet":   wss://spiritnet.kilt.io/
  * For the KILT Test Chain "Peregrine":   wss://peregrine.kilt.io/
  *
