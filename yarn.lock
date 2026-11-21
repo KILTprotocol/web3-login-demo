@@ -3623,13 +3623,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/body-parser@npm:*, @types/body-parser@npm:^1.19.2":
-  version: 1.19.5
-  resolution: "@types/body-parser@npm:1.19.5"
+"@types/body-parser@npm:*, @types/body-parser@npm:^1.19.6":
+  version: 1.19.6
+  resolution: "@types/body-parser@npm:1.19.6"
   dependencies:
     "@types/connect": "*"
     "@types/node": "*"
-  checksum: 1e251118c4b2f61029cc43b0dc028495f2d1957fe8ee49a707fb940f86a9bd2f9754230805598278fe99958b49e9b7e66eec8ef6a50ab5c1f6b93e1ba2aaba82
+  checksum: 33041e88eae00af2cfa0827e951e5f1751eafab2a8b6fce06cd89ef368a988907996436b1325180edaeddd1c0c7d0d0d4c20a6c9ff294a91e0039a9db9e9b658
   languageName: node
   linkType: hard
 
@@ -15270,7 +15270,7 @@ __metadata:
     "@polkadot/api": ^9.14.2
     "@polkadot/util": ^10.4.2
     "@polkadot/util-crypto": ^10.4.2
-    "@types/body-parser": ^1.19.2
+    "@types/body-parser": ^1.19.6
     "@types/cookie-parser": ^1.4.6
     "@types/cors": ^2.8.17
     "@types/express": ^4.17.21
